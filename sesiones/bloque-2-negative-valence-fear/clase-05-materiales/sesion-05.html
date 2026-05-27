@@ -397,11 +397,93 @@ html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
         </div>
         <p class="reveal source" style="margin-top: clamp(1rem, 2vw, 1.5rem); text-align: center;">Mobbs 2018 anticipa la lógica RDoC: descomponer el miedo por ejes ecológicos.</p>
     </div>
-    <span class="slide-num">09 · 47</span>
+    <span class="slide-num"></span>
     <span class="section-label">Modelos clásicos</span>
 </section>
 
-<!-- === SECCIÓN C: RDoC NEGATIVE VALENCE (slides 10-17) === -->
+<section class="slide" id="slide-10">
+    <div class="domain-bar gradient"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Facetas de afectividad negativa / neuroticismo: <span style="color: var(--color-accent);">cuatro nosologías convergen</span></h1>
+        <div class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1rem); display: flex; justify-content: center;">
+            <table class="data-table" style="max-width: 950px; font-size: clamp(0.55rem, 0.95vw, 0.75rem);">
+                <thead>
+                    <tr>
+                        <th style="color: var(--text-primary);">Faceta núcleo</th>
+                        <th style="color: var(--text-secondary);">Big Five — NEO-PI-R<br><span style="font-size: 0.85em; color: var(--text-muted); font-weight: 400;">Dominio: Neuroticismo</span></th>
+                        <th style="color: var(--color-distress);">DSM-5-TR · PID-5 (AMPD)<br><span style="font-size: 0.85em; color: var(--text-muted); font-weight: 400;">Dominio: Negative Affectivity</span></th>
+                        <th style="color: var(--color-success);">CIE-11 (ICD-11) — Trastornos de personalidad<br><span style="font-size: 0.85em; color: var(--text-muted); font-weight: 400;">Dominio: Negative Affectivity</span></th>
+                        <th style="color: var(--color-compulsive);">CAT-PD<br><span style="font-size: 0.85em; color: var(--text-muted); font-weight: 400;">Factor: Negative Emotionality</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Ansiedad</strong></td>
+                        <td>Anxiety (N1)</td>
+                        <td>Anxiousness</td>
+                        <td>Anxiety, fear, worry</td>
+                        <td>Anxiousness</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Depresividad</strong></td>
+                        <td>Depression (N3)</td>
+                        <td>Depressivity</td>
+                        <td>Low self-esteem, pessimism</td>
+                        <td>Depressiveness</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hostilidad / ira</strong></td>
+                        <td>Angry Hostility (N2)</td>
+                        <td>Hostility</td>
+                        <td>(cargas en Dissociality)</td>
+                        <td>Anger</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Labilidad emocional</strong></td>
+                        <td>(sin faceta directa)</td>
+                        <td>Emotional Lability</td>
+                        <td>Emotional lability</td>
+                        <td>Affective Lability</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Inseguridad / dependencia</strong></td>
+                        <td>Self-Consciousness (N4)</td>
+                        <td>Separation Insecurity · Submissiveness</td>
+                        <td>Dependency</td>
+                        <td>Submissiveness</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Perseveración / rumiación</strong></td>
+                        <td>(sin faceta directa)</td>
+                        <td>Perseveration</td>
+                        <td>(no directa)</td>
+                        <td>Rumination</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Vulnerabilidad al estrés</strong></td>
+                        <td>Vulnerability (N6)</td>
+                        <td>(parcial en Perseveration)</td>
+                        <td>(bajo emotionality)</td>
+                        <td>(parcial en Rumination)</td>
+                    </tr>
+                    <tr style="background: rgba(249,115,22,0.08);">
+                        <td><strong>Impulsividad</strong></td>
+                        <td>Impulsiveness (N5)</td>
+                        <td>→ Disinhibition (no Negative Affectivity)</td>
+                        <td>→ Disinhibition</td>
+                        <td>→ Disinhibition</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="reveal" style="margin-top: clamp(0.5rem, 1vw, 0.75rem); text-align: center; color: var(--color-accent); font-size: var(--small-size);">Convergencia: ansiedad · depresividad · labilidad · dependencia. <strong>Divergencia clave:</strong> Big Five mete impulsividad en Neuroticismo; las otras tres nosologías la sacan a Disinhibición.</p>
+        <p class="reveal source" style="text-align: center;">Costa &amp; McCrae 1992 (NEO-PI-R) · Krueger et al. 2012 (PID-5) · WHO 2024 (CIE-11 PD) · Simms et al. 2011 (CAT-PD)</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Facetas comparadas</span>
+</section>
+
+<!-- === SECCIÓN C: RDoC NEGATIVE VALENCE === -->
 
 <section class="slide" id="slide-10">
     <div class="domain-bar gradient"></div>
@@ -1381,11 +1463,22 @@ class SlidePresentation {
     constructor() {
         this.slides = document.querySelectorAll('.slide');
         this.currentSlide = 0;
+        this.populateSlideNumbers();
         this.setupIntersectionObserver();
         this.setupKeyboardNav();
         this.setupTouchNav();
         this.setupProgressBar();
         this.setupNavDots();
+    }
+    populateSlideNumbers() {
+        const total = this.slides.length;
+        this.slides.forEach((slide, i) => {
+            const numEl = slide.querySelector('.slide-num');
+            if (numEl) {
+                const n = String(i + 1).padStart(2, '0');
+                numEl.textContent = `${n} · ${total}`;
+            }
+        });
     }
     setupIntersectionObserver() {
         const observer = new IntersectionObserver((entries) => {
