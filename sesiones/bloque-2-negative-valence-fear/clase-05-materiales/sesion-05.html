@@ -498,17 +498,90 @@ html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
     <div class="domain-bar gradient"></div>
     <div class="slide-content">
         <h1 class="reveal">El miedo no es una emoción — son <span style="color: var(--color-accent);">cinco constructos</span> diferenciados por imminence, uncertainty y duration</h1>
-        <table class="data-table reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem);">
-            <thead><tr><th>Constructo</th><th>Definición operacional</th><th>Eje clave</th></tr></thead>
+        <table class="data-table reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1rem); font-size: clamp(0.5rem, 0.85vw, 0.7rem);">
+            <thead>
+                <tr>
+                    <th style="width: 10%;">Constructo</th>
+                    <th style="width: 16%;">Definición operacional</th>
+                    <th style="width: 10%; color: var(--color-accent);">Eje clave</th>
+                    <th style="width: 36%; color: var(--text-secondary);">RDoC Matrix — circuitos · conducta · self-report</th>
+                    <th style="width: 28%; color: var(--color-distress);">HiTOP — subfactor → síndromes</th>
+                </tr>
+            </thead>
             <tbody>
-                <tr><td><span class="tag tag-red">Acute Threat</span></td><td>Respuesta defensiva ante peligro inminente o presente</td><td><strong>Imminence ALTA</strong></td></tr>
-                <tr><td><span class="tag tag-orange">Potential Threat</span></td><td>Vigilancia ante peligro incierto, ambiguo o distante</td><td><strong>Uncertainty ALTA</strong></td></tr>
-                <tr><td><span class="tag tag-amber">Sustained Threat</span></td><td>Estado aversivo prolongado por exposición continua</td><td><strong>Duration LARGA</strong></td></tr>
-                <tr><td><span class="tag tag-gray">Loss</span></td><td>Privación de algo motivacionalmente significativo</td><td>Pérdida real (no anticipada)</td></tr>
-                <tr><td><span class="tag tag-green">Frustrative Nonreward</span></td><td>Reacción a recompensa bloqueada tras esfuerzo sostenido</td><td>Bloqueo del SEEKING</td></tr>
+                <tr>
+                    <td><span class="tag tag-red">Acute Threat</span></td>
+                    <td>Respuesta defensiva ante peligro inminente o presente</td>
+                    <td><strong>Imminence ALTA</strong></td>
+                    <td>
+                        <strong style="color: var(--color-acute);">Circuitos:</strong> núcleo central de la amígdala → sustancia gris periacueductal · corteza prefrontal ventromedial<br>
+                        <strong style="color: var(--color-acute);">Conducta:</strong> congelamiento, huida, lucha, evitación condicionada<br>
+                        <strong style="color: var(--color-acute);">Self-report:</strong> Anxiety Sensitivity Index, Fear Survey Schedule
+                    </td>
+                    <td>
+                        <strong>Fear</strong> (anclaje)<br>
+                        <span style="color: var(--text-muted);">Fobia específica · agorafobia · pánico · ansiedad social · TOC (parcial)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="tag tag-orange">Potential Threat</span></td>
+                    <td>Vigilancia ante peligro incierto, ambiguo o distante</td>
+                    <td><strong>Uncertainty ALTA</strong></td>
+                    <td>
+                        <strong style="color: var(--color-potential);">Circuitos:</strong> núcleo del lecho de la estría terminal · corteza prefrontal medial (modelo en debate; ver slide 16)<br>
+                        <strong style="color: var(--color-potential);">Conducta:</strong> hipervigilancia, startle potentiation, paradigma NPU (No-shock/Predictable/Unpredictable)<br>
+                        <strong style="color: var(--color-potential);">Self-report:</strong> Intolerance of Uncertainty Scale, Penn State Worry Questionnaire
+                    </td>
+                    <td>
+                        <strong>Fear ⇄ Distress</strong> (carga cruzada)<br>
+                        <span style="color: var(--text-muted);">Trastorno de ansiedad generalizada · ansiedad anticipatoria · hipocondría</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="tag tag-amber">Sustained Threat</span></td>
+                    <td>Estado aversivo prolongado por exposición continua</td>
+                    <td><strong>Duration LARGA</strong></td>
+                    <td>
+                        <strong style="color: var(--color-sustained);">Circuitos:</strong> eje hipotálamo-pituitario-adrenal · hipocampo · amígdala extendida<br>
+                        <strong style="color: var(--color-sustained);">Conducta:</strong> conducta de desesperanza, sesgo atencional a la amenaza, deterioro del aprendizaje contextual<br>
+                        <strong style="color: var(--color-sustained);">Self-report:</strong> Kessler-10, Perceived Stress Scale · biomarcador: cortisol en cabello, índice de carga alostática
+                    </td>
+                    <td>
+                        <strong>Distress</strong> (anclaje)<br>
+                        <span style="color: var(--text-muted);">Trastorno de estrés postraumático · trastorno depresivo mayor · trastorno de ansiedad generalizada · distimia</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="tag tag-gray">Loss</span></td>
+                    <td>Privación de algo motivacionalmente significativo</td>
+                    <td>Pérdida real (no anticipada)</td>
+                    <td>
+                        <strong style="color: var(--color-loss);">Circuitos:</strong> cingulado anterior · ínsula · sistema dopaminérgico mesolímbico (hipoactivo)<br>
+                        <strong style="color: var(--color-loss);">Conducta:</strong> retiro social, baja exploración, anhedonia conductual<br>
+                        <strong style="color: var(--color-loss);">Self-report:</strong> PHQ-9 (depresión), Inventory of Complicated Grief, BDI-II
+                    </td>
+                    <td>
+                        <strong>Distress</strong><br>
+                        <span style="color: var(--text-muted);">Trastorno depresivo mayor · duelo prolongado · trastorno de estrés postraumático (parcial)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="tag tag-green">Frustrative Nonreward</span></td>
+                    <td>Reacción a recompensa bloqueada tras esfuerzo sostenido</td>
+                    <td>Bloqueo del SEEKING</td>
+                    <td>
+                        <strong style="color: var(--color-frust);">Circuitos:</strong> amígdala · corteza orbitofrontal · corteza prefrontal lateral<br>
+                        <strong style="color: var(--color-frust);">Conducta:</strong> agresión reactiva, irritabilidad, mayor toma de riesgos, extinción acelerada<br>
+                        <strong style="color: var(--color-frust);">Self-report:</strong> Affective Reactivity Index, escalas de irritabilidad
+                    </td>
+                    <td>
+                        <strong>Externalizing</strong> (no Internalizing)<br>
+                        <span style="color: var(--text-muted);">Trastorno de desregulación disruptiva del estado de ánimo · trastorno explosivo intermitente · irritabilidad en trastorno límite</span>
+                    </td>
+                </tr>
             </tbody>
         </table>
-        <p class="reveal source">NIMH RDoC · Definitions of Negative Valence Systems</p>
+        <p class="reveal source" style="margin-top: clamp(0.4rem, 0.8vw, 0.6rem);">NIMH RDoC Matrix · Negative Valence Systems · mapeo HiTOP según Latzman &amp; DeYoung (PMC8165014)</p>
     </div>
     <span class="slide-num">10 · 47</span>
     <span class="section-label">RDoC</span>
