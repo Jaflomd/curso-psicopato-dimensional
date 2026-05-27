@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sesión 5: El sistema de amenaza — modelos</title>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@400;500;600;700&f[]=satoshi@400;500;700&display=swap"/>
+<style>
+/* === THEME — Bloque 2 Fear palette === */
+:root {
+    --bg-primary: #0c0a09;
+    --bg-secondary: #1c1410;
+    --bg-card: #261a14;
+    --text-primary: #f1ece8;
+    --text-secondary: #a8978b;
+    --text-muted: #6b5b53;
+    --font-display: 'Clash Display', sans-serif;
+    --font-body: 'Satoshi', sans-serif;
+    --title-size: clamp(1.6rem, 4.5vw, 3.2rem);
+    --h2-size: clamp(1.2rem, 3vw, 2rem);
+    --body-size: clamp(0.7rem, 1.3vw, 1rem);
+    --small-size: clamp(0.6rem, 1vw, 0.8rem);
+    --slide-padding: clamp(1.5rem, 4vw, 4rem);
+    --content-gap: clamp(0.75rem, 2vw, 1.5rem);
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --duration-normal: 0.6s;
+    /* Domain colors — fear / negative valence */
+    --color-acute: #ef4444;
+    --color-potential: #f97316;
+    --color-sustained: #f59e0b;
+    --color-loss: #64748b;
+    --color-frust: #84cc16;
+    --color-fear: #dc2626;
+    --color-distress: #3b82f6;
+    --color-compulsive: #8b5cf6;
+    --color-allostatic: #d97706;
+    --color-k10: #10b981;
+    --color-meta: #fbbf24;
+    --color-accent: #f97316;
+    --color-warn: #facc15;
+    --color-success: #22c55e;
+    --color-danger: #ef4444;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; overflow-x: hidden; }
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+.slide {
+    width: 100vw; height: 100vh; height: 100dvh;
+    overflow: hidden; scroll-snap-align: start;
+    display: flex; flex-direction: column; position: relative;
+    background: var(--bg-primary); font-family: var(--font-body); color: var(--text-primary);
+}
+.slide-content {
+    flex: 1; display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    max-height: 100%; overflow: hidden;
+    padding: var(--slide-padding);
+}
+.slide-content > * { width: 100%; max-width: 1000px; }
+.slide h1 { font-family: var(--font-display); font-size: var(--title-size); font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; }
+.slide h2 { font-family: var(--font-display); font-size: var(--h2-size); font-weight: 500; line-height: 1.2; color: var(--text-secondary); margin-top: clamp(0.3rem, 1vw, 0.75rem); }
+.slide p, .slide li { font-size: var(--body-size); line-height: 1.5; color: var(--text-secondary); }
+.slide .source { font-size: var(--small-size); color: var(--text-muted); padding-top: clamp(0.75rem, 1.5vh, 1.5rem); }
+
+/* === DOMAIN BAR === */
+.domain-bar { position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.domain-bar.acute { background: var(--color-acute); }
+.domain-bar.potential { background: var(--color-potential); }
+.domain-bar.sustained { background: var(--color-sustained); }
+.domain-bar.fear { background: var(--color-fear); }
+.domain-bar.al { background: var(--color-allostatic); }
+.domain-bar.k10 { background: var(--color-k10); }
+.domain-bar.gradient { background: linear-gradient(90deg, var(--color-acute), var(--color-potential), var(--color-sustained)); }
+.domain-bar.compulsive { background: var(--color-compulsive); }
+.domain-bar.meta { background: var(--color-meta); }
+
+/* === LAYOUTS === */
+.centered { text-align: center; }
+.centered > * { margin-left: auto; margin-right: auto; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1rem, 3vw, 2.5rem); align-items: center; }
+.three-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(0.5rem, 1.5vw, 1.5rem); }
+.four-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(0.4rem, 1vw, 1rem); }
+.flow-horizontal { display: flex; align-items: center; gap: clamp(0.3rem, 0.8vw, 0.75rem); flex-wrap: wrap; justify-content: center; }
+.flow-vertical { display: flex; flex-direction: column; gap: clamp(0.3rem, 0.8vw, 0.6rem); }
+
+/* === COMPONENTS === */
+.tag { display: inline-block; padding: clamp(0.15rem, 0.4vw, 0.3rem) clamp(0.4rem, 1vw, 0.75rem); border-radius: 4px; font-size: var(--small-size); font-weight: 500; }
+.tag-red { background: rgba(239,68,68,0.15); color: #fca5a5; }
+.tag-orange { background: rgba(249,115,22,0.15); color: #fdba74; }
+.tag-amber { background: rgba(245,158,11,0.15); color: #fcd34d; }
+.tag-blue { background: rgba(59,130,246,0.15); color: #93c5fd; }
+.tag-violet { background: rgba(139,92,246,0.18); color: #c4b5fd; }
+.tag-green { background: rgba(16,185,129,0.15); color: #6ee7b7; }
+.tag-gray { background: rgba(148,163,184,0.15); color: #cbd5e1; }
+
+.card {
+    background: var(--bg-card); border-radius: 8px;
+    padding: clamp(0.75rem, 2vw, 1.5rem);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+.card h3 { font-family: var(--font-display); font-size: clamp(0.85rem, 1.5vw, 1.15rem); font-weight: 500; margin-bottom: clamp(0.3rem, 0.5vw, 0.5rem); }
+
+.flow-box {
+    background: var(--bg-card); border-radius: 6px;
+    padding: clamp(0.4rem, 1vw, 0.75rem) clamp(0.6rem, 1.2vw, 1rem);
+    font-size: var(--body-size); text-align: center;
+    border-left: 3px solid var(--color-accent);
+    min-width: clamp(80px, 12vw, 140px);
+}
+.flow-arrow { font-size: clamp(0.8rem, 1.5vw, 1.2rem); color: var(--text-muted); }
+
+.big-number { font-family: var(--font-display); font-size: clamp(2.5rem, 7vw, 6rem); font-weight: 700; line-height: 1; }
+.med-number { font-family: var(--font-display); font-size: clamp(1.5rem, 4vw, 3rem); font-weight: 600; line-height: 1; }
+
+/* === TABLE === */
+.data-table { width: 100%; border-collapse: collapse; font-size: var(--small-size); }
+.data-table th { text-align: left; padding: clamp(0.3rem, 0.6vw, 0.5rem); color: var(--text-muted); font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: var(--small-size); }
+.data-table td { padding: clamp(0.25rem, 0.5vw, 0.4rem); border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-secondary); }
+.data-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+/* === THERMOMETER (K10) === */
+.thermo { width: clamp(40px, 6vw, 60px); height: clamp(180px, 30vh, 280px); background: var(--bg-card); border-radius: 30px; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column-reverse; }
+.thermo-zone { width: 100%; display: flex; align-items: center; justify-content: center; font-size: var(--small-size); font-weight: 600; }
+.thermo-zone.well { background: rgba(34,197,94,0.35); height: 30%; color: #86efac; }
+.thermo-zone.mild { background: rgba(250,204,21,0.35); height: 8%; color: #fde047; }
+.thermo-zone.mod { background: rgba(249,115,22,0.45); height: 8%; color: #fdba74; }
+.thermo-zone.severe { background: rgba(239,68,68,0.55); height: 54%; color: #fca5a5; }
+
+/* === RADAR / 4-AXIS === */
+.radar-container { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(0.5rem, 1vw, 1rem); max-width: 600px; }
+.radar-card { padding: clamp(0.6rem, 1.2vw, 1rem); border-radius: 8px; background: var(--bg-card); border-top: 3px solid; }
+.radar-card.neuro { border-top-color: var(--color-allostatic); }
+.radar-card.inflam { border-top-color: var(--color-fear); }
+.radar-card.cardio { border-top-color: var(--color-compulsive); }
+.radar-card.metab { border-top-color: var(--color-k10); }
+.radar-card h3 { font-size: clamp(0.7rem, 1.2vw, 0.9rem); color: var(--text-primary); margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.radar-card ul { list-style: none; }
+.radar-card li { font-size: var(--small-size); padding: 2px 0; }
+
+/* === TRIANGLE === */
+.triangle-svg { max-width: clamp(280px, 50vh, 480px); height: auto; }
+.triangle-svg circle { transition: all 0.6s var(--ease-out-expo); }
+.triangle-svg text { font-family: var(--font-body); fill: var(--text-primary); font-size: 14px; }
+.triangle-svg .vertex-label { fill: var(--text-primary); font-weight: 600; font-size: 13px; }
+
+/* === ANIMATIONS === */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity var(--duration-normal) var(--ease-out-expo), transform var(--duration-normal) var(--ease-out-expo); }
+.slide.visible .reveal { opacity: 1; transform: translateY(0); }
+.reveal:nth-child(2) { transition-delay: 0.1s; }
+.reveal:nth-child(3) { transition-delay: 0.2s; }
+.reveal:nth-child(4) { transition-delay: 0.3s; }
+.reveal:nth-child(5) { transition-delay: 0.4s; }
+.reveal:nth-child(6) { transition-delay: 0.5s; }
+
+/* === PROGRESS BAR === */
+.progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: var(--color-accent); z-index: 1000; transition: width 0.3s ease; }
+
+/* === NAV DOTS === */
+.nav-dots { position: fixed; right: clamp(0.5rem, 1.5vw, 1.5rem); top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 5px; z-index: 100; max-height: 80vh; overflow-y: auto; padding: 4px; }
+.nav-dots .dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.2); cursor: pointer; transition: all 0.3s; flex-shrink: 0; }
+.nav-dots .dot.active { background: var(--color-accent); transform: scale(1.5); }
+
+/* === SLIDE LABEL === */
+.slide-num { position: absolute; bottom: clamp(0.5rem, 1vh, 1rem); left: clamp(0.75rem, 1.5vw, 1.5rem); font-size: var(--small-size); color: var(--text-muted); font-family: var(--font-display); letter-spacing: 0.05em; }
+.section-label { position: absolute; bottom: clamp(0.5rem, 1vh, 1rem); right: clamp(0.75rem, 1.5vw, 1.5rem); font-size: var(--small-size); color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase; }
+
+/* === RESPONSIVE === */
+@media (max-height: 700px) {
+    :root { --slide-padding: clamp(0.75rem, 3vw, 2rem); --title-size: clamp(1.3rem, 4vw, 2.5rem); }
+}
+@media (max-height: 600px) {
+    :root { --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem); --title-size: clamp(1.1rem, 3.5vw, 2rem); --body-size: clamp(0.65rem, 1.1vw, 0.9rem); }
+    .nav-dots { display: none; }
+}
+@media (max-width: 700px) {
+    .split { grid-template-columns: 1fr; }
+    .three-cols, .four-cols { grid-template-columns: 1fr 1fr; }
+    .radar-container { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+    html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots"></nav>
+
+<!-- === SECCIÓN A: APERTURA (slides 1-5) === -->
+
+<section class="slide" id="slide-1">
+    <div class="domain-bar gradient"></div>
+    <div class="slide-content centered">
+        <p class="reveal" style="font-size: var(--small-size); color: var(--color-accent); letter-spacing: 0.15em; text-transform: uppercase;">Psicopatología Dimensional · Bloque 2</p>
+        <h1 class="reveal" style="margin-top: clamp(0.5rem, 1vw, 1rem);">El sistema de amenaza<br><span style="color: var(--color-acute);">— modelos</span></h1>
+        <h2 class="reveal">Negative Valence / Fear</h2>
+        <p class="reveal source">Sesión 5 de 21 · Javier Flores · R1 Psiquiatría · 2026</p>
+    </div>
+    <div style="position: absolute; bottom: 15%; left: 50%; transform: translateX(-50%); width: 60%; height: 1px; background: linear-gradient(90deg, transparent, var(--color-acute), var(--color-potential), var(--color-sustained), transparent); opacity: 0.5;"></div>
+    <span class="slide-num">01 · 47</span>
+    <span class="section-label">Apertura</span>
+</section>
+
+<section class="slide" id="slide-2">
+    <div class="domain-bar fear"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Caso de apertura: rituales, evitación, <span style="color: var(--color-potential);">"algo malo va a pasar"</span></h1>
+        <div class="split reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); gap: clamp(1.5rem, 3vw, 2.5rem);">
+            <div class="card" style="border-left: 3px solid var(--color-fear);">
+                <h3 style="color: var(--color-accent);">Paciente</h3>
+                <p>Mujer · 32 años</p>
+                <p>Ingeniera</p>
+                <p style="color: var(--text-muted); font-size: var(--small-size); margin-top: 0.4rem;">Consulta por "ataques de pánico"</p>
+            </div>
+            <div class="flow-vertical" style="gap: clamp(0.5rem, 1vw, 0.75rem);">
+                <div class="flow-box" style="text-align: left; border-left-color: var(--color-acute);"><strong>Rituales matutinos 40 min</strong><br><span style="font-size: var(--small-size); color: var(--text-muted);">revisar puerta · gas · ventanas</span></div>
+                <div class="flow-box" style="text-align: left; border-left-color: var(--color-potential);"><strong>Evitación de salir sola</strong><br><span style="font-size: var(--small-size); color: var(--text-muted);">progresiva, 8 meses</span></div>
+                <div class="flow-box" style="text-align: left; border-left-color: var(--color-sustained); font-style: italic;">"No sé si estoy enloqueciendo. Siento que algo malo va a pasar pero no sé qué."</div>
+            </div>
+        </div>
+    </div>
+    <span class="slide-num">02 · 47</span>
+    <span class="section-label">Apertura</span>
+</section>
+
+<section class="slide" id="slide-3">
+    <div class="slide-content centered">
+        <h1 class="reveal">¿Qué diagnóstico DSM le ponemos? — Y por qué <span style="color: var(--color-potential);">esa es la pregunta equivocada</span></h1>
+        <div class="four-cols reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); max-width: 700px;">
+            <div class="card" style="text-align: center; opacity: 0.6;"><strong style="color: var(--color-compulsive);">TOC</strong><br><span style="font-size: 1.4rem;">?</span></div>
+            <div class="card" style="text-align: center; opacity: 0.6;"><strong style="color: var(--color-acute);">Agorafobia</strong><br><span style="font-size: 1.4rem;">?</span></div>
+            <div class="card" style="text-align: center; opacity: 0.6;"><strong style="color: var(--color-sustained);">GAD</strong><br><span style="font-size: 1.4rem;">?</span></div>
+            <div class="card" style="text-align: center; opacity: 0.6;"><strong style="color: var(--color-fear);">Pánico</strong><br><span style="font-size: 1.4rem;">?</span></div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); color: var(--color-accent); font-style: italic;">El paciente no es una etiqueta — es un perfil de mecanismos.</p>
+    </div>
+    <span class="slide-num">03 · 47</span>
+    <span class="section-label">Apertura</span>
+</section>
+
+<section class="slide" id="slide-4">
+    <div class="slide-content">
+        <h1 class="reveal">Cuatro lentes que se superponen sobre el mismo paciente</h1>
+        <div class="four-cols reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem);">
+            <div class="card" style="border-top: 3px solid var(--color-fear); text-align: center;">
+                <p style="font-size: var(--small-size); color: var(--color-fear); text-transform: uppercase; letter-spacing: 0.08em;">RDoC NV</p>
+                <p style="margin-top: 0.5rem; font-size: var(--body-size); color: var(--text-primary);">¿Qué tipo de amenaza?</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-distress); text-align: center;">
+                <p style="font-size: var(--small-size); color: var(--color-distress); text-transform: uppercase; letter-spacing: 0.08em;">HiTOP</p>
+                <p style="margin-top: 0.5rem; font-size: var(--body-size); color: var(--text-primary);">¿Qué dimensión clínica?</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-allostatic); text-align: center;">
+                <p style="font-size: var(--small-size); color: var(--color-allostatic); text-transform: uppercase; letter-spacing: 0.08em;">Carga alostática</p>
+                <p style="margin-top: 0.5rem; font-size: var(--body-size); color: var(--text-primary);">¿Qué huella corporal?</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-meta); text-align: center;">
+                <p style="font-size: var(--small-size); color: var(--color-meta); text-transform: uppercase; letter-spacing: 0.08em;">Metacontrol</p>
+                <p style="margin-top: 0.5rem; font-size: var(--body-size); color: var(--text-primary);">¿Qué mecanismo cognitivo?</p>
+            </div>
+        </div>
+        <p class="reveal source" style="margin-top: clamp(1rem, 2vw, 1.5rem); text-align: center;">Mismo paciente · cuatro descripciones simultáneas · sin contradicción</p>
+    </div>
+    <span class="slide-num">04 · 47</span>
+    <span class="section-label">Apertura</span>
+</section>
+
+<section class="slide" id="slide-5">
+    <div class="slide-content">
+        <h1 class="reveal">Bloque 1 cerró el toolkit general — Bloque 2 abre la fase <span style="color: var(--color-acute);">dominio</span></h1>
+        <div class="flow-vertical reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); gap: clamp(0.25rem, 0.5vw, 0.4rem);">
+            <div style="display: flex; gap: 0.75rem; font-size: var(--small-size);"><span style="color: var(--color-success);">✓</span><span style="color: var(--text-muted);">B1</span><span style="color: var(--text-primary);">Fundamentos (HiTOP · RDoC · Exposoma · Networks · PRISM)</span></div>
+            <div style="height: 1px; background: rgba(255,255,255,0.1); margin: 0.4rem 0;"></div>
+            <div style="display: flex; gap: 0.75rem; padding: 0.4rem 0.6rem; background: rgba(239,68,68,0.08); border-left: 3px solid var(--color-acute); border-radius: 0 4px 4px 0;"><span style="color: var(--color-acute);">→</span><span style="color: var(--text-muted);">B2</span><span style="color: var(--text-primary);"><strong>Negative Valence / Fear</strong> — estamos aquí</span></div>
+            <div style="display: flex; gap: 0.75rem; font-size: var(--small-size); padding-left: 1.5rem; color: var(--text-muted);">S5 modelos · S6 psicoterapia · S7 farmacología PRISM</div>
+            <div style="height: 1px; background: rgba(255,255,255,0.05); margin: 0.4rem 0;"></div>
+            <div style="display: flex; gap: 0.75rem; font-size: var(--small-size); opacity: 0.5;"><span></span><span style="color: var(--text-muted);">B3-B9</span><span>Distress · Detachment · Arousal · Cognitive · Externalizing · Integradora</span></div>
+        </div>
+    </div>
+    <span class="slide-num">05 · 47</span>
+    <span class="section-label">Apertura</span>
+</section>
+
+<!-- === SECCIÓN B: MODELOS CLÁSICOS (slides 6-9) === -->
+
+<section class="slide" id="slide-6">
+    <div class="domain-bar gradient"></div>
+    <div class="slide-content">
+        <h1 class="reveal">RDoC no salió de la nada — destila <span style="color: var(--color-accent);">cuatro tradiciones clásicas</span></h1>
+        <div class="flow-vertical reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); gap: clamp(0.4rem, 0.8vw, 0.6rem);">
+            <div style="display: grid; grid-template-columns: 100px 1fr; gap: 0.75rem; padding: 0.5rem 0.75rem; border-left: 3px solid var(--color-loss); background: rgba(100,116,139,0.08);">
+                <span style="color: var(--color-loss); font-family: var(--font-display); font-weight: 600;">1913</span>
+                <span><strong style="color: var(--text-primary);">Jaspers</strong> — Fenomenología descriptiva</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 100px 1fr; gap: 0.75rem; padding: 0.5rem 0.75rem; border-left: 3px solid var(--color-distress); background: rgba(59,130,246,0.08);">
+                <span style="color: var(--color-distress); font-family: var(--font-display); font-weight: 600;">2000-2014</span>
+                <span><strong style="color: var(--text-primary);">Barlow</strong> — Triple Vulnerability</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 100px 1fr; gap: 0.75rem; padding: 0.5rem 0.75rem; border-left: 3px solid var(--color-fear); background: rgba(220,38,38,0.08);">
+                <span style="color: var(--color-fear); font-family: var(--font-display); font-weight: 600;">2014-2022</span>
+                <span><strong style="color: var(--text-primary);">LeDoux</strong> — Defensive Survival Circuits</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 100px 1fr; gap: 0.75rem; padding: 0.5rem 0.75rem; border-left: 3px solid var(--color-potential); background: rgba(249,115,22,0.08);">
+                <span style="color: var(--color-potential); font-family: var(--font-display); font-weight: 600;">2018</span>
+                <span><strong style="color: var(--text-primary);">Mobbs</strong> — Ethological deconstruction</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 100px 1fr; gap: 0.75rem; padding: 0.6rem 0.75rem; border: 1px solid var(--color-accent); background: rgba(249,115,22,0.12); border-radius: 4px; margin-top: 0.4rem;">
+                <span style="color: var(--color-accent); font-family: var(--font-display); font-weight: 700;">2010-2025</span>
+                <span><strong style="color: var(--text-primary);">RDoC + HiTOP</strong> — operacionalización dimensional</span>
+            </div>
+        </div>
+    </div>
+    <span class="slide-num">06 · 47</span>
+    <span class="section-label">Modelos clásicos</span>
+</section>
+
+<section class="slide" id="slide-7">
+    <div class="domain-bar potential"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Barlow: <span style="color: var(--color-distress);">Triple Vulnerability</span> — tres capas producen un trastorno emocional</h1>
+        <div class="split reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); gap: clamp(1.5rem, 3vw, 2.5rem); align-items: stretch;">
+            <div class="flow-vertical" style="gap: clamp(0.5rem, 1vw, 0.75rem); justify-content: center;">
+                <div class="card" style="border-left: 4px solid var(--color-loss);">
+                    <h3 style="color: var(--color-loss);">1 · Vulnerabilidad biológica generalizada</h3>
+                    <p style="font-size: var(--small-size);">Neuroticism · behavioral inhibition · arousal autonómico</p>
+                </div>
+                <div class="card" style="border-left: 4px solid var(--color-potential);">
+                    <h3 style="color: var(--color-potential);">2 · Vulnerabilidad psicológica generalizada</h3>
+                    <p style="font-size: var(--small-size);">Early experience de no-control sobre eventos</p>
+                </div>
+                <div class="card" style="border-left: 4px solid var(--color-fear);">
+                    <h3 style="color: var(--color-fear);">3 · Vulnerabilidad psicológica específica</h3>
+                    <p style="font-size: var(--small-size);">Sentido de amenaza sobre estímulo concreto</p>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column; justify-content: center; padding: clamp(0.75rem, 2vw, 1.5rem); background: var(--bg-secondary); border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-accent);">Implicación clínica</p>
+                <p style="margin-top: 0.5rem; font-size: var(--body-size); color: var(--text-primary);">Las tres capas <strong>convergen</strong> en un trastorno emocional. Tratar solo la capa específica (la fobia) no cura — el Unified Protocol (S9) interviene en las tres simultáneamente.</p>
+                <p class="source">Barlow, Ellard, Sauer-Zavala 2014, <em>Perspect Psychol Sci</em></p>
+            </div>
+        </div>
+    </div>
+    <span class="slide-num">07 · 47</span>
+    <span class="section-label">Modelos clásicos</span>
+</section>
+
+<section class="slide" id="slide-8">
+    <div class="domain-bar fear"></div>
+    <div class="slide-content">
+        <h1 class="reveal">LeDoux: el <span style="color: var(--color-loss);">circuito defensivo</span> ≠ la <span style="color: var(--color-fear);">experiencia subjetiva</span></h1>
+        <div class="split reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); gap: clamp(1.5rem, 3vw, 2.5rem);">
+            <div class="card" style="border-top: 3px solid var(--color-loss); padding: clamp(1rem, 2vw, 1.5rem);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-loss);">Sistema 1 · No-consciente</p>
+                <h3 style="color: var(--text-primary); margin-top: 0.5rem;">Defensive Survival Circuit</h3>
+                <p style="margin-top: 0.5rem; font-size: var(--small-size);">Amígdala · sustancia gris periacueductal · hipotálamo</p>
+                <p style="margin-top: 0.5rem; font-size: var(--small-size); color: var(--text-muted);">→ freezing, fight, flight</p>
+                <p style="margin-top: 0.75rem; font-size: var(--small-size); font-style: italic; color: var(--text-secondary);">"Mi cuerpo está reaccionando"</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-fear); padding: clamp(1rem, 2vw, 1.5rem);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-fear);">Sistema 2 · Consciente</p>
+                <h3 style="color: var(--text-primary); margin-top: 0.5rem;">Subjective Fear</h3>
+                <p style="margin-top: 0.5rem; font-size: var(--small-size);">Corteza cingulada anterior · ínsula anterior</p>
+                <p style="margin-top: 0.5rem; font-size: var(--small-size); color: var(--text-muted);">→ "tengo miedo"</p>
+                <p style="margin-top: 0.75rem; font-size: var(--small-size); font-style: italic; color: var(--text-secondary);">"Lo siento, lo percibo, lo nombro"</p>
+            </div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); text-align: center; color: var(--color-accent); font-style: italic;">Tratar el circuito ≠ tratar la experiencia.</p>
+        <p class="reveal source" style="text-align: center;">LeDoux &amp; Pine 2016, <em>Am J Psychiatry</em> · LeDoux et al. 2022, <em>Mol Psychiatry</em></p>
+    </div>
+    <span class="slide-num">08 · 47</span>
+    <span class="section-label">Modelos clásicos</span>
+</section>
+
+<section class="slide" id="slide-9">
+    <div class="slide-content">
+        <h1 class="reveal">Mobbs: <span style="color: var(--color-potential);">"miedo" no es un sistema único</span> — son múltiples sistemas defensivos por distancia al depredador</h1>
+        <div class="three-cols reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem);">
+            <div class="card" style="border-top: 3px solid var(--color-sustained);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-sustained);">Lejos · pre-encounter</p>
+                <h3 style="color: var(--text-primary); margin-top: 0.4rem;">Vigilancia</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.4rem;">Ansiedad · núcleo del lecho de la estría terminal · corteza prefrontal</p>
+                <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.3rem;">¿hay algo allá afuera?</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-potential);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-potential);">Cerca · post-encounter</p>
+                <h3 style="color: var(--text-primary); margin-top: 0.4rem;">Freezing</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.4rem;">Núcleo central de la amígdala</p>
+                <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.3rem;">no me muevas, no me veas</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-fear);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-fear);">Inminente · circa-strike</p>
+                <h3 style="color: var(--text-primary); margin-top: 0.4rem;">Flight / Fight</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.4rem;">Sustancia gris periacueductal · ejecución motora</p>
+                <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.3rem;">huir o pelear, ahora</p>
+            </div>
+        </div>
+        <p class="reveal source" style="margin-top: clamp(1rem, 2vw, 1.5rem); text-align: center;">Mobbs 2018 anticipa la lógica RDoC: descomponer el miedo por ejes ecológicos.</p>
+    </div>
+    <span class="slide-num">09 · 47</span>
+    <span class="section-label">Modelos clásicos</span>
+</section>
+
+<!-- === SECCIÓN C: RDoC NEGATIVE VALENCE (slides 10-17) === -->
+
+<section class="slide" id="slide-10">
+    <div class="domain-bar gradient"></div>
+    <div class="slide-content">
+        <h1 class="reveal">El miedo no es una emoción — son <span style="color: var(--color-accent);">cinco constructos</span> diferenciados por imminence, uncertainty y duration</h1>
+        <table class="data-table reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem);">
+            <thead><tr><th>Constructo</th><th>Definición operacional</th><th>Eje clave</th></tr></thead>
+            <tbody>
+                <tr><td><span class="tag tag-red">Acute Threat</span></td><td>Respuesta defensiva ante peligro inminente o presente</td><td><strong>Imminence ALTA</strong></td></tr>
+                <tr><td><span class="tag tag-orange">Potential Threat</span></td><td>Vigilancia ante peligro incierto, ambiguo o distante</td><td><strong>Uncertainty ALTA</strong></td></tr>
+                <tr><td><span class="tag tag-amber">Sustained Threat</span></td><td>Estado aversivo prolongado por exposición continua</td><td><strong>Duration LARGA</strong></td></tr>
+                <tr><td><span class="tag tag-gray">Loss</span></td><td>Privación de algo motivacionalmente significativo</td><td>Pérdida real (no anticipada)</td></tr>
+                <tr><td><span class="tag tag-green">Frustrative Nonreward</span></td><td>Reacción a recompensa bloqueada tras esfuerzo sostenido</td><td>Bloqueo del SEEKING</td></tr>
+            </tbody>
+        </table>
+        <p class="reveal source">NIMH RDoC · Definitions of Negative Valence Systems</p>
+    </div>
+    <span class="slide-num">10 · 47</span>
+    <span class="section-label">RDoC</span>
+</section>
+
+<section class="slide" id="slide-11">
+    <div class="slide-content centered">
+        <h1 class="reveal">Tres ejes diferenciadores: <span style="color: var(--color-acute);">cuán cerca</span> · <span style="color: var(--color-potential);">cuán seguro</span> · <span style="color: var(--color-sustained);">cuánto dura</span></h1>
+        <div class="three-cols reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem);">
+            <div style="text-align: center; padding: clamp(0.75rem, 1.5vw, 1.25rem); background: var(--bg-card); border-radius: 8px; border-top: 3px solid var(--color-acute);">
+                <p class="med-number" style="color: var(--color-acute);">→</p>
+                <h3 style="margin-top: 0.5rem;">Imminence</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.3rem;">Acute (alta) vs Potential (baja)</p>
+            </div>
+            <div style="text-align: center; padding: clamp(0.75rem, 1.5vw, 1.25rem); background: var(--bg-card); border-radius: 8px; border-top: 3px solid var(--color-potential);">
+                <p class="med-number" style="color: var(--color-potential);">?</p>
+                <h3 style="margin-top: 0.5rem;">Uncertainty</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.3rem;">Acute (baja) vs Potential (alta)</p>
+            </div>
+            <div style="text-align: center; padding: clamp(0.75rem, 1.5vw, 1.25rem); background: var(--bg-card); border-radius: 8px; border-top: 3px solid var(--color-sustained);">
+                <p class="med-number" style="color: var(--color-sustained);">∞</p>
+                <h3 style="margin-top: 0.5rem;">Duration</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.3rem;">Potential (corta) vs Sustained (larga)</p>
+            </div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); color: var(--text-secondary);">El mismo paciente puede tener varios constructos activos simultáneamente — son ejes, no cajas.</p>
+    </div>
+    <span class="slide-num">11 · 47</span>
+    <span class="section-label">RDoC</span>
+</section>
+
+<section class="slide" id="slide-12">
+    <div class="slide-content">
+        <h1 class="reveal">RDoC y ICD-11 convergen: <span style="color: var(--color-acute);">Fear</span> ≠ <span style="color: var(--color-potential);">Anxiety</span>, separados por imminence</h1>
+        <div class="split reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); gap: clamp(1rem, 2vw, 1.5rem);">
+            <div class="card" style="border-top: 3px solid var(--color-acute);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-acute);">RDoC Acute Threat ≈ ICD-11 MB24.A Fear</p>
+                <h3 style="color: var(--text-primary); margin-top: 0.5rem;">Miedo</h3>
+                <p style="margin-top: 0.5rem; font-size: var(--small-size); font-style: italic;">"Respuesta emocional ante una amenaza percibida como inminente, asociada a impulsos de huir o luchar."</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-potential);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-potential);">RDoC Potential Threat ≈ ICD-11 MB24.3 Anxiety</p>
+                <h3 style="color: var(--text-primary); margin-top: 0.5rem;">Ansiedad</h3>
+                <p style="margin-top: 0.5rem; font-size: var(--small-size); font-style: italic;">"Aprensión o anticipación de un peligro o desgracia futura, acompañada de preocupación o síntomas somáticos de tensión."</p>
+            </div>
+        </div>
+        <p class="reveal source" style="text-align: center;">Dos frameworks independientes llegan al mismo eje. Uno de los pocos consensos transnosológicos sólidos.</p>
+    </div>
+    <span class="slide-num">12 · 47</span>
+    <span class="section-label">RDoC</span>
+</section>
+
+<section class="slide" id="slide-13">
+    <div class="slide-content">
+        <h1 class="reveal">El modelo de libro: <span style="color: var(--color-accent);">tres circuitos para tres tipos de amenaza</span></h1>
+        <div class="three-cols reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); align-items: stretch;">
+            <div class="card" style="border-top: 3px solid var(--color-acute);">
+                <h3 style="color: var(--color-acute);">Amenaza aguda (Acute Threat)</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.5rem;"><strong>Núcleo central de la amígdala → sustancia gris periacueductal lateral</strong></p>
+                <p style="font-size: var(--small-size); color: var(--text-muted);">congelamiento (freezing) / huida</p>
+                <p style="font-size: var(--small-size); margin-top: 0.5rem;"><strong>Núcleo basolateral de la amígdala → corteza prefrontal ventromedial / corteza infralímbica</strong></p>
+                <p style="font-size: var(--small-size); color: var(--text-muted);">extinción del miedo condicionado</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-potential);">
+                <h3 style="color: var(--color-potential);">Amenaza potencial (Potential Threat)</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.5rem;"><strong>Núcleo del lecho de la estría terminal → locus coeruleus + núcleo paraventricular del hipotálamo</strong></p>
+                <p style="font-size: var(--small-size); color: var(--text-muted);">vigilancia · hormona liberadora de corticotropina como impulsor</p>
+                <p style="font-size: var(--small-size); margin-top: 0.5rem;"><strong>Eje neuroendocrino</strong></p>
+                <p style="font-size: var(--small-size); color: var(--text-muted);">noradrenérgico · eje hipotálamo-pituitario-adrenal</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-sustained);">
+                <h3 style="color: var(--color-sustained);">Amenaza sostenida (Sustained Threat)</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.5rem;"><strong>Eje hipotálamo-pituitario-adrenal prolongado</strong></p>
+                <p style="font-size: var(--small-size); color: var(--text-muted);">→ carga alostática</p>
+                <p style="font-size: var(--small-size); margin-top: 0.5rem;"><strong>Hipocampo</strong></p>
+                <p style="font-size: var(--small-size); color: var(--text-muted);">retroalimentación inhibitoria dañada</p>
+            </div>
+        </div>
+        <p class="reveal source" style="text-align: center;">Davis · LeDoux · Walker — modelo dominante</p>
+    </div>
+    <span class="slide-num">13 · 47</span>
+    <span class="section-label">RDoC</span>
+</section>
+
+<section class="slide" id="slide-14">
+    <div class="slide-content centered">
+        <h1 class="reveal">Amígdala — corteza prefrontal ventromedial en amenaza aguda: <span style="color: var(--color-success);">el hallazgo más replicado en humanos</span></h1>
+        <div class="reveal" style="display: grid; grid-template-columns: repeat(3, auto); gap: clamp(1rem, 3vw, 2rem); margin-top: clamp(1.5rem, 3vw, 2rem); align-items: center; justify-content: center;">
+            <div style="text-align: center;">
+                <p class="big-number" style="color: var(--color-acute);">2,199</p>
+                <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.5rem;">individuos</p>
+            </div>
+            <div style="text-align: center;">
+                <p class="med-number" style="color: var(--color-potential);">43 / 21 / 9</p>
+                <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.5rem;">muestras · laboratorios · países</p>
+            </div>
+            <div style="text-align: center;">
+                <p class="med-number" style="color: var(--color-success); font-size: clamp(1.1rem, 3vw, 2.2rem);">Corteza prefrontal ventromedial ↓</p>
+                <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.5rem;">desactivación durante el estímulo condicionado de amenaza (CS+)</p>
+            </div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); color: var(--text-secondary);">Red autonómica-interoceptiva consistente: ínsula · cíngulo anterior · amígdala · corteza prefrontal ventromedial.</p>
+        <p class="reveal source">Fullana MA et al. 2022 — mega-análisis multi-laboratorio</p>
+    </div>
+    <span class="slide-num">14 · 47</span>
+    <span class="section-label">RDoC</span>
+</section>
+
+<section class="slide" id="slide-15">
+    <div class="domain-bar fear"></div>
+    <div class="slide-content centered">
+        <h1 class="reveal">Pero la disociación <span style="color: var(--color-potential);">núcleo central de la amígdala vs núcleo del lecho de la estría terminal</span> en humanos <span style="color: var(--color-danger);">no se sostiene</span></h1>
+        <div class="reveal" style="display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 3vw, 2.5rem); margin-top: clamp(1.5rem, 3vw, 2rem); max-width: 700px;">
+            <div class="card" style="text-align: center; border-top: 3px solid var(--color-potential);">
+                <p style="font-size: var(--small-size); color: var(--color-potential); text-transform: uppercase; letter-spacing: 0.08em;">Núcleo del lecho de la estría terminal</p>
+                <p class="big-number" style="color: var(--text-primary); margin-top: 0.5rem;">Factor de Bayes = 0.11</p>
+                <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.5rem;">d de Cohen = 0.03 · t(294) = 0.59</p>
+            </div>
+            <div class="card" style="text-align: center; border-top: 3px solid var(--color-acute);">
+                <p style="font-size: var(--small-size); color: var(--color-acute); text-transform: uppercase; letter-spacing: 0.08em;">Núcleo central de la amígdala</p>
+                <p class="big-number" style="color: var(--text-primary); margin-top: 0.5rem;">Factor de Bayes = 0.03</p>
+                <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.5rem;">d de Cohen = 0.08 · t(294) = 1.38</p>
+            </div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); color: var(--color-accent); font-weight: 500;">Factor de Bayes &lt; 1 = evidencia Bayesiana <strong>fuerte</strong> a favor del modelo nulo (equivalencia regional) · n = 295</p>
+        <p class="reveal source">Fox AS &amp; Shackman AJ 2025 (bioRxiv preprint)</p>
+    </div>
+    <span class="slide-num">15 · 47</span>
+    <span class="section-label">RDoC</span>
+</section>
+
+<section class="slide" id="slide-16">
+    <div class="slide-content">
+        <h1 class="reveal">Cuatro implicaciones para leer fMRI de ansiedad</h1>
+        <div class="four-cols reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem);">
+            <div class="card" style="border-top: 3px solid var(--color-loss);">
+                <p style="font-size: var(--small-size); color: var(--color-loss); text-transform: uppercase; letter-spacing: 0.08em;">01</p>
+                <h3 style="margin-top: 0.4rem;">Resolución</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.4rem;">Resonancia magnética funcional convencional (2-3 mm) no separa el núcleo del lecho de la estría terminal de los núcleos amigdalinos adyacentes. 7 Tesla mitiga pero no elimina.</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-potential);">
+                <p style="font-size: var(--small-size); color: var(--color-potential); text-transform: uppercase; letter-spacing: 0.08em;">02</p>
+                <h3 style="margin-top: 0.4rem;">Translación</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.4rem;">Lesiones y optogenética en roedores no tienen equivalente ético en humanos.</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-sustained);">
+                <p style="font-size: var(--small-size); color: var(--color-sustained); text-transform: uppercase; letter-spacing: 0.08em;">03</p>
+                <h3 style="margin-top: 0.4rem;">Temporalidad</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.4rem;">"Sustained" = minutos en rata, semanas en humano. El constructo no escala linealmente.</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-fear);">
+                <p style="font-size: var(--small-size); color: var(--color-fear); text-transform: uppercase; letter-spacing: 0.08em;">04</p>
+                <h3 style="margin-top: 0.4rem;">Lectura crítica</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.4rem;">Al leer resonancia magnética funcional de ansiedad: ¿los autores <strong>asumieron</strong> la disociación o la <strong>probaron</strong>?</p>
+            </div>
+        </div>
+    </div>
+    <span class="slide-num">16 · 47</span>
+    <span class="section-label">RDoC</span>
+</section>
+
+<section class="slide" id="slide-17">
+    <div class="slide-content">
+        <h1 class="reveal">Tabla de honestidad epistémica: <span style="color: var(--color-accent);">qué tan sólido es cada constructo en humanos</span></h1>
+        <table class="data-table reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem);">
+            <thead><tr><th>Constructo / Circuito</th><th>Evidencia rodente</th><th>Evidencia humana</th><th>Veredicto</th></tr></thead>
+            <tbody>
+                <tr>
+                    <td>Amenaza aguda → núcleo central de la amígdala — sustancia gris periacueductal</td>
+                    <td>Sólida</td>
+                    <td>Sólida (Fullana 2022 n=2,199)</td>
+                    <td><span class="tag tag-green">✓ Robusto</span></td>
+                </tr>
+                <tr>
+                    <td>Corteza prefrontal ventromedial → extinción del miedo condicionado</td>
+                    <td>Sólida</td>
+                    <td>Sólida y replicada</td>
+                    <td><span class="tag tag-green">✓ Robusto</span></td>
+                </tr>
+                <tr>
+                    <td>Amenaza potencial → núcleo del lecho de la estría terminal</td>
+                    <td>Sólida (lesiones, optogenética)</td>
+                    <td><strong>Falsificada</strong> (Fox 2025 n=295)</td>
+                    <td><span class="tag tag-amber">⚠ Frágil</span></td>
+                </tr>
+                <tr>
+                    <td>Amenaza sostenida → eje hipotálamo-pituitario-adrenal crónico</td>
+                    <td>Limitada</td>
+                    <td>Indirecta (cortisol en cabello, cortisol diurno)</td>
+                    <td><span class="tag tag-gray">◯ Plausible</span></td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="reveal source" style="text-align: center;">Cada framework merece su propio veredicto. RDoC no es absoluto — es refinado por la evidencia humana.</p>
+    </div>
+    <span class="slide-num">17 · 47</span>
+    <span class="section-label">RDoC</span>
+</section>
+
+<!-- === SECCIÓN D: CARGA ALOSTÁTICA + K10 (slides 18-25) === -->
+
+<section class="slide" id="slide-18">
+    <div class="domain-bar al"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Sustained Threat no es solo "duración" — es <span style="color: var(--color-allostatic);">chronification con secuelas en el cuerpo</span></h1>
+        <div class="split reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); gap: clamp(2rem, 4vw, 3rem); align-items: center;">
+            <div style="text-align: center; padding: clamp(1rem, 2vw, 1.5rem); background: var(--bg-card); border-radius: 8px; border-top: 3px solid var(--color-fear);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-fear);">Origen</p>
+                <h3 style="margin-top: 0.5rem; color: var(--text-primary);">Cerebro</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.5rem;">Circuito de amenaza sostenida · hormona liberadora de corticotropina · eje hipotálamo-pituitario-adrenal</p>
+            </div>
+            <div style="text-align: center; padding: clamp(1rem, 2vw, 1.5rem); background: var(--bg-card); border-radius: 8px; border-top: 3px solid var(--color-allostatic);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-allostatic);">Huella</p>
+                <h3 style="margin-top: 0.5rem; color: var(--text-primary);">Cuerpo</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.5rem;">Corazón · vasos · suprarrenales · hígado · hipocampo</p>
+            </div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); text-align: center; color: var(--color-accent); font-style: italic;">El sustained threat no se queda en el cerebro — pasa al cuerpo. Ese pasaje tiene nombre: <strong>carga alostática</strong>.</p>
+    </div>
+    <span class="slide-num">18 · 47</span>
+    <span class="section-label">Carga alostática + Kessler-10</span>
+</section>
+
+<section class="slide" id="slide-19">
+    <div class="slide-content">
+        <h1 class="reveal"><span style="color: var(--color-loss);">Alostasis</span> ≠ Homeostasis — mantener estabilidad <span style="color: var(--color-allostatic);">a través</span> del cambio</h1>
+        <div class="split reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); gap: clamp(1.5rem, 3vw, 2rem);">
+            <div class="card" style="border-left: 4px solid var(--color-loss); padding: clamp(1rem, 2vw, 1.5rem);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-loss);">Homeostasis</p>
+                <h3 style="color: var(--text-primary); margin-top: 0.5rem;">Set-point fijo</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.5rem;">pH, temperatura, glucosa: parámetros con valor objetivo estable.</p>
+                <p style="font-size: var(--small-size); margin-top: 0.5rem; color: var(--text-muted); font-style: italic;">Ajuste reactivo al desvío.</p>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--color-allostatic); padding: clamp(1rem, 2vw, 1.5rem);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-allostatic);">Alostasis</p>
+                <h3 style="color: var(--text-primary); margin-top: 0.5rem;">Set-point ajustado anticipatoriamente</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.5rem;">BP, cortisol, frecuencia cardíaca: ajuste <strong>predictivo</strong> según la demanda esperada.</p>
+                <p style="font-size: var(--small-size); margin-top: 0.5rem; color: var(--color-accent); font-style: italic;">Ante amenaza, BP sube <strong>antes</strong> de que ocurra el daño.</p>
+            </div>
+        </div>
+        <p class="reveal source" style="text-align: center;">Sterling &amp; Eyer 1988 · McEwen 2007, <em>Physiol Rev</em></p>
+    </div>
+    <span class="slide-num">19 · 47</span>
+    <span class="section-label">Carga alostática + Kessler-10</span>
+</section>
+
+<section class="slide" id="slide-20">
+    <div class="slide-content">
+        <h1 class="reveal">El <span style="color: var(--color-allostatic);">índice de carga alostática</span>: 10-13 biomarcadores en 4 ejes capturan la huella del estrés crónico</h1>
+        <div class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); display: flex; justify-content: center;">
+            <div class="radar-container">
+                <div class="radar-card neuro">
+                    <h3 style="color: var(--color-allostatic);">Neuroendocrino</h3>
+                    <ul>
+                        <li>Cortisol</li>
+                        <li>Sulfato de dehidroepiandrosterona</li>
+                        <li>Noradrenalina</li>
+                        <li>Epinefrina</li>
+                    </ul>
+                </div>
+                <div class="radar-card inflam">
+                    <h3 style="color: var(--color-fear);">Inmuno-inflamatorio</h3>
+                    <ul>
+                        <li>Interleucina-6</li>
+                        <li>Proteína C reactiva</li>
+                        <li>Fibrinógeno</li>
+                    </ul>
+                </div>
+                <div class="radar-card cardio">
+                    <h3 style="color: var(--color-compulsive);">Cardiovascular</h3>
+                    <ul>
+                        <li>Presión arterial sistólica</li>
+                        <li>Presión arterial diastólica</li>
+                        <li>Variabilidad de la frecuencia cardíaca</li>
+                    </ul>
+                </div>
+                <div class="radar-card metab">
+                    <h3 style="color: var(--color-k10);">Metabólico</h3>
+                    <ul>
+                        <li>Índice de masa corporal</li>
+                        <li>Relación cintura-cadera</li>
+                        <li>Hemoglobina glicosilada</li>
+                        <li>Lipoproteínas de alta y baja densidad</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <p class="reveal source" style="text-align: center; margin-top: clamp(0.75rem, 1.5vw, 1rem);">Juster RP, McEwen BS, Lupien SJ 2010, <em>Neurosci Biobehav Rev</em> — paper canónico</p>
+    </div>
+    <span class="slide-num">20 · 47</span>
+    <span class="section-label">Carga alostática + Kessler-10</span>
+</section>
+
+<section class="slide" id="slide-21">
+    <div class="slide-content">
+        <h1 class="reveal">Cómo se calcula: <span style="color: var(--color-allostatic);">dicotomizar por cuartil → sumar → triage</span></h1>
+        <div class="three-cols reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); align-items: stretch;">
+            <div class="card" style="border-top: 3px solid var(--color-loss);">
+                <p style="font-size: var(--small-size); color: var(--color-loss); text-transform: uppercase; letter-spacing: 0.08em;">Paso 1</p>
+                <h3 style="margin-top: 0.4rem;">Dicotomizar</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.4rem;">Cada biomarcador → cuartil poblacional. <strong>1 punto</strong> si cae en el cuartil más adverso.</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-potential);">
+                <p style="font-size: var(--small-size); color: var(--color-potential); text-transform: uppercase; letter-spacing: 0.08em;">Paso 2</p>
+                <h3 style="margin-top: 0.4rem;">Sumar</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.4rem;">Score total <strong>0 a 13</strong>. Un índice agregado del costo acumulativo del estrés crónico.</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-fear);">
+                <p style="font-size: var(--small-size); color: var(--color-fear); text-transform: uppercase; letter-spacing: 0.08em;">Paso 3</p>
+                <h3 style="margin-top: 0.4rem;">Triage</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.4rem;"><strong>≥4</strong> = carga alostática elevada · <strong>≥6</strong> = sobrecarga alostática.</p>
+            </div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); text-align: center; color: var(--color-accent);">Presión arterial, índice de masa corporal, hemoglobina glicosilada, proteína C reactiva que ya pides en consulta = índice de carga alostática parcial.</p>
+    </div>
+    <span class="slide-num">21 · 47</span>
+    <span class="section-label">Carga alostática + Kessler-10</span>
+</section>
+
+<section class="slide" id="slide-22">
+    <div class="slide-content">
+        <h1 class="reveal">Carga alostática elevada <span style="color: var(--color-fear);">predice</span> depresión, enfermedad cardiovascular, deterioro cognitivo y mortalidad</h1>
+        <div class="flow-vertical reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); gap: clamp(0.4rem, 0.8vw, 0.6rem); max-width: 700px; margin-left: auto; margin-right: auto;">
+            <div style="display: grid; grid-template-columns: 180px 1fr; align-items: center; gap: 1rem;">
+                <span style="font-size: var(--small-size); color: var(--text-secondary);">Depresión</span>
+                <div style="height: 12px; background: linear-gradient(90deg, var(--color-allostatic), var(--color-fear)); border-radius: 6px; width: 75%;"></div>
+            </div>
+            <div style="display: grid; grid-template-columns: 180px 1fr; align-items: center; gap: 1rem;">
+                <span style="font-size: var(--small-size); color: var(--text-secondary);">Ansiedad</span>
+                <div style="height: 12px; background: linear-gradient(90deg, var(--color-allostatic), var(--color-potential)); border-radius: 6px; width: 60%;"></div>
+            </div>
+            <div style="display: grid; grid-template-columns: 180px 1fr; align-items: center; gap: 1rem;">
+                <span style="font-size: var(--small-size); color: var(--text-secondary);">Enfermedad cardiovascular</span>
+                <div style="height: 12px; background: linear-gradient(90deg, var(--color-allostatic), var(--color-fear)); border-radius: 6px; width: 90%;"></div>
+            </div>
+            <div style="display: grid; grid-template-columns: 180px 1fr; align-items: center; gap: 1rem;">
+                <span style="font-size: var(--small-size); color: var(--text-secondary);">Deterioro cognitivo</span>
+                <div style="height: 12px; background: linear-gradient(90deg, var(--color-allostatic), var(--color-fear)); border-radius: 6px; width: 55%;"></div>
+            </div>
+            <div style="display: grid; grid-template-columns: 180px 1fr; align-items: center; gap: 1rem;">
+                <span style="font-size: var(--small-size); color: var(--text-secondary);">Mortalidad</span>
+                <div style="height: 12px; background: linear-gradient(90deg, var(--color-allostatic), var(--color-danger)); border-radius: 6px; width: 95%;"></div>
+            </div>
+        </div>
+        <p class="reveal source" style="text-align: center; margin-top: clamp(1rem, 2vw, 1.5rem);">Guidi J, Lucente M, Sonino N, Fava GA 2021 — revisión sistemática, 267 estudios, <em>Psychother Psychosom</em></p>
+    </div>
+    <span class="slide-num">22 · 47</span>
+    <span class="section-label">Carga alostática + Kessler-10</span>
+</section>
+
+<section class="slide" id="slide-23">
+    <div class="slide-content centered">
+        <h1 class="reveal">Amenaza sostenida → <span style="color: var(--color-distress);">depresión ansiosa</span>: el puente entre Fear y Distress dentro del Research Domain Criteria</h1>
+        <div class="flow-vertical reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); align-items: center; gap: clamp(0.3rem, 0.7vw, 0.5rem); max-width: 500px;">
+            <div class="flow-box" style="width: 100%; border-left-color: var(--color-sustained);"><strong>Amenaza sostenida</strong> (Sustained Threat · RDoC)</div>
+            <span class="flow-arrow">↓</span>
+            <div class="flow-box" style="width: 100%; border-left-color: var(--color-allostatic);"><strong>Eje hipotálamo-pituitario-adrenal crónico + carga alostática elevada</strong></div>
+            <span class="flow-arrow">↓</span>
+            <div class="flow-box" style="width: 100%; border-left-color: var(--color-distress); background: linear-gradient(90deg, rgba(220,38,38,0.06), rgba(59,130,246,0.12));">
+                <strong style="color: var(--color-distress);">Depresión ansiosa</strong><br>
+                <span style="font-size: var(--small-size); color: var(--text-muted);">subfactor Distress de HiTOP + carga residual del subfactor Fear</span>
+            </div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); color: var(--color-accent); max-width: 700px;">La correlación entre los subfactores Fear y Distress de HiTOP (correlación r ≈ 0.60-0.80) no es estadística — es <strong>mecanística</strong>: ambas dimensiones comparten amenaza sostenida y carga alostática.</p>
+        <p class="reveal source">Ross RA, Foster SL, Ionescu DF 2017, <em>Chronic Stress</em></p>
+    </div>
+    <span class="slide-num">23 · 47</span>
+    <span class="section-label">Carga alostática + Kessler-10</span>
+</section>
+
+<section class="slide" id="slide-24">
+    <div class="domain-bar k10"></div>
+    <div class="slide-content">
+        <h1 class="reveal">K10: el <span style="color: var(--color-k10);">termómetro clínico</span> que llevas mañana a consulta — 10 ítems · 90 segundos</h1>
+        <div class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1rem); background: var(--bg-card); border-radius: 8px; padding: clamp(0.75rem, 1.5vw, 1.25rem); border-left: 4px solid var(--color-k10); max-width: 800px; margin-left: auto; margin-right: auto;">
+            <p style="font-size: var(--small-size); color: var(--color-k10); text-transform: uppercase; letter-spacing: 0.08em;">En los últimos 30 días, ¿con qué frecuencia ud...</p>
+            <div style="margin-top: 0.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem 1rem;">
+                <p style="font-size: var(--small-size);">1. Se sintió cansado/a sin razón?</p>
+                <p style="font-size: var(--small-size);">6. Tan inquieto/a que no podía estar quieto/a?</p>
+                <p style="font-size: var(--small-size);">2. Se sintió nervioso/a?</p>
+                <p style="font-size: var(--small-size);">7. Tan deprimido/a que nada lo animaba?</p>
+                <p style="font-size: var(--small-size);">3. Tan nervioso/a que nada lo calmaba?</p>
+                <p style="font-size: var(--small-size);">8. Sintió que todo era un esfuerzo?</p>
+                <p style="font-size: var(--small-size);">4. Se sintió desesperado/a o sin esperanza?</p>
+                <p style="font-size: var(--small-size);">9. Se sintió triste o decaído/a?</p>
+                <p style="font-size: var(--small-size);">5. Se sintió inquieto/a o agitado/a?</p>
+                <p style="font-size: var(--small-size);">10. Se sintió inútil?</p>
+            </div>
+            <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.75rem; text-align: center;">Escala: 1=Nunca · 2=Pocas veces · 3=Algunas veces · 4=Casi siempre · 5=Siempre · Suma 10-50</p>
+        </div>
+        <p class="reveal source" style="text-align: center;">Kessler RC et al. 2002, <em>Psychol Med</em> · Validación español: Vargas Terrez 2011, <em>Salud Mental</em> (α=0.90, AUC=0.85)</p>
+    </div>
+    <span class="slide-num">24 · 47</span>
+    <span class="section-label">Carga alostática + Kessler-10</span>
+</section>
+
+<section class="slide" id="slide-25">
+    <div class="slide-content">
+        <h1 class="reveal">Cutoffs K10 + interpretación clínica</h1>
+        <div class="split reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); gap: clamp(2rem, 4vw, 3rem); align-items: center;">
+            <div style="display: flex; justify-content: center;">
+                <div class="thermo">
+                    <div class="thermo-zone severe">30-50</div>
+                    <div class="thermo-zone mod">25-29</div>
+                    <div class="thermo-zone mild">20-24</div>
+                    <div class="thermo-zone well">&lt;20</div>
+                </div>
+            </div>
+            <div class="flow-vertical" style="gap: clamp(0.3rem, 0.6vw, 0.5rem);">
+                <div style="padding: 0.5rem 0.75rem; background: rgba(34,197,94,0.12); border-left: 3px solid var(--color-success); border-radius: 0 4px 4px 0;">
+                    <strong style="color: var(--color-success);">&lt; 20 — Bienestar</strong>
+                    <p style="font-size: var(--small-size); margin-top: 0.2rem;">Sin acción · seguimiento rutinario</p>
+                </div>
+                <div style="padding: 0.5rem 0.75rem; background: rgba(250,204,21,0.12); border-left: 3px solid var(--color-warn); border-radius: 0 4px 4px 0;">
+                    <strong style="color: var(--color-warn);">20-24 — Distress leve</strong>
+                    <p style="font-size: var(--small-size); margin-top: 0.2rem;">Psicoeducación · reevaluar 4-6 sem</p>
+                </div>
+                <div style="padding: 0.5rem 0.75rem; background: rgba(249,115,22,0.12); border-left: 3px solid var(--color-potential); border-radius: 0 4px 4px 0;">
+                    <strong style="color: var(--color-potential);">25-29 — Distress moderado</strong>
+                    <p style="font-size: var(--small-size); margin-top: 0.2rem;">Probable trastorno mental · evaluación estructurada</p>
+                </div>
+                <div style="padding: 0.5rem 0.75rem; background: rgba(239,68,68,0.15); border-left: 3px solid var(--color-danger); border-radius: 0 4px 4px 0;">
+                    <strong style="color: var(--color-danger);">30-50 — Distress severo</strong>
+                    <p style="font-size: var(--small-size); margin-top: 0.2rem;">Alta probabilidad trastorno severo · intervención prioritaria</p>
+                </div>
+            </div>
+        </div>
+        <p class="reveal source" style="text-align: center;">Andrews G, Slade T 2001 — cutoffs canónicos · libre de derechos</p>
+    </div>
+    <span class="slide-num">25 · 47</span>
+    <span class="section-label">Carga alostática + Kessler-10</span>
+</section>
+
+<!-- === SECCIÓN E: HiTOP + METACONTROL (slides 26-33) === -->
+
+<section class="slide" id="slide-26">
+    <div class="slide-content centered">
+        <h1 class="reveal" style="font-size: clamp(1.4rem, 3.5vw, 2.6rem); max-width: 800px;">AL nos dio el <span style="color: var(--color-allostatic);">cuerpo</span> del paciente.<br>HiTOP nos da su <span style="color: var(--color-distress);">estructura clínica</span>.</h1>
+        <p class="reveal source" style="margin-top: clamp(1rem, 2vw, 1.5rem);">Transición · del cuerpo a la dimensión</p>
+    </div>
+    <span class="slide-num">26 · 47</span>
+    <span class="section-label">HiTOP</span>
+</section>
+
+<section class="slide" id="slide-27">
+    <div class="domain-bar compulsive"></div>
+    <div class="slide-content">
+        <h1 class="reveal">HiTOP <span style="color: var(--color-accent);">no parte de la teoría</span> — parte de los datos: 6 espectros, 5 niveles</h1>
+        <div class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1rem); text-align: center;">
+            <div style="display: inline-block; padding: 0.4rem 0.9rem; background: rgba(255,255,255,0.05); border-radius: 4px; font-family: var(--font-display); font-weight: 600;">p-factor</div>
+            <div style="font-size: var(--small-size); color: var(--text-muted); margin: 0.3rem 0;">↓</div>
+            <div style="display: flex; justify-content: center; gap: clamp(0.2rem, 0.5vw, 0.4rem); flex-wrap: wrap;">
+                <span class="tag tag-blue">Internalizing</span>
+                <span class="tag tag-red">Antagonistic Ext.</span>
+                <span class="tag tag-orange">Disinhibited Ext.</span>
+                <span class="tag tag-gray">Detachment</span>
+                <span class="tag tag-violet">Thought Disorder</span>
+                <span class="tag tag-green">Somatoform</span>
+            </div>
+            <div style="font-size: var(--small-size); color: var(--text-muted); margin: 0.3rem 0;">↓ (subfactores dentro de Internalizing)</div>
+            <div style="display: flex; justify-content: center; gap: clamp(0.2rem, 0.5vw, 0.4rem); flex-wrap: wrap;">
+                <span class="tag tag-red" style="font-weight: 600;">Fear</span>
+                <span class="tag tag-blue">Distress</span>
+                <span class="tag tag-orange">Eating Pathology</span>
+                <span class="tag tag-amber">Sexual Problems</span>
+                <span class="tag tag-violet" style="font-weight: 600;">Obsessive-Compulsive*</span>
+            </div>
+            <div style="font-size: var(--small-size); color: var(--text-muted); margin: 0.3rem 0;">↓ (síndromes dentro de Fear)</div>
+            <div style="display: flex; justify-content: center; gap: clamp(0.2rem, 0.5vw, 0.4rem); flex-wrap: wrap;">
+                <span style="font-size: var(--small-size); color: var(--text-secondary);">Pánico · Fobias · Agorafobia · SAD · Sep Anx</span>
+            </div>
+        </div>
+        <p class="reveal source" style="text-align: center; margin-top: clamp(0.75rem, 1vw, 1rem);">Kotov R et al. 2017, <em>J Abnorm Psychol</em> · *actualización HiTOP-SR 2024</p>
+    </div>
+    <span class="slide-num">27 · 47</span>
+    <span class="section-label">HiTOP</span>
+</section>
+
+<section class="slide" id="slide-28">
+    <div class="slide-content">
+        <h1 class="reveal">Cargas factoriales: <span style="color: var(--color-accent);">dónde se ubica cada trastorno</span> empíricamente</h1>
+        <table class="data-table reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem);">
+            <thead><tr><th>Trastorno</th><th>λ en Fear</th><th>λ en Distress</th><th>Comentario</th></tr></thead>
+            <tbody>
+                <tr><td>Fobia específica</td><td><span class="tag tag-red">0.70-0.85</span></td><td>baja</td><td>Anchor del Fear</td></tr>
+                <tr><td>Agorafobia</td><td><span class="tag tag-red">0.72-0.82</span></td><td>baja</td><td>Anchor del Fear</td></tr>
+                <tr><td>Pánico</td><td><span class="tag tag-orange">0.68-0.80</span></td><td>baja-mod</td><td>Mayoritariamente Fear</td></tr>
+                <tr><td>Trastorno de ansiedad social (fobia social)</td><td><span class="tag tag-orange">0.65-0.78</span></td><td>moderada</td><td>Carga cruzada</td></tr>
+                <tr><td>Trastorno de ansiedad por separación</td><td><span class="tag tag-amber">0.55-0.70</span></td><td>moderada</td><td>Provisional</td></tr>
+                <tr style="background: rgba(139,92,246,0.06);"><td><strong>Trastorno obsesivo-compulsivo</strong></td><td><span class="tag tag-violet">0.60-0.72</span></td><td>baja</td><td><strong>Nodo puente — ver debate</strong></td></tr>
+                <tr><td>Trastorno depresivo mayor</td><td>baja</td><td><span class="tag tag-blue">0.75-0.85</span></td><td>Anclaje del Distress</td></tr>
+                <tr><td>Trastorno de ansiedad generalizada</td><td>moderada</td><td><span class="tag tag-blue">0.65-0.75</span></td><td>Distress dominante</td></tr>
+                <tr><td>Trastorno de estrés postraumático</td><td>controvertido</td><td>controvertido</td><td>Carga cruzada o factor separado</td></tr>
+            </tbody>
+        </table>
+        <p class="reveal source" style="text-align: center;">Kotov 2017 y réplicas · correlación entre subfactores Fear y Distress: r ≈ 0.60-0.80</p>
+    </div>
+    <span class="slide-num">28 · 47</span>
+    <span class="section-label">HiTOP</span>
+</section>
+
+<section class="slide" id="slide-29">
+    <div class="slide-content">
+        <h1 class="reveal">Cuando los datos hablan: los <span style="color: var(--color-accent);">mismos síntomas</span> atraviesan 5 diagnósticos DSM</h1>
+        <div class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); display: flex; justify-content: center;">
+            <div style="background: var(--bg-card); border-radius: 8px; padding: clamp(0.75rem, 1.5vw, 1.25rem); max-width: 700px; border-top: 3px solid var(--color-fear);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-fear); text-align: center;">Cluster Forbes 2024: Hipervigilancia y evitación situacional</p>
+                <table class="data-table" style="margin-top: 0.5rem;">
+                    <tbody>
+                        <tr><td style="font-style: italic;">"Evitaba un objeto o situación que me causaba miedo"</td><td><span class="tag tag-red">Fobia específica</span></td></tr>
+                        <tr><td style="font-style: italic;">"Evitaba situaciones que pudieran provocarme pánico"</td><td><span class="tag tag-orange">Trastorno de pánico</span></td></tr>
+                        <tr><td style="font-style: italic;">"Tenía pensamientos de que no podría escapar ni pedir ayuda"</td><td><span class="tag tag-amber">Agorafobia</span></td></tr>
+                        <tr><td style="font-style: italic;">"Estaba hipervigilante, constantemente buscando peligros"</td><td><span class="tag tag-blue">PTSD / Acute Stress</span></td></tr>
+                        <tr><td style="font-style: italic;">"Me asustaba fácilmente, un ruido fuerte me sobresaltaba"</td><td><span class="tag tag-gray">Intox. estimulantes</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <p class="reveal source" style="text-align: center;">Forbes MK et al. 2024 · <em>Clin Psychol Sci</em> · reorganización data-driven del DSM-5</p>
+    </div>
+    <span class="slide-num">29 · 47</span>
+    <span class="section-label">HiTOP</span>
+</section>
+
+<section class="slide" id="slide-30">
+    <div class="slide-content">
+        <h1 class="reveal">HiTOP-SR Escala <span style="color: var(--color-fear);">"Pánico"</span> → posición Internalizing · <strong>Fear</strong></h1>
+        <div class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); background: var(--bg-card); border-radius: 8px; padding: clamp(1rem, 2vw, 1.5rem); max-width: 700px; margin-left: auto; margin-right: auto; border-left: 4px solid var(--color-fear);">
+            <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-fear);">En los últimos 12 meses... · escala 1-4</p>
+            <ul style="list-style: none; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.4rem;">
+                <li style="display: flex; gap: 0.5rem; font-size: var(--small-size);"><span style="color: var(--color-fear); font-weight: 600;">6.</span> Me sentía mareado/a o aturdido/a.</li>
+                <li style="display: flex; gap: 0.5rem; font-size: var(--small-size);"><span style="color: var(--color-fear); font-weight: 600;">93.</span> Mi corazón latía rápido o con fuerza.</li>
+                <li style="display: flex; gap: 0.5rem; font-size: var(--small-size);"><span style="color: var(--color-fear); font-weight: 600;">136.</span> Estaba tan agitado/a que pensé que podía morir.</li>
+                <li style="display: flex; gap: 0.5rem; font-size: var(--small-size);"><span style="color: var(--color-fear); font-weight: 600;">308.</span> Temía estar teniendo un ataque al corazón.</li>
+                <li style="display: flex; gap: 0.5rem; font-size: var(--small-size);"><span style="color: var(--color-fear); font-weight: 600;">397.</span> Estaba temblando.</li>
+            </ul>
+            <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.05);">Posición jerárquica: <strong style="color: var(--color-fear);">Internalizing → Fear</strong></p>
+        </div>
+        <p class="reveal source" style="text-align: center;">HiTOP Society 2024 · HiTOP-SR 1.0</p>
+    </div>
+    <span class="slide-num">30 · 47</span>
+    <span class="section-label">HiTOP</span>
+</section>
+
+<section class="slide" id="slide-31">
+    <div class="slide-content">
+        <h1 class="reveal">HiTOP-SR Escala <span style="color: var(--color-compulsive);">"Comprobación"</span> → Internalizing · <strong>Obsessive-Compulsive</strong> (no Fear)</h1>
+        <div class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); background: var(--bg-card); border-radius: 8px; padding: clamp(1rem, 2vw, 1.5rem); max-width: 700px; margin-left: auto; margin-right: auto; border-left: 4px solid var(--color-compulsive);">
+            <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-compulsive);">En los últimos 12 meses... · escala 1-4</p>
+            <ul style="list-style: none; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.4rem;">
+                <li style="display: flex; gap: 0.5rem; font-size: var(--small-size);"><span style="color: var(--color-compulsive); font-weight: 600;">110.</span> Tenía duda persistente de haber dejado algo importante sin hacer.</li>
+                <li style="display: flex; gap: 0.5rem; font-size: var(--small-size);"><span style="color: var(--color-compulsive); font-weight: 600;">302.</span> Me preocupaba si realmente había hecho algo o sólo lo había intentado.</li>
+                <li style="display: flex; gap: 0.5rem; font-size: var(--small-size);"><span style="color: var(--color-compulsive); font-weight: 600;">317.</span> Sentía el impulso de revisar para asegurarme de haber hecho algo.</li>
+                <li style="display: flex; gap: 0.5rem; font-size: var(--small-size);"><span style="color: var(--color-compulsive); font-weight: 600;">322.</span> Después de salir de casa, me preocupaba haber dejado algo sin hacer.</li>
+                <li style="display: flex; gap: 0.5rem; font-size: var(--small-size);"><span style="color: var(--color-compulsive); font-weight: 600;">341.</span> Aun cuando era muy cuidadoso/a, me preocupaba si había hecho algo correctamente.</li>
+            </ul>
+            <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.05);">Posición jerárquica: <strong style="color: var(--color-compulsive);">Internalizing → Obsessive-Compulsive</strong> (NO Fear)</p>
+        </div>
+        <p class="reveal" style="text-align: center; color: var(--color-accent); margin-top: clamp(0.75rem, 1vw, 1rem); font-style: italic;">Spoiler para el debate: el propio HiTOP-SR ya no mete TOC en Fear.</p>
+    </div>
+    <span class="slide-num">31 · 47</span>
+    <span class="section-label">HiTOP</span>
+</section>
+
+<section class="slide" id="slide-32">
+    <div class="domain-bar meta"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Metacontrol (Hommel): el control cognitivo opera en un eje <span style="color: var(--color-meta);">persistencia ↔ flexibilidad</span></h1>
+        <div class="split reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); gap: clamp(1.5rem, 3vw, 2.5rem);">
+            <div class="card" style="border-top: 3px solid var(--color-meta);">
+                <h3 style="color: var(--color-meta);">Persistencia (D1 mode)</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.4rem; color: var(--text-secondary);"><strong>Características:</strong> alta competitividad de objetivo; procesamiento selectivo y excluyente.</p>
+                <p style="font-size: var(--small-size); margin-top: 0.4rem; color: var(--text-secondary);"><strong>Ventaja:</strong> mantenimiento de meta, resistencia a distractores.</p>
+                <p style="font-size: var(--small-size); margin-top: 0.4rem; color: var(--color-danger);"><strong>Costo:</strong> rigidez, rumiación, dificultad set-shifting.</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-k10);">
+                <h3 style="color: var(--color-k10);">Flexibilidad (D2 mode)</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.4rem; color: var(--text-secondary);"><strong>Características:</strong> baja competitividad; integración múltiple.</p>
+                <p style="font-size: var(--small-size); margin-top: 0.4rem; color: var(--text-secondary);"><strong>Ventaja:</strong> task-switching, creatividad.</p>
+                <p style="font-size: var(--small-size); margin-top: 0.4rem; color: var(--color-danger);"><strong>Costo:</strong> distractibilidad, inconsistencia.</p>
+            </div>
+        </div>
+        <p class="reveal source" style="text-align: center;">Hommel 2015 · Hommel &amp; Colzato 2022, <em>Front Psychiatry</em></p>
+    </div>
+    <span class="slide-num">32 · 47</span>
+    <span class="section-label">HiTOP</span>
+</section>
+
+<section class="slide" id="slide-33">
+    <div class="slide-content">
+        <h1 class="reveal">Persistence bias es <span style="color: var(--color-meta);">transdiagnóstico</span> — TOC, GAD, rumiación, hipocondría</h1>
+        <div class="four-cols reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem);">
+            <div class="card" style="border-left: 3px solid var(--color-compulsive);">
+                <h3 style="color: var(--color-compulsive);">Trastorno obsesivo-compulsivo</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.3rem;">La obsesión no suelta el contenido</p>
+            </div>
+            <div class="card" style="border-left: 3px solid var(--color-distress);">
+                <h3 style="color: var(--color-distress);">Trastorno de ansiedad generalizada</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.3rem;">La preocupación no cierra (intolerancia a la incertidumbre)</p>
+            </div>
+            <div class="card" style="border-left: 3px solid var(--color-sustained);">
+                <h3 style="color: var(--color-sustained);">Rumiación depresiva</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.3rem;">Bucle persistente sobre la pérdida</p>
+            </div>
+            <div class="card" style="border-left: 3px solid var(--color-fear);">
+                <h3 style="color: var(--color-fear);">Hipocondría</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.3rem;">Bucle persistente sobre amenaza somática</p>
+            </div>
+        </div>
+        <p class="reveal source" style="text-align: center;">Matiz: Fradkin 2020 reinterpreta como <em>transition uncertainty</em>, no perseveración clásica. Debate abierto.</p>
+    </div>
+    <span class="slide-num">33 · 47</span>
+    <span class="section-label">HiTOP</span>
+</section>
+
+<!-- === SECCIÓN F: EJERCICIO DE MAPEO (slides 34-37) === -->
+
+<section class="slide" id="slide-34">
+    <div class="domain-bar gradient"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Ejercicio en pares · 12 minutos · <span style="color: var(--color-accent);">mapeo cuádruple</span></h1>
+        <div class="four-cols reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem);">
+            <div class="card" style="text-align: center; border-top: 3px solid var(--color-fear);">
+                <p class="med-number" style="color: var(--color-fear);">1</p>
+                <h3 style="margin-top: 0.4rem;">RDoC</h3>
+                <p style="font-size: var(--small-size);">Constructo dominante</p>
+            </div>
+            <div class="card" style="text-align: center; border-top: 3px solid var(--color-distress);">
+                <p class="med-number" style="color: var(--color-distress);">2</p>
+                <h3 style="margin-top: 0.4rem;">HiTOP</h3>
+                <p style="font-size: var(--small-size);">Subfactor</p>
+            </div>
+            <div class="card" style="text-align: center; border-top: 3px solid var(--color-k10);">
+                <p class="med-number" style="color: var(--color-k10);">3</p>
+                <h3 style="margin-top: 0.4rem;">K10 (rango)</h3>
+                <p style="font-size: var(--small-size);">Cutoff estimado</p>
+            </div>
+            <div class="card" style="text-align: center; border-top: 3px solid var(--color-meta);">
+                <p class="med-number" style="color: var(--color-meta);">4</p>
+                <h3 style="margin-top: 0.4rem;">Mecanismo</h3>
+                <p style="font-size: var(--small-size);">Transdiagnóstico</p>
+            </div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); text-align: center; color: var(--text-secondary);">Justificar con ≥2 elementos del perfil del caso.</p>
+    </div>
+    <span class="slide-num">34 · 47</span>
+    <span class="section-label">Ejercicio</span>
+</section>
+
+<section class="slide" id="slide-35">
+    <div class="slide-content">
+        <h1 class="reveal">Casos <span style="color: var(--color-acute);">A</span> y <span style="color: var(--color-compulsive);">B</span></h1>
+        <div class="split reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); align-items: stretch;">
+            <div class="card" style="border-top: 3px solid var(--color-acute);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-acute);">Caso A · Fobia perros</p>
+                <h3 style="margin-top: 0.4rem;">M · 28 · programador</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.5rem;">Ante cualquier perro: taquicardia inmediata, urgencia de huir, transpiración. <strong>No piensa en perros entre exposiciones.</strong> Sin rituales, sin rumiación, sin ansiedad anticipatoria fuera de la exposición. Función laboral preservada. Evita parques pet-friendly hace 3 años.</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-compulsive);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-compulsive);">Caso B · TOC contaminación</p>
+                <h3 style="margin-top: 0.4rem;">F · 24 · estudiante de medicina</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.5rem;">Lavado de manos 30-40 min × 8/día. Pensamiento intrusivo: <em>"si toco transporte público, mis padres pueden morir"</em>. Sabe que es irracional. Sin ataques de pánico. Sin evitación generalizada. Función deteriorada por <strong>tiempo en rituales</strong>.</p>
+            </div>
+        </div>
+    </div>
+    <span class="slide-num">35 · 47</span>
+    <span class="section-label">Ejercicio</span>
+</section>
+
+<section class="slide" id="slide-36">
+    <div class="slide-content">
+        <h1 class="reveal">Casos <span style="color: var(--color-fear);">C</span> y <span style="color: var(--color-sustained);">D</span></h1>
+        <div class="split reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); align-items: stretch;">
+            <div class="card" style="border-top: 3px solid var(--color-fear);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-fear);">Caso C · Pánico + agorafobia</p>
+                <h3 style="margin-top: 0.4rem;">F · 35 · contadora</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.5rem;">Hace 14 m: primer ataque de pánico inesperado en supermercado (taquicardia, disnea, sensación de morir, 8 min). Desde entonces: 3 ataques más en lugares concurridos. Evitación progresiva: centros comerciales, transporte, cines. <strong>No sale sola del barrio.</strong> Ansiedad anticipatoria diaria.</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-sustained);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-sustained);">Caso D · Sep anxiety adulta</p>
+                <h3 style="margin-top: 0.4rem;">M · 31 · empleado bancario</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.5rem;">Casado hace 2 años. No puede dormir las noches que esposa viaja. Llama 15-20 veces/noche. <em>"¿Y si tiene un accidente?"</em> Tensión muscular, opresión torácica, GI. Vergüenza tras retorno. Reporta haber sido <strong>"el niño que lloraba en el kinder"</strong>.</p>
+            </div>
+        </div>
+    </div>
+    <span class="slide-num">36 · 47</span>
+    <span class="section-label">Ejercicio</span>
+</section>
+
+<section class="slide" id="slide-37">
+    <div class="slide-content">
+        <h1 class="reveal">Mientras trabajan: <span style="color: var(--color-accent);">cuatro preguntas guía</span></h1>
+        <div class="flow-vertical reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); max-width: 700px; margin-left: auto; margin-right: auto; gap: clamp(0.5rem, 1vw, 0.75rem);">
+            <div style="display: grid; grid-template-columns: 40px 1fr; gap: 0.75rem; padding: 0.6rem 0.75rem; background: var(--bg-card); border-radius: 6px;">
+                <span class="med-number" style="color: var(--color-fear);">1</span>
+                <span style="align-self: center;">¿Qué evidencia conductual revela el constructo RDoC dominante?</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 40px 1fr; gap: 0.75rem; padding: 0.6rem 0.75rem; background: var(--bg-card); border-radius: 6px;">
+                <span class="med-number" style="color: var(--color-distress);">2</span>
+                <span style="align-self: center;">¿Qué carga factorial λ esperaría en cada subfactor HiTOP?</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 40px 1fr; gap: 0.75rem; padding: 0.6rem 0.75rem; background: var(--bg-card); border-radius: 6px;">
+                <span class="med-number" style="color: var(--color-k10);">3</span>
+                <span style="align-self: center;">¿Dónde caería el K10 (rango)?</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 40px 1fr; gap: 0.75rem; padding: 0.6rem 0.75rem; background: var(--bg-card); border-radius: 6px;">
+                <span class="med-number" style="color: var(--color-meta);">4</span>
+                <span style="align-self: center;">¿Qué mecanismo explica la <strong>persistencia</strong> del cuadro?</span>
+            </div>
+        </div>
+        <p class="reveal source" style="text-align: center;">Facilitador circula · El desacuerdo entre pares es pedagógicamente valioso.</p>
+    </div>
+    <span class="slide-num">37 · 47</span>
+    <span class="section-label">Ejercicio</span>
+</section>
+
+<!-- === SECCIÓN G: DEBATE TOC (slides 38-44) === -->
+
+<section class="slide" id="slide-38">
+    <div class="domain-bar compulsive"></div>
+    <div class="slide-content centered">
+        <h1 class="reveal">Puesta en común: empezamos con el caso <span style="color: var(--color-compulsive);">B</span> · TOC</h1>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); font-size: clamp(1.2rem, 2.5vw, 2rem); color: var(--text-primary); font-family: var(--font-display); font-weight: 500;">¿Es un trastorno de miedo?</p>
+        <p class="reveal source" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">Escuchar 2-3 pares antes de presentar argumentos.</p>
+    </div>
+    <span class="slide-num">38 · 47</span>
+    <span class="section-label">Debate sobre trastorno obsesivo-compulsivo</span>
+</section>
+
+<section class="slide" id="slide-39">
+    <div class="slide-content">
+        <h1 class="reveal">Argumento <span style="color: var(--color-success);">"sí"</span>: evidencia psicométrica clásica (Kotov 2017)</h1>
+        <div class="three-cols reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem);">
+            <div class="card" style="border-top: 3px solid var(--color-success);">
+                <h3 style="color: var(--color-success);">Cargas factoriales</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.4rem;">OCD carga en Fear λ ≈ 0.60-0.72 (Kotov 2017)</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-success);">
+                <h3 style="color: var(--color-success);">Arousal</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.4rem;">Autonómico elevado ante estímulos disparadores → fenotípicamente parece miedo</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-success);">
+                <h3 style="color: var(--color-success);">Respuesta a inhibidores de la recaptación de serotonina</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.4rem;">Similar a fobias y pánico — perfil farmacológico convergente</p>
+            </div>
+        </div>
+        <p class="reveal source" style="text-align: center;">Tres líneas de evidencia psicométrica clásica · pero...</p>
+    </div>
+    <span class="slide-num">39 · 47</span>
+    <span class="section-label">Debate sobre trastorno obsesivo-compulsivo</span>
+</section>
+
+<section class="slide" id="slide-40">
+    <div class="domain-bar fear"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Argumento <span style="color: var(--color-danger);">"no" #1</span> — PGC 2025: OCD pertenece al factor <span style="color: var(--color-compulsive);">Compulsive</span>, no a Internalizing</h1>
+        <div class="split reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); gap: clamp(1.5rem, 3vw, 2.5rem);">
+            <div class="card" style="border-left: 4px solid var(--color-compulsive);">
+                <h3 style="color: var(--color-compulsive);">Factor Compulsive</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.5rem; color: var(--text-primary);">Anorexia nerviosa · <strong>Trastorno obsesivo-compulsivo</strong> · Síndrome de Tourette</p>
+                <p style="font-size: var(--small-size); margin-top: 0.5rem; color: var(--text-muted);">Cluster genómico distinto</p>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--color-distress);">
+                <h3 style="color: var(--color-distress);">Factor Internalizing</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.5rem; color: var(--text-primary);">Trastorno depresivo mayor · Trastorno de estrés postraumático · Trastornos de ansiedad</p>
+                <p style="font-size: var(--small-size); margin-top: 0.5rem; color: var(--text-muted);">El trastorno obsesivo-compulsivo <strong>no</strong> está aquí</p>
+            </div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); text-align: center; color: var(--color-accent);">Cuando miras genes, el trastorno obsesivo-compulsivo no se parece a ansiedad — se parece a anorexia nerviosa y síndrome de Tourette.</p>
+        <p class="reveal source" style="text-align: center;">Psychiatric Genomics Consortium · Cross-Disorder Group 2025/2026, <em>Nature</em> · modelo de ecuaciones estructurales genómico de 14 trastornos</p>
+    </div>
+    <span class="slide-num">40 · 47</span>
+    <span class="section-label">Debate sobre trastorno obsesivo-compulsivo</span>
+</section>
+
+<section class="slide" id="slide-41">
+    <div class="slide-content">
+        <h1 class="reveal">Argumento <span style="color: var(--color-danger);">"no" #2</span> — Forbes 2024 data-driven: <span style="color: var(--color-compulsive);">rituales NO en internalizing</span></h1>
+        <div class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); display: flex; justify-content: center;">
+            <div style="max-width: 600px; padding: clamp(1rem, 2vw, 1.5rem); background: var(--bg-card); border-radius: 8px; border-left: 4px solid var(--color-compulsive);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-compulsive);">Cluster Forbes "Rituales repetitivos y compulsiones"</p>
+                <div style="margin-top: 0.75rem; display: flex; flex-direction: column; gap: 0.3rem;">
+                    <div style="display: grid; grid-template-columns: 150px 1fr; gap: 0.5rem; font-size: var(--small-size);">
+                        <span style="color: var(--text-muted);">Super-spectrum</span>
+                        <span style="color: var(--text-secondary);">(vacío)</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 150px 1fr; gap: 0.5rem; font-size: var(--small-size);">
+                        <span style="color: var(--text-muted);">Spectrum</span>
+                        <span style="color: var(--text-primary);"><strong>Dificultades neurodevelopmentales y cognitivas</strong></span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 150px 1fr; gap: 0.5rem; font-size: var(--small-size);">
+                        <span style="color: var(--text-muted);">Sub-spectrum</span>
+                        <span style="color: var(--text-primary);">Neurodesarrollo</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 150px 1fr; gap: 0.5rem; font-size: var(--small-size);">
+                        <span style="color: var(--text-muted);">Subfactor</span>
+                        <span style="color: var(--color-compulsive); font-weight: 600;">Comportamiento ritualizado</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); text-align: center; color: var(--text-secondary);">Cuando los datos hablan sin imponer DSM, los rituales <strong>no agrupan con miedo</strong>.</p>
+        <p class="reveal source" style="text-align: center;">Forbes MK et al. 2024, <em>Clin Psychol Sci</em></p>
+    </div>
+    <span class="slide-num">41 · 47</span>
+    <span class="section-label">Debate sobre trastorno obsesivo-compulsivo</span>
+</section>
+
+<section class="slide" id="slide-42">
+    <div class="slide-content">
+        <h1 class="reveal">Argumento <span style="color: var(--color-danger);">"no" #3</span> — HiTOP-SR 2024 ya <span style="color: var(--color-compulsive);">no pone OCD en Fear</span></h1>
+        <div class="split reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); gap: clamp(2rem, 4vw, 3rem);">
+            <div class="card" style="border-top: 3px solid var(--color-fear); text-align: center;">
+                <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-fear);">Escala "Pánico"</p>
+                <h3 style="margin-top: 0.5rem; color: var(--text-primary);">Internalizing → Fear ✓</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.5rem; color: var(--text-muted);">Posición coherente con HiTOP 2017</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-compulsive); text-align: center;">
+                <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-compulsive);">Escala "Comprobación"</p>
+                <h3 style="margin-top: 0.5rem; color: var(--text-primary);">Internalizing → OC ✗ (no Fear)</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.5rem; color: var(--text-muted);">Sub-spectrum nuevo en 2024</p>
+            </div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); text-align: center; color: var(--color-accent);">El propio consorcio HiTOP evolucionó. Lo que metía OCD en Fear en 2017, ya no lo hace en 2024.</p>
+    </div>
+    <span class="slide-num">42 · 47</span>
+    <span class="section-label">Debate sobre trastorno obsesivo-compulsivo</span>
+</section>
+
+<section class="slide" id="slide-43">
+    <div class="slide-content centered">
+        <h1 class="reveal">Tres líneas independientes convergen: <span style="color: var(--color-compulsive);">TOC ≠ miembro inequívoco del Fear subfactor</span></h1>
+        <div class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); display: flex; justify-content: center;">
+            <svg class="triangle-svg" viewBox="0 0 400 340">
+                <!-- Triángulo -->
+                <polygon points="200,40 60,300 340,300" fill="none" stroke="rgba(249,115,22,0.4)" stroke-width="2" stroke-dasharray="6,4"/>
+                <!-- Vértice 1 -->
+                <circle cx="200" cy="40" r="28" fill="rgba(139,92,246,0.18)" stroke="#8b5cf6" stroke-width="2"/>
+                <text x="200" y="46" text-anchor="middle" class="vertex-label" fill="#c4b5fd">PGC 2025</text>
+                <text x="200" y="20" text-anchor="middle" fill="#a8978b" style="font-size: 11px;">Genómica</text>
+                <!-- Vértice 2 -->
+                <circle cx="60" cy="300" r="28" fill="rgba(59,130,246,0.18)" stroke="#3b82f6" stroke-width="2"/>
+                <text x="60" y="306" text-anchor="middle" class="vertex-label" fill="#93c5fd">Forbes 2024</text>
+                <text x="60" y="335" text-anchor="middle" fill="#a8978b" style="font-size: 11px;">Data-driven</text>
+                <!-- Vértice 3 -->
+                <circle cx="340" cy="300" r="28" fill="rgba(220,38,38,0.18)" stroke="#dc2626" stroke-width="2"/>
+                <text x="340" y="306" text-anchor="middle" class="vertex-label" fill="#fca5a5">HiTOP-SR</text>
+                <text x="340" y="335" text-anchor="middle" fill="#a8978b" style="font-size: 11px;">Instrumento</text>
+                <!-- Centro -->
+                <circle cx="200" cy="213" r="42" fill="rgba(249,115,22,0.15)" stroke="#f97316" stroke-width="2"/>
+                <text x="200" y="208" text-anchor="middle" fill="#fdba74" style="font-size: 14px; font-weight: 600;">TOC</text>
+                <text x="200" y="226" text-anchor="middle" fill="#fdba74" style="font-size: 10px;">bridge node</text>
+            </svg>
+        </div>
+        <p class="reveal source" style="text-align: center; margin-top: clamp(0.75rem, 1vw, 1rem);">Genómica · Sintomatología data-driven · Instrumento operacional · todas apuntan en la misma dirección</p>
+    </div>
+    <span class="slide-num">43 · 47</span>
+    <span class="section-label">Debate sobre trastorno obsesivo-compulsivo</span>
+</section>
+
+<section class="slide" id="slide-44">
+    <div class="slide-content">
+        <h1 class="reveal">TOC como <span style="color: var(--color-accent);">nodo puente</span>: un brazo en Fear, otro en Compulsive</h1>
+        <div class="split reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); gap: clamp(1.5rem, 3vw, 2rem);">
+            <div class="card" style="border-left: 4px solid var(--color-fear);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-fear);">Brazo Fear</p>
+                <ul style="list-style: none; margin-top: 0.5rem;">
+                    <li style="font-size: var(--small-size); padding: 0.2rem 0;">• Pensamientos intrusivos catastróficos</li>
+                    <li style="font-size: var(--small-size); padding: 0.2rem 0;">• Ansiedad anticipatoria</li>
+                    <li style="font-size: var(--small-size); padding: 0.2rem 0;">• Evitación de disparadores</li>
+                    <li style="font-size: var(--small-size); padding: 0.2rem 0;">• Activación autonómica elevada</li>
+                </ul>
+                <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.05);">Tratamiento: exposición · inhibidores de la recaptación de serotonina</p>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--color-compulsive);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-compulsive);">Brazo Compulsive</p>
+                <ul style="list-style: none; margin-top: 0.5rem;">
+                    <li style="font-size: var(--small-size); padding: 0.2rem 0;">• Rituales (lavado, comprobación, conteo)</li>
+                    <li style="font-size: var(--small-size); padding: 0.2rem 0;">• Sensación de "no del todo correcto"</li>
+                    <li style="font-size: var(--small-size); padding: 0.2rem 0;">• Búsqueda de simetría y completitud</li>
+                    <li style="font-size: var(--small-size); padding: 0.2rem 0;">• Rigidez cognitiva (circuito córtico-estriato-tálamo-cortical)</li>
+                </ul>
+                <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.05);">Tratamiento: exposición con prevención de respuesta · neuromodulación del circuito córtico-estriato-tálamo-cortical</p>
+            </div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); text-align: center; color: var(--color-accent);">La elección entre tratar el miedo vs tratar la compulsión depende del <strong>brazo dominante</strong> en cada paciente.</p>
+    </div>
+    <span class="slide-num">44 · 47</span>
+    <span class="section-label">Debate sobre trastorno obsesivo-compulsivo</span>
+</section>
+
+<!-- === SECCIÓN H: CIERRE (slides 45-47) === -->
+
+<section class="slide" id="slide-45">
+    <div class="slide-content centered">
+        <h1 class="reveal" style="font-size: clamp(1.3rem, 3vw, 2.2rem); line-height: 1.5; max-width: 850px;">
+            El miedo no es una caja — es un <span style="color: var(--color-accent);">perfil de mecanismos</span>.<br>
+            Cuatro lentes (<span style="color: var(--color-fear);">RDoC</span>, <span style="color: var(--color-distress);">HiTOP</span>, <span style="color: var(--color-allostatic);">AL+K10</span>, <span style="color: var(--color-meta);">metacontrol</span>) lo descomponen.<br>
+            El <span style="color: var(--color-compulsive);">TOC</span> vive en el puente entre Fear y Compulsive — y eso cambia cómo lo tratamos.
+        </h1>
+        <p class="reveal source" style="margin-top: clamp(1rem, 2vw, 1.5rem);">Take-home · S5 · Bloque 2</p>
+    </div>
+    <span class="slide-num">45 · 47</span>
+    <span class="section-label">Cierre</span>
+</section>
+
+<section class="slide" id="slide-46">
+    <div class="slide-content">
+        <h1 class="reveal">Cuatro puntos para recordar</h1>
+        <div class="flow-vertical reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); gap: clamp(0.5rem, 1vw, 0.75rem); max-width: 750px; margin-left: auto; margin-right: auto;">
+            <div style="display: grid; grid-template-columns: 50px 1fr; gap: 0.75rem; padding: 0.6rem 0.75rem; background: var(--bg-card); border-left: 3px solid var(--color-acute); border-radius: 0 4px 4px 0;">
+                <span class="med-number" style="color: var(--color-acute);">1</span>
+                <div style="align-self: center;"><strong>Fears (plural).</strong> 5 constructos RDoC, no uno. Imminence × uncertainty × duration.</div>
+            </div>
+            <div style="display: grid; grid-template-columns: 50px 1fr; gap: 0.75rem; padding: 0.6rem 0.75rem; background: var(--bg-card); border-left: 3px solid var(--color-potential); border-radius: 0 4px 4px 0;">
+                <span class="med-number" style="color: var(--color-potential);">2</span>
+                <div style="align-self: center;"><strong>La disociación núcleo central de la amígdala / núcleo del lecho de la estría terminal no escala de rodente a humano</strong> (Fox &amp; Shackman 2025). Leer la resonancia magnética funcional con esa lupa.</div>
+            </div>
+            <div style="display: grid; grid-template-columns: 50px 1fr; gap: 0.75rem; padding: 0.6rem 0.75rem; background: var(--bg-card); border-left: 3px solid var(--color-allostatic); border-radius: 0 4px 4px 0;">
+                <span class="med-number" style="color: var(--color-allostatic);">3</span>
+                <div style="align-self: center;"><strong>Carga alostática + Kessler-10 = puente cuerpo-mente.</strong> Termómetro y huella corporal para mañana en consulta.</div>
+            </div>
+            <div style="display: grid; grid-template-columns: 50px 1fr; gap: 0.75rem; padding: 0.6rem 0.75rem; background: var(--bg-card); border-left: 3px solid var(--color-compulsive); border-radius: 0 4px 4px 0;">
+                <span class="med-number" style="color: var(--color-compulsive);">4</span>
+                <div style="align-self: center;"><strong>El trastorno obsesivo-compulsivo es nodo puente.</strong> Tres líneas independientes (Psychiatric Genomics Consortium, Forbes, HiTOP-SR) lo sacan del subfactor Fear.</div>
+            </div>
+        </div>
+    </div>
+    <span class="slide-num">46 · 47</span>
+    <span class="section-label">Cierre</span>
+</section>
+
+<section class="slide" id="slide-47">
+    <div class="domain-bar gradient"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Tarea S6 + preview del bloque</h1>
+        <div class="split reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); gap: clamp(1.5rem, 3vw, 2.5rem);">
+            <div class="card" style="border-left: 4px solid var(--color-accent);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-accent);">Tarea</p>
+                <h3 style="color: var(--text-primary); margin-top: 0.5rem;">Lectura para S6</h3>
+                <p style="font-size: var(--small-size); margin-top: 0.5rem;"><strong>Craske MG et al. 2014</strong> — Maximizing exposure therapy: An inhibitory learning approach. <em>Behav Res Ther</em> 58:10-23.</p>
+                <p style="font-size: var(--small-size); margin-top: 0.5rem; color: var(--text-muted); font-style: italic;">"¿Por qué Craske argumenta que la habituación NO es el mecanismo principal de la exposición?"</p>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--color-fear);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-fear);">Preview</p>
+                <div style="margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.4rem;">
+                    <div style="font-size: var(--small-size);"><strong>Sesión 6 · Psicoterapia</strong> — exposición con prevención de respuesta + aprendizaje inhibitorio</div>
+                    <div style="font-size: var(--small-size);"><strong>Sesión 7 · Farmacología PRISM</strong> — por qué las benzodiacepinas pueden sabotear la exposición con prevención de respuesta</div>
+                </div>
+                <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.05);">El paciente del caso de apertura vuelve en S7.</p>
+            </div>
+        </div>
+        <p class="reveal source" style="text-align: center; margin-top: clamp(1rem, 2vw, 1.5rem);">Gracias.</p>
+    </div>
+    <span class="slide-num">47 · 47</span>
+    <span class="section-label">Cierre</span>
+</section>
+
+<script>
+class SlidePresentation {
+    constructor() {
+        this.slides = document.querySelectorAll('.slide');
+        this.currentSlide = 0;
+        this.setupIntersectionObserver();
+        this.setupKeyboardNav();
+        this.setupTouchNav();
+        this.setupProgressBar();
+        this.setupNavDots();
+    }
+    setupIntersectionObserver() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    const idx = Array.from(this.slides).indexOf(entry.target);
+                    this.currentSlide = idx;
+                    this.updateProgress();
+                    this.updateDots();
+                }
+            });
+        }, { threshold: 0.5 });
+        this.slides.forEach(slide => observer.observe(slide));
+    }
+    setupKeyboardNav() {
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                this.goTo(Math.min(this.currentSlide + 1, this.slides.length - 1));
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                e.preventDefault();
+                this.goTo(Math.max(this.currentSlide - 1, 0));
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                this.goTo(0);
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                this.goTo(this.slides.length - 1);
+            }
+        });
+    }
+    setupTouchNav() {
+        let startY = 0;
+        document.addEventListener('touchstart', (e) => { startY = e.touches[0].clientY; });
+        document.addEventListener('touchend', (e) => {
+            const diff = startY - e.changedTouches[0].clientY;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) this.goTo(Math.min(this.currentSlide + 1, this.slides.length - 1));
+                else this.goTo(Math.max(this.currentSlide - 1, 0));
+            }
+        });
+    }
+    setupProgressBar() {
+        this.progressBar = document.getElementById('progressBar');
+        this.updateProgress();
+    }
+    setupNavDots() {
+        const nav = document.getElementById('navDots');
+        nav.innerHTML = '';
+        this.slides.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.addEventListener('click', () => this.goTo(i));
+            nav.appendChild(dot);
+        });
+        this.dots = nav.querySelectorAll('.dot');
+    }
+    goTo(idx) {
+        this.slides[idx].scrollIntoView({ behavior: 'smooth' });
+    }
+    updateProgress() {
+        const pct = ((this.currentSlide + 1) / this.slides.length) * 100;
+        this.progressBar.style.width = pct + '%';
+    }
+    updateDots() {
+        if (!this.dots) return;
+        this.dots.forEach((d, i) => d.classList.toggle('active', i === this.currentSlide));
+    }
+}
+new SlidePresentation();
+</script>
+</body>
+</html>
