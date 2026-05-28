@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sesión 6: Tratamiento — Psicoterapia (Fear)</title>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@400;500;600;700&f[]=satoshi@400;500;700&display=swap"/>
+<style>
+:root {
+    --bg-primary: #0c0a09;
+    --bg-secondary: #1c1410;
+    --bg-card: #261a14;
+    --text-primary: #f1ece8;
+    --text-secondary: #a8978b;
+    --text-muted: #6b5b53;
+    --font-display: 'Clash Display', sans-serif;
+    --font-body: 'Satoshi', sans-serif;
+    --title-size: clamp(1.6rem, 4.5vw, 3.2rem);
+    --h2-size: clamp(1.2rem, 3vw, 2rem);
+    --body-size: clamp(0.7rem, 1.3vw, 1rem);
+    --small-size: clamp(0.6rem, 1vw, 0.8rem);
+    --slide-padding: clamp(1.5rem, 4vw, 4rem);
+    --content-gap: clamp(0.75rem, 2vw, 1.5rem);
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --duration-normal: 0.6s;
+    --color-acute: #ef4444;
+    --color-potential: #f97316;
+    --color-sustained: #f59e0b;
+    --color-loss: #64748b;
+    --color-fear: #dc2626;
+    --color-distress: #3b82f6;
+    --color-compulsive: #8b5cf6;
+    --color-accent: #f97316;
+    --color-warn: #facc15;
+    --color-success: #22c55e;
+    --color-danger: #ef4444;
+    --color-intervention: #14b8a6;
+    --color-il: #06b6d4;
+    --color-erp: #10b981;
+    --color-up: #8b5cf6;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; overflow-x: hidden; }
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+.slide {
+    width: 100vw; height: 100vh; height: 100dvh;
+    overflow: hidden; scroll-snap-align: start;
+    display: flex; flex-direction: column; position: relative;
+    background: var(--bg-primary); font-family: var(--font-body); color: var(--text-primary);
+}
+.slide-content {
+    flex: 1; display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    max-height: 100%; overflow: hidden;
+    padding: var(--slide-padding);
+}
+.slide-content > * { width: 100%; max-width: 1000px; }
+.slide h1 { font-family: var(--font-display); font-size: var(--title-size); font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; }
+.slide h2 { font-family: var(--font-display); font-size: var(--h2-size); font-weight: 500; line-height: 1.2; color: var(--text-secondary); margin-top: clamp(0.3rem, 1vw, 0.75rem); }
+.slide p, .slide li { font-size: var(--body-size); line-height: 1.5; color: var(--text-secondary); }
+.slide .source { font-size: var(--small-size); color: var(--text-muted); padding-top: clamp(0.75rem, 1.5vh, 1.5rem); }
+.domain-bar { position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.domain-bar.fear { background: var(--color-fear); }
+.domain-bar.gradient { background: linear-gradient(90deg, var(--color-acute), var(--color-potential), var(--color-sustained)); }
+.domain-bar.intervention { background: var(--color-intervention); }
+.domain-bar.il { background: var(--color-il); }
+.domain-bar.erp { background: var(--color-erp); }
+.domain-bar.up { background: var(--color-up); }
+.centered { text-align: center; }
+.centered > * { margin-left: auto; margin-right: auto; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1rem, 3vw, 2.5rem); align-items: center; }
+.three-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(0.5rem, 1.5vw, 1.5rem); }
+.four-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(0.4rem, 1vw, 1rem); }
+.flow-horizontal { display: flex; align-items: center; gap: clamp(0.3rem, 0.8vw, 0.75rem); flex-wrap: wrap; justify-content: center; }
+.flow-vertical { display: flex; flex-direction: column; gap: clamp(0.3rem, 0.8vw, 0.6rem); }
+.tag { display: inline-block; padding: clamp(0.15rem, 0.4vw, 0.3rem) clamp(0.4rem, 1vw, 0.75rem); border-radius: 4px; font-size: var(--small-size); font-weight: 500; }
+.tag-red { background: rgba(239,68,68,0.15); color: #fca5a5; }
+.tag-orange { background: rgba(249,115,22,0.15); color: #fdba74; }
+.tag-green { background: rgba(16,185,129,0.15); color: #6ee7b7; }
+.tag-cyan { background: rgba(6,182,212,0.15); color: #67e8f9; }
+.tag-violet { background: rgba(139,92,246,0.18); color: #c4b5fd; }
+.tag-gray { background: rgba(148,163,184,0.15); color: #cbd5e1; }
+.tag-amber { background: rgba(245,158,11,0.15); color: #fcd34d; }
+.card {
+    background: var(--bg-card); border-radius: 8px;
+    padding: clamp(0.75rem, 2vw, 1.5rem);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+.card h3 { font-family: var(--font-display); font-size: clamp(0.85rem, 1.5vw, 1.15rem); font-weight: 500; margin-bottom: clamp(0.3rem, 0.5vw, 0.5rem); }
+.flow-box {
+    background: var(--bg-card); border-radius: 6px;
+    padding: clamp(0.4rem, 1vw, 0.75rem) clamp(0.6rem, 1.2vw, 1rem);
+    font-size: var(--body-size); text-align: center;
+    border-left: 3px solid var(--color-accent);
+    min-width: clamp(80px, 12vw, 140px);
+}
+.flow-arrow { font-size: clamp(0.8rem, 1.5vw, 1.2rem); color: var(--text-muted); }
+.big-number { font-family: var(--font-display); font-size: clamp(2.5rem, 7vw, 6rem); font-weight: 700; line-height: 1; }
+.med-number { font-family: var(--font-display); font-size: clamp(1.5rem, 4vw, 3rem); font-weight: 600; line-height: 1; }
+.data-table { width: 100%; border-collapse: collapse; font-size: var(--small-size); }
+.data-table th { text-align: left; padding: clamp(0.3rem, 0.6vw, 0.5rem); color: var(--text-muted); font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: var(--small-size); }
+.data-table td { padding: clamp(0.25rem, 0.5vw, 0.4rem); border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-secondary); }
+.data-table tr:hover td { background: rgba(255,255,255,0.02); }
+.bar-container { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; }
+.bar-label { font-size: var(--small-size); min-width: clamp(100px, 18vw, 200px); text-align: right; color: var(--text-secondary); }
+.bar { height: clamp(16px, 2.5vh, 24px); border-radius: 4px; display: flex; align-items: center; padding-left: 0.5rem; font-size: var(--small-size); font-weight: 600; color: var(--text-primary); min-width: 40px; }
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity var(--duration-normal) var(--ease-out-expo), transform var(--duration-normal) var(--ease-out-expo); }
+.slide.visible .reveal { opacity: 1; transform: translateY(0); }
+.reveal:nth-child(2) { transition-delay: 0.1s; }
+.reveal:nth-child(3) { transition-delay: 0.2s; }
+.reveal:nth-child(4) { transition-delay: 0.3s; }
+.reveal:nth-child(5) { transition-delay: 0.4s; }
+.reveal:nth-child(6) { transition-delay: 0.5s; }
+.progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: var(--color-intervention); z-index: 1000; transition: width 0.3s ease; }
+.nav-dots { position: fixed; right: clamp(0.5rem, 1.5vw, 1.5rem); top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 5px; z-index: 100; max-height: 80vh; overflow-y: auto; padding: 4px; }
+.nav-dots .dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.2); cursor: pointer; transition: all 0.3s; flex-shrink: 0; }
+.nav-dots .dot.active { background: var(--color-intervention); transform: scale(1.5); }
+.slide-num { position: absolute; bottom: clamp(0.5rem, 1vh, 1rem); left: clamp(0.75rem, 1.5vw, 1.5rem); font-size: var(--small-size); color: var(--text-muted); font-family: var(--font-display); letter-spacing: 0.05em; }
+.section-label { position: absolute; bottom: clamp(0.5rem, 1vh, 1rem); right: clamp(0.75rem, 1.5vw, 1.5rem); font-size: var(--small-size); color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase; }
+@media (max-height: 700px) { :root { --slide-padding: clamp(0.75rem, 3vw, 2rem); --title-size: clamp(1.3rem, 4vw, 2.5rem); } }
+@media (max-height: 600px) { :root { --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem); --title-size: clamp(1.1rem, 3.5vw, 2rem); --body-size: clamp(0.65rem, 1.1vw, 0.9rem); } .nav-dots { display: none; } }
+@media (max-width: 700px) { .split { grid-template-columns: 1fr; } .three-cols, .four-cols { grid-template-columns: 1fr 1fr; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots"></nav>
+
+<!-- === SECCIÓN A: APERTURA (slides 1-4) === -->
+
+<section class="slide" id="slide-1">
+    <div class="domain-bar intervention"></div>
+    <div class="slide-content centered">
+        <p class="reveal" style="font-size: var(--small-size); color: var(--color-intervention); letter-spacing: 0.15em; text-transform: uppercase;">Psicopatología Dimensional · Bloque 2</p>
+        <h1 class="reveal" style="margin-top: clamp(0.5rem, 1vw, 1rem);">Tratamiento — Psicoterapia<br><span style="color: var(--color-intervention);">Fear</span></h1>
+        <h2 class="reveal">Aprendizaje inhibitorio · ERP · Protocolo Unificado</h2>
+        <p class="reveal source">Sesión 6 de 21 · Javier Flores · R1 Psiquiatría · 2026</p>
+    </div>
+    <div style="position: absolute; bottom: 15%; left: 50%; transform: translateX(-50%); width: 60%; height: 1px; background: linear-gradient(90deg, transparent, var(--color-il), var(--color-erp), var(--color-up), transparent); opacity: 0.5;"></div>
+    <span class="slide-num"></span>
+    <span class="section-label">Apertura</span>
+</section>
+
+<section class="slide" id="slide-2">
+    <div class="domain-bar fear"></div>
+    <div class="slide-content centered">
+        <h1 class="reveal">¿Cuál era el mecanismo transdiagnóstico del <span style="color: var(--color-fear);">subfactor fear</span>?</h1>
+        <div class="three-cols reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); max-width: 700px;">
+            <div class="card" style="text-align: center; opacity: 0.5;"><p style="color: var(--text-muted); font-size: var(--small-size);">A</p><p style="color: var(--text-secondary);">Habituación al estímulo</p></div>
+            <div class="card" style="text-align: center; border: 1px solid var(--color-fear);"><p style="color: var(--color-fear); font-size: var(--small-size);">B</p><p style="color: var(--text-primary);"><strong>Persistence bias</strong><br>rigidez metacognitiva</p></div>
+            <div class="card" style="text-align: center; opacity: 0.5;"><p style="color: var(--text-muted); font-size: var(--small-size);">C</p><p style="color: var(--text-secondary);">Sobreactivación amigdalar</p></div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); color: var(--color-intervention); font-style: italic;">Hoy vamos a ver cómo se interviene sobre ese mecanismo.</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Apertura</span>
+</section>
+
+<section class="slide" id="slide-3">
+    <div class="slide-content">
+        <h1 class="reveal">S5 nos dio el <span style="color: var(--color-fear);">diagnóstico</span> dimensional — S6 nos da la <span style="color: var(--color-intervention);">intervención</span></h1>
+        <div class="split reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem);">
+            <div class="card" style="border-top: 3px solid var(--color-fear);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; color: var(--color-fear); letter-spacing: 0.08em;">S5 — Modelo</p>
+                <p style="margin-top: 0.5rem;">Triple mapeo: RDoC + HiTOP + Mecanismo</p>
+                <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.3rem;">"Qué tiene y por qué persiste"</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-intervention);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; color: var(--color-intervention); letter-spacing: 0.08em;">S6 — Intervención</p>
+                <p style="margin-top: 0.5rem;">Exposición + ERP + Protocolo Unificado</p>
+                <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.3rem;">"Cómo se interviene"</p>
+            </div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); text-align: center; color: var(--color-accent); font-style: italic;">El modelo dicta la intervención, no el diagnóstico DSM.</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Apertura</span>
+</section>
+
+<section class="slide" id="slide-4">
+    <div class="slide-content centered">
+        <h1 class="reveal">Tres preguntas que vamos a responder hoy</h1>
+        <div class="flow-vertical reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); gap: clamp(0.5rem, 1vw, 0.75rem); max-width: 650px;">
+            <div class="card" style="border-left: 3px solid var(--color-il);"><p style="color: var(--color-il); font-size: var(--small-size); text-transform: uppercase;">Mecanismo</p><p style="color: var(--text-primary); margin-top: 0.3rem;"><strong>¿Por qué funciona la exposición?</strong></p></div>
+            <div class="card" style="border-left: 3px solid var(--color-erp);"><p style="color: var(--color-erp); font-size: var(--small-size); text-transform: uppercase;">ERP</p><p style="color: var(--text-primary); margin-top: 0.3rem;"><strong>¿Qué hace diferente al ERP?</strong></p></div>
+            <div class="card" style="border-left: 3px solid var(--color-up);"><p style="color: var(--color-up); font-size: var(--small-size); text-transform: uppercase;">Decisión</p><p style="color: var(--text-primary); margin-top: 0.3rem;"><strong>¿Cuándo UP vs ERP?</strong></p></div>
+        </div>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Apertura</span>
+</section>
+
+<!-- === SECCIÓN B: MECANISMOS DE LA EXPOSICIÓN (slides 5-14) === -->
+
+<section class="slide" id="slide-5">
+    <div class="domain-bar il"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Durante 30 años, la respuesta fue: <span style="color: var(--color-sustained);">"la ansiedad baja. El paciente se habitúa."</span></h1>
+        <div class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); max-width: 700px; margin-left: auto; margin-right: auto;">
+            <svg viewBox="0 0 700 280" style="width: 100%; height: auto;">
+                <rect x="0" y="0" width="700" height="280" fill="none"/>
+                <line x1="60" y1="240" x2="650" y2="240" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+                <line x1="60" y1="40" x2="60" y2="240" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+                <text x="30" y="145" fill="#a8978b" font-size="11" text-anchor="middle" transform="rotate(-90,30,145)" font-family="Satoshi, sans-serif">SUDS</text>
+                <text x="355" y="268" fill="#a8978b" font-size="11" text-anchor="middle" font-family="Satoshi, sans-serif">Tiempo durante la sesión →</text>
+                <path d="M60,220 C120,220 140,60 200,60 C260,60 300,100 350,120 C400,140 450,160 500,180 C550,195 600,210 650,215" fill="none" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+                <text x="200" y="48" fill="#f59e0b" font-size="11" font-family="Satoshi, sans-serif">↑ Pico de ansiedad</text>
+                <text x="530" y="200" fill="#f59e0b" font-size="11" font-family="Satoshi, sans-serif">↓ Habituación</text>
+            </svg>
+        </div>
+        <p class="reveal source" style="text-align: center;">Emotional Processing Theory — Foa &amp; Kozak 1986</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Mecanismos</span>
+</section>
+
+<section class="slide" id="slide-6">
+    <div class="domain-bar il"></div>
+    <div class="slide-content">
+        <h1 class="reveal">El problema: la habituación intra-sesión <span style="color: var(--color-danger);">no predice</span> si el paciente mejora</h1>
+        <div class="flow-vertical reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); gap: clamp(0.3rem, 0.6vw, 0.5rem);">
+            <div class="bar-container"><span class="bar-label">Rupp et al. 2017 (meta-análisis)</span><div class="bar" style="width: 50%; background: rgba(239,68,68,0.3); border: 1px solid rgba(239,68,68,0.5);">n.s.</div></div>
+            <div class="bar-container"><span class="bar-label">Meuret et al. 2012</span><div class="bar" style="width: 45%; background: rgba(239,68,68,0.3); border: 1px solid rgba(239,68,68,0.5);">n.s.</div></div>
+            <div class="bar-container"><span class="bar-label">Peterman et al. 2016</span><div class="bar" style="width: 42%; background: rgba(239,68,68,0.3); border: 1px solid rgba(239,68,68,0.5);">n.s.</div></div>
+            <div class="bar-container"><span class="bar-label">Kozak, van Minnen &amp; Foa 2006</span><div class="bar" style="width: 48%; background: rgba(239,68,68,0.3); border: 1px solid rgba(239,68,68,0.5);">n.s.</div></div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1rem); text-align: center;"><span class="tag tag-red">WSFR = Within-Session Fear Reduction</span> <span style="color: var(--text-muted); font-size: var(--small-size); margin-left: 0.5rem;">No predice outcome.</span></p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Mecanismos</span>
+</section>
+
+<section class="slide" id="slide-7">
+    <div class="domain-bar il"></div>
+    <div class="slide-content">
+        <h1 class="reveal">La extinción <span style="color: var(--color-il);">no borra</span> el miedo — crea una <span style="color: var(--color-erp);">memoria nueva</span> que compite</h1>
+        <div class="split reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem);">
+            <div class="card" style="border-left: 4px solid var(--color-fear);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; color: var(--color-fear);">Memoria original (CS-US)</p>
+                <p style="margin-top: 0.5rem; color: var(--text-primary);">"La perilla está contaminada → me voy a enfermar"</p>
+                <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.4rem; font-style: italic;">Persiste siempre</p>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--color-erp);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; color: var(--color-erp);">Memoria inhibitoria (CS-noUS)</p>
+                <p style="margin-top: 0.5rem; color: var(--text-primary);">"Toqué la perilla → no pasó nada"</p>
+                <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.4rem; font-style: italic;">Compite por expresión</p>
+            </div>
+        </div>
+        <div class="four-cols reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1rem);">
+            <div style="text-align: center; padding: 0.4rem;"><span class="tag tag-amber">Recuperación espontánea</span></div>
+            <div style="text-align: center; padding: 0.4rem;"><span class="tag tag-amber">Renovación contextual</span></div>
+            <div style="text-align: center; padding: 0.4rem;"><span class="tag tag-amber">Reinstauración</span></div>
+            <div style="text-align: center; padding: 0.4rem;"><span class="tag tag-amber">Readquisición rápida</span></div>
+        </div>
+        <p class="reveal source" style="text-align: center;">Si la extinción borrara el miedo, ninguno de estos fenómenos existiría. — Bouton 2002/2004; Craske et al. 2014</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Mecanismos</span>
+</section>
+
+<section class="slide" id="slide-8">
+    <div class="domain-bar il"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Habituación vs <span style="color: var(--color-il);">Aprendizaje Inhibitorio</span>: lo que cambió</h1>
+        <div class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1rem);">
+            <table class="data-table">
+                <thead><tr><th></th><th style="color: var(--color-sustained);">Habituación (Foa 1986)</th><th style="color: var(--color-il);">Aprendizaje Inhibitorio (Craske 2014)</th></tr></thead>
+                <tbody>
+                    <tr><td style="color: var(--text-primary);">Mecanismo</td><td>Reducción de arousal</td><td style="color: var(--text-primary);">Nueva memoria CS-noUS</td></tr>
+                    <tr><td style="color: var(--text-primary);">Criterio de éxito</td><td>SUDS baja</td><td style="color: var(--text-primary);">Expectativa violada</td></tr>
+                    <tr><td style="color: var(--text-primary);">Fin de exposición</td><td>Cuando ansiedad "baje"</td><td style="color: var(--text-primary);">Cuando predicción fue testeada</td></tr>
+                    <tr><td style="color: var(--text-primary);">Jerarquía</td><td>Estrictamente graduada</td><td style="color: var(--text-primary);">Variable, no rígida</td></tr>
+                    <tr><td style="color: var(--text-primary);">BDZ concurrente</td><td>Facilita</td><td style="color: var(--color-danger);">Puede interferir</td></tr>
+                    <tr><td style="color: var(--text-primary);">Evidencia 2025</td><td style="color: var(--color-danger);">WSFR no predice outcome</td><td style="color: var(--color-erp);">EC y tasa de aprendizaje sí predicen</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="reveal source" style="text-align: center;">Craske et al. 2014, <em>BRT</em> · Actualización 2022 · Pittig et al. 2022</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Mecanismos</span>
+</section>
+
+<section class="slide" id="slide-9">
+    <div class="domain-bar il"></div>
+    <div class="slide-content">
+        <h1 class="reveal">2022: no solo adquirir la extinción — <span style="color: var(--color-il);">poder recuperarla</span> en cualquier contexto</h1>
+        <div class="flow-horizontal reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem);">
+            <div class="flow-box" style="border-left-color: var(--color-sustained);">1. Adquisición<br><span style="font-size: var(--small-size); color: var(--text-muted);">CS-noUS en sesión</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box" style="border-left-color: var(--color-potential);">2. Consolidación<br><span style="font-size: var(--small-size); color: var(--text-muted);">Post-sesión, sueño</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-box" style="border-left-color: var(--color-il); border: 1px solid var(--color-il);">3. Recuperación<br><span style="font-size: var(--small-size); color: var(--color-il);">Retrieval multi-contexto</span></div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); text-align: center; color: var(--color-il); font-style: italic;">Inhibitory Retrieval Model — la generalización es tan crítica como el aprendizaje.</p>
+        <p class="reveal source" style="text-align: center;">Craske 2022, <em>Behav Res Ther</em></p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Mecanismos</span>
+</section>
+
+<section class="slide" id="slide-10">
+    <div class="domain-bar il"></div>
+    <div class="slide-content">
+        <h1 class="reveal">La extinción tiene su propio circuito — y es <span style="color: var(--color-erp);">activo</span>, no pasivo</h1>
+        <div class="flow-vertical reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); align-items: center; gap: clamp(0.3rem, 0.6vw, 0.5rem);">
+            <div class="flow-box" style="border-left-color: var(--color-erp); max-width: 400px;"><strong style="color: var(--color-erp);">IL-mPFC / vmPFC</strong><br><span style="font-size: var(--small-size);">Señal activa de seguridad</span></div>
+            <span class="flow-arrow">↓</span>
+            <div class="flow-box" style="border-left-color: var(--color-sustained); max-width: 400px;"><strong style="color: var(--color-sustained);">ITC</strong> (células intercaladas)<br><span style="font-size: var(--small-size);">Mediación inhibitoria</span></div>
+            <span class="flow-arrow">↓</span>
+            <div class="flow-box" style="border-left-color: var(--color-fear); max-width: 400px; opacity: 0.6;"><strong style="color: var(--color-fear);">BLA</strong> (amígdala basolateral)<br><span style="font-size: var(--small-size);">← INHIBIDA</span></div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1rem); text-align: center; color: var(--color-intervention); font-size: var(--body-size);">Las neuronas IL solo responden al CS <strong>después</strong> de la extinción. No es ausencia de peligro — es señal de seguridad.</p>
+        <p class="reveal source" style="text-align: center;">Quirk et al. 2007 · Fullana et al. 2018</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Mecanismos</span>
+</section>
+
+<section class="slide" id="slide-11">
+    <div class="domain-bar il"></div>
+    <div class="slide-content">
+        <h1 class="reveal"><span style="color: var(--color-il);">Error de predicción</span>: el motor del aprendizaje inhibitorio</h1>
+        <div class="flow-vertical reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); gap: clamp(0.4rem, 0.8vw, 0.6rem); max-width: 700px; margin-left: auto; margin-right: auto;">
+            <div class="card" style="border-left: 3px solid var(--color-potential);"><p style="font-size: var(--small-size); text-transform: uppercase; color: var(--color-potential);">1. Predicción</p><p style="color: var(--text-primary); margin-top: 0.3rem;">"Si toco la perilla sin lavarme, me voy a contaminar y vomitar en 2 horas"</p><p style="color: var(--color-sustained); font-size: var(--small-size); margin-top: 0.3rem;">SUDS predicho: 85</p></div>
+            <div class="card" style="border-left: 3px solid var(--color-intervention);"><p style="font-size: var(--small-size); text-transform: uppercase; color: var(--color-intervention);">2. Exposición</p><p style="color: var(--text-primary); margin-top: 0.3rem;">Toca la perilla. No se lava.</p></div>
+            <div class="card" style="border-left: 3px solid var(--color-erp);"><p style="font-size: var(--small-size); text-transform: uppercase; color: var(--color-erp);">3. Resultado</p><p style="color: var(--text-primary); margin-top: 0.3rem;">No se enfermó. SUDS real: 40.</p><p style="color: var(--color-il); font-size: var(--body-size); margin-top: 0.3rem; font-weight: 600;">Error de predicción = 85 − 40 = 45 → actualiza la creencia</p></div>
+        </div>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Mecanismos</span>
+</section>
+
+<section class="slide" id="slide-12">
+    <div class="domain-bar il"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Violar la expectativa <span style="color: var(--color-danger);">no alcanza</span> — lo que predice outcome es <span style="color: var(--color-erp);">cuánto cambia la creencia</span></h1>
+        <div class="three-cols reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem);">
+            <div class="card" style="border-top: 3px solid var(--color-danger); text-align: center;">
+                <h3 style="color: var(--color-danger);">EV</h3>
+                <p style="font-size: var(--small-size);">Expectancy Violation</p>
+                <p style="margin-top: 0.5rem; font-size: var(--small-size);">Discrepancia predicción − resultado</p>
+                <p style="color: var(--color-danger); margin-top: 0.5rem; font-weight: 600;">NO predice outcome</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-erp); text-align: center;">
+                <h3 style="color: var(--color-erp);">EC</h3>
+                <p style="font-size: var(--small-size);">Expectancy Change</p>
+                <p style="margin-top: 0.5rem; font-size: var(--small-size);">Cambio real de creencia</p>
+                <p style="color: var(--color-erp); margin-top: 0.5rem; font-weight: 600;">SÍ predice (rs = .23–.36)</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-il); text-align: center;">
+                <h3 style="color: var(--color-il);">Tasa de aprendizaje</h3>
+                <p style="font-size: var(--small-size);">EV → EC conversion</p>
+                <p style="margin-top: 0.5rem; font-size: var(--small-size);">Cuánta violación produce cambio</p>
+                <p style="color: var(--color-il); margin-top: 0.5rem; font-weight: 600;">SÍ predice (~15% varianza)</p>
+            </div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1rem); text-align: center; color: var(--color-accent); font-style: italic;">La violación que no produce cambio de creencia es terapéuticamente inerte.</p>
+        <p class="reveal source" style="text-align: center;">Pittig et al. 2022, <em>Clin Psychol Sci</em> — n=605, 8,484 registros, transdiagnóstico</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Mecanismos</span>
+</section>
+
+<section class="slide" id="slide-13">
+    <div class="domain-bar il"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Seis estrategias del <span style="color: var(--color-il);">modelo inhibitorio</span></h1>
+        <div class="three-cols reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1rem);">
+            <div class="card" style="border-top: 2px solid var(--color-erp);"><span class="tag tag-green" style="margin-bottom: 0.4rem;">Robusta</span><h3>Violación de expectativas</h3><p style="font-size: var(--small-size);">Elicitar predicción → testear → revisar</p></div>
+            <div class="card" style="border-top: 2px solid var(--color-sustained);"><span class="tag tag-amber" style="margin-bottom: 0.4rem;">Moderada</span><h3>Variabilidad de estímulos</h3><p style="font-size: var(--small-size);">Orden no graduado, variación intencional</p></div>
+            <div class="card" style="border-top: 2px solid var(--color-sustained);"><span class="tag tag-amber" style="margin-bottom: 0.4rem;">Moderada</span><h3>Retirada de señales de seguridad</h3><p style="font-size: var(--small-size);">BDZ PRN, acompañante, teléfono</p></div>
+            <div class="card" style="border-top: 2px solid var(--color-sustained);"><span class="tag tag-amber" style="margin-bottom: 0.4rem;">Moderada</span><h3>Extinción multi-contexto</h3><p style="font-size: var(--small-size);">Consulta, hogar, transporte, calle</p></div>
+            <div class="card" style="border-top: 2px solid var(--color-loss);"><span class="tag tag-gray" style="margin-bottom: 0.4rem;">Experimental</span><h3>Extinción profundizada</h3><p style="font-size: var(--small-size);">Combinar CS previamente extinguidos</p></div>
+            <div class="card" style="border-top: 2px solid var(--color-sustained);"><span class="tag tag-amber" style="margin-bottom: 0.4rem;">Moderada</span><h3>Affect labeling</h3><p style="font-size: var(--small-size);">Verbalizar emoción durante exposición</p></div>
+        </div>
+        <p class="reveal source" style="text-align: center;">Craske et al. 2014/2022</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Mecanismos</span>
+</section>
+
+<section class="slide" id="slide-14">
+    <div class="domain-bar il"></div>
+    <div class="slide-content">
+        <h1 class="reveal"><span style="color: var(--color-il);">Affect labeling</span>: nombrar la emoción reduce la respuesta fisiológica</h1>
+        <div class="split reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem);">
+            <div class="flow-vertical" style="gap: clamp(0.3rem, 0.6vw, 0.5rem);">
+                <div class="bar-container"><span class="bar-label">Affect labeling</span><div class="bar" style="width: 85%; background: rgba(6,182,212,0.4); border: 1px solid var(--color-il);">↓↓ SCR</div></div>
+                <div class="bar-container"><span class="bar-label">Reappraisal</span><div class="bar" style="width: 55%; background: rgba(139,92,246,0.3);">↓ SCR</div></div>
+                <div class="bar-container"><span class="bar-label">Distracción</span><div class="bar" style="width: 50%; background: rgba(100,116,139,0.3);">≈</div></div>
+                <div class="bar-container"><span class="bar-label">Exposición sola</span><div class="bar" style="width: 45%; background: rgba(100,116,139,0.3);">≈</div></div>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-il);">
+                <p style="color: var(--text-primary);"><strong>n = 88</strong> · Fobia a arañas</p>
+                <p style="margin-top: 0.5rem; font-size: var(--small-size);">SCR a 1 semana: affect labeling significativamente menor</p>
+                <p style="margin-top: 0.5rem; font-size: var(--small-size);">Correlación: <strong style="color: var(--color-il);">r = −.288</strong></p>
+                <p style="font-size: var(--small-size); color: var(--text-muted);">Más palabras de miedo = menor SCR</p>
+                <p style="margin-top: 0.75rem; font-size: var(--small-size); color: var(--text-muted);">Mecanismo: RVLPFC → inhibición amigdalar</p>
+            </div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1rem); text-align: center; color: var(--color-il); font-style: italic;">Paradoja: hablar del miedo durante la exposición mejora la extinción.</p>
+        <p class="reveal source" style="text-align: center;">Kircanski, Lieberman &amp; Craske 2012, <em>Psychol Sci</em></p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Mecanismos</span>
+</section>
+
+<!-- === SECCIÓN C: ERP (slides 15-20) === -->
+
+<section class="slide" id="slide-15">
+    <div class="domain-bar erp"></div>
+    <div class="slide-content">
+        <h1 class="reveal">En TOC, la <span style="color: var(--color-fear);">compulsión bloquea</span> el error de predicción</h1>
+        <div class="split reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem);">
+            <div class="card" style="border-left: 4px solid var(--color-fear); opacity: 0.8;">
+                <p style="font-size: var(--small-size); text-transform: uppercase; color: var(--color-fear);">Sin prevención de respuesta</p>
+                <div class="flow-vertical" style="margin-top: 0.5rem; gap: 0.3rem;">
+                    <p style="font-size: var(--small-size);">CS (perilla) → ansiedad</p>
+                    <p style="font-size: var(--small-size);">→ <strong style="color: var(--color-fear);">ritual (lavado)</strong> → alivio</p>
+                    <p style="font-size: var(--small-size);">→ "No me enfermé <strong>PORQUE</strong> me lavé"</p>
+                    <p style="font-size: var(--small-size); color: var(--color-fear); margin-top: 0.3rem;">CS-US intacta. Aprendizaje: CERO.</p>
+                </div>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--color-erp);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; color: var(--color-erp);">Con prevención de respuesta</p>
+                <div class="flow-vertical" style="margin-top: 0.5rem; gap: 0.3rem;">
+                    <p style="font-size: var(--small-size);">CS (perilla) → ansiedad</p>
+                    <p style="font-size: var(--small-size);">→ <strong style="color: var(--color-erp);">NO ritual</strong> → resultado real</p>
+                    <p style="font-size: var(--small-size);">→ "No me enfermé <strong>Y</strong> no me lavé"</p>
+                    <p style="font-size: var(--small-size); color: var(--color-erp); margin-top: 0.3rem;">CS-noUS adquirida. Aprendizaje: ACTIVO.</p>
+                </div>
+            </div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1rem); text-align: center; color: var(--color-accent); font-style: italic;">La compulsión es la trampa: alivia pero impide aprender.</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">ERP</span>
+</section>
+
+<section class="slide" id="slide-16">
+    <div class="domain-bar erp"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Foa 1984: la combinación <span style="color: var(--color-erp);">ERP es superior</span></h1>
+        <div class="four-cols reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem);">
+            <div class="card" style="text-align: center; border-top: 2px solid var(--color-sustained); opacity: 0.7;"><h3>Exposición sola</h3><p style="font-size: var(--small-size);">Mejoría parcial<br>(obsesiones)</p></div>
+            <div class="card" style="text-align: center; border-top: 2px solid var(--color-sustained); opacity: 0.7;"><h3>PR sola</h3><p style="font-size: var(--small-size);">Mejoría parcial<br>(compulsiones)</p></div>
+            <div class="card" style="text-align: center; border-top: 3px solid var(--color-erp); border: 1px solid var(--color-erp);"><h3 style="color: var(--color-erp);">ERP combinado</h3><p style="font-size: var(--small-size); color: var(--text-primary);"><strong>Superior en las 3 medidas</strong><br>obsesiones + compulsiones + malestar</p></div>
+            <div class="card" style="text-align: center; border-top: 2px solid var(--color-loss); opacity: 0.5;"><h3>Lista de espera</h3><p style="font-size: var(--small-size);">Sin cambio</p></div>
+        </div>
+        <p class="reveal source" style="text-align: center;">Foa, Steketee, Grayson et al. 1984, <em>Behav Ther</em></p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">ERP</span>
+</section>
+
+<section class="slide" id="slide-17">
+    <div class="domain-bar erp"></div>
+    <div class="slide-content">
+        <h1 class="reveal">ERP: el mayor tamaño de efecto en <span style="color: var(--color-erp);">psiquiatría de ansiedad</span></h1>
+        <div class="flow-vertical reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1rem); gap: clamp(0.3rem, 0.6vw, 0.5rem);">
+            <div class="bar-container"><span class="bar-label">ERP vs lista espera</span><div class="bar" style="width: 90%; background: rgba(16,185,129,0.4); border: 1px solid var(--color-erp);">d = 1.31</div></div>
+            <div class="bar-container"><span class="bar-label">ERP vs placebo</span><div class="bar" style="width: 92%; background: rgba(16,185,129,0.4); border: 1px solid var(--color-erp);">d = 1.33</div></div>
+            <div class="bar-container"><span class="bar-label">ERP específico (2024)</span><div class="bar" style="width: 88%; background: rgba(16,185,129,0.35); border: 1px solid var(--color-erp);">g = −1.25</div></div>
+            <div style="height: 1px; background: rgba(255,255,255,0.1); margin: 0.3rem 0;"></div>
+            <div class="bar-container"><span class="bar-label">Clomipramina vs placebo</span><div class="bar" style="width: 32%; background: rgba(249,115,22,0.3); border: 1px solid var(--color-potential);">−4.72 pts</div></div>
+            <div class="bar-container"><span class="bar-label">ISRS vs placebo</span><div class="bar" style="width: 24%; background: rgba(249,115,22,0.25); border: 1px solid var(--color-potential);">−3.49 pts</div></div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1rem); text-align: center; color: var(--color-erp); font-weight: 600;">ERP ≈ 4× la reducción Y-BOCS que los ISRS solos.</p>
+        <p class="reveal source" style="text-align: center;">Öst 2015 · Cambridge Core 2024 · Skapinakis 2016, <em>Lancet Psychiatry</em> (NMA 86 RCTs)</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">ERP</span>
+</section>
+
+<section class="slide" id="slide-18">
+    <div class="domain-bar erp"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Simpson 2008: ERP funciona <span style="color: var(--color-erp);">incluso sobre ISRS</span></h1>
+        <div class="split reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem);">
+            <div class="card" style="border-left: 3px solid var(--color-erp);"><h3 style="color: var(--color-erp);">ERP augmentación</h3><p style="font-size: var(--small-size);">17 sesiones sobre ISRS previo</p><p style="font-size: var(--small-size); color: var(--text-primary); margin-top: 0.5rem;"><strong>Más respondedores</strong><br>(≥25% reducción Y-BOCS)</p></div>
+            <div class="card" style="border-left: 3px solid var(--color-loss); opacity: 0.7;"><h3>Manejo de estrés</h3><p style="font-size: var(--small-size);">17 sesiones sobre ISRS previo</p><p style="font-size: var(--small-size); margin-top: 0.5rem;">Menos respondedores</p></div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); text-align: center; font-size: var(--body-size); color: var(--text-secondary);">n = 108 · TOC con ISRS previo</p>
+        <p class="reveal source" style="text-align: center;">Simpson et al. 2008, <em>Am J Psychiatry</em> — La pregunta de S7: ¿cuándo agregar fármaco al ERP, o ERP al fármaco?</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">ERP</span>
+</section>
+
+<section class="slide" id="slide-19">
+    <div class="domain-bar erp"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Pero <span style="color: var(--color-danger);">~40% no responde</span> — y el dropout es real</h1>
+        <div class="split reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem);">
+            <div class="flow-vertical" style="gap: clamp(0.5rem, 1vw, 0.75rem);">
+                <div style="text-align: center;"><span class="med-number" style="color: var(--color-sustained);">40-60%</span><p style="font-size: var(--small-size); color: var(--text-muted);">logra reducción clínicamente significativa</p></div>
+                <div style="text-align: center;"><span class="med-number" style="color: var(--color-danger);">20-30%</span><p style="font-size: var(--small-size); color: var(--text-muted);">dropout en estudios controlados</p></div>
+            </div>
+            <div class="flow-vertical" style="gap: clamp(0.3rem, 0.6vw, 0.5rem);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.08em;">Predictores de no-respuesta</p>
+                <div class="flow-box" style="text-align: left; border-left-color: var(--color-danger);">Insight pobre / ausente</div>
+                <div class="flow-box" style="text-align: left; border-left-color: var(--color-danger);">Comorbilidad depresiva alta</div>
+                <div class="flow-box" style="text-align: left; border-left-color: var(--color-danger);">TOC hoarding</div>
+                <div class="flow-box" style="text-align: left; border-left-color: var(--color-danger);">Incumplimiento intersesión</div>
+            </div>
+        </div>
+        <p class="reveal source" style="text-align: center;">Cambridge Core 2024: I² = 72.23% — heterogeneidad alta entre estudios</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">ERP</span>
+</section>
+
+<section class="slide" id="slide-20">
+    <div class="domain-bar erp"></div>
+    <div class="slide-content centered">
+        <h1 class="reveal">Prevención de respuesta interrumpe el <span style="color: var(--color-fear);">persistence bias</span></h1>
+        <div class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); max-width: 700px;">
+            <div style="display: flex; align-items: center; gap: 0; height: clamp(60px, 10vh, 80px); border-radius: 8px; overflow: hidden;">
+                <div style="flex: 1; background: rgba(239,68,68,0.2); height: 100%; display: flex; align-items: center; justify-content: center; border-left: 3px solid var(--color-fear);"><span style="font-size: var(--small-size); color: var(--color-fear); font-weight: 600;">Persistence bias<br>Compulsiones · Rigidez</span></div>
+                <div style="width: clamp(80px, 12vw, 120px); background: rgba(16,185,129,0.3); height: 100%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--color-erp);"><span style="font-size: var(--small-size); color: var(--color-erp); font-weight: 700;">ERP</span></div>
+                <div style="flex: 1; background: rgba(6,182,212,0.1); height: 100%; display: flex; align-items: center; justify-content: center;"><span style="font-size: var(--small-size); color: var(--color-il);">Flexibilidad<br>Nuevo aprendizaje</span></div>
+            </div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); color: var(--color-accent); font-style: italic;">S5 diagnosticó el mecanismo. S6 lo interviene.</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">ERP</span>
+</section>
+
+<!-- === SECCIÓN D: DEMO ERP (slides 21-24) === -->
+
+<section class="slide" id="slide-21">
+    <div class="domain-bar intervention"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Demo: construir una <span style="color: var(--color-intervention);">jerarquía de exposición</span> con principios inhibitorios</h1>
+        <div class="four-cols reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem);">
+            <div class="card" style="text-align: center; border-top: 2px solid var(--color-potential);"><p style="color: var(--color-potential); font-weight: 700; font-size: clamp(1.2rem, 2vw, 1.5rem);">1</p><p style="font-size: var(--small-size);">Identificar CS y US temido</p></div>
+            <div class="card" style="text-align: center; border-top: 2px solid var(--color-il);"><p style="color: var(--color-il); font-weight: 700; font-size: clamp(1.2rem, 2vw, 1.5rem);">2</p><p style="font-size: var(--small-size);">Elicitar predicción <strong>específica</strong></p></div>
+            <div class="card" style="text-align: center; border-top: 2px solid var(--color-erp);"><p style="color: var(--color-erp); font-weight: 700; font-size: clamp(1.2rem, 2vw, 1.5rem);">3</p><p style="font-size: var(--small-size);">Jerarquía 5+ ítems con SUDS</p></div>
+            <div class="card" style="text-align: center; border-top: 2px solid var(--color-intervention);"><p style="color: var(--color-intervention); font-weight: 700; font-size: clamp(1.2rem, 2vw, 1.5rem);">4</p><p style="font-size: var(--small-size);">Instrucción de prevención de respuesta</p></div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); text-align: center;"><span class="tag tag-cyan">Voluntario o caso estandarizado · 13 min</span></p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Demo</span>
+</section>
+
+<section class="slide" id="slide-22">
+    <div class="domain-bar intervention"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Caso para demo: Ana, 26 años, <span style="color: var(--color-potential);">TOC de contaminación</span></h1>
+        <div class="split reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem);">
+            <div class="card" style="border-left: 3px solid var(--color-potential);">
+                <h3 style="color: var(--color-potential);">Perfil</h3>
+                <p style="font-size: var(--small-size);">F · 26 · Estudiante de enfermería</p>
+                <p style="font-size: var(--small-size); margin-top: 0.3rem;">Rituales: lavado 15-20 min post-contacto</p>
+                <p style="font-size: var(--small-size); margin-top: 0.3rem;">Y-BOCS: 24 (moderado-severo)</p>
+                <p style="font-size: var(--small-size); margin-top: 0.3rem;">Fluoxetina 40mg × 8 sem, respuesta parcial</p>
+            </div>
+            <div class="flow-vertical" style="gap: clamp(0.3rem, 0.6vw, 0.5rem);">
+                <div class="flow-box" style="text-align: left; border-left-color: var(--color-potential); font-size: var(--small-size);"><strong>RDoC:</strong> Potential Threat</div>
+                <div class="flow-box" style="text-align: left; border-left-color: var(--color-fear); font-size: var(--small-size);"><strong>HiTOP:</strong> Fear subfactor (λ ~0.65)</div>
+                <div class="flow-box" style="text-align: left; border-left-color: var(--color-sustained); font-size: var(--small-size);"><strong>Mecanismo:</strong> Persistence bias → lavado ritual</div>
+            </div>
+        </div>
+        <p class="reveal source" style="text-align: center; font-style: italic;">Solo si no hay voluntario. Si hay voluntario R1, saltar este slide.</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Demo</span>
+</section>
+
+<section class="slide" id="slide-23">
+    <div class="domain-bar intervention"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Template de <span style="color: var(--color-intervention);">jerarquía inhibitoria</span></h1>
+        <div class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1rem);">
+            <table class="data-table">
+                <thead><tr><th>#</th><th>Estímulo</th><th>SUDS</th><th style="color: var(--color-il);">Predicción específica</th><th style="color: var(--color-erp);">Prevención de respuesta</th><th>Principio IL</th></tr></thead>
+                <tbody>
+                    <tr><td>1</td><td style="color: var(--text-primary);">Tocar su propio celular</td><td>30</td><td style="color: var(--text-primary);">"Mis bacterias me van a enfermar"</td><td>No limpiar celular</td><td><span class="tag tag-amber" style="font-size: 0.6rem;">Variabilidad</span></td></tr>
+                    <tr><td>2</td><td style="color: var(--text-primary);">Perilla del consultorio</td><td>45</td><td style="color: var(--text-primary);">"Gérmenes de otros, me enfermo"</td><td>No lavarse 30 min</td><td><span class="tag tag-amber" style="font-size: 0.6rem;">Multi-contexto</span></td></tr>
+                    <tr><td>3</td><td style="color: var(--text-primary);">Dinero en efectivo</td><td>60</td><td style="color: var(--text-primary);">"Dinero sucio → dolor estómago"</td><td>No lavarse, comer</td><td><span class="tag tag-gray" style="font-size: 0.6rem;">Deepened ext.</span></td></tr>
+                    <tr><td>4</td><td style="color: var(--text-primary);">Baranda del bus</td><td>75</td><td style="color: var(--text-primary);">"Contagio de algo grave"</td><td>No lavarse 1-2 hrs</td><td><span class="tag tag-amber" style="font-size: 0.6rem;">Multi-contexto</span></td></tr>
+                    <tr><td>5</td><td style="color: var(--text-primary);">Taza del baño público</td><td>90</td><td style="color: var(--text-primary);">"Infección grave, hospitalización"</td><td>No lavarse, tocarse la cara</td><td><span class="tag tag-amber" style="font-size: 0.6rem;">Affect labeling</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1rem); text-align: center; color: var(--color-il); font-style: italic;">SUDS como brújula, no como meta. La columna clave es la predicción.</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Demo</span>
+</section>
+
+<section class="slide" id="slide-24">
+    <div class="domain-bar intervention"></div>
+    <div class="slide-content centered">
+        <h1 class="reveal">Post-demo: <span style="color: var(--color-intervention);">tres preguntas</span> para el grupo</h1>
+        <div class="flow-vertical reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); gap: clamp(0.5rem, 1vw, 0.75rem); max-width: 650px;">
+            <div class="card" style="border-left: 3px solid var(--color-il);"><p style="color: var(--text-primary);"><strong>1.</strong> ¿En qué momento se generó el error de predicción?</p></div>
+            <div class="card" style="border-left: 3px solid var(--color-erp);"><p style="color: var(--text-primary);"><strong>2.</strong> ¿Qué señales de seguridad identificaron (explícitas e implícitas)?</p></div>
+            <div class="card" style="border-left: 3px solid var(--color-potential);"><p style="color: var(--text-primary);"><strong>3.</strong> ¿Cómo generarían variabilidad en esta jerarquía?</p></div>
+        </div>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Demo</span>
+</section>
+
+<!-- === SECCIÓN E: UP vs ERP (slides 25-29) === -->
+
+<section class="slide" id="slide-25">
+    <div class="domain-bar up"></div>
+    <div class="slide-content">
+        <h1 class="reveal"><span style="color: var(--color-up);">Unified Protocol</span>: un protocolo, múltiples trastornos emocionales</h1>
+        <div class="flow-vertical reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1rem); gap: clamp(0.2rem, 0.4vw, 0.3rem); max-width: 600px; margin-left: auto; margin-right: auto;">
+            <div class="flow-box" style="border-left-color: var(--color-loss); opacity: 0.7; font-size: var(--small-size);">1. Motivación y psicoeducación</div>
+            <div class="flow-box" style="border-left-color: var(--color-loss); opacity: 0.7; font-size: var(--small-size);">2. Conciencia emocional</div>
+            <div class="flow-box" style="border-left-color: var(--color-loss); opacity: 0.7; font-size: var(--small-size);">3. Flexibilidad cognitiva</div>
+            <div class="flow-box" style="border-left-color: var(--color-up); border: 1px solid var(--color-up); font-size: var(--small-size);"><strong style="color: var(--color-up);">4. Contracarreo de conductas emocionales (exposición emocional)</strong></div>
+            <div class="flow-box" style="border-left-color: var(--color-loss); opacity: 0.7; font-size: var(--small-size);">5. Tolerancia de sensaciones físicas</div>
+            <div class="flow-box" style="border-left-color: var(--color-loss); opacity: 0.7; font-size: var(--small-size);">6. Exposición interoceptiva y situacional</div>
+            <div class="flow-box" style="border-left-color: var(--color-loss); opacity: 0.7; font-size: var(--small-size);">7. Prevención de recaídas</div>
+        </div>
+        <p class="reveal source" style="text-align: center;">UP expone a <strong>emociones</strong>, no solo a estímulos. — Barlow et al. 2011/2017</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">UP vs ERP</span>
+</section>
+
+<section class="slide" id="slide-26">
+    <div class="domain-bar up"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Barlow 2017: UP <span style="color: var(--color-up);">equivalente</span> a protocolos específicos — con <span style="color: var(--color-erp);">menos dropout</span></h1>
+        <div class="split reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem);">
+            <div class="flow-vertical" style="gap: clamp(0.4rem, 0.8vw, 0.6rem);">
+                <div class="bar-container"><span class="bar-label" style="color: var(--color-up);">UP vs WL</span><div class="bar" style="width: 70%; background: rgba(139,92,246,0.35); border: 1px solid var(--color-up);">d = −0.93</div></div>
+                <div class="bar-container"><span class="bar-label" style="color: var(--color-erp);">SDPs vs WL</span><div class="bar" style="width: 80%; background: rgba(16,185,129,0.3); border: 1px solid var(--color-erp);">d = −1.08</div></div>
+                <div style="height: 1px; background: rgba(255,255,255,0.1); margin: 0.2rem 0;"></div>
+                <div class="bar-container"><span class="bar-label">Equivalencia UP-SDP</span><div class="bar" style="width: 60%; background: rgba(100,116,139,0.2); border: 1px solid rgba(255,255,255,0.2);">β = 0.25 (IC cruza 0)</div></div>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-erp);">
+                <p style="font-size: var(--small-size); text-transform: uppercase; color: var(--color-erp);">Dato clave</p>
+                <p class="med-number" style="color: var(--color-erp); margin-top: 0.3rem;">OR 3.11</p>
+                <p style="font-size: var(--small-size); margin-top: 0.3rem;">UP: mayor tasa de completación</p>
+                <p style="font-size: var(--small-size); color: var(--text-muted);">IC 1.44–6.74</p>
+                <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.5rem;">62% libre de diagnóstico al follow-up</p>
+            </div>
+        </div>
+        <p class="reveal source" style="text-align: center;">Barlow et al. 2017, <em>JAMA Psychiatry</em> · n = 223 · Pánico, TAG, fobia social, TOC</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">UP vs ERP</span>
+</section>
+
+<section class="slide" id="slide-27">
+    <div class="domain-bar up"></div>
+    <div class="slide-content centered">
+        <h1 class="reveal">Meta-análisis 2024: TCC transdiagnóstica <span style="color: var(--color-up);">equivale</span> a TCC específica</h1>
+        <div class="split reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); max-width: 700px;">
+            <div style="text-align: center;"><span class="med-number" style="color: var(--color-up);">53</span><p style="font-size: var(--small-size); color: var(--text-muted);">RCTs</p><span class="med-number" style="color: var(--color-up);">~6,700</span><p style="font-size: var(--small-size); color: var(--text-muted);">pacientes</p></div>
+            <div class="flow-vertical" style="gap: 0.4rem;">
+                <p style="font-size: var(--small-size);">TD-CBT vs DS-CBT: <strong style="color: var(--text-primary);">sin diferencia significativa</strong></p>
+                <p style="font-size: var(--small-size);">TD-CBT vs WL/TAU: <strong style="color: var(--color-erp);">superior</strong></p>
+                <p style="font-size: var(--small-size);">Mantenimiento: significativo a 3-12 meses</p>
+                <p style="font-size: var(--small-size); color: var(--color-danger);">No significativo a 24 meses</p>
+            </div>
+        </div>
+        <p class="reveal source">Schaeuffele et al. 2024, <em>Nature Human Behaviour</em></p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">UP vs ERP</span>
+</section>
+
+<section class="slide" id="slide-28">
+    <div class="domain-bar up"></div>
+    <div class="slide-content centered">
+        <h1 class="reveal">UP reduce <span style="color: var(--color-up);">neuroticismo</span> — los SDPs no</h1>
+        <div class="flow-vertical reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); align-items: center; gap: clamp(0.3rem, 0.6vw, 0.5rem); max-width: 500px;">
+            <div class="card" style="border-top: 3px solid var(--color-sustained); text-align: center; width: 100%;"><h3 style="color: var(--color-sustained);">Neuroticismo</h3><p style="font-size: var(--small-size);">Vulnerabilidad temperamental de nivel superior</p></div>
+            <div style="display: flex; gap: 1rem; width: 100%;">
+                <div style="flex: 1; text-align: center;"><span class="flow-arrow" style="color: var(--color-up);">↓</span><p style="font-size: var(--small-size); color: var(--color-up); font-weight: 600;">UP reduce</p></div>
+                <div style="flex: 1; text-align: center;"><span class="flow-arrow" style="color: var(--color-danger);">↓</span><p style="font-size: var(--small-size); color: var(--color-danger);">SDPs no reducen</p></div>
+            </div>
+            <div class="card" style="text-align: center; width: 100%; opacity: 0.7;"><p style="font-size: var(--small-size);">Trastornos específicos (pánico, fobia, GAD)</p></div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1rem); color: var(--color-up); font-style: italic;">El UP actúa sobre el "suelo" temperamental, no solo sobre los síntomas.</p>
+        <p class="reveal source">Sauer-Zavala et al. 2021</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">UP vs ERP</span>
+</section>
+
+<section class="slide" id="slide-29">
+    <div class="domain-bar up"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Tabla decisional: <span style="color: var(--color-erp);">¿cuándo ERP</span> vs <span style="color: var(--color-up);">cuándo UP</span>?</h1>
+        <div class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1rem);">
+            <table class="data-table">
+                <thead><tr><th>Escenario clínico</th><th>Recomendación</th><th>Justificación</th></tr></thead>
+                <tbody>
+                    <tr><td style="color: var(--text-primary);">TOC primario, insight preservado, baja comorbilidad</td><td style="color: var(--color-erp); font-weight: 600;">ERP específico</td><td>Mayor dosis del mecanismo activo</td></tr>
+                    <tr><td style="color: var(--text-primary);">Alta comorbilidad (fobia + GAD + distimia)</td><td style="color: var(--color-up); font-weight: 600;">UP</td><td>Un protocolo, múltiples targets</td></tr>
+                    <tr><td style="color: var(--text-primary);">Fear spectrum + depresión comórbida</td><td style="color: var(--color-up); font-weight: 600;">UP</td><td>SDPs no abordan depresión</td></tr>
+                    <tr><td style="color: var(--text-primary);">Pocos terapeutas especializados</td><td style="color: var(--color-up); font-weight: 600;">UP</td><td>Diseminación más eficiente</td></tr>
+                    <tr><td style="color: var(--text-primary);">Baja tolerabilidad a protocolos intensivos</td><td style="color: var(--color-up); font-weight: 600;">UP</td><td>Mayor adherencia (OR 3.11)</td></tr>
+                    <tr><td style="color: var(--text-primary);">TOC grave, Y-BOCS &gt;28</td><td style="color: var(--color-erp); font-weight: 600;">ERP específico</td><td>Dilución mecanicista del UP</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1rem); text-align: center; color: var(--color-accent); font-style: italic;">La decisión no es ideológica — es clínica.</p>
+        <p class="reveal source" style="text-align: center;">UP reaparece en S9 con módulo de reappraisal para distress.</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">UP vs ERP</span>
+</section>
+
+<!-- === SECCIÓN F: TAREA GUIADA (slides 30-34) === -->
+
+<section class="slide" id="slide-30">
+    <div class="domain-bar intervention"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Ejercicio: diseñar jerarquía para <span style="color: var(--color-intervention);">tu paciente</span></h1>
+        <div class="flow-vertical reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); gap: clamp(0.3rem, 0.6vw, 0.5rem); max-width: 650px; margin-left: auto; margin-right: auto;">
+            <div class="flow-box" style="text-align: left; border-left-color: var(--color-potential);">1. Elegir paciente propio del subfactor fear</div>
+            <div class="flow-box" style="text-align: left; border-left-color: var(--color-il);">2. Completar template: RDoC + HiTOP + ≥5 ítems SUDS</div>
+            <div class="flow-box" style="text-align: left; border-left-color: var(--color-erp);">3. Incluir ≥1 principio IL + instrucción PR específica</div>
+            <div class="flow-box" style="text-align: left; border-left-color: var(--color-intervention);">4. Revisar en triadas (8 min)</div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); text-align: center;"><span class="tag tag-cyan">13 min · Trabajo individual + triadas</span></p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Ejercicio</span>
+</section>
+
+<section class="slide" id="slide-31">
+    <div class="domain-bar intervention"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Template: <span style="color: var(--color-intervention);">jerarquía inhibitoria</span> — paciente propio</h1>
+        <div class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1rem);">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; margin-bottom: 0.75rem; font-size: var(--small-size);">
+                <div class="flow-box" style="border-left-color: var(--color-potential); font-size: var(--small-size);">RDoC: ___________</div>
+                <div class="flow-box" style="border-left-color: var(--color-fear); font-size: var(--small-size);">HiTOP: ___ (λ: ___)</div>
+                <div class="flow-box" style="border-left-color: var(--color-sustained); font-size: var(--small-size);">Mecanismo: ________</div>
+            </div>
+            <table class="data-table">
+                <thead><tr><th>#</th><th>Estímulo</th><th>SUDS</th><th style="color: var(--color-il);">Predicción específica</th><th style="color: var(--color-erp);">PR</th><th>Principio IL</th></tr></thead>
+                <tbody>
+                    <tr style="height: 2rem;"><td>1</td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr style="height: 2rem;"><td>2</td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr style="height: 2rem;"><td>3</td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr style="height: 2rem;"><td>4</td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr style="height: 2rem;"><td>5</td><td></td><td></td><td></td><td></td><td></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="reveal source" style="text-align: center;">Imprimir copias para cada residente.</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Ejercicio</span>
+</section>
+
+<section class="slide" id="slide-32">
+    <div class="domain-bar intervention"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Checklist del facilitador para circular</h1>
+        <div class="flow-vertical reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); gap: clamp(0.4rem, 0.8vw, 0.6rem); max-width: 700px; margin-left: auto; margin-right: auto;">
+            <div class="card" style="border-left: 3px solid var(--color-il);"><p style="color: var(--text-primary);">☐ La predicción es <strong>específica</strong> (no "me voy a sentir mal")</p></div>
+            <div class="card" style="border-left: 3px solid var(--color-erp);"><p style="color: var(--text-primary);">☐ La PR es específica al <strong>ritual del paciente</strong></p></div>
+            <div class="card" style="border-left: 3px solid var(--color-intervention);"><p style="color: var(--text-primary);">☐ Hay ≥1 principio IL <strong>explícito</strong></p></div>
+            <div class="card" style="border-left: 3px solid var(--color-sustained);"><p style="color: var(--text-primary);">☐ SUDS con rango suficiente (no todos 50-60)</p></div>
+            <div class="card" style="border-left: 3px solid var(--color-potential);"><p style="color: var(--text-primary);">☐ Jerarquía clínicamente <strong>ejecutable</strong></p></div>
+        </div>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Ejercicio</span>
+</section>
+
+<section class="slide" id="slide-33">
+    <div class="domain-bar intervention"></div>
+    <div class="slide-content centered">
+        <h1 class="reveal">Triadas: presentar, evaluar, rotar</h1>
+        <div class="three-cols reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); max-width: 700px;">
+            <div class="card" style="text-align: center; border-top: 3px solid var(--color-il);"><h3 style="color: var(--color-il);">Rol A</h3><p style="font-size: var(--small-size);">Presenta su jerarquía<br>(3 min)</p></div>
+            <div class="card" style="text-align: center; border-top: 3px solid var(--color-erp);"><h3 style="color: var(--color-erp);">Rol B</h3><p style="font-size: var(--small-size);">Evalúa predicciones y PR<br>"¿Son específicas?"</p></div>
+            <div class="card" style="text-align: center; border-top: 3px solid var(--color-up);"><h3 style="color: var(--color-up);">Rol C</h3><p style="font-size: var(--small-size);">Evalúa principios IL<br>"¿Cuál aplicaste?"</p></div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); color: var(--text-muted); font-size: var(--small-size);">Rotar roles. Facilitador circula e interviene si la jerarquía no es funcional.</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Ejercicio</span>
+</section>
+
+<section class="slide" id="slide-34">
+    <div class="domain-bar intervention"></div>
+    <div class="slide-content centered">
+        <h1 class="reveal">2-3 voluntarios comparten su jerarquía</h1>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); font-size: var(--body-size);">Seleccionar: <span class="tag tag-green">1 caso TOC</span> + <span class="tag tag-orange">1 caso fobia/pánico</span></p>
+        <p class="reveal" style="margin-top: 0.5rem; color: var(--text-muted); font-size: var(--small-size);">Mostrar variedad en constructo RDoC, principio IL elegido y PR.</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Ejercicio</span>
+</section>
+
+<!-- === SECCIÓN G: CIERRE (slides 35-38) === -->
+
+<section class="slide" id="slide-35">
+    <div class="domain-bar gradient"></div>
+    <div class="slide-content centered">
+        <h1 class="reveal" style="font-size: clamp(1.1rem, 2.8vw, 1.8rem); max-width: 800px;">La exposición no funciona por habituación sino por <span style="color: var(--color-il);">aprendizaje inhibitorio</span>: el paciente no olvida el miedo, aprende que la amenaza anticipada no ocurre.</h1>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); color: var(--color-accent);">Eso cambia cómo se diseña la jerarquía, cuánto tiempo se mantiene el ítem y por qué la prevención de respuesta es parte del mecanismo.</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Cierre</span>
+</section>
+
+<section class="slide" id="slide-36">
+    <div class="slide-content">
+        <h1 class="reveal">Cuatro puntos para recordar</h1>
+        <div class="flow-vertical reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); gap: clamp(0.4rem, 0.8vw, 0.6rem);">
+            <div class="card" style="border-left: 3px solid var(--color-il);"><p style="color: var(--text-primary);"><strong style="color: var(--color-il);">1. Extinción ≠ borrado.</strong> Crea memoria competidora (CS-noUS). Por eso el miedo puede volver — y eso es normal.</p></div>
+            <div class="card" style="border-left: 3px solid var(--color-erp);"><p style="color: var(--text-primary);"><strong style="color: var(--color-erp);">2. Lo que predice outcome es el cambio de expectativa</strong>, no la reducción de SUDS.</p></div>
+            <div class="card" style="border-left: 3px solid var(--color-fear);"><p style="color: var(--text-primary);"><strong style="color: var(--color-fear);">3. En TOC, la compulsión bloquea el error de predicción.</strong> Sin PR no hay aprendizaje inhibitorio.</p></div>
+            <div class="card" style="border-left: 3px solid var(--color-up);"><p style="color: var(--text-primary);"><strong style="color: var(--color-up);">4. UP ≈ ERP en eficacia, pero con mejor adherencia.</strong> Elegir según perfil clínico, no ideología.</p></div>
+        </div>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Cierre</span>
+</section>
+
+<section class="slide" id="slide-37">
+    <div class="slide-content">
+        <h1 class="reveal">Tarea para <span style="color: var(--color-accent);">S7</span></h1>
+        <div class="flow-vertical reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); gap: clamp(0.5rem, 1vw, 0.75rem); max-width: 650px; margin-left: auto; margin-right: auto;">
+            <div class="card" style="border-left: 3px solid var(--color-erp);"><p style="color: var(--text-primary);"><strong>Completar:</strong> Finalizar jerarquía de exposición para su paciente</p></div>
+            <div class="card" style="border-left: 3px solid var(--color-potential);"><p style="color: var(--text-primary);"><strong>Pensar:</strong> "¿Este paciente necesita fármaco además de ERP? ¿Cuál dominio PRISM?"</p></div>
+            <div class="card" style="border-left: 3px solid var(--color-accent);"><p style="color: var(--text-primary);"><strong>Lectura:</strong> Skapinakis et al. 2016. NMA de intervenciones en TOC. <em>Lancet Psychiatry</em>.</p></div>
+        </div>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Cierre</span>
+</section>
+
+<section class="slide" id="slide-38">
+    <div class="domain-bar gradient"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Preview S7: <span style="color: var(--color-danger);">Farmacología PRISM</span></h1>
+        <div class="split reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem);">
+            <div style="text-align: center;">
+                <svg viewBox="0 0 120 120" style="width: clamp(80px, 15vw, 120px); height: auto;">
+                    <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(239,68,68,0.3)" stroke-width="2"/>
+                    <circle cx="60" cy="60" r="35" fill="none" stroke="rgba(239,68,68,0.5)" stroke-width="2"/>
+                    <circle cx="60" cy="60" r="20" fill="rgba(239,68,68,0.15)" stroke="var(--color-danger)" stroke-width="2"/>
+                    <text x="60" y="65" text-anchor="middle" fill="#fca5a5" font-size="12" font-family="Satoshi, sans-serif">BDZ</text>
+                </svg>
+                <p style="font-size: var(--small-size); color: var(--color-warn); margin-top: 0.5rem;">¿Safety behavior farmacológica?</p>
+            </div>
+            <div class="flow-vertical" style="gap: clamp(0.3rem, 0.6vw, 0.5rem);">
+                <div class="flow-box" style="text-align: left; border-left-color: var(--color-danger); font-size: var(--small-size);">PRISM dominio Negative Valence</div>
+                <div class="flow-box" style="text-align: left; border-left-color: var(--color-potential); font-size: var(--small-size);">SRI · benzodiacepinas · glutamato</div>
+                <div class="flow-box" style="text-align: left; border-left-color: var(--color-erp); font-size: var(--small-size);">¿Cuándo fármaco, cuándo terapia, cuándo ambos?</div>
+            </div>
+        </div>
+        <p class="reveal" style="margin-top: clamp(1rem, 2vw, 1.5rem); text-align: center; color: var(--color-accent); font-style: italic;">Traigan el caso de la jerarquía — lo van a usar.</p>
+    </div>
+    <span class="slide-num"></span>
+    <span class="section-label">Cierre</span>
+</section>
+
+<script>
+class SlidePresentation {
+    constructor() {
+        this.slides = document.querySelectorAll('.slide');
+        this.currentSlide = 0;
+        this.populateSlideNumbers();
+        this.setupIntersectionObserver();
+        this.setupKeyboardNav();
+        this.setupTouchNav();
+        this.setupProgressBar();
+        this.setupNavDots();
+    }
+    populateSlideNumbers() {
+        const total = this.slides.length;
+        this.slides.forEach((slide, i) => {
+            const numEl = slide.querySelector('.slide-num');
+            if (numEl) {
+                const n = String(i + 1).padStart(2, '0');
+                numEl.textContent = `${n} · ${total}`;
+            }
+        });
+    }
+    setupIntersectionObserver() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    const idx = Array.from(this.slides).indexOf(entry.target);
+                    this.currentSlide = idx;
+                    this.updateProgress();
+                    this.updateDots();
+                }
+            });
+        }, { threshold: 0.5 });
+        this.slides.forEach(slide => observer.observe(slide));
+    }
+    setupKeyboardNav() {
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                this.goTo(Math.min(this.currentSlide + 1, this.slides.length - 1));
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                e.preventDefault();
+                this.goTo(Math.max(this.currentSlide - 1, 0));
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                this.goTo(0);
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                this.goTo(this.slides.length - 1);
+            }
+        });
+    }
+    setupTouchNav() {
+        let startY = 0;
+        document.addEventListener('touchstart', (e) => { startY = e.touches[0].clientY; });
+        document.addEventListener('touchend', (e) => {
+            const diff = startY - e.changedTouches[0].clientY;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) this.goTo(Math.min(this.currentSlide + 1, this.slides.length - 1));
+                else this.goTo(Math.max(this.currentSlide - 1, 0));
+            }
+        });
+    }
+    setupProgressBar() {
+        this.progressBar = document.getElementById('progressBar');
+        this.updateProgress();
+    }
+    setupNavDots() {
+        const nav = document.getElementById('navDots');
+        nav.innerHTML = '';
+        this.slides.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.addEventListener('click', () => this.goTo(i));
+            nav.appendChild(dot);
+        });
+        this.dots = nav.querySelectorAll('.dot');
+    }
+    goTo(idx) {
+        this.slides[idx].scrollIntoView({ behavior: 'smooth' });
+    }
+    updateProgress() {
+        const pct = ((this.currentSlide + 1) / this.slides.length) * 100;
+        this.progressBar.style.width = pct + '%';
+    }
+    updateDots() {
+        if (!this.dots) return;
+        this.dots.forEach((d, i) => d.classList.toggle('active', i === this.currentSlide));
+    }
+}
+new SlidePresentation();
+</script>
+</body>
+</html>
