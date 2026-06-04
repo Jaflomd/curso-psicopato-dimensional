@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>Sesión 9: Tratamiento — Psicoterapia (Distress)</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@300;400;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --primary: #2A7DE1; --secondary: #1DCAD3; --accent: #1BACE4;
+  --dark: #1a2b3c; --medium: #5a6b7c; --light: #eaf6fb;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-brand: "Montserrat", sans-serif;
+  --sky-rainy: linear-gradient(180deg, #5a6b7c 0%, #3a4b5c 50%, #1a2b3c 100%);
+  --sky-morning: linear-gradient(180deg, #FFE5C7 0%, #1DCAD3 40%, #2A7DE1 100%);
+  --color-distress: #7eb8ff; --color-loss: #FFC88C; --color-sustained: #f87171;
+  --color-intervention: #1DCAD3; --color-abc: #93c5fd; --color-tipss: #67e8f9;
+  --color-defusion: #c4b5fd; --color-exposure: #fcd34d; --color-reappraisal: #5eead4;
+  --color-pfc: #7dd3fc; --title-size: clamp(1.35rem, 3.8vw, 2.75rem);
+  --h2-size: clamp(1rem, 2.5vw, 1.65rem);
+  --body-size: clamp(0.78rem, 1.35vw, 1.02rem);
+  --small-size: clamp(0.68rem, 1.05vw, 0.84rem);
+  --slide-padding: clamp(1.25rem, 3.5vw, 3.5rem);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-normal: 0.65s;
+  --text-primary: #fff;
+  --text-secondary: rgba(255,255,255,.82);
+  --text-muted: rgba(255,255,255,.55);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+html, body { height: 100%; overflow-x: hidden; }
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+body { font-family: var(--font-body); color: #fff; line-height: 1.55; }
+
+.world-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.world-bg .sky { position: absolute; inset: 0; background: var(--sky-rainy); }
+.world-bg .layer { position: absolute; left: -5%; right: -5%; bottom: 0; width: 110%; will-change: transform; transition: transform .12s ease-out; }
+.world-bg .layer svg { display: block; width: 100%; height: auto; }
+.world-bg .distant { bottom: 8%; opacity: .45; color: #1BACE4; z-index: 1; }
+.world-bg .mid { bottom: 0; opacity: .72; color: #2A7DE1; z-index: 2; }
+.world-bg .near { bottom: -2%; color: #1a2b3c; z-index: 3; }
+.world-bg .fore { bottom: -4%; color: #0a1525; z-index: 4; }
+.world-bg .celestial {
+  position: absolute; width: 72px; height: 72px; border-radius: 50%;
+  top: 14%; left: 72%; background: #8ba4b8; opacity: .35;
+  box-shadow: 0 0 60px rgba(139,164,184,.4); z-index: 1;
+}
+.rain-layer { position: absolute; inset: 0; z-index: 5; overflow: hidden; }
+.raindrop {
+  position: absolute; width: 1.5px; height: 44px;
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,.42));
+  animation: rain linear infinite;
+}
+@keyframes rain { 0% { transform: translateY(-100vh); } 100% { transform: translateY(120vh); } }
+
+.deck { position: relative; z-index: 2; }
+.slide {
+  width: 100vw; min-height: 100vh; min-height: 100dvh;
+  scroll-snap-align: start; position: relative;
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.slide-scene { flex: 1; display: flex; flex-direction: column; position: relative; min-height: 100dvh; }
+.slide-content {
+  flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center;
+  padding: var(--slide-padding); padding-top: clamp(2.5rem, 6vh, 4rem);
+  max-height: 100%; overflow-y: auto;
+}
+.slide-content > * { width: 100%; max-width: 1040px; }
+.slide h1 {
+  font-family: var(--font-display); font-size: var(--title-size); font-weight: 500;
+  line-height: 1.12; letter-spacing: -.02em; color: #fff;
+  text-shadow: 0 2px 12px rgba(0,0,0,.35);
+  font-variation-settings: "opsz" 120;
+}
+.slide p, .slide li { font-size: var(--body-size); line-height: 1.55; color: rgba(255,255,255,.88); text-shadow: 0 1px 4px rgba(0,0,0,.2); }
+.slide .source { font-size: var(--small-size); color: rgba(255,255,255,.55); padding-top: clamp(0.5rem, 1vh, 1rem); text-shadow: none; }
+.domain-bar { position: absolute; top: 0; left: 0; right: 0; height: 3px; z-index: 3; }
+.domain-bar.distress { background: var(--color-distress); }
+.domain-bar.intervention { background: var(--color-intervention); }
+.domain-bar.loss { background: var(--color-loss); }
+.domain-bar.sustained { background: var(--color-sustained); }
+.domain-bar.abc { background: var(--color-abc); }
+.domain-bar.tipss { background: var(--color-tipss); }
+.domain-bar.defusion { background: var(--color-defusion); }
+.domain-bar.exposure { background: var(--color-exposure); }
+.domain-bar.reappraisal { background: var(--color-reappraisal); }
+.domain-bar.reto { background: linear-gradient(90deg, var(--color-tipss), var(--color-defusion), var(--color-exposure), var(--color-abc), var(--color-reappraisal)); }
+.centered { text-align: center; }
+.centered > * { margin-left: auto; margin-right: auto; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(0.85rem, 2.5vw, 2rem); align-items: stretch; }
+.three-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(0.5rem, 1.5vw, 1.25rem); }
+.four-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(0.4rem, 1vw, 0.9rem); }
+.five-cols { display: grid; grid-template-columns: repeat(5, 1fr); gap: clamp(0.35rem, 0.8vw, 0.7rem); }
+.flow-vertical { display: flex; flex-direction: column; gap: clamp(0.35rem, 0.8vw, 0.55rem); }
+.card, .case-card, .formula-card, .flow-box {
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-radius: 14px; border: 1px solid rgba(255,255,255,.2);
+}
+.card {
+  background: rgba(0,0,0,.32); padding: clamp(0.75rem, 2vw, 1.35rem);
+}
+.card h3 { font-family: var(--font-display); font-size: clamp(0.9rem, 1.5vw, 1.08rem); font-weight: 500; margin-bottom: 0.35rem; color: #fff; text-shadow: none; }
+.tag { display: inline-block; padding: 0.2rem 0.55rem; border-radius: 999px; font-size: var(--small-size); font-weight: 600; font-family: var(--font-brand); letter-spacing: .3px; }
+.tag-indigo { background: rgba(42,125,225,.35); color: #bfdbfe; }
+.tag-teal { background: rgba(29,202,211,.3); color: #a5f3fc; }
+.tag-cyan { background: rgba(103,232,249,.25); color: #cffafe; }
+.tag-violet { background: rgba(196,181,253,.25); color: #ede9fe; }
+.tag-amber { background: rgba(252,211,77,.25); color: #fef3c7; }
+.tag-rose { background: rgba(248,113,113,.25); color: #fecaca; }
+.tag-blue { background: rgba(147,197,253,.25); color: #dbeafe; }
+.formula-card {
+  background: rgba(0,0,0,.45); padding: clamp(1rem, 2.5vw, 1.65rem); text-align: center;
+  border-left: 4px solid var(--accent);
+}
+.formula-card p { color: #eaf6fb; }
+.formula-card .step { color: var(--secondary); font-weight: 600; }
+.formula-card .target { color: #FFC88C; font-weight: 600; }
+.case-card {
+  border: 2px dashed rgba(29,202,211,.55); background: rgba(0,0,0,.38);
+  padding: clamp(1rem, 2.5vw, 1.65rem);
+}
+.answer-card {
+  border: 2px solid rgba(16,185,129,.55); background: rgba(16,185,129,.12);
+  padding: clamp(1rem, 2.5vw, 1.65rem); border-left: 4px solid #10b981;
+}
+.answer-card .patient-name { color: #a7f3d0; }
+.eval-30s {
+  margin-top: 0.65rem; padding: 0.55rem 0.75rem; border-radius: 8px;
+  background: rgba(16,185,129,.15); border: 1px solid rgba(16,185,129,.4);
+  font-size: var(--small-size); line-height: 1.45; color: #d1fae5; text-shadow: none;
+}
+.eval-30s strong { color: #6ee7b7; font-family: var(--font-brand); letter-spacing: .3px; }
+.skill-triad { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(0.5rem, 1.2vw, 1rem); margin-top: 0.85rem; align-items: stretch; }
+.skill-col h3 { font-family: var(--font-display); font-size: clamp(0.82rem, 1.4vw, 1rem); font-weight: 600; margin-bottom: 0.45rem; color: var(--secondary); text-shadow: none; }
+.skill-col ul { margin: 0; padding-left: 1rem; font-size: var(--small-size); line-height: 1.45; color: rgba(255,255,255,.88); text-shadow: none; }
+.skill-col li { margin-bottom: 0.28rem; }
+.skill-col p { font-size: var(--small-size); line-height: 1.45; text-shadow: none; }
+.skill-eval { margin-top: 0.4rem; padding-top: 0.35rem; border-top: 1px solid rgba(255,255,255,.12); font-size: clamp(0.62rem, 0.95vw, 0.78rem); color: #a7f3d0; }
+@media (max-width: 900px) { .skill-triad { grid-template-columns: 1fr; } }
+.case-card .case-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: clamp(0.6rem, 1.2vw, 0.9rem); }
+.case-card .patient-name { font-family: var(--font-display); font-size: clamp(1.15rem, 2.4vw, 1.55rem); color: #fff; }
+.case-prompt {
+  margin-top: clamp(0.65rem, 1.2vw, 0.9rem); padding: clamp(0.55rem, 1vw, 0.85rem);
+  background: rgba(42,125,225,.28); border-radius: 10px; border-left: 3px solid var(--primary);
+}
+.case-prompt p { color: #dbeafe; font-weight: 500; text-shadow: none; }
+.case-meta { font-size: var(--small-size); color: rgba(255,255,255,.6); }
+.case-row { margin-bottom: 0.4rem; }
+.case-row strong { color: #fff; }
+.data-table { width: 100%; border-collapse: collapse; font-size: var(--small-size); background: rgba(0,0,0,.28); border-radius: 12px; overflow: hidden; backdrop-filter: blur(10px); }
+.data-table th { text-align: left; padding: 0.45rem 0.55rem; color: rgba(255,255,255,.75); border-bottom: 1px solid rgba(255,255,255,.15); background: linear-gradient(135deg, rgba(29,202,211,.45), rgba(42,125,225,.45)); font-family: var(--font-brand); font-size: .72rem; letter-spacing: .4px; }
+.data-table td { padding: 0.38rem 0.55rem; border-bottom: 1px solid rgba(255,255,255,.08); color: rgba(255,255,255,.9); vertical-align: top; text-shadow: none; }
+.flow-box {
+  background: rgba(0,0,0,.35); padding: 0.5rem 0.75rem; font-size: var(--body-size); text-align: center;
+  border-left: 3px solid var(--secondary);
+}
+.circuit-pill {
+  display: inline-block; font-size: var(--small-size); padding: 0.12rem 0.48rem; margin: 0.12rem 0.08rem;
+  border-radius: 99px; background: rgba(29,202,211,.2); color: #a5f3fc; border: 1px solid rgba(29,202,211,.35);
+}
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity var(--duration-normal) var(--ease-out-expo), transform var(--duration-normal) var(--ease-out-expo); }
+.slide.visible .reveal { opacity: 1; transform: translateY(0); }
+.reveal:nth-child(2) { transition-delay: .07s; }
+.reveal:nth-child(3) { transition-delay: .14s; }
+.reveal:nth-child(4) { transition-delay: .21s; }
+.progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--secondary), var(--primary)); z-index: 999; transition: width .3s ease; box-shadow: 0 0 12px rgba(29,202,211,.5); }
+.nav-dots { position: fixed; right: clamp(0.45rem, 1.2vw, 1.2rem); top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 5px; z-index: 200; max-height: 72vh; overflow-y: auto; padding: 8px 6px; background: rgba(5,10,21,.45); border-radius: 999px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.12); }
+.nav-dots .dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.28); cursor: pointer; transition: all .25s; border: none; padding: 0; }
+.nav-dots .dot.active { background: #fff; transform: scale(1.45); box-shadow: 0 0 8px rgba(255,255,255,.6); }
+.slide-num { position: absolute; bottom: clamp(0.55rem, 1.2vh, 1rem); left: clamp(0.75rem, 1.5vw, 1.5rem); font-size: var(--small-size); color: rgba(255,255,255,.5); font-family: var(--font-brand); font-weight: 600; letter-spacing: .4px; z-index: 4; }
+.section-label { position: absolute; bottom: clamp(0.55rem, 1.2vh, 1rem); right: clamp(0.75rem, 1.5vw, 1.5rem); font-size: var(--small-size); color: rgba(255,255,255,.45); text-transform: uppercase; letter-spacing: .08em; font-family: var(--font-brand); z-index: 4; }
+.hint { position: fixed; bottom: 18px; left: 18px; z-index: 200; font-size: .68rem; color: rgba(255,255,255,.7); background: rgba(5,10,21,.55); padding: 6px 12px; border-radius: 999px; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.12); font-family: var(--font-body); animation: hintFade 6s ease-out forwards; pointer-events: none; }
+@keyframes hintFade { 0%,75% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
+.slide.slide-morning .slide-scene::before {
+  content: ""; position: absolute; inset: 0; background: var(--sky-morning); opacity: .55; pointer-events: none; z-index: 0;
+}
+@media (max-height: 650px) { .nav-dots { display: none; } }
+@media (max-width: 700px) { .split, .three-cols, .four-cols, .five-cols { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .reveal { transition: none; opacity: 1; transform: none; } html { scroll-behavior: auto; } .raindrop { animation: none; display: none; } }
+</style>
+</head>
+<body>
+
+<div class="world-bg" id="worldBg" aria-hidden="true">
+  <div class="sky"></div>
+  <div class="celestial"></div>
+  <div class="layer distant">
+<svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMax slice"><path fill="currentColor" d="M0,400 L0,260 Q120,200 220,230 Q320,255 420,210 Q540,170 660,220 Q780,260 900,200 Q1020,160 1140,225 L1200,250 L1200,400 Z"/></svg>
+</div>
+  <div class="layer mid">
+<svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMax slice"><path fill="currentColor" d="M0,400 L0,290 Q100,240 200,275 Q300,310 400,255 Q500,210 620,260 L720,310 Q820,255 940,290 Q1060,320 1200,275 L1200,400 Z"/></svg>
+</div>
+  <div class="layer near">
+<svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMax slice"><path fill="currentColor" d="M0,400 L0,330 Q80,295 160,320 Q260,355 360,310 Q460,275 580,315 Q680,345 800,305 Q920,275 1040,325 Q1140,360 1200,335 L1200,400 Z"/></svg>
+</div>
+  <div class="layer fore">
+<svg viewBox="0 0 1200 300" preserveAspectRatio="xMidYMax slice"><path fill="currentColor" d="M0,300 L0,180 Q100,150 220,165 Q320,175 380,155 L440,155 L440,135 L460,115 L500,135 L500,155 L560,155 Q620,150 700,170 Q820,200 940,175 Q1080,150 1200,180 L1200,300 Z"/></svg>
+</div>
+  <div class="rain-layer" id="rainLayer"></div>
+</div>
+
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots" aria-label="Navegación slides"></nav>
+<div class="hint" id="hint">↓ ↑ o desliza · ← →</div>
+
+<main class="deck">
+<section class="slide" id="slide-1">
+  <div class="slide-scene">
+<div class="domain-bar intervention"></div>
+    <div class="slide-content centered">
+        <p class="reveal" style="font-size: var(--small-size); color: var(--color-intervention); letter-spacing: 0.14em; text-transform: uppercase;">Psicopatología Dimensional · Bloque 3</p>
+        <h1 class="reveal" style="margin-top: 0.5rem;">Tratamiento — Psicoterapia<br><span style="color: var(--color-distress);">Distress</span></h1>
+        <p class="reveal" style="color: var(--text-secondary); margin-top: 0.5rem;">Rohlfing × RDoC · ABC · Toolkit · Retos clínicos</p>
+        <p class="reveal source">Sesión 9 de 21 · Javier Flores · R1 Psiquiatría · 2026</p>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Apertura</span>
+  </div>
+</section>
+<section class="slide" id="slide-2">
+  <div class="slide-scene">
+<div class="domain-bar distress"></div>
+    <div class="slide-content">
+        <h1 class="reveal">¿Qué mantiene el <span style="color: var(--color-distress);">distress</span> encendido después de S8?</h1>
+        <div class="split reveal" style="margin-top: 1.25rem;">
+            <div class="card" style="border-top: 3px solid var(--color-loss);">
+                <p class="tag tag-amber">Rumiación</p>
+                <p style="margin-top: 0.5rem;">Pasado · pérdida · loop <strong>DMN</strong></p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-sustained);">
+                <p class="tag tag-rose">IU</p>
+                <p style="margin-top: 0.5rem;">Futuro · incertidumbre · vigilancia</p>
+            </div>
+        </div>
+        <p class="reveal" style="margin-top: 1rem; text-align: center; color: var(--color-intervention);">Ambos bloquean <strong>goal updating</strong> (Rohlfing)</p>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Apertura</span>
+  </div>
+</section>
+<section class="slide" id="slide-3">
+  <div class="slide-scene">
+<div class="slide-content">
+        <h1 class="reveal">S8 = <span style="color: var(--color-distress);">modelo</span> · S9 = <span style="color: var(--color-intervention);">algoritmo</span></h1>
+        <div class="split reveal" style="margin-top: 1rem;">
+            <div class="card" style="border-top: 3px solid var(--color-loss);">
+                <p style="font-size: var(--small-size); color: var(--color-loss); text-transform: uppercase;">S8</p>
+                <p>Loss + Sustained Threat + motores</p>
+                <p style="font-size: var(--small-size); color: var(--text-muted);">Por qué persiste</p>
+            </div>
+            <div class="card" style="border-top: 3px solid var(--color-intervention);">
+                <p style="font-size: var(--small-size); color: var(--color-intervention); text-transform: uppercase;">S9</p>
+                <p>5 habilidades en secuencia</p>
+                <p style="font-size: var(--small-size); color: var(--text-muted);">Qué mecanismo tocar</p>
+            </div>
+        </div>
+        <p class="reveal" style="text-align: center; margin-top: 1rem; font-style: italic; color: var(--color-abc);">Target = representación en WM — no el código DSM</p>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Apertura</span>
+  </div>
+</section>
+<section class="slide" id="slide-4">
+  <div class="slide-scene">
+<div class="domain-bar distress"></div>
+    <div class="slide-content centered">
+        <h1 class="reveal" style="font-size: clamp(1.2rem, 3vw, 2rem);">Rohlfing 2025: ecuación para la psicoterapia</h1>
+        <div class="formula-card reveal" style="margin-top: 1rem; max-width: 620px;">
+            <p><span class="step">Necesidades</span> → evaluación de experiencias</p>
+            <p>→ <span class="target">sesgos / representación en WM</span> ← TARGET</p>
+            <p>→ <span class="step">reappraisal + control cognitivo</span></p>
+        </div>
+        <p class="reveal source">Front Psychiatry 2025 · doi:10.3389/fpsyt.2025.1549976 · marco falsable</p>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Marco</span>
+  </div>
+</section>
+<section class="slide" id="slide-5">
+  <div class="slide-scene">
+<div class="slide-content centered">
+        <h1 class="reveal">Tres preguntas de hoy</h1>
+        <div class="flow-vertical reveal" style="margin-top: 1rem; max-width: 580px;">
+            <div class="card" style="border-left: 3px solid var(--color-distress);"><p><strong>1.</strong> ¿Cuál es el <strong>target</strong>? (sesgo en B / WM)</p></div>
+            <div class="card" style="border-left: 3px solid var(--color-abc);"><p><strong>2.</strong> ¿Por qué <strong>ABC</strong> disputa B? (goal updating)</p></div>
+            <div class="card" style="border-left: 3px solid var(--color-intervention);"><p><strong>3.</strong> ¿Qué <strong>orden</strong> de habilidades? (Fig. 1C)</p></div>
+        </div>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Apertura</span>
+  </div>
+</section>
+<section class="slide" id="slide-6">
+  <div class="slide-scene">
+<div class="domain-bar distress"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Fig. 1A — Pipeline de conducta</h1>
+        <div class="reveal" style="margin-top: 1rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.35rem;">
+            <span class="flow-box">Ambiente</span><span style="color:var(--text-muted)">→</span>
+            <span class="flow-box">Atención</span><span style="color:var(--text-muted)">→</span>
+            <span class="flow-box" style="border-color: var(--color-distress);">Evaluación + WM</span><span style="color:var(--text-muted)">→</span>
+            <span class="flow-box">Motivación</span><span style="color:var(--text-muted)">→</span>
+            <span class="flow-box">Conducta</span>
+        </div>
+        <p class="reveal" style="text-align: center; margin-top: 0.75rem; font-size: var(--small-size);">Memoria semántica + episódica → <strong>reward prediction</strong></p>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Marco</span>
+  </div>
+</section>
+<section class="slide" id="slide-7">
+  <div class="slide-scene">
+<div class="domain-bar sustained"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Fig. 1B — Cinco mecanismos que rompen el pipeline en <span style="color: var(--color-sustained);">distress</span></h1>
+        <ul class="reveal" style="margin-top: 1rem; padding-left: 1.2rem; max-width: 700px;">
+            <li>Mood-congruent retrieval bias</li>
+            <li>Negative encoding bias</li>
+            <li><strong style="color: var(--color-sustained);">High arousal</strong></li>
+            <li><strong>Impaired disengagement</strong></li>
+            <li>↓ reward expectation / ↑ punishment expectation</li>
+        </ul>
+        <p class="reveal" style="margin-top: 0.75rem; color: var(--color-abc);">WM restringe percepción y acceso a LTM</p>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Marco</span>
+  </div>
+</section>
+<section class="slide" id="slide-8">
+  <div class="slide-scene">
+<div class="domain-bar abc"></div>
+    <div class="slide-content centered">
+        <h1 class="reveal">La representación en <span style="color: var(--color-abc);">WM es el sesgo</span> — no solo lo contiene</h1>
+        <div class="reveal card" style="margin-top: 1rem; max-width: 520px; text-align: center; border: 1px solid var(--color-abc);">
+            <p style="font-size: clamp(1rem, 2vw, 1.35rem); color: var(--text-primary); font-style: italic;">"Nunca voy a estar bien"</p>
+            <p style="margin-top: 0.75rem; font-size: var(--small-size);">Bloquea experiencias alternativas en memoria episódica</p>
+        </div>
+        <p class="reveal source">Gazzaley 2005; Lewis-Peacock & Postle 2008 (vía Rohlfing)</p>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Marco</span>
+  </div>
+</section>
+<section class="slide" id="slide-9">
+  <div class="slide-scene">
+<div class="domain-bar intervention"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Fig. 1C — Mecanismo → <span style="color: var(--color-intervention);">habilidad</span></h1>
+        <table class="data-table reveal" style="margin-top: 0.75rem;">
+            <thead><tr><th>Mecanismo 1B</th><th>Skill S09</th><th>RDoC / red (resumen)</th></tr></thead>
+            <tbody>
+                <tr><td>High arousal</td><td><strong style="color:var(--color-tipss)">TIPSS</strong></td><td><span class="circuit-pill">SNS ↓</span> <span class="circuit-pill">vagal</span> <span class="circuit-pill">insula</span></td></tr>
+                <tr><td>Impaired disengagement</td><td><strong style="color:var(--color-defusion)">Defusión</strong> + ABC</td><td><span class="circuit-pill">DMN</span> <span class="circuit-pill">meta-rep</span></td></tr>
+                <tr><td>Evitación PE</td><td><strong style="color:var(--color-exposure)">Exposición</strong></td><td><span class="circuit-pill">ínsula</span> <span class="circuit-pill">vmPFC</span></td></tr>
+                <tr><td>WM rígida</td><td><strong style="color:var(--color-abc)">ABC</strong> + UP</td><td><span class="circuit-pill">dlPFC–ACC</span> <span class="circuit-pill">hipocampo</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Marco</span>
+  </div>
+</section>
+<section class="slide" id="slide-10">
+  <div class="slide-scene">
+<div class="slide-content">
+        <h1 class="reveal">Proceso dual + <span style="color: var(--color-pfc);">control cognitivo</span></h1>
+        <div class="split reveal" style="margin-top: 1rem;">
+            <div class="card" style="border-left: 3px solid var(--color-distress);">
+                <p class="tag tag-indigo">Implícito</p>
+                <p style="margin-top: 0.4rem;">Evitación · rumia · fusión</p>
+                <p style="font-size: var(--small-size); color: var(--text-muted);">Estriado · DMN</p>
+            </div>
+            <div class="card" style="border-left: 3px solid var(--color-intervention);">
+                <p class="tag tag-teal">Explícito</p>
+                <p style="margin-top: 0.4rem;">Disputa · reappraisal</p>
+                <p style="font-size: var(--small-size); color: var(--text-muted);">dlPFC · ACC · vmPFC</p>
+            </div>
+        </div>
+        <p class="reveal" style="text-align: center; margin-top: 0.75rem;">Psicoterapia = <strong>alinear</strong> ambos</p>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Marco</span>
+  </div>
+</section>
+<section class="slide" id="slide-11">
+  <div class="slide-scene">
+<div class="slide-content centered">
+        <h1 class="reveal">Expectativas disfuncionales = <span style="color: var(--color-loss);">prediction errors crónicos</span></h1>
+        <div class="reveal card" style="margin-top: 1rem; max-width: 600px;">
+            <p>"No lo soporto" / "Nunca termina" → evitación o rumia → <strong>PE no resuelto</strong> → loop</p>
+            <p style="margin-top: 0.5rem; font-size: var(--small-size);">S06: PE en miedo · S09: PE en <strong>tolerabilidad</strong> del malestar</p>
+        </div>
+        <p class="reveal source">Papalini et al. 2020 · dopamina / expectativa</p>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Marco</span>
+  </div>
+</section>
+<section class="slide" id="slide-12">
+  <div class="slide-scene">
+<div class="domain-bar abc"></div>
+    <div class="slide-content">
+        <h1 class="reveal"><span style="color: var(--color-abc);">ABC</span> = goal updating en B — núcleo de la sesión</h1>
+        <table class="data-table reveal" style="margin-top: 0.75rem;">
+            <thead><tr><th>Ellis</th><th>RDoC</th><th>Clínica</th></tr></thead>
+            <tbody>
+                <tr><td>A</td><td>Input + memoria</td><td>Pérdida · trigger real</td></tr>
+                <tr><td><strong>B</strong></td><td><strong>Representación + PE</strong></td><td>"No soporto" · "nunca"</td></tr>
+                <tr><td>C</td><td>Conducta + afecto</td><td>Rumia · evitación</td></tr>
+                <tr><td><strong>Disputa</strong></td><td><strong>Goal updating</strong></td><td>Desbloquear LTM</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <span class="slide-num"></span><span class="section-label">ABC</span>
+  </div>
+</section>
+<section class="slide" id="slide-13">
+  <div class="slide-scene">
+<div class="slide-content centered">
+        <h1 class="reveal">Disputamos <span style="color: var(--color-abc);">B</span>, no A — la pérdida puede ser real</h1>
+        <div class="split reveal" style="margin-top: 1rem; max-width: 700px;">
+            <div class="card" style="opacity: 0.55;"><p style="color: var(--text-muted);">❌ Solo modificar A</p><p style="font-size: var(--small-size);">Evitar · controlar mundo</p></div>
+            <div class="card" style="border: 1px solid var(--color-abc);"><p style="color: var(--color-abc);">✓ Disputar B</p><p style="font-size: var(--small-size);">Actualizar evaluación · PE adaptativo</p></div>
+        </div>
+    </div>
+    <span class="slide-num"></span><span class="section-label">ABC</span>
+  </div>
+</section>
+<section class="slide" id="slide-14">
+  <div class="slide-scene">
+<div class="slide-content">
+        <h1 class="reveal">Viñette duelo — identifiquen A · B · C</h1>
+        <div class="reveal case-card" style="margin-top: 0.75rem; border-color: rgba(129,140,248,0.4);">
+            <p class="case-row"><strong>A:</strong> Encuentra foto del difunto</p>
+            <p class="case-row"><strong>B:</strong> "Si miro, me destruyo; no puedo soportarlo"</p>
+            <p class="case-row"><strong>C:</strong> Esconde fotos + rumia culpa 3 h</p>
+            <p style="font-size: var(--small-size); color: var(--color-loss); margin-top: 0.5rem;">Motor: rumiación</p>
+        </div>
+    </div>
+    <span class="slide-num"></span><span class="section-label">ABC</span>
+  </div>
+</section>
+<section class="slide" id="slide-15">
+  <div class="slide-scene">
+<div class="domain-bar sustained"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Disputar contenido sin <span style="color: var(--color-defusion);">proceso</span> = podar maleza sin raíz</h1>
+        <div class="reveal card" style="margin-top: 1rem; border-left: 3px solid var(--color-success);">
+            <p><strong>Watkins et al. 2011</strong> — RFCBT: el outcome fue <strong>mediado por cambio en rumiación</strong></p>
+            <p style="margin-top: 0.5rem; font-size: var(--small-size);">En tu plan: ≥1 disputa de proceso (IU: "debo saber ya" · rumia: "debo pensar más")</p>
+        </div>
+    </div>
+    <span class="slide-num"></span><span class="section-label">ABC</span>
+  </div>
+</section>
+<section class="slide" id="slide-16">
+  <div class="slide-scene">
+<div class="domain-bar intervention"></div>
+    <div class="slide-content centered">
+        <h1 class="reveal">Regla de oro: <span style="color: var(--color-tipss);">sin ventana fisiológica</span> no hay PFC</h1>
+        <div class="flow-vertical reveal" style="margin-top: 1rem; max-width: 480px; font-size: var(--body-size);">
+            <div class="card" style="border-left: 3px solid var(--color-tipss);">Inundación → <strong>TIPSS</strong></div>
+            <div class="card" style="border-left: 3px solid var(--color-defusion);">Fusión → <strong>Defusión</strong></div>
+            <div class="card" style="border-left: 3px solid var(--color-exposure);">Evitación experiencial → <strong>Exposición</strong></div>
+            <div class="card" style="border-left: 3px solid var(--color-abc);">Ventana cognitiva → <strong>ABC / UP</strong></div>
+        </div>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Toolkit</span>
+  </div>
+</section>
+<section class="slide" id="slide-17">
+  <div class="slide-scene">
+<div class="domain-bar tipss"></div>
+    <div class="slide-content centered">
+        <h1 class="reveal"><span style="color: var(--color-tipss);">TIPSS</span> = TIPP (DBT) + S grounding</h1>
+        <div class="five-cols reveal" style="margin-top: 1.25rem; max-width: 900px;">
+            <div class="card" style="text-align:center;"><p style="color:var(--color-tipss);font-weight:700;">T</p><p style="font-size:var(--small-size);">Temperatura</p></div>
+            <div class="card" style="text-align:center;"><p style="color:var(--color-tipss);font-weight:700;">I</p><p style="font-size:var(--small-size);">Intensidad</p></div>
+            <div class="card" style="text-align:center;"><p style="color:var(--color-tipss);font-weight:700;">P</p><p style="font-size:var(--small-size);">Pausa</p></div>
+            <div class="card" style="text-align:center;"><p style="color:var(--color-tipss);font-weight:700;">P</p><p style="font-size:var(--small-size);">Progresiva</p></div>
+            <div class="card" style="text-align:center;"><p style="color:var(--color-tipss);font-weight:700;">S</p><p style="font-size:var(--small-size);">Sostener</p></div>
+        </div>
+        <p class="reveal" style="margin-top: 0.75rem; font-size: var(--small-size);"><span class="circuit-pill">dive reflex</span> <span class="circuit-pill">vagal</span> <span class="circuit-pill">salience → presente</span></p>
+    </div>
+    <span class="slide-num"></span><span class="section-label">TIPSS</span>
+  </div>
+</section>
+<section class="slide" id="slide-tipss-guide">
+  <div class="slide-scene">
+<div class="domain-bar tipss"></div>
+    <div class="slide-content">
+        <h1 class="reveal" style="font-size:clamp(1.1rem,2.8vw,1.85rem);"><span style="color:var(--color-tipss);">TIPSS</span> — hacer · sentir · evaluar</h1>
+        <div class="skill-triad reveal">
+            <div class="card skill-col"><h3>Cómo se hace</h3><ul><li>Triaje: arousal ≥7 → antes de cognición</li><li>Elegir <strong>1–2 letras</strong> (P+S en consultorio)</li><li><strong>P:</strong> exhalar &gt; inhalar 2–3 min</li><li><strong>S:</strong> 5 sentidos o pies + lugar + fecha</li><li>Re-check arousal; si ≤6 → siguiente skill</li></ul></div>
+            <div class="card skill-col"><h3>Cómo se siente</h3><p><strong>Paciente:</strong> urgencia baja de «ahora» a «puedo esperar»; cuerpo más lento; puede seguir triste — «sigo mal pero ya no me arrastra».</p><p style="margin-top:.35rem;"><strong>Tú:</strong> bajan revoluciones, no insight. Que <em>nombre</em> emoción, no «explosión».</p></div>
+            <div class="card skill-col"><h3>Cómo se evalúa</h3><ul><li>Arousal 0–10: caída ≥2 pts en 3–5 min</li><li>Posterga impulso crítico 5–10 min</li><li>Nombra emoción específica</li></ul><p class="skill-eval">✓ ventana · ✗ «quedó feliz» · ✗ ABC con pulso 120</p></div>
+        </div>
+    </div>
+    <span class="slide-num"></span><span class="section-label">TIPSS · guía</span>
+  </div>
+</section>
+<section class="slide" id="slide-defusion-guide">
+  <div class="slide-scene">
+<div class="domain-bar defusion"></div>
+    <div class="slide-content">
+        <h1 class="reveal" style="font-size:clamp(1.1rem,2.8vw,1.85rem);"><span style="color:var(--color-defusion);">Defusión</span> — hacer · sentir · evaluar</h1>
+        <div class="skill-triad reveal">
+            <div class="card skill-col"><h3>Cómo se hace</h3><ul><li>Indicación: «soy…», absolutos, arousal 3–6</li><li>Un ejercicio 3–5 min: repetición ×15, prefijo «tengo el pensamiento…», hoja a distancia</li><li>Debrief: ¿suena igual? ¿pensamiento vs yo?</li><li>Luego ABC (contenido) o exposición (ola)</li></ul></div>
+            <div class="card skill-col"><h3>Cómo se siente</h3><p><strong>Paciente:</strong> vergüenza → extrañeza; la frase pierde verdad absoluta; a veces risa nerviosa o vacío breve.</p><p style="margin-top:.35rem;"><strong>Tú:</strong> corrige solo: «no soy eso, <em>aparece</em> el pensamiento» — despegue, no euforia.</p></div>
+            <div class="card skill-col"><h3>Cómo se evalúa</h3><ul><li>Credibilidad pensamiento −20–30%</li><li>Prefijo meta-cognitivo espontáneo</li><li>Pequeña acción valiosa opcional</li></ul><p class="skill-eval">✓ distancia · ✗ «ya no es un fracaso» (eso es ABC)</p></div>
+        </div>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Defusión · guía</span>
+  </div>
+</section>
+<section class="slide" id="slide-exposure-guide">
+  <div class="slide-scene">
+<div class="domain-bar exposure"></div>
+    <div class="slide-content">
+        <h1 class="reveal" style="font-size:clamp(1.1rem,2.8vw,1.85rem);"><span style="color:var(--color-exposure);">Exposición al malestar</span> — hacer · sentir · evaluar</h1>
+        <div class="skill-triad reveal">
+            <div class="card skill-col"><h3>Cómo se hace</h3><ul><li>Predicción escrita: intensidad + «qué pasará»</li><li>Titulación: 30s→3min intero; 2–10min situacional</li><li>Sin rumia analítica ni nuevas seguridades</li><li>Debrief PE: real vs predicho</li></ul></div>
+            <div class="card skill-col"><h3>Cómo se siente</h3><p><strong>Paciente:</strong> ola sube 1–3 min; miedo a no parar; si no huye, meseta y descenso — a veces alivio «sobreviví».</p><p style="margin-top:.35rem;"><strong>Tú:</strong> resistir rescate; cronometrar y nombrar, no interpretar en el pico.</p></div>
+            <div class="card skill-col"><h3>Cómo se evalúa</h3><ul><li>Intensidad real ≤ predicha o PE articulado</li><li>Completó tiempo sin escape</li><li>Frase aprendizaje en sus palabras</li></ul><p class="skill-eval">✓ PE · ✗ flooding · ✗ sin predicción</p></div>
+        </div>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Exposición · guía</span>
+  </div>
+</section>
+<section class="slide" id="slide-abc-guide">
+  <div class="slide-scene">
+<div class="domain-bar abc"></div>
+    <div class="slide-content">
+        <h1 class="reveal" style="font-size:clamp(1.1rem,2.8vw,1.85rem);"><span style="color:var(--color-abc);">ABC</span> — hacer · sentir · evaluar</h1>
+        <div class="skill-triad reveal">
+            <div class="card skill-col"><h3>Cómo se hace</h3><ul><li>A/B/C + motor (R o IU)</li><li>Disputar <strong>B</strong>, no A (pérdida real OK)</li><li>≥2 disputas; ≥1 de <strong>proceso</strong></li><li>Nuevo B + C experimental pequeño</li><li>Credibilidad B 0–100% pre/post</li></ul></div>
+            <div class="card skill-col"><h3>Cómo se siente</h3><p><strong>Paciente:</strong> esfuerzo mental; irritación posible; al aflojar B: alivio o tristeza sin urgencia — validar sin positividad tóxica.</p><p style="margin-top:.35rem;"><strong>Tú:</strong> goal updating: matices, excepciones, menos absolutismo.</p></div>
+            <div class="card skill-col"><h3>Cómo se evalúa</h3><ul><li>B credibilidad −25% o alternativa aceptada</li><li>Disputa de proceso si IU/rumia</li><li>C nuevo realizado entre sesiones</li></ul><p class="skill-eval">✗ quitar teléfono sin tocar B · ✗ ABC en arousal ≥7</p></div>
+        </div>
+    </div>
+    <span class="slide-num"></span><span class="section-label">ABC · guía</span>
+  </div>
+</section>
+<section class="slide" id="slide-up-guide">
+  <div class="slide-scene">
+<div class="domain-bar reappraisal"></div>
+    <div class="slide-content">
+        <h1 class="reveal" style="font-size:clamp(1.1rem,2.8vw,1.85rem);"><span style="color:var(--color-reappraisal);">Reappraisal UP</span> — hacer · sentir · evaluar</h1>
+        <div class="skill-triad reveal">
+            <div class="card skill-col"><h3>Cómo se hace</h3><ul><li>Emoción ahora (SUDs) → pensamiento caliente</li><li><strong>Una</strong> reappraisal: temporal, evidencia o perspectiva</li><li>Re-check SUDs + credibilidad</li><li>Misma familia que disputa B, <strong>en vivo</strong></li></ul></div>
+            <div class="card skill-col"><h3>Cómo se siente</h3><p><strong>Paciente:</strong> emoción presente durante el ejercicio; menos atrapado o más claro — no siempre «mejor».</p><p style="margin-top:.35rem;"><strong>Tú:</strong> cambio de tono/postura cuando la nueva evaluación <em>encaja</em>, no cuando suena a discurso.</p></div>
+            <div class="card skill-col"><h3>Cómo se evalúa</h3><ul><li>SUDs emoción −1–2 pts</li><li>Emoción nombrada <em>antes</em> de reappraisar</li><li>Credibilidad hot thought −20%</li></ul><p class="skill-eval">✗ positividad tóxica · ✗ sin etiquetar emoción</p></div>
+        </div>
+    </div>
+    <span class="slide-num"></span><span class="section-label">UP · guía</span>
+  </div>
+</section>
+<section class="slide" id="slide-18">
+  <div class="slide-scene">
+<div class="domain-bar reto"></div>
+    <div class="slide-content centered">
+        <h1 class="reveal">Reto clínico: <span style="color: var(--color-intervention);">caso → skill → circuito</span></h1>
+        <p class="reveal" style="margin-top: 1rem; max-width: 620px;">Proyecto un card. Ustedes inventan la habilidad primaria, el mecanismo Fig. 1B y la red cerebral. <strong>Sin DSM.</strong></p>
+        <div class="reveal case-prompt" style="max-width: 560px; text-align: left;">
+            <p>¿Skill? ¿Secuencia? ¿Mecanismo 1B? ¿Constructo RDoC? ¿Circuito?</p>
+        </div>
+        <p class="reveal source">Tras cada caso: slide de solución (solo para ti, tras el debate)</p>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Reto</span>
+  </div>
+</section>
+<section class="slide" id="slide-19">
+  <div class="slide-scene">
+<div class="domain-bar tipss"></div>
+    <div class="slide-content">
+        <div class="case-card reveal">
+            <div class="case-header">
+                <span class="patient-name">Carmen, 29</span>
+                <span class="tag tag-cyan">CARD · RETO 1</span>
+            </div>
+            <p class="case-meta">Ruptura 3 semanas · Motor pendiente de identificar</p>
+            <p class="case-row" style="margin-top: 0.75rem;"><strong>Situación:</strong> Vio historia de IG de su ex hace 20 min</p>
+            <p class="case-row"><strong>Presente:</strong> FC ~120, temblor, nudo garganta, urgencia de escribirle <strong>ahora</strong></p>
+            <p class="case-row"><strong>Conducta:</strong> Intentó "razonarse" 10 min; mente en blanco; no nombra emoción salvo "explosión"</p>
+            <div class="case-prompt"><p>¿Primera skill? ¿Por qué no ABC? ¿Qué circuito modulamos?</p></div>
+        </div>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Reto · TIPSS</span>
+  </div>
+</section>
+<section class="slide" id="slide-19-answer">
+  <div class="slide-scene">
+<div class="domain-bar tipss"></div>
+    <div class="slide-content">
+        <div class="answer-card reveal">
+            <div class="case-header">
+                <span class="patient-name">Carmen — clave</span>
+                <span class="tag tag-cyan">SOLUCIÓN</span>
+            </div>
+            <p class="case-row"><strong>Skill:</strong> <span style="color:var(--color-tipss)">TIPSS</span> — P (respiración) + S (grounding); T si hay agua/frío</p>
+            <p class="case-row"><strong>Mecanismo 1B:</strong> High arousal</p>
+            <p class="case-row"><strong>RDoC:</strong> Sustained Threat (agudo) + Arousal/Regulatory Systems</p>
+            <p class="case-row"><strong>Circuitos:</strong> <span class="circuit-pill">SNS ↓</span> <span class="circuit-pill">locus coeruleus–HPA</span> <span class="circuit-pill">vagal ↑</span> <span class="circuit-pill">dlPFC offline → salience al presente</span></p>
+            <p class="case-row" style="margin-top:.6rem;font-size:var(--small-size);"><strong>Error típico:</strong> Disputar «no debería escribirle» con arousal 9/10 — ABC <em>después</em></p>
+            <p class="eval-30s"><strong>Eval 30 s:</strong> Arousal pre/post −2 pts · ¿postergó escribir 5–10 min? · ¿nombró emoción ≠ «explosión»? → 3/3 = TIPSS OK</p>
+        </div>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Clave · TIPSS</span>
+  </div>
+</section>
+<section class="slide" id="slide-20">
+  <div class="slide-scene">
+<div class="domain-bar defusion"></div>
+    <div class="slide-content">
+        <div class="case-card reveal" style="border-color: rgba(168,85,247,0.45);">
+            <div class="case-header">
+                <span class="patient-name">Roberto, 45</span>
+                <span class="tag tag-violet">CARD · RETO 2</span>
+            </div>
+            <p class="case-meta">MDD residual · PHQ-9 = 11 · Arousal 4/10</p>
+            <p class="case-row" style="margin-top: 0.75rem;"><strong>Verbaliza:</strong> <em>"Soy un fracaso total"</em> — no distingue pensamiento de identidad</p>
+            <p class="case-row"><strong>Conducta:</strong> Dejó proyectos; repite la frase cada mañana como hecho biográfico</p>
+            <div class="case-prompt"><p>¿Defusión, ABC o reappraisal? ¿Proceso vs contenido? ¿Red?</p></div>
+        </div>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Reto · Defusión</span>
+  </div>
+</section>
+<section class="slide" id="slide-20-answer">
+  <div class="slide-scene">
+<div class="domain-bar defusion"></div>
+    <div class="slide-content">
+        <div class="answer-card reveal">
+            <div class="case-header">
+                <span class="patient-name">Roberto — clave</span>
+                <span class="tag tag-violet">SOLUCIÓN</span>
+            </div>
+            <p class="case-row"><strong>Skill:</strong> <span style="color:var(--color-defusion)">Defusión cognitiva</span> → luego ABC si hace falta cuestionar contenido</p>
+            <p class="case-row"><strong>Mecanismo 1B:</strong> Impaired disengagement + narrativa pegada</p>
+            <p class="case-row"><strong>RDoC:</strong> Cognitive control (meta-representación)</p>
+            <p class="case-row"><strong>Circuitos:</strong> <span class="circuit-pill">DMN</span> <span class="circuit-pill">mPFC/PCC</span> <span class="circuit-pill">meta-rep → goal updating dlPFC</span></p>
+            <p class="case-row" style="margin-top:.6rem;font-size:var(--small-size);"><strong>Error típico:</strong> Reestructuración prematura («mira tus logros») sin des-fusión</p>
+            <p class="eval-30s"><strong>Eval 30 s:</strong> Credibilidad «soy un fracaso» −20% <em>o</em> prefijo espontáneo · ¿no debatió contenido aún? · ¿distancia yo/pensamiento? → 2/3 = defusión OK</p>
+        </div>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Clave · Defusión</span>
+  </div>
+</section>
+<section class="slide" id="slide-21">
+  <div class="slide-scene">
+<div class="domain-bar exposure"></div>
+    <div class="slide-content">
+        <div class="case-card reveal" style="border-color: rgba(245,158,11,0.45);">
+            <div class="case-header">
+                <span class="patient-name">Elena, 52</span>
+                <span class="tag tag-amber">CARD · RETO 3</span>
+            </div>
+            <p class="case-meta">Duelo por hijo · 8 meses</p>
+            <p class="case-row" style="margin-top: 0.75rem;"><strong>Evita:</strong> cuarto del hijo — predice colapso, llanto sin fin, no poder trabajar</p>
+            <p class="case-row"><strong>Conducta:</strong> Anestesia entre semana; llanto solo cuando "se escapa"</p>
+            <p class="case-row"><strong>Arousal al nombrar cuarto:</strong> 5/10</p>
+            <div class="case-prompt"><p>¿Exposición, TIPSS o ABC? ¿Qué PE testeamos? ¿Circuito Loss?</p></div>
+        </div>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Reto · Exposición</span>
+  </div>
+</section>
+<section class="slide" id="slide-21-answer">
+  <div class="slide-scene">
+<div class="domain-bar exposure"></div>
+    <div class="slide-content">
+        <div class="answer-card reveal">
+            <div class="case-header">
+                <span class="patient-name">Elena — clave</span>
+                <span class="tag tag-amber">SOLUCIÓN</span>
+            </div>
+            <p class="case-row"><strong>Skill:</strong> <span style="color:var(--color-exposure)">Exposición al malestar</span> titulada (ej. 5 min puerta abierta o 2 min foto + predicción previa)</p>
+            <p class="case-row"><strong>Mecanismo 1B:</strong> ↓ reward expectation · evitación de PE sobre tolerabilidad</p>
+            <p class="case-row"><strong>RDoC:</strong> Loss (+ yearning / NAcc si se discute)</p>
+            <p class="case-row"><strong>Circuitos:</strong> <span class="circuit-pill">ínsula</span> <span class="circuit-pill">vmPFC</span> <span class="circuit-pill">PE adaptativo</span></p>
+            <p class="case-row" style="margin-top:.6rem;font-size:var(--small-size);"><strong>Error típico:</strong> ABC sin exposición → nunca testea «puedo sentir y no colapsar»</p>
+            <p class="eval-30s"><strong>Eval 30 s:</strong> ¿Predijo intensidad + colapso? · Tras tarea: real ≤ predicho <em>o</em> PE en sus palabras · ¿completó tiempo sin escape? → 3/3 = exposición OK</p>
+        </div>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Clave · Exposición</span>
+  </div>
+</section>
+<section class="slide" id="slide-22">
+  <div class="slide-scene">
+<div class="domain-bar abc"></div>
+    <div class="slide-content">
+        <div class="case-card reveal" style="border-color: rgba(129,140,248,0.45);">
+            <div class="case-header">
+                <span class="patient-name">Diego, 34</span>
+                <span class="tag tag-blue">CARD · RETO 4 · ABC</span>
+            </div>
+            <p class="case-meta">IU dominante · Arousal 6/10 tras breve regulación</p>
+            <p class="case-row" style="margin-top: 0.75rem;"><strong>A:</strong> Pareja sin WhatsApp 3 h</p>
+            <p class="case-row"><strong>B:</strong> "Le pasó algo grave y es mi culpa por no estar pendiente"</p>
+            <p class="case-row"><strong>C:</strong> 40+ mensajes + rumiación 2 h</p>
+            <div class="case-prompt"><p>¿Por qué B y no A? ¿Goal updating? ¿dlPFC–hipocampo?</p></div>
+        </div>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Reto · ABC</span>
+  </div>
+</section>
+<section class="slide" id="slide-22-answer">
+  <div class="slide-scene">
+<div class="domain-bar abc"></div>
+    <div class="slide-content">
+        <div class="answer-card reveal">
+            <div class="case-header">
+                <span class="patient-name">Diego — clave</span>
+                <span class="tag tag-blue">SOLUCIÓN</span>
+            </div>
+            <p class="case-row"><strong>Skill:</strong> <span style="color:var(--color-abc)">ABC</span> — disputa B + disputa de <strong>proceso</strong> IU («debo saber ya»)</p>
+            <p class="case-row"><strong>Mecanismo 1B:</strong> Representación rígida en WM · mood-congruent bias</p>
+            <p class="case-row"><strong>RDoC:</strong> Cognitive control — goal updating</p>
+            <p class="case-row"><strong>Circuitos:</strong> <span class="circuit-pill">dlPFC–ACC</span> <span class="circuit-pill">hipocampo</span> <span class="circuit-pill">PE catástrofe</span></p>
+            <p class="case-row" style="margin-top:.6rem;font-size:var(--small-size);"><strong>Error típico:</strong> Quitar el teléfono (modificar A) sin tocar B</p>
+            <p class="eval-30s"><strong>Eval 30 s:</strong> B catástrofa/culpa −25% credibilidad · disputa <strong>proceso</strong> «debo saber ya» · C nuevo (no solo quitar WhatsApp) → 3/3 = ABC OK</p>
+        </div>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Clave · ABC</span>
+  </div>
+</section>
+<section class="slide" id="slide-23">
+  <div class="slide-scene">
+<div class="domain-bar reappraisal"></div>
+    <div class="slide-content">
+        <div class="case-card reveal" style="border-color: rgba(34,211,238,0.45);">
+            <div class="case-header">
+                <span class="patient-name">Lucía, 26</span>
+                <span class="tag tag-teal">CARD · RETO 5</span>
+            </div>
+            <p class="case-meta">En sesión · tras 3 min respiración · arousal estable</p>
+            <p class="case-row" style="margin-top: 0.75rem;"><strong>Emoción:</strong> tristeza 6/10 tras rechazo laboral</p>
+            <p class="case-row"><strong>Pensamiento automático:</strong> "Esto confirma que nunca voy a salir adelante"</p>
+            <div class="case-prompt"><p>¿Reappraisal UP vs ABC diferido? ¿Mismo circuito que disputa B?</p></div>
+        </div>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Reto · UP</span>
+  </div>
+</section>
+<section class="slide" id="slide-23-answer">
+  <div class="slide-scene">
+<div class="domain-bar reappraisal"></div>
+    <div class="slide-content">
+        <div class="answer-card reveal">
+            <div class="case-header">
+                <span class="patient-name">Lucía — clave</span>
+                <span class="tag tag-teal">SOLUCIÓN</span>
+            </div>
+            <p class="case-row"><strong>Skill:</strong> <span style="color:var(--color-reappraisal)">Reappraisal UP</span> — emoción → pensamiento → 1 reappraisal (temporal o de evidencia)</p>
+            <p class="case-row"><strong>Mecanismo 1B:</strong> Representación en WM · actualización online</p>
+            <p class="case-row"><strong>RDoC:</strong> Cognitive control aplicado a Negative Valence</p>
+            <p class="case-row"><strong>Circuitos:</strong> <span class="circuit-pill">dlPFC → ↓ amígdala</span> <span class="circuit-pill">Ochsner & Gross</span> — misma familia que goal updating, timing en vivo</p>
+            <p class="case-row" style="margin-top:.6rem;font-size:var(--small-size);"><strong>Error típico:</strong> Positividad tóxica; reappraisal sin identificar emoción primero</p>
+            <p class="eval-30s"><strong>Eval 30 s:</strong> ¿Nombró <strong>tristeza</strong> antes del reappraisal? · SUDs −1–2 <em>o</em> hot thought −20% · ¿no fue positividad tóxica? → 3/3 = UP OK</p>
+        </div>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Clave · UP</span>
+  </div>
+</section>
+<section class="slide" id="slide-24">
+  <div class="slide-scene">
+<div class="domain-bar defusion"></div>
+    <div class="slide-content">
+        <h1 class="reveal"><span style="color: var(--color-defusion);">Defusión</span> — relación, no verdad</h1>
+        <div class="split reveal" style="margin-top: 1rem;">
+            <div class="card" style="opacity: 0.6;"><p>Fusión</p><p><em>"Soy un fracaso"</em></p></div>
+            <div class="card" style="border: 1px solid var(--color-defusion);"><p>Defusión</p><p><em>"Tengo el pensamiento de que…"</em></p></div>
+        </div>
+        <p class="reveal" style="margin-top: 0.75rem;"><span class="circuit-pill">DMN ↓ captura</span> <span class="circuit-pill">meta-representación</span></p>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Defusión</span>
+  </div>
+</section>
+<section class="slide" id="slide-25">
+  <div class="slide-scene">
+<div class="slide-content">
+        <h1 class="reveal">Cuatro palancas · cuatro mecanismos</h1>
+        <table class="data-table reveal" style="margin-top: 0.5rem;">
+            <thead><tr><th>Skill</th><th>Diana</th><th>No usar cuando</th></tr></thead>
+            <tbody>
+                <tr><td style="color:var(--color-tipss)">TIPSS</td><td>Arousal</td><td>Como única terapia</td></tr>
+                <tr><td style="color:var(--color-defusion)">Defusión</td><td>Proceso / fusión</td><td>Sustituto de exposición</td></tr>
+                <tr><td style="color:var(--color-exposure)">Exposición</td><td>PE tolerabilidad</td><td>Flooding</td></tr>
+                <tr><td style="color:var(--color-abc)">ABC / UP</td><td>WM / B</td><td>Inundación</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Toolkit</span>
+  </div>
+</section>
+<section class="slide" id="slide-26">
+  <div class="slide-scene">
+<div class="domain-bar exposure"></div>
+    <div class="slide-content">
+        <h1 class="reveal">S06: CS externo · S09: <span style="color: var(--color-exposure);">ola interna</span></h1>
+        <div class="split reveal" style="margin-top: 1rem;">
+            <div class="card"><p class="tag tag-rose">Fear</p><p>Extinción · perilla · puente</p></div>
+            <div class="card" style="border: 1px solid var(--color-exposure);"><p class="tag tag-amber">Distress</p><p>Tristeza · vacío · nudo · anhelo</p></div>
+        </div>
+        <p class="reveal" style="margin-top: 0.75rem; text-align: center;">Predicción → exposición titulada → revisión (PE)</p>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Exposición</span>
+  </div>
+</section>
+<section class="slide" id="slide-27">
+  <div class="slide-scene">
+<div class="domain-bar reappraisal"></div>
+    <div class="slide-content centered">
+        <h1 class="reveal"><span style="color: var(--color-reappraisal);">Reappraisal UP</span> en 3 pasos</h1>
+        <div class="three-cols reveal" style="margin-top: 1rem;">
+            <div class="card" style="text-align:center;"><p>1</p><p>Emoción</p></div>
+            <div class="card" style="text-align:center;"><p>2</p><p>Pensamiento</p></div>
+            <div class="card" style="text-align:center;"><p>3</p><p>Reappraisal</p></div>
+        </div>
+        <p class="reveal" style="margin-top: 0.75rem;"><span class="circuit-pill">dlPFC → ↓ amígdala</span> · Ochsner & Gross 2005</p>
+    </div>
+    <span class="slide-num"></span><span class="section-label">UP</span>
+  </div>
+</section>
+<section class="slide" id="slide-28">
+  <div class="slide-scene">
+<div class="domain-bar intervention"></div>
+    <div class="slide-content">
+        <h1 class="reveal">Tarea en triadas — <span style="color: var(--color-intervention);">plan integrado</span></h1>
+        <div class="reveal card" style="margin-top: 0.75rem; font-size: var(--small-size);">
+            <p>☐ ABC (A, B, C) + motor <strong>R</strong> o <strong>IU</strong></p>
+            <p>☐ ≥2 skills en <strong>secuencia</strong> + mecanismo 1B</p>
+            <p>☐ Exposición al malestar <strong>titulada</strong> + predicción</p>
+            <p>☐ ≥2 disputas · ≥1 de <strong>proceso</strong></p>
+            <p>☐ ≥1 <strong>circuito</strong> nombrado por skill</p>
+        </div>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Tarea</span>
+  </div>
+</section>
+<section class="slide" id="slide-29">
+  <div class="slide-scene">
+<div class="slide-content centered">
+        <h1 class="reveal" style="font-size: clamp(1.1rem, 2.8vw, 1.75rem);">Take-home: cuatro palancas, un sistema</h1>
+        <div class="four-cols reveal" style="margin-top: 1.25rem; max-width: 800px;">
+            <div class="card" style="text-align:center;border-top:3px solid var(--color-tipss)"><p style="color:var(--color-tipss)">TIPSS</p><p style="font-size:var(--small-size)">cuerpo</p></div>
+            <div class="card" style="text-align:center;border-top:3px solid var(--color-defusion)"><p style="color:var(--color-defusion)">Defusión</p><p style="font-size:var(--small-size)">despegue</p></div>
+            <div class="card" style="text-align:center;border-top:3px solid var(--color-exposure)"><p style="color:var(--color-exposure)">Exposición</p><p style="font-size:var(--small-size)">ola</p></div>
+            <div class="card" style="text-align:center;border-top:3px solid var(--color-abc)"><p style="color:var(--color-abc)">ABC/UP</p><p style="font-size:var(--small-size)">B / WM</p></div>
+        </div>
+        <p class="reveal" style="margin-top: 1rem; max-width: 640px; font-style: italic;">Target Rohlfing: la representación semántica que mantiene el distress</p>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Cierre</span>
+  </div>
+</section>
+<section class="slide slide-morning" id="slide-30">
+  <div class="slide-scene">
+<div class="slide-content centered">
+        <h1 class="reveal">Voluntario: fusionado + evita llorar + arousal 3/10</h1>
+        <p class="reveal" style="margin-top: 1.5rem; color: var(--text-secondary);">¿Primera skill?</p>
+        <p class="reveal" style="margin-top: 1rem; color: var(--color-defusion); font-size: var(--h2-size);">Defusión → exposición titulada → ABC</p>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Cierre</span>
+  </div>
+</section>
+<section class="slide slide-morning" id="slide-31">
+  <div class="slide-scene">
+<div class="domain-bar loss"></div>
+    <div class="slide-content centered">
+        <h1 class="reveal">S10: <span style="color: var(--color-loss);">farmacología de precisión</span> del distress</h1>
+        <p class="reveal" style="margin-top: 1rem;">Traigan el <strong>mismo caso</strong> con ABC + secuencia + circuitos</p>
+        <p class="reveal" style="margin-top: 0.5rem; font-size: var(--small-size); color: var(--text-muted);">¿Qué fármaco complementa Loss vs Threat vs déficit de control cognitivo?</p>
+    </div>
+    <span class="slide-num"></span><span class="section-label">Puente S10</span>
+  </div>
+</section>
+
+</main>
+
+<script>
+(function initRain() {
+  const layer = document.getElementById("rainLayer");
+  if (!layer || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  for (let i = 0; i < 48; i++) {
+    const d = document.createElement("div");
+    d.className = "raindrop";
+    d.style.left = Math.random() * 100 + "%";
+    d.style.animationDuration = (0.55 + Math.random() * 0.75) + "s";
+    d.style.animationDelay = Math.random() * 2 + "s";
+    d.style.opacity = 0.25 + Math.random() * 0.45;
+    layer.appendChild(d);
+  }
+})();
+
+(function parallax() {
+  const bg = document.getElementById("worldBg");
+  if (!bg || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const layers = {
+    distant: bg.querySelector(".distant"),
+    mid: bg.querySelector(".mid"),
+    near: bg.querySelector(".near"),
+    fore: bg.querySelector(".fore"),
+    celestial: bg.querySelector(".celestial")
+  };
+  document.addEventListener("mousemove", (e) => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 2;
+    const y = (e.clientY / window.innerHeight - 0.5) * 2;
+    if (layers.distant) layers.distant.style.transform = `translate3d(${x * -8}px, ${y * -4}px, 0)`;
+    if (layers.mid) layers.mid.style.transform = `translate3d(${x * -18}px, ${y * -8}px, 0)`;
+    if (layers.near) layers.near.style.transform = `translate3d(${x * -30}px, ${y * -12}px, 0)`;
+    if (layers.fore) layers.fore.style.transform = `translate3d(${x * -45}px, ${y * -18}px, 0)`;
+    if (layers.celestial) layers.celestial.style.transform = `translate3d(${x * -4}px, ${y * -2}px, 0)`;
+  });
+})();
+
+class SlidePresentation {
+  constructor() {
+    this.slides = document.querySelectorAll(".slide");
+    this.currentSlide = 0;
+    this.init();
+  }
+  init() {
+    this.setupSlideNumbers();
+    this.setupIntersectionObserver();
+    this.setupKeyboardNav();
+    this.setupTouchNav();
+    this.setupProgressBar();
+    this.setupNavDots();
+  }
+  setupSlideNumbers() {
+    this.slides.forEach((slide, i) => {
+      const num = slide.querySelector(".slide-num");
+      if (num) num.textContent = `${i + 1} / ${this.slides.length}`;
+    });
+  }
+  setupIntersectionObserver() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          const idx = Array.from(this.slides).indexOf(entry.target);
+          this.currentSlide = idx;
+          this.updateProgress();
+          this.updateDots();
+        }
+      });
+    }, { threshold: 0.5 });
+    this.slides.forEach(slide => observer.observe(slide));
+  }
+  setupKeyboardNav() {
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown" || e.key === "ArrowRight" || e.key === " ") {
+        e.preventDefault();
+        this.goTo(Math.min(this.currentSlide + 1, this.slides.length - 1));
+      } else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+        e.preventDefault();
+        this.goTo(Math.max(this.currentSlide - 1, 0));
+      } else if (e.key === "Home") { e.preventDefault(); this.goTo(0); }
+      else if (e.key === "End") { e.preventDefault(); this.goTo(this.slides.length - 1); }
+    });
+  }
+  setupTouchNav() {
+    let startY = 0;
+    document.addEventListener("touchstart", (e) => { startY = e.touches[0].clientY; }, { passive: true });
+    document.addEventListener("touchend", (e) => {
+      const diff = startY - e.changedTouches[0].clientY;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) this.goTo(Math.min(this.currentSlide + 1, this.slides.length - 1));
+        else this.goTo(Math.max(this.currentSlide - 1, 0));
+      }
+    });
+  }
+  setupProgressBar() {
+    this.progressBar = document.getElementById("progressBar");
+    this.updateProgress();
+  }
+  setupNavDots() {
+    const nav = document.getElementById("navDots");
+    this.slides.forEach((_, i) => {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "dot" + (i === 0 ? " active" : "");
+      dot.setAttribute("aria-label", `Slide ${i + 1}`);
+      dot.addEventListener("click", () => this.goTo(i));
+      nav.appendChild(dot);
+    });
+    this.dots = nav.querySelectorAll(".dot");
+  }
+  goTo(idx) { this.slides[idx].scrollIntoView({ behavior: "smooth" }); }
+  updateProgress() {
+    this.progressBar.style.width = ((this.currentSlide + 1) / this.slides.length) * 100 + "%";
+  }
+  updateDots() {
+    if (!this.dots) return;
+    this.dots.forEach((d, i) => d.classList.toggle("active", i === this.currentSlide));
+  }
+}
+new SlidePresentation();
+</script>
+</body>
+</html>

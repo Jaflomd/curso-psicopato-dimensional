@@ -2,22 +2,44 @@
 
 ## Learning Objectives
 
-- **LO1** (Bloom 2 / Miller: Sabe): Describir el modelo ABC de Ellis, identificando los tres componentes en al menos 3 ejemplos clínicos del subfactor distress y explicando por qué la disputa de B es el mecanismo de cambio, no la modificación de A
-- **LO2** (Bloom 3 / Miller: Demuestra): Demostrar la aplicación del módulo de reappraisal cognitivo del Unified Protocol en la demo de 10-15 min, mostrando transición de emoción automática a respuesta modulada mediante al menos 2 estrategias de reappraisal
-- **LO3** (Bloom 5 / Miller: Hace): Diseñar una intervención de reestructuración cognitiva (ABC completo) para un paciente propio con clínica del subfactor distress, identificando mecanismo transdiagnóstico activo (rumiación o IU), creencia irracional central, al menos 2 disputas y pensamiento alternativo
+- **K1** (Bloom 2 / Miller: Sabe): Explicar la ecuación Rohlfing (necesidades → evaluación → sesgos → reappraisal/control cognitivo) y mapear ≥3 mecanismos Fig. 1B del distress a habilidades del toolkit (Fig. 1C)
+- **K2** (Bloom 2–3 / Miller: Sabe / Sabe cómo): Describir el modelo ABC de Ellis en ≥3 ejemplos del subfactor distress; explicar por qué la disputa de **B** es **goal updating** (representación semántica en WM), no modificación de **A**
+- **K3** (Bloom 3 / Miller: Sabe cómo): Aplicar el mapa de decisión clínico (inundación → TIPSS; fusión → defusión; evitación → exposición al malestar; ventana cognitiva → ABC/reappraisal UP) con constructos RDoC (Loss, Sustained Threat, Cognitive Control)
+- **K4** (Bloom 4 / Miller: Sabe cómo): Distinguir intervenciones por diana contenido vs **proceso** (rumiación/IU); citar mediación por rumiación (Watkins et al. 2011)
+- **A1** (Bloom 5 / Miller: Demuestra): Demostrar ≥3 habilidades del toolkit en demo breve, verbalizando el mecanismo disfuncional target
+- **A2** (Bloom 6 / Miller: Hace): Diseñar plan integrado para paciente propio: ABC + ≥2 habilidades en secuencia + exposición al malestar titulada con predicción + ≥2 disputas (≥1 de proceso)
+
+**Detalle formal:** `clase-09-materiales/objetivos-sesion-09.md`  
+**Guion docente:** `clase-09-materiales/sesion-09-contenido.md`  
+**Slides:** `clase-09-materiales/sesion-09.html` (frontend) · `slide-outline.md`  
+**Retos:** `clase-09-materiales/casos-retos-habilidades-s09.md` (5 cards + clave circuitos)
+**Marco:** `clase-09-materiales/marco-computacional-rohlfing-s09.md`
+
+## Toolkit de habilidades (5)
+
+| Habilidad | Función | Mecanismo Rohlfing (Fig. 1C) |
+|---|---|---|
+| **ABC (Ellis)** | Disputar **B** — **core** | Goal updating; representación en WM |
+| **Reappraisal (UP)** | Regulación cognitiva en tiempo real | Misma familia que disputa B (online) |
+| **TIPSS** | Down-regulation fisiológica | High arousal |
+| **Defusión cognitiva** | Des-fusión pensamiento/yo | Impaired disengagement |
+| **Exposición al malestar** | Tolerar la ola emocional | PE sobre intolerabilidad; Loss |
+
+Detalle clínico: `clase-09-materiales/habilidades-distress-toolkit.md`
 
 ## Outline (50 min)
 
-| Min | Actividad | Notas |
-|-----|-----------|-------|
-| 0-5 | Recuperación activa: "¿Cuál era la diferencia entre rumiación e IU?" Conectar: ¿a qué apunta la terapia cognitiva en distress? | Anclar S8 sin repasar todo |
-| 5-13 | Modelo ABC de Ellis: A = antecedente, B = creencia, C = consecuencia. El trabajo está en B. Ejemplos con rumiación e IU. Distinción pensamientos automáticos vs creencias irracionales nucleares | 2-3 ejemplos clínicos del subfactor distress |
-| 13-15 | Transición al reappraisal del UP: diferencia reestructuración clásica vs reappraisal como regulación emocional en tiempo real | Tabla comparativa de 2 filas |
-| 15-28 | Demo reappraisal cognitivo (13 min): identificación de emoción automática, detección del pensamiento, 2 estrategias de reappraisal (perspectiva temporal, decentering, evaluación de evidencia) | Grupo recibe hoja de trabajo con ABC + columna de reappraisal |
-| 28-43 | Tarea guiada: paciente propio del subfactor distress. ABC completo, identificar creencia + mecanismo transdiagnóstico, 2 disputas + pensamiento alternativo. En triadas: revisar que disputa apunte al mecanismo, no solo al contenido | Enfatizar: disputar contenido sin tocar proceso = trabajo incompleto |
-| 43-49 | 2-3 voluntarios comparten ABC. Facilitador señala cuándo se modifica proceso vs contenido. Recordatorio: traer caso a S10 | |
-| 49-50 | Take-home | |
+| Min | Actividad | LO |
+|-----|-----------|-----|
+| 0-4 | Recuperación S8: rumiación vs IU → target = representación sesgada | — |
+| 4-12 | Marco Rohlfing/RDoC + **ABC núcleo** | K1, K2 |
+| 12-17 | Mapa decisión + demo **TIPSS** | K3, A1 |
+| 17-22 | Demo **defusión** + contenido vs proceso | K3, K4, A1 |
+| 22-27 | **Exposición al malestar** (concepto + titulación) | K3, K4 |
+| 27-34 | Demo **reappraisal UP** (si hay ventana) | K3, A1 |
+| 34-46 | Tarea triadas: plan integrado (hoja toolkit) | A2 |
+| 46-50 | Cierre + take-home + puente S10 | K4 |
 
 ## Take-Home Message
 
-> Reestructurar el contenido del pensamiento sin tocar el proceso rumiatvo es podar la maleza sin sacar la raíz. El objetivo de la intervención cognitiva en el subfactor distress no es que el paciente piense "correcto" — es que el sistema de evaluación deje de operar en modo sostenido e incontrolable.
+> **Cuatro palancas, un sistema** (TIPSS → defusión → exposición → ABC/reappraisal): el target es la **representación evaluativa en B**, no el diagnóstico. Reestructurar contenido sin proceso rumiativo, sin bajar inundación, o sin dejar de evitar la emoción = podar maleza sin sacar la raíz. La psicoterapia del distress alinea sistema implícito y explícito para restablecer **control cognitivo** (Rohlfing et al. 2025).
