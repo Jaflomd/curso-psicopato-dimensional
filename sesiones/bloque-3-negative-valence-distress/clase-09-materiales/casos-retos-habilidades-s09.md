@@ -2,7 +2,7 @@
 
 **Formato en aula:** proyectas el **card** (slide o este MD). Los residentes proponen: **skill primaria**, **secuencia** si aplica, **mecanismo Fig. 1B**, **constructo RDoC**, **red/circuito**. Tú cierras con la clave docente.
 
-**No proyectar la clave** en `sesion-09.html` — solo el caso.
+**En aula:** proyectar solo el **card** (caso). La **clave** (+ eval 30 s) está en `sesion-09.html` **después** de cada caso — avanzar solo tras el debate.
 
 ---
 
@@ -30,6 +30,7 @@
 | **RDoC**         | Sustained Threat (agudo) + Arousal/Regulatory Systems                                                                          |
 | **Circuitos**    | ↑ SNS / locus coeruleus–HPA; **dlPFC offline** → TIPSS busca ↑ vagal, ↓ CeA-driven arousal, re-entrar red salience al presente |
 | **Error típico** | Disputar "no debería escribirle" con arousal 9/10                                                                              |
+| **Eval 30 s**    | Arousal pre/post **−2 pts** · ¿postergó escribir **5–10 min**? · ¿nombró emoción ≠ «explosión»? → **3/3** = TIPSS OK          |
 
 ---
 
@@ -52,6 +53,7 @@
 | **RDoC** | Cognitive control (meta-representación) |
 | **Circuitos** | Captura WM por narrativa self-referential (**DMN** mPFC/PCC); defusión = distancia meta-representacional antes de **goal updating** dlPFC |
 | **Error típico** | Reestructuración prematura ("mira tus logros") sin des-fusión → refuerza debate de contenido |
+| **Eval 30 s**    | Credibilidad «soy un fracaso» **−20%** o prefijo espontáneo · ¿no debatió contenido aún? · distancia yo/pensamiento → **2/3** = defusión OK |
 
 ---
 
@@ -74,6 +76,7 @@
 | **RDoC** | **Loss** (+ yearning / NAcc si se discute) |
 | **Circuitos** | **Ínsula** interoceptiva + **vmPFC** (integración "ola tolerable"); evitación mantiene predicción de castigo corporal sin actualización |
 | **Error típico** | ABC sin exposición → nunca testea "puedo sentir y no colapsar" |
+| **Eval 30 s**    | ¿Predijo intensidad + colapso? · Tras tarea: real ≤ predicho **o** PE verbalizado · ¿completó tiempo sin escape? → **3/3** = exposición OK |
 
 ---
 
@@ -97,6 +100,7 @@
 | **RDoC** | Cognitive control — **goal updating** |
 | **Circuitos** | **dlPFC–ACC** actualizan evaluación; **hippocampo** recupera episodios alternativos; PE sobre expectativa de catástrofe |
 | **Error típico** | Quitar el teléfono (modificar A) sin tocar B |
+| **Eval 30 s**    | B catástrofa/culpa **−25%** credibilidad · disputa **proceso** «debo saber ya» · C nuevo (no solo quitar WhatsApp) → **3/3** = ABC OK |
 
 ---
 
@@ -118,6 +122,7 @@
 | **RDoC** | Cognitive control aplicado a Negative Valence |
 | **Circuitos** | **dlPFC** modula **amígdala** (Ochsner & Gross); misma familia que goal updating, timing en vivo |
 | **Error típico** | Positividad tóxica; reappraisal sin identificar emoción primero |
+| **Eval 30 s**    | ¿Nombró **tristeza** antes del reappraisal? · SUDs **−1–2** o hot thought **−20%** · ¿no positividad tóxica? → **3/3** = UP OK |
 
 ---
 
@@ -140,3 +145,6 @@
 | Mecanismo 1B correcto | — | Sí |
 | ≥1 circuito/red plausible | — | Sí (no hace falta neuroanatomía de atlas) |
 | Secuencia si hay arousal alto | — | TIPSS antes de cognición |
+| **Eval 30 s** (cierre por card) | No articula criterio medible | Usa checklist 3 ítems del slide clave |
+
+**Uso en aula:** tras el debate del grupo, avanzas al slide **SOLUCIÓN** y lees solo la caja verde **Eval 30 s** — si el grupo acertó 2–3 ítems, validas; si no, corriges con skill + error típico.
