@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galeria | Psicopatologia Dimensional</title>
+  <meta name="description" content="Indice tipo galeria para las sesiones del curso de Psicopatologia Dimensional." />
+  <style>
+    :root {
+      --bg: #f7f6f3;
+      --surface: #ffffff;
+      --surface-soft: #fbfaf8;
+      --ink: #242424;
+      --muted: #6f6c66;
+      --line: #dedbd3;
+      --line-strong: #c8c3b8;
+      --blue: #2f6f9f;
+      --teal: #20806f;
+      --amber: #a76616;
+      --rose: #9e3d52;
+      --violet: #6c55a3;
+      --green: #387449;
+      --shadow: 0 10px 30px rgba(36, 36, 36, 0.08);
+      --radius: 8px;
+      color-scheme: light;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.72), rgba(247,246,243,0) 360px),
+        var(--bg);
+      color: var(--ink);
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .shell {
+      width: min(1440px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 22px 0 44px;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: end;
+      margin-bottom: 18px;
+    }
+
+    .title-block {
+      min-width: 0;
+    }
+
+    .eyebrow {
+      margin: 0 0 6px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 650;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.95rem;
+      line-height: 1.15;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 5px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.72);
+      color: var(--muted);
+      font-size: 0.86rem;
+      white-space: nowrap;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 0 14px;
+      background: linear-gradient(180deg, var(--bg) 78%, rgba(247,246,243,0));
+      margin-bottom: 4px;
+    }
+
+    .search-wrap {
+      position: relative;
+      min-width: 0;
+    }
+
+    .search-wrap svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      width: 18px;
+      height: 18px;
+      transform: translateY(-50%);
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    .search {
+      width: 100%;
+      height: 42px;
+      padding: 0 12px 0 40px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.86);
+      color: var(--ink);
+      outline: none;
+      box-shadow: 0 1px 0 rgba(36,36,36,0.03);
+    }
+
+    .search:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(47,111,159,0.15);
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .filter-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 36px;
+      padding: 0 11px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.78);
+      color: var(--muted);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .filter-button svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .filter-button[aria-pressed="true"] {
+      border-color: var(--line-strong);
+      background: var(--ink);
+      color: #ffffff;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .session-card {
+      display: flex;
+      min-width: 0;
+      min-height: 460px;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: 0 1px 0 rgba(36,36,36,0.03);
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+    }
+
+    .session-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--line-strong);
+      box-shadow: var(--shadow);
+    }
+
+    .preview-link {
+      display: block;
+      position: relative;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      background: #111318;
+    }
+
+    .preview-link iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      pointer-events: none;
+      background: #111318;
+    }
+
+    .preview-link::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-top: 4px solid var(--accent, var(--blue));
+      pointer-events: none;
+    }
+
+    .card-body {
+      display: flex;
+      min-height: 0;
+      flex: 1;
+      flex-direction: column;
+      gap: 12px;
+      padding: 14px;
+    }
+
+    .card-kicker {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .session-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 28px;
+      border-radius: 6px;
+      background: color-mix(in srgb, var(--accent, var(--blue)) 13%, white);
+      color: var(--accent, var(--blue));
+      font-weight: 750;
+      line-height: 1;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: #f1efeb;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+
+    .tag.domain {
+      background: color-mix(in srgb, var(--accent, var(--blue)) 12%, white);
+      color: color-mix(in srgb, var(--accent, var(--blue)) 84%, black);
+    }
+
+    .card-title {
+      margin: 0;
+      font-size: 1.07rem;
+      line-height: 1.28;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .card-title a {
+      display: inline;
+      background-image: linear-gradient(currentColor, currentColor);
+      background-position: 0 100%;
+      background-repeat: no-repeat;
+      background-size: 0 1px;
+      transition: background-size 140ms ease;
+    }
+
+    .card-title a:hover {
+      background-size: 100% 1px;
+    }
+
+    .summary {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .properties {
+      display: grid;
+      grid-template-columns: 84px minmax(0, 1fr);
+      gap: 6px 10px;
+      margin-top: auto;
+      padding-top: 2px;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .properties dt,
+    .properties dd {
+      margin: 0;
+      min-width: 0;
+    }
+
+    .properties dt {
+      color: #8b867d;
+    }
+
+    .properties dd {
+      color: #514f4a;
+      overflow-wrap: anywhere;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-top: 2px;
+    }
+
+    .action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 34px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface-soft);
+      color: #393733;
+      font-size: 0.84rem;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+
+    .action svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    .action.primary {
+      border-color: color-mix(in srgb, var(--accent, var(--blue)) 58%, var(--line));
+      background: color-mix(in srgb, var(--accent, var(--blue)) 10%, white);
+      color: color-mix(in srgb, var(--accent, var(--blue)) 78%, black);
+    }
+
+    .action:hover {
+      border-color: var(--line-strong);
+      background: #ffffff;
+    }
+
+    .empty {
+      display: none;
+      grid-column: 1 / -1;
+      min-height: 180px;
+      align-items: center;
+      justify-content: center;
+      border: 1px dashed var(--line-strong);
+      border-radius: var(--radius);
+      color: var(--muted);
+      background: rgba(255,255,255,0.55);
+      text-align: center;
+    }
+
+    .empty.is-visible {
+      display: flex;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    .accent-foundations { --accent: var(--blue); }
+    .accent-fear { --accent: var(--rose); }
+    .accent-distress { --accent: var(--violet); }
+    .accent-therapy { --accent: var(--teal); }
+    .accent-pharm { --accent: var(--amber); }
+
+    @media (max-width: 1180px) {
+      .gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 820px) {
+      .shell {
+        width: min(100% - 24px, 760px);
+        padding-top: 16px;
+      }
+
+      .topbar,
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .meta-row,
+      .filters {
+        justify-content: flex-start;
+      }
+
+      .toolbar {
+        position: static;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .session-card {
+        min-height: 0;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .filters {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .filter-button {
+        justify-content: center;
+      }
+
+      .properties {
+        grid-template-columns: 74px minmax(0, 1fr);
+      }
+
+      .action {
+        flex: 1 1 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar" aria-label="Cabecera del indice">
+      <div class="title-block">
+        <p class="eyebrow">Curso R1 Psiquiatria</p>
+        <h1>Psicopatologia Dimensional</h1>
+      </div>
+      <div class="meta-row" aria-label="Resumen">
+        <span class="pill"><span id="visibleCount">9</span> / 9 sesiones</span>
+        <span class="pill">3 bloques activos</span>
+        <span class="pill">GitHub Pages</span>
+      </div>
+    </header>
+
+    <section class="toolbar" aria-label="Filtros de galeria">
+      <label class="search-wrap" for="search">
+        <i data-lucide="search" aria-hidden="true"></i>
+        <input class="search" id="search" type="search" autocomplete="off" placeholder="Buscar sesion, dominio o tratamiento" />
+      </label>
+      <div class="filters" role="group" aria-label="Filtrar sesiones">
+        <button class="filter-button" type="button" data-filter="all" aria-pressed="true"><i data-lucide="layout-grid"></i>Todo</button>
+        <button class="filter-button" type="button" data-filter="foundations" aria-pressed="false"><i data-lucide="blocks"></i>Fundamentos</button>
+        <button class="filter-button" type="button" data-filter="fear" aria-pressed="false"><i data-lucide="activity"></i>Fear</button>
+        <button class="filter-button" type="button" data-filter="distress" aria-pressed="false"><i data-lucide="waves"></i>Distress</button>
+      </div>
+    </section>
+
+    <section class="gallery" aria-label="Galeria de sesiones">
+      <article class="session-card accent-foundations" data-category="foundations" data-text="sesion 1 categorias dimensiones fundamentos hitop rdoc maria diagnostico dimensional">
+        <a class="preview-link" href="sesiones/bloque-1-fundamentos/clase-01-materiales/sesion-01.html" aria-label="Abrir slides de la sesion 1">
+          <iframe src="sesiones/bloque-1-fundamentos/clase-01-materiales/sesion-01.html" title="Preview sesion 1" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+        </a>
+        <div class="card-body">
+          <div class="card-kicker"><span class="session-number">01</span><span class="tag domain">Fundamentos</span><span class="tag">Modelo</span></div>
+          <h2 class="card-title"><a href="sesiones/bloque-1-fundamentos/clase-01-materiales/sesion-01.html">De categorias a dimensiones</a></h2>
+          <p class="summary">Apertura del curso: por que el diagnostico categorial no basta y como leer el caso desde perfiles dimensionales.</p>
+          <dl class="properties">
+            <dt>Bloque</dt><dd>1 · Fundamentos</dd>
+            <dt>Foco</dt><dd>Lenguaje dimensional, HiTOP/RDoC, caso guia</dd>
+            <dt>Estado</dt><dd>Deck y materiales base</dd>
+          </dl>
+          <div class="actions">
+            <a class="action primary" href="sesiones/bloque-1-fundamentos/clase-01-materiales/sesion-01.html"><i data-lucide="presentation"></i>Slides</a>
+            <a class="action" href="sesiones/bloque-1-fundamentos/clase-01-materiales/sesion-01-contenido.md"><i data-lucide="file-text"></i>Contenido</a>
+            <a class="action" href="sesiones/bloque-1-fundamentos/clase-01-materiales/slide-outline.md"><i data-lucide="list-tree"></i>Outline</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="session-card accent-foundations" data-category="foundations" data-text="sesion 2 rdoc lenguaje operativo matriz dominios constructos unidades de analisis">
+        <a class="preview-link" href="sesiones/bloque-1-fundamentos/clase-02-materiales/sesion-02.html" aria-label="Abrir slides de la sesion 2">
+          <iframe src="sesiones/bloque-1-fundamentos/clase-02-materiales/sesion-02.html" title="Preview sesion 2" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+        </a>
+        <div class="card-body">
+          <div class="card-kicker"><span class="session-number">02</span><span class="tag domain">Fundamentos</span><span class="tag">RDoC</span></div>
+          <h2 class="card-title"><a href="sesiones/bloque-1-fundamentos/clase-02-materiales/sesion-02.html">RDoC: el lenguaje operativo del curso</a></h2>
+          <p class="summary">Matriz RDoC, unidades de analisis y traduccion clinica para formular sintomas como sistemas.</p>
+          <dl class="properties">
+            <dt>Bloque</dt><dd>1 · Fundamentos</dd>
+            <dt>Foco</dt><dd>Constructos, dominios, matriz dimensional</dd>
+            <dt>Estado</dt><dd>Deck y objetivos</dd>
+          </dl>
+          <div class="actions">
+            <a class="action primary" href="sesiones/bloque-1-fundamentos/clase-02-materiales/sesion-02.html"><i data-lucide="presentation"></i>Slides</a>
+            <a class="action" href="sesiones/bloque-1-fundamentos/clase-02-materiales/objetivos-sesion-02.md"><i data-lucide="target"></i>Objetivos</a>
+            <a class="action" href="sesiones/bloque-1-fundamentos/clase-02-materiales/slide-outline.md"><i data-lucide="list-tree"></i>Outline</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="session-card accent-foundations" data-category="foundations" data-text="sesion 3 exposoma staging clinico trayectoria riesgo desarrollo temporalidad">
+        <a class="preview-link" href="sesiones/bloque-1-fundamentos/clase-03-materiales/sesion-03.html" aria-label="Abrir slides de la sesion 3">
+          <iframe src="sesiones/bloque-1-fundamentos/clase-03-materiales/sesion-03.html" title="Preview sesion 3" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+        </a>
+        <div class="card-body">
+          <div class="card-kicker"><span class="session-number">03</span><span class="tag domain">Fundamentos</span><span class="tag">Trayectoria</span></div>
+          <h2 class="card-title"><a href="sesiones/bloque-1-fundamentos/clase-03-materiales/sesion-03.html">Exposoma y staging clinico</a></h2>
+          <p class="summary">Carga ambiental, desarrollo y estadio clinico como moduladores de gravedad, curso y tratamiento.</p>
+          <dl class="properties">
+            <dt>Bloque</dt><dd>1 · Fundamentos</dd>
+            <dt>Foco</dt><dd>Exposoma, riesgo, staging 2.0</dd>
+            <dt>Estado</dt><dd>Deck, objetivos y referencias</dd>
+          </dl>
+          <div class="actions">
+            <a class="action primary" href="sesiones/bloque-1-fundamentos/clase-03-materiales/sesion-03.html"><i data-lucide="presentation"></i>Slides</a>
+            <a class="action" href="sesiones/bloque-1-fundamentos/clase-03-materiales/objetivos-sesion-03.md"><i data-lucide="target"></i>Objetivos</a>
+            <a class="action" href="sesiones/bloque-1-fundamentos/clase-03-materiales/referencias.md"><i data-lucide="book-open"></i>Refs</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="session-card accent-pharm" data-category="foundations" data-text="sesion 4 redes computacion farmacologia dimensional precision network computational psychiatry nbn">
+        <a class="preview-link" href="sesiones/bloque-1-fundamentos/clase-04-materiales/sesion-04.html" aria-label="Abrir slides de la sesion 4">
+          <iframe src="sesiones/bloque-1-fundamentos/clase-04-materiales/sesion-04.html" title="Preview sesion 4" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+        </a>
+        <div class="card-body">
+          <div class="card-kicker"><span class="session-number">04</span><span class="tag domain">Fundamentos</span><span class="tag">Integracion</span></div>
+          <h2 class="card-title"><a href="sesiones/bloque-1-fundamentos/clase-04-materiales/sesion-04.html">Redes, computacion y farmacologia dimensional</a></h2>
+          <p class="summary">Network theory, psiquiatria computacional y psicofarmacologia de precision como toolkit comun.</p>
+          <dl class="properties">
+            <dt>Bloque</dt><dd>1 · Cierre</dd>
+            <dt>Foco</dt><dd>Redes, prediccion, NbN2, mapa farmacologico</dd>
+            <dt>Estado</dt><dd>Deck, objetivos y referencias</dd>
+          </dl>
+          <div class="actions">
+            <a class="action primary" href="sesiones/bloque-1-fundamentos/clase-04-materiales/sesion-04.html"><i data-lucide="presentation"></i>Slides</a>
+            <a class="action" href="sesiones/bloque-1-fundamentos/clase-04-materiales/objetivos-sesion-04.md"><i data-lucide="target"></i>Objetivos</a>
+            <a class="action" href="sesiones/bloque-1-fundamentos/clase-04-materiales/slide-outline.md"><i data-lucide="list-tree"></i>Outline</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="session-card accent-fear" data-category="fear" data-text="sesion 5 sistema amenaza modelos negative valence fear acute threat potential threat ansiedad toc panico fobias">
+        <a class="preview-link" href="sesiones/bloque-2-negative-valence-fear/clase-05-materiales/sesion-05.html" aria-label="Abrir slides de la sesion 5">
+          <iframe src="sesiones/bloque-2-negative-valence-fear/clase-05-materiales/sesion-05.html" title="Preview sesion 5" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+        </a>
+        <div class="card-body">
+          <div class="card-kicker"><span class="session-number">05</span><span class="tag domain">Fear</span><span class="tag">Modelo</span></div>
+          <h2 class="card-title"><a href="sesiones/bloque-2-negative-valence-fear/clase-05-materiales/sesion-05.html">El sistema de amenaza: modelos</a></h2>
+          <p class="summary">Amenaza aguda y potencial como eje para leer panico, fobias, ansiedad social y TOC.</p>
+          <dl class="properties">
+            <dt>Bloque</dt><dd>2 · Negative Valence / Fear</dd>
+            <dt>Foco</dt><dd>Acute threat, potential threat, compulsividad</dd>
+            <dt>Estado</dt><dd>Deck, objetivos y referencias</dd>
+          </dl>
+          <div class="actions">
+            <a class="action primary" href="sesiones/bloque-2-negative-valence-fear/clase-05-materiales/sesion-05.html"><i data-lucide="presentation"></i>Slides</a>
+            <a class="action" href="sesiones/bloque-2-negative-valence-fear/clase-05-materiales/objetivos-sesion-05.md"><i data-lucide="target"></i>Objetivos</a>
+            <a class="action" href="sesiones/bloque-2-negative-valence-fear/clase-05-materiales/referencias.md"><i data-lucide="book-open"></i>Refs</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="session-card accent-therapy" data-category="fear" data-text="sesion 6 tratamiento psicoterapia fear exposicion erp aprendizaje inhibitorio ansiedad toc fobias">
+        <a class="preview-link" href="sesiones/bloque-2-negative-valence-fear/clase-06-materiales/sesion-06.html" aria-label="Abrir slides de la sesion 6">
+          <iframe src="sesiones/bloque-2-negative-valence-fear/clase-06-materiales/sesion-06.html" title="Preview sesion 6" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+        </a>
+        <div class="card-body">
+          <div class="card-kicker"><span class="session-number">06</span><span class="tag domain">Fear</span><span class="tag">Psicoterapia</span></div>
+          <h2 class="card-title"><a href="sesiones/bloque-2-negative-valence-fear/clase-06-materiales/sesion-06.html">Tratamiento: psicoterapia del Fear</a></h2>
+          <p class="summary">Exposicion, ERP y aprendizaje inhibitorio como intervenciones sobre amenaza y evitacion.</p>
+          <dl class="properties">
+            <dt>Bloque</dt><dd>2 · Negative Valence / Fear</dd>
+            <dt>Foco</dt><dd>Exposicion, ERP, inhibicion, jerarquias</dd>
+            <dt>Estado</dt><dd>Deck y objetivos</dd>
+          </dl>
+          <div class="actions">
+            <a class="action primary" href="sesiones/bloque-2-negative-valence-fear/clase-06-materiales/sesion-06.html"><i data-lucide="presentation"></i>Slides</a>
+            <a class="action" href="sesiones/bloque-2-negative-valence-fear/clase-06-materiales/objetivos-sesion-06.md"><i data-lucide="target"></i>Objetivos</a>
+            <a class="action" href="sesiones/bloque-2-negative-valence-fear/clase-06-materiales/slide-outline.md"><i data-lucide="list-tree"></i>Outline</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="session-card accent-pharm" data-category="fear" data-text="sesion 7 psicofarmacologia precision fear ssri tms neuromodulacion farmacos ansiedad toc panic">
+        <a class="preview-link" href="sesiones/bloque-2-negative-valence-fear/clase-07-materiales/sesion-07.html" aria-label="Abrir slides de la sesion 7">
+          <iframe src="sesiones/bloque-2-negative-valence-fear/clase-07-materiales/sesion-07.html" title="Preview sesion 7" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+        </a>
+        <div class="card-body">
+          <div class="card-kicker"><span class="session-number">07</span><span class="tag domain">Fear</span><span class="tag">Farmaco</span></div>
+          <h2 class="card-title"><a href="sesiones/bloque-2-negative-valence-fear/clase-07-materiales/sesion-07.html">Psicofarmacologia de precision del Fear</a></h2>
+          <p class="summary">Eleccion de molecula, secuencia terapeutica y neuromodulacion segun mecanismo dominante.</p>
+          <dl class="properties">
+            <dt>Bloque</dt><dd>2 · Cierre Fear</dd>
+            <dt>Foco</dt><dd>ISRS, glutamato, TMS, plan integrado</dd>
+            <dt>Estado</dt><dd>Deck, objetivos y referencias</dd>
+          </dl>
+          <div class="actions">
+            <a class="action primary" href="sesiones/bloque-2-negative-valence-fear/clase-07-materiales/sesion-07.html"><i data-lucide="presentation"></i>Slides</a>
+            <a class="action" href="sesiones/bloque-2-negative-valence-fear/clase-07-materiales/objetivos-sesion-07.md"><i data-lucide="target"></i>Objetivos</a>
+            <a class="action" href="sesiones/bloque-2-negative-valence-fear/clase-07-materiales/referencias.md"><i data-lucide="book-open"></i>Refs</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="session-card accent-distress" data-category="distress" data-text="sesion 8 sistema perdida estres modelos distress sustained threat loss depresion duelo trauma hpa recompensa">
+        <a class="preview-link" href="sesiones/bloque-3-negative-valence-distress/clase-08-materiales/sesion-08.html" aria-label="Abrir slides de la sesion 8">
+          <iframe src="sesiones/bloque-3-negative-valence-distress/clase-08-materiales/sesion-08.html" title="Preview sesion 8" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+        </a>
+        <div class="card-body">
+          <div class="card-kicker"><span class="session-number">08</span><span class="tag domain">Distress</span><span class="tag">Modelo</span></div>
+          <h2 class="card-title"><a href="sesiones/bloque-3-negative-valence-distress/clase-08-materiales/sesion-08.html">El sistema de perdida y estres: modelos</a></h2>
+          <p class="summary">Loss y sustained threat como puerta de entrada para depresion, duelo, trauma y estres cronico.</p>
+          <dl class="properties">
+            <dt>Bloque</dt><dd>3 · Negative Valence / Distress</dd>
+            <dt>Foco</dt><dd>Loss, HPA, recompensa, exposoma, trauma</dd>
+            <dt>Estado</dt><dd>Deck, objetivos y referencias</dd>
+          </dl>
+          <div class="actions">
+            <a class="action primary" href="sesiones/bloque-3-negative-valence-distress/clase-08-materiales/sesion-08.html"><i data-lucide="presentation"></i>Slides</a>
+            <a class="action" href="sesiones/bloque-3-negative-valence-distress/clase-08-materiales/objetivos-sesion-08.md"><i data-lucide="target"></i>Objetivos</a>
+            <a class="action" href="sesiones/bloque-3-negative-valence-distress/clase-08-materiales/referencias.md"><i data-lucide="book-open"></i>Refs</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="session-card accent-therapy" data-category="distress" data-text="sesion 9 tratamiento psicoterapia distress rohlfing rdoc abc toolkit retos clinicos rumia iu act">
+        <a class="preview-link" href="sesiones/bloque-3-negative-valence-distress/clase-09-materiales/sesion-09.html" aria-label="Abrir slides de la sesion 9">
+          <iframe src="sesiones/bloque-3-negative-valence-distress/clase-09-materiales/sesion-09.html" title="Preview sesion 9" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+        </a>
+        <div class="card-body">
+          <div class="card-kicker"><span class="session-number">09</span><span class="tag domain">Distress</span><span class="tag">Psicoterapia</span></div>
+          <h2 class="card-title"><a href="sesiones/bloque-3-negative-valence-distress/clase-09-materiales/sesion-09.html">Tratamiento: psicoterapia del Distress</a></h2>
+          <p class="summary">Rohlfing, ABC, defusion, exposicion al malestar y toolkit para rumiacion e intolerancia a la incertidumbre.</p>
+          <dl class="properties">
+            <dt>Bloque</dt><dd>3 · Negative Valence / Distress</dd>
+            <dt>Foco</dt><dd>Rohlfing, ABC, TIPSS, reappraisal, retos clinicos</dd>
+            <dt>Estado</dt><dd>Deck y toolkit ampliado</dd>
+          </dl>
+          <div class="actions">
+            <a class="action primary" href="sesiones/bloque-3-negative-valence-distress/clase-09-materiales/sesion-09.html"><i data-lucide="presentation"></i>Slides</a>
+            <a class="action" href="sesiones/bloque-3-negative-valence-distress/clase-09-materiales/objetivos-sesion-09.md"><i data-lucide="target"></i>Objetivos</a>
+            <a class="action" href="sesiones/bloque-3-negative-valence-distress/clase-09-materiales/habilidades-distress-toolkit.md"><i data-lucide="wrench"></i>Toolkit</a>
+          </div>
+        </div>
+      </article>
+
+      <div class="empty" id="emptyState">No hay sesiones para ese filtro.</div>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>
+    const searchInput = document.querySelector("#search");
+    const cards = Array.from(document.querySelectorAll(".session-card"));
+    const buttons = Array.from(document.querySelectorAll("[data-filter]"));
+    const visibleCount = document.querySelector("#visibleCount");
+    const emptyState = document.querySelector("#emptyState");
+    let activeFilter = "all";
+
+    function normalize(value) {
+      return value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+    function applyFilters() {
+      const query = normalize(searchInput.value.trim());
+      let count = 0;
+
+      cards.forEach((card) => {
+        const matchesFilter = activeFilter === "all" || card.dataset.category === activeFilter;
+        const matchesSearch = !query || normalize(card.dataset.text + " " + card.innerText).includes(query);
+        const visible = matchesFilter && matchesSearch;
+        card.hidden = !visible;
+        if (visible) count += 1;
+      });
+
+      visibleCount.textContent = String(count);
+      emptyState.classList.toggle("is-visible", count === 0);
+    }
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        activeFilter = button.dataset.filter;
+        buttons.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+        applyFilters();
+      });
+    });
+
+    searchInput.addEventListener("input", applyFilters);
+
+    if (window.lucide) {
+      window.lucide.createIcons({ attrs: { "aria-hidden": "true" } });
+    }
+  </script>
+</body>
+</html>
