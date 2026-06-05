@@ -1,0 +1,1670 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Sesión 10: Psicofarmacología de precisión (Distress)</title>
+<meta name="description" content="Slides HTML de la Sesión 10 del curso Psicopatología Dimensional: psicofarmacología de precisión para Distress." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,800&family=Source+Sans+3:wght@400;500;650;750&display=swap" rel="stylesheet">
+<style>
+/* ===========================================
+   CSS CUSTOM PROPERTIES: PRECISION LAB THEME
+   =========================================== */
+:root {
+  --bg-primary: #080b12;
+  --bg-secondary: #101827;
+  --bg-panel: rgba(15, 23, 42, 0.78);
+  --bg-panel-soft: rgba(15, 23, 42, 0.52);
+  --text-primary: #f7fbff;
+  --text-secondary: rgba(226, 236, 247, 0.82);
+  --text-muted: rgba(182, 196, 213, 0.58);
+  --line: rgba(157, 180, 204, 0.18);
+  --line-strong: rgba(157, 180, 204, 0.34);
+  --distress: #7aa8ff;
+  --plasticity: #f2b65c;
+  --threat: #b6425a;
+  --teal: #38d6c2;
+  --green: #6ee7a8;
+  --amber: #f7c873;
+  --red: #f07a82;
+  --violet: #b7a0ff;
+  --blue-glow: rgba(122, 168, 255, 0.22);
+  --teal-glow: rgba(56, 214, 194, 0.20);
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Source Sans 3", sans-serif;
+  --font-mono: "Azeret Mono", monospace;
+  --title-size: clamp(1.55rem, 4.6vw, 3.65rem);
+  --h2-size: clamp(1.1rem, 2.7vw, 2rem);
+  --h3-size: clamp(0.88rem, 1.65vw, 1.18rem);
+  --body-size: clamp(0.74rem, 1.28vw, 1.02rem);
+  --small-size: clamp(0.62rem, 0.98vw, 0.82rem);
+  --micro-size: clamp(0.54rem, 0.8vw, 0.7rem);
+  --slide-padding: clamp(1.05rem, 3.6vw, 3.4rem);
+  --content-gap: clamp(0.55rem, 1.7vw, 1.25rem);
+  --element-gap: clamp(0.35rem, 1vw, 0.8rem);
+  --radius: 8px;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-normal: 0.62s;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ===========================================
+   VIEWPORT FITTING: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   =========================================== */
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+html {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+}
+
+.slide {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.slide-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-height: 100%;
+    overflow: hidden;
+    padding: var(--slide-padding);
+}
+
+.card, .container, .content-box {
+    max-width: min(90vw, 1000px);
+    max-height: min(80vh, 700px);
+}
+
+.feature-list, .bullet-list {
+    gap: clamp(0.4rem, 1vh, 1rem);
+}
+
+.feature-list li, .bullet-list li {
+    font-size: var(--body-size);
+    line-height: 1.4;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    gap: clamp(0.5rem, 1.5vw, 1rem);
+}
+
+img, .image-container {
+    max-width: 100%;
+    max-height: min(50vh, 400px);
+    object-fit: contain;
+}
+
+@media (max-height: 700px) {
+    :root {
+        --slide-padding: clamp(0.75rem, 3vw, 2rem);
+        --content-gap: clamp(0.4rem, 1.5vw, 1rem);
+        --title-size: clamp(1.25rem, 4.5vw, 2.5rem);
+        --h2-size: clamp(1rem, 3vw, 1.75rem);
+    }
+}
+
+@media (max-height: 600px) {
+    :root {
+        --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem);
+        --content-gap: clamp(0.3rem, 1vw, 0.75rem);
+        --title-size: clamp(1.1rem, 4vw, 2rem);
+        --body-size: clamp(0.68rem, 1.1vw, 0.9rem);
+    }
+
+    .nav-dots, .keyboard-hint, .decorative {
+        display: none;
+    }
+}
+
+@media (max-height: 500px) {
+    :root {
+        --slide-padding: clamp(0.4rem, 2vw, 1rem);
+        --title-size: clamp(1rem, 3.5vw, 1.5rem);
+        --h2-size: clamp(0.9rem, 2.5vw, 1.25rem);
+        --body-size: clamp(0.62rem, 0.95vw, 0.82rem);
+    }
+}
+
+@media (max-width: 600px) {
+    :root {
+        --title-size: clamp(1.25rem, 7vw, 2.5rem);
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* ===========================================
+   BASE PRESENTATION STYLE
+   =========================================== */
+body {
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  font-family: var(--font-body);
+  line-height: 1.42;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 16% 18%, rgba(122, 168, 255, 0.18), transparent 31%),
+    radial-gradient(circle at 88% 12%, rgba(56, 214, 194, 0.14), transparent 28%),
+    radial-gradient(circle at 64% 82%, rgba(182, 66, 90, 0.14), transparent 28%),
+    linear-gradient(180deg, #080b12 0%, #0b1220 55%, #070a10 100%);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  background-image:
+    linear-gradient(rgba(180, 204, 232, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(180, 204, 232, 0.08) 1px, transparent 1px);
+  background-size: clamp(36px, 6vw, 72px) clamp(36px, 6vw, 72px);
+  mask-image: linear-gradient(180deg, transparent, #000 15%, #000 82%, transparent);
+}
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  z-index: 1000;
+  background: linear-gradient(90deg, var(--teal), var(--distress), var(--plasticity));
+  box-shadow: 0 0 18px var(--teal-glow);
+}
+
+.nav-dots {
+  position: fixed;
+  right: clamp(0.35rem, 1vw, 1rem);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-height: 76vh;
+  overflow-y: auto;
+  padding: 8px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 999px;
+  background: rgba(4, 8, 16, 0.52);
+  backdrop-filter: blur(14px);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.26);
+  cursor: pointer;
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.dot.active {
+  background: var(--teal);
+  transform: scale(1.55);
+  box-shadow: 0 0 10px rgba(56, 214, 194, 0.78);
+}
+
+.keyboard-hint {
+  position: fixed;
+  left: clamp(0.7rem, 1.5vw, 1.25rem);
+  bottom: clamp(0.7rem, 1.5vw, 1.1rem);
+  z-index: 180;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 999px;
+  background: rgba(4, 8, 16, 0.58);
+  color: var(--text-muted);
+  font: 500 var(--micro-size) var(--font-mono);
+  animation: hintFade 6s ease forwards;
+}
+
+@keyframes hintFade {
+  0%, 74% { opacity: 1; }
+  100% { opacity: 0; visibility: hidden; }
+}
+
+.slide {
+  background:
+    linear-gradient(135deg, rgba(122, 168, 255, 0.045), transparent 36%),
+    linear-gradient(315deg, rgba(56, 214, 194, 0.04), transparent 40%);
+}
+
+.slide::before {
+  content: "";
+  position: absolute;
+  inset: clamp(1rem, 2vw, 2rem);
+  z-index: 0;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  pointer-events: none;
+}
+
+.slide::after {
+  content: "";
+  position: absolute;
+  right: clamp(2.2rem, 7vw, 7rem);
+  top: clamp(2.2rem, 8vh, 5rem);
+  width: clamp(140px, 22vw, 320px);
+  aspect-ratio: 1;
+  z-index: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(56, 214, 194, 0.16), transparent 57%),
+    radial-gradient(circle, transparent 45%, rgba(122, 168, 255, 0.10) 46%, transparent 49%),
+    radial-gradient(circle, transparent 63%, rgba(242, 182, 92, 0.13) 64%, transparent 67%);
+  opacity: 0.72;
+  pointer-events: none;
+}
+
+.slide-content {
+  position: relative;
+  z-index: 2;
+  width: min(1120px, calc(100vw - clamp(2.5rem, 8vw, 7rem)));
+  margin-inline: auto;
+  gap: var(--content-gap);
+}
+
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+h1 {
+  max-width: 1080px;
+  font-family: var(--font-display);
+  font-size: var(--title-size);
+  font-weight: 650;
+  line-height: 1.02;
+  letter-spacing: 0;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: var(--h2-size);
+  font-weight: 500;
+  line-height: 1.12;
+  color: var(--text-secondary);
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-size: var(--h3-size);
+  font-weight: 650;
+  line-height: 1.15;
+}
+
+p, li, td, th, dd, dt {
+  font-size: var(--body-size);
+}
+
+p, li, dd {
+  color: var(--text-secondary);
+}
+
+strong {
+  color: var(--text-primary);
+}
+
+ul, ol {
+  padding-left: 1.1rem;
+}
+
+li {
+  margin-bottom: 0.18rem;
+}
+
+.eyebrow {
+  color: var(--teal);
+  font: 700 var(--small-size) var(--font-mono);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.lead {
+  max-width: 900px;
+  color: var(--text-secondary);
+  font-size: clamp(0.88rem, 1.65vw, 1.28rem);
+  line-height: 1.32;
+}
+
+.source {
+  color: var(--text-muted);
+  font: 500 var(--small-size) var(--font-mono);
+}
+
+.context-note {
+  width: min(100%, 980px);
+  padding: clamp(0.34rem, 0.75vw, 0.52rem) clamp(0.48rem, 1vw, 0.72rem);
+  border-left: 2px solid rgba(56, 214, 194, 0.72);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: rgba(56, 214, 194, 0.075);
+  color: rgba(226, 236, 247, 0.78);
+  font-size: clamp(0.62rem, 0.98vw, 0.82rem);
+  line-height: 1.3;
+}
+
+.context-note strong {
+  color: #dffdfa;
+}
+
+.abbr-footnote {
+  position: absolute;
+  left: clamp(1rem, 2vw, 1.8rem);
+  right: clamp(1rem, 2vw, 1.8rem);
+  bottom: clamp(1.45rem, 2.2vh, 2rem);
+  z-index: 4;
+  padding: 0.16rem 0.48rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  background: rgba(4, 8, 16, 0.46);
+  color: rgba(182, 196, 213, 0.72);
+  font: 500 clamp(0.43rem, 0.66vw, 0.58rem) var(--font-mono);
+  line-height: 1.16;
+  text-align: center;
+  pointer-events: none;
+  backdrop-filter: blur(8px);
+}
+
+.abbr-footnote strong {
+  color: rgba(223, 253, 250, 0.92);
+}
+
+.abbr-footnote.long {
+  font-size: clamp(0.39rem, 0.58vw, 0.52rem);
+  line-height: 1.1;
+}
+
+.accent {
+  color: var(--teal);
+}
+
+.amber {
+  color: var(--plasticity);
+}
+
+.danger {
+  color: var(--red);
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.centered {
+  text-align: center;
+  align-items: center;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--element-gap);
+  align-items: stretch;
+  width: 100%;
+}
+
+.cols-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--element-gap);
+  width: 100%;
+}
+
+.cols-4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--element-gap);
+  width: 100%;
+}
+
+.cols-5 {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: calc(var(--element-gap) * 0.75);
+  width: 100%;
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.84), rgba(15, 23, 42, 0.54));
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.20);
+  padding: clamp(0.68rem, 1.4vw, 1.1rem);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(120deg, rgba(255,255,255,0.06), transparent 35%, rgba(56,214,194,0.04));
+}
+
+.card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.42rem;
+  padding: 0.18rem 0.48rem;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 999px;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.045);
+  font: 700 var(--micro-size) var(--font-mono);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.tag.a { color: #c9ffe1; border-color: rgba(110,231,168,0.35); background: rgba(110,231,168,0.12); }
+.tag.b { color: #ffedbf; border-color: rgba(247,200,115,0.38); background: rgba(247,200,115,0.12); }
+.tag.c { color: #ffd0d4; border-color: rgba(240,122,130,0.36); background: rgba(240,122,130,0.12); }
+.tag.teal { color: #c8fff7; border-color: rgba(56,214,194,0.35); background: rgba(56,214,194,0.12); }
+.tag.blue { color: #d6e5ff; border-color: rgba(122,168,255,0.36); background: rgba(122,168,255,0.12); }
+.tag.amber { color: #ffe5b8; border-color: rgba(242,182,92,0.36); background: rgba(242,182,92,0.12); }
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--element-gap) * 0.75);
+}
+
+.axis {
+  display: grid;
+  place-items: center;
+  min-height: min(42vh, 310px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(90deg, transparent 49.6%, rgba(255,255,255,0.16) 49.8%, rgba(255,255,255,0.16) 50.2%, transparent 50.4%),
+    linear-gradient(0deg, transparent 49.6%, rgba(255,255,255,0.16) 49.8%, rgba(255,255,255,0.16) 50.2%, transparent 50.4%),
+    rgba(15, 23, 42, 0.45);
+}
+
+.axis-inner {
+  position: relative;
+  width: min(52vw, 520px);
+  height: min(36vh, 260px);
+}
+
+.axis-label {
+  position: absolute;
+  color: var(--text-muted);
+  font: 700 var(--micro-size) var(--font-mono);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.axis-label.x { bottom: -0.8rem; left: 50%; transform: translateX(-50%); }
+.axis-label.y { top: 50%; left: -2.4rem; transform: translateY(-50%) rotate(-90deg); }
+
+.node {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: clamp(2rem, 5vw, 3.3rem);
+  height: clamp(2rem, 5vw, 3.3rem);
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(56,214,194,0.16);
+  color: var(--text-primary);
+  font: 800 var(--small-size) var(--font-mono);
+  box-shadow: 0 0 28px rgba(56,214,194,0.18);
+}
+
+.bars {
+  display: grid;
+  gap: 0.42rem;
+}
+
+.bar-row {
+  display: grid;
+  grid-template-columns: minmax(3.3rem, 4.4rem) 1fr minmax(2rem, 3rem);
+  gap: 0.45rem;
+  align-items: center;
+  font: 700 var(--small-size) var(--font-mono);
+}
+
+.bar-track {
+  height: clamp(0.6rem, 1.5vh, 0.9rem);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--teal), var(--distress));
+  box-shadow: 0 0 14px rgba(56,214,194,0.35);
+}
+
+.readiness {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--element-gap);
+}
+
+.level-card {
+  border-top: 4px solid var(--red);
+}
+.level-card.b { border-top-color: var(--amber); }
+.level-card.a { border-top-color: var(--green); }
+
+.level-big {
+  font: 800 clamp(2.2rem, 8vw, 5rem) var(--font-mono);
+  line-height: 0.9;
+}
+.level-card.a .level-big { color: var(--green); }
+.level-card.b .level-big { color: var(--amber); }
+.level-card.c .level-big { color: var(--red); }
+
+.biotype-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: calc(var(--element-gap) * 0.72);
+}
+
+.biotype-card {
+  min-height: clamp(5.4rem, 16vh, 7.8rem);
+  padding: clamp(0.55rem, 1.1vw, 0.8rem);
+}
+
+.biotype-code {
+  color: var(--teal);
+  font: 800 var(--small-size) var(--font-mono);
+  margin-bottom: 0.22rem;
+}
+
+.biotype-name {
+  color: var(--text-primary);
+  font: 750 clamp(0.64rem, 1.08vw, 0.82rem) var(--font-body);
+  line-height: 1.08;
+  margin-bottom: 0.22rem;
+}
+
+.biotype-card p {
+  font-size: clamp(0.62rem, 1.03vw, 0.78rem);
+  line-height: 1.25;
+}
+
+.legend-line {
+  max-width: 1040px;
+  color: var(--text-muted);
+  font: 500 clamp(0.52rem, 0.78vw, 0.66rem) var(--font-mono);
+  line-height: 1.35;
+}
+
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: calc(var(--element-gap) * 0.7);
+  align-items: stretch;
+}
+
+.time-card {
+  border-left: 3px solid var(--distress);
+}
+
+.network-map {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: calc(var(--element-gap) * 0.65);
+  width: 100%;
+}
+
+.network-card {
+  min-height: clamp(6.1rem, 17vh, 8.3rem);
+  padding: clamp(0.56rem, 1.05vw, 0.84rem);
+  border-top: 3px solid var(--distress);
+}
+
+.network-card.threat { border-top-color: var(--red); }
+.network-card.rumination { border-top-color: var(--violet); }
+.network-card.control { border-top-color: var(--teal); }
+.network-card.reward { border-top-color: var(--plasticity); }
+.network-card.context { border-top-color: var(--green); }
+.network-card.body { border-top-color: var(--distress); }
+
+.network-card h3 {
+  font-size: clamp(0.78rem, 1.25vw, 0.98rem);
+  margin-bottom: 0.25rem;
+}
+
+.network-card p {
+  font-size: clamp(0.58rem, 0.9vw, 0.72rem);
+  line-height: 1.22;
+}
+
+.receptor-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.22rem;
+  margin: 0.28rem 0 0.36rem;
+}
+
+.receptor-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.22rem;
+  padding: 0.12rem 0.34rem;
+  border: 1px solid rgba(122,168,255,0.32);
+  border-radius: 999px;
+  color: #dce8ff;
+  background: rgba(122,168,255,0.10);
+  font: 800 clamp(0.48rem, 0.72vw, 0.62rem) var(--font-mono);
+  white-space: nowrap;
+}
+
+.target-line {
+  margin-top: 0.22rem;
+  color: rgba(223, 253, 250, 0.86);
+}
+
+.target-matrix {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: rgba(15,23,42,0.58);
+}
+
+.target-matrix th, .target-matrix td {
+  padding: clamp(0.28rem, 0.58vw, 0.46rem);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  text-align: left;
+  vertical-align: top;
+  font-size: clamp(0.55rem, 0.88vw, 0.7rem);
+  line-height: 1.18;
+}
+
+.target-matrix th {
+  color: var(--text-primary);
+  background: rgba(56,214,194,0.12);
+  font-weight: 750;
+}
+
+.target-matrix td {
+  color: var(--text-secondary);
+}
+
+.target-matrix .rx {
+  color: var(--text-primary);
+  font-weight: 750;
+}
+
+.target-matrix .caveat {
+  color: rgba(247, 200, 115, 0.88);
+}
+
+.precision-steps {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: calc(var(--element-gap) * 0.62);
+  width: 100%;
+}
+
+.step-card {
+  min-height: clamp(4.8rem, 12vh, 6.6rem);
+  padding: clamp(0.52rem, 1vw, 0.76rem);
+}
+
+.step-num {
+  display: inline-grid;
+  place-items: center;
+  width: 1.45rem;
+  height: 1.45rem;
+  margin-bottom: 0.32rem;
+  border-radius: 50%;
+  background: rgba(56,214,194,0.16);
+  color: var(--teal);
+  font: 800 var(--micro-size) var(--font-mono);
+}
+
+.step-card h3 {
+  font-size: clamp(0.72rem, 1.05vw, 0.88rem);
+  margin-bottom: 0.18rem;
+}
+
+.step-card p {
+  font-size: clamp(0.56rem, 0.86vw, 0.68rem);
+  line-height: 1.2;
+}
+
+.seesaw {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--element-gap);
+  align-items: center;
+}
+
+.fulcrum {
+  width: 0;
+  height: 0;
+  border-left: clamp(1.2rem, 3vw, 2rem) solid transparent;
+  border-right: clamp(1.2rem, 3vw, 2rem) solid transparent;
+  border-bottom: clamp(2rem, 6vh, 4rem) solid rgba(56,214,194,0.55);
+}
+
+.decision-tree {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--element-gap);
+  align-items: stretch;
+}
+
+.matrix {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: rgba(15,23,42,0.55);
+  font-size: var(--small-size);
+}
+
+.matrix th, .matrix td {
+  padding: clamp(0.34rem, 0.7vw, 0.55rem);
+  text-align: left;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  vertical-align: top;
+}
+
+.matrix th {
+  color: var(--text-primary);
+  background: rgba(56,214,194,0.12);
+  font: 750 var(--small-size) var(--font-body);
+}
+
+.matrix td {
+  color: var(--text-secondary);
+}
+
+.formula {
+  font: 700 clamp(0.92rem, 2.1vw, 1.55rem) var(--font-mono);
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.quote {
+  max-width: 900px;
+  font-family: var(--font-display);
+  font-size: clamp(1.18rem, 3.2vw, 2.45rem);
+  line-height: 1.14;
+  color: var(--text-primary);
+}
+
+.slide-num, .section-label {
+  position: absolute;
+  z-index: 4;
+  bottom: clamp(0.6rem, 1.3vw, 1.2rem);
+  color: var(--text-muted);
+  font: 700 var(--micro-size) var(--font-mono);
+  letter-spacing: 0.06em;
+}
+.slide-num { left: clamp(0.9rem, 2vw, 1.8rem); }
+.section-label { right: clamp(0.9rem, 2vw, 1.8rem); text-transform: uppercase; }
+
+/* ===========================================
+   ANIMATIONS
+   =========================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity var(--duration-normal) var(--ease-out-expo),
+    transform var(--duration-normal) var(--ease-out-expo);
+}
+
+.slide.visible .reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal:nth-child(2) { transition-delay: 0.07s; }
+.reveal:nth-child(3) { transition-delay: 0.14s; }
+.reveal:nth-child(4) { transition-delay: 0.21s; }
+.reveal:nth-child(5) { transition-delay: 0.28s; }
+.reveal:nth-child(6) { transition-delay: 0.35s; }
+
+@media (max-width: 820px) {
+  .split, .cols-3, .cols-4, .cols-5, .readiness, .timeline, .decision-tree, .seesaw {
+    grid-template-columns: 1fr;
+  }
+  .biotype-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .network-map {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .precision-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .slide-content {
+    width: min(100vw, calc(100vw - 2rem));
+  }
+  .seesaw .fulcrum {
+    display: none;
+  }
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots" aria-label="Navegación de slides"></nav>
+<div class="keyboard-hint">flechas · espacio · scroll</div>
+
+<main>
+<section class="slide" id="slide-1">
+  <div class="slide-content centered">
+    <p class="eyebrow reveal">Psicopatología Dimensional · Bloque 3</p>
+    <h1 class="reveal">Psicofarmacología de precisión <span class="accent">no es un oráculo</span></h1>
+    <p class="lead reveal">Tratamiento del Distress: internalizing, MDD, GAD, PTSD, PDD y depresión bipolar II.</p>
+    <p class="context-note reveal"><strong>Contexto:</strong> la sesión no promete un test que escoja fármaco; enseña a ordenar mecanismos, trayectoria y evidencia para decidir con humildad.</p>
+    <p class="source reveal">Sesión 10 de 21 · Javier Flores · R1 Psiquiatría · 2026</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Apertura</span>
+</section>
+
+<section class="slide" id="slide-2">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Caso integrador</p>
+    <h1 class="reveal">El plan fracasa si llamamos <span class="danger">resistencia</span> a todo</h1>
+    <div class="split reveal">
+      <div class="card stack">
+        <h3>Paciente</h3>
+        <p>Depresión recurrente moderada-severa, trauma racial acumulado, rumiación prominente, sueño fragmentado y ansiedad sostenida.</p>
+        <p>Respuesta parcial a dos ciclos ISRS.</p>
+      </div>
+      <div class="card stack">
+        <h3>La bifurcación clínica</h3>
+        <span class="tag c">TRD farmacológica</span>
+        <span class="tag teal">Distress mantenido por sistema</span>
+        <p>La pregunta no es solo "qué molécula sigue", sino qué fuerza mantiene encendido el circuito.</p>
+      </div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> cuando hay respuesta parcial, primero separa resistencia farmacológica de un sistema mantenido por rumiación, trauma, sueño y exposoma.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Caso</span>
+</section>
+
+<section class="slide" id="slide-3">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Puente S8-S9-S10</p>
+    <h1 class="reveal">La pregunta clínica es <span class="accent">qué mantiene encendido</span> el circuito</h1>
+    <div class="cols-3 reveal">
+      <div class="card"><h3>S8 · modelo</h3><p>Loss, sustained threat, rumiación e intolerancia a la incertidumbre.</p></div>
+      <div class="card"><h3>S9 · psicoterapia</h3><p>ABC, defusión, exposición al malestar, RFCBT y reappraisal.</p></div>
+      <div class="card"><h3>S10 · tratamiento</h3><p>Plasticidad, inflamación, staging, seguridad y bipolaridad.</p></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> S8 nombra el sistema, S9 cambia procesos psicológicos y S10 traduce esa formulación a fármacos, secuencia y duración.</p>
+    <p class="source reveal">Mecanismo mantenedor -> intervención secuenciada.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Mapa</span>
+</section>
+
+<section class="slide" id="slide-4">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Techo real 2026</p>
+    <h1 class="reveal">Ningún biomarcador prescribe tratamiento en rutina</h1>
+    <div class="readiness reveal">
+      <div class="card level-card a"><div class="level-big">A</div><h3>Listo para decisión</h3><p>Medición, trauma/bipolar screening, preferencia y seguridad.</p></div>
+      <div class="card level-card b"><div class="level-big">B</div><h3>Validado, no rutinario</h3><p>CRP, sgACC/SCC, PGx para metabolismo y dosis.</p></div>
+      <div class="card level-card c"><div class="level-big">C</div><h3>Exploratorio</h3><p>Biotipos fMRI, ML multimodal, PRS y paneles amplios.</p></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> un biomarcador prescriptivo tendría que cambiar qué tratamiento recibe el paciente, no solo describir gravedad o riesgo.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Evidencia</span>
+</section>
+
+<section class="slide" id="slide-5">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Regla operacional</p>
+    <h1 class="reveal">Sin nivel A/B/C, "precisión" se vuelve marketing</h1>
+    <div class="cols-3 reveal">
+      <div class="card level-card a"><h3><span class="tag a">A</span> ¿Lo uso?</h3><p>Cambia decisiones hoy, con utilidad clínica razonable.</p></div>
+      <div class="card level-card b"><h3><span class="tag b">B</span> ¿Lo considero?</h3><p>Hay señal replicada o plausible, pero falta despliegue prospectivo.</p></div>
+      <div class="card level-card c"><h3><span class="tag c">C</span> ¿Lo enseño?</h3><p>Sirve para pensar circuitos, no para vender un test.</p></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> A/B/C es el lenguaje de honestidad de la clase: separa práctica actual, investigación útil y frontera especulativa.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Evidencia</span>
+</section>
+
+<section class="slide" id="slide-6">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Biotipos · Tozzi/Williams 2024</p>
+    <h1 class="reveal">Sí hay perfiles de circuito reportados</h1>
+    <div class="biotype-grid reveal">
+      <div class="card biotype-card"><div class="biotype-code">D_C+ · S_C+ · A_C+</div><div class="biotype-name">Default-salience-atención hiperconectados</div><p>Conectividad task-free alta en default mode, salience y atención. Mejor respuesta conductual: 42% respondedores, 25% remitidos.</p></div>
+      <div class="card biotype-card"><div class="biotype-code">A_C-</div><div class="biotype-name">Atención hipoconectada</div><p>Hipoconectividad del circuito de atención/frontoparietal. Peor respuesta a I-CARE: 26% respondedores, 22% remitidos.</p></div>
+      <div class="card biotype-card"><div class="biotype-code">N_SA+ · P_A+</div><div class="biotype-name">Tristeza + recompensa hiperactivadas</div><p>Activación alta de negative affect ante tristeza y positive affect/recompensa. Más anhedonia y brooding/rumiación.</p></div>
+      <div class="card biotype-card"><div class="biotype-code">C_A+</div><div class="biotype-name">Control cognitivo hiperactivado</div><p>Activación alta del circuito cognitivo/control. Mejor respuesta relativa a venlafaxina: 64% respondedores, 40% remitidos.</p></div>
+      <div class="card biotype-card"><div class="biotype-code">N_TC_C- · C_A-</div><div class="biotype-name">Amenaza consciente + control hipoactivos</div><p>Conectividad baja de negative affect ante amenaza consciente + activación baja de control cognitivo. Cluster pequeño, n=15.</p></div>
+      <div class="card biotype-card"><div class="biotype-code">D_X · S_X · A_X · N_X · P_X · C_X</div><div class="biotype-name">Perfil sin alteración marcada</div><p>Circuitos relativamente intactos, n=44. Referencia útil, no etiqueta clínica cerrada.</p></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> estos nombres son códigos de circuito, no diagnósticos: D=default mode, S=salience, A=attention, N/P/C=afecto negativo/positivo/control.</p>
+    <p class="legend-line reveal">Clave: D=default mode; S=salience; A=attention/frontoparietal; N=negative affect; NS=tristeza; NTC=amenaza consciente; P=positive affect; C=cognitive control. Sufijo C=connectivity; A=activation; +=hiper; -=hipo; X=intacto.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Biotipos</span>
+</section>
+
+<section class="slide" id="slide-7">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Biotipos · Drysdale 2017</p>
+    <h1 class="reveal">La promesa era orientar TMS por perfil de circuito</h1>
+    <div class="split reveal">
+      <div class="axis">
+        <div class="axis-inner">
+          <span class="axis-label x">anhedonia / retardo</span>
+          <span class="axis-label y">ansiedad / insomnio</span>
+          <span class="node" style="left:18%; top:16%;">B1</span>
+          <span class="node" style="left:24%; top:58%; background:rgba(122,168,255,0.18);">B2</span>
+          <span class="node" style="left:62%; top:56%; background:rgba(242,182,92,0.18);">B3</span>
+          <span class="node" style="left:66%; top:18%; background:rgba(182,66,90,0.20);">B4</span>
+        </div>
+      </div>
+      <div class="card stack">
+        <h3>Respuesta parcial a rTMS</h3>
+        <div class="bars">
+          <div class="bar-row"><span>B1</span><div class="bar-track"><div class="bar-fill" style="width:82.5%"></div></div><span>82.5</span></div>
+          <div class="bar-row"><span>B3</span><div class="bar-track"><div class="bar-fill" style="width:61%"></div></div><span>61.0</span></div>
+          <div class="bar-row"><span>B4</span><div class="bar-track"><div class="bar-fill" style="width:29.6%"></div></div><span>29.6</span></div>
+          <div class="bar-row"><span>B2</span><div class="bar-track"><div class="bar-fill" style="width:25%"></div></div><span>25.0</span></div>
+        </div>
+        <p>Predicción reportada: 78.3% conectividad, 89.6% conectividad + biotipo, 62.6% síntomas.</p>
+      </div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> Drysdale fue seductor porque proponía subtipos transdiagnósticos accionables; por eso conviene enseñar la promesa antes de mostrar la réplica.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Biotipos</span>
+</section>
+
+<section class="slide" id="slide-8">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Réplica · Dinga 2019</p>
+    <h1 class="reveal">La réplica dejó ejes, no clusters listos para consulta</h1>
+    <div class="split reveal">
+      <div class="card stack">
+        <h3>Lo seductor</h3>
+        <p>Correlaciones canónicas aparentes: 0.99 y 0.97.</p>
+        <p>Una solución de 3 clusters parecía visualmente ordenada.</p>
+      </div>
+      <div class="card stack">
+        <h3>La auditoría</h3>
+        <p>No significativas bajo pruebas rigurosas.</p>
+        <p>Calinski-Harabasz p=0.45, silhouette p=0.19. Validación cruzada cercana a 0.</p>
+      </div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> la réplica no borra la neurobiología; desplaza la idea desde clusters discretos hacia ejes dimensionales todavía no prescriptivos.</p>
+    <p class="lead reveal">Conclusión fina: no es "no hay nada"; hay señales dimensionales sin punto de corte clínico prescriptivo.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Biotipos</span>
+</section>
+
+<section class="slide" id="slide-9">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Diana farmacológica</p>
+    <h1 class="reveal">Los antidepresivos apuntan a plasticidad, no solo a monoaminas</h1>
+    <div class="timeline reveal">
+      <div class="card time-card"><h3>Día 1</h3><p>Monoaminas cambian rápido.</p></div>
+      <div class="card time-card"><h3>Semanas 2-6</h3><p>BDNF, plasticidad sináptica y aprendizaje.</p></div>
+      <div class="card time-card"><h3>Contexto</h3><p>El entorno decide qué se consolida.</p></div>
+      <div class="card time-card"><h3>Outcome</h3><p>Menos rigidez del circuito.</p></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> la demora clínica de antidepresivos encaja mejor con aprendizaje y plasticidad que con una sola subida monoaminérgica.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Plasticidad</span>
+</section>
+
+<section class="slide" id="slide-network-targets">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Redes y targets</p>
+    <h1 class="reveal">La diana no es “depresión”: es el bucle que mantiene distress</h1>
+    <div class="network-map reveal">
+      <div class="card network-card threat">
+        <h3>Threat / salience</h3>
+        <div class="receptor-row"><span class="receptor-pill">CRF1</span><span class="receptor-pill">α1/β</span><span class="receptor-pill">NMDA</span><span class="receptor-pill">GABA-A</span></div>
+        <p>Alarma sostenida, sobresalto, ansiedad anticipatoria, pesadillas e hipervigilancia.</p>
+        <p class="target-line"><strong>Targets:</strong> ISRS/IRSN, prazosina si α1 domina, GABA-A solo como contención breve; CRF1 sigue investigacional.</p>
+      </div>
+      <div class="card network-card rumination">
+        <h3>Default mode / rumiación</h3>
+        <div class="receptor-row"><span class="receptor-pill">5-HT1A</span><span class="receptor-pill">5-HT2A</span><span class="receptor-pill">mGluR5</span><span class="receptor-pill">GABA-B</span></div>
+        <p>Autorreferencia rígida: el sistema vuelve al mismo pensamiento aunque no resuelva nada.</p>
+        <p class="target-line"><strong>Targets:</strong> serotonérgicos, ketamina/esketamina si TRD, psicodélicos solo en marcos regulados.</p>
+      </div>
+      <div class="card network-card control">
+        <h3>PFC / control cognitivo</h3>
+        <div class="receptor-row"><span class="receptor-pill">D1</span><span class="receptor-pill">α2A</span><span class="receptor-pill">α1</span><span class="receptor-pill">NMDA</span></div>
+        <p>Cuando el estrés sube catecolaminas, baja el control top-down y aumenta perseveración.</p>
+        <p class="target-line"><strong>Targets:</strong> IRSN con cautela, α2A agonistas en hiperactivación, dopaminérgicos/augmentación si control-reward falla.</p>
+      </div>
+      <div class="card network-card reward">
+        <h3>Reward / anhedonia</h3>
+        <div class="receptor-row"><span class="receptor-pill">D1</span><span class="receptor-pill">D2/D3</span><span class="receptor-pill">μ-opioide</span><span class="receptor-pill">κ-opioide</span></div>
+        <p>Menos motivación y placer dejan al circuito negativo sin competencia conductual.</p>
+        <p class="target-line"><strong>Targets:</strong> bupropión, D2/D3 parcial como augmentación, KOR investigacional; μ-opioide no es rutina.</p>
+      </div>
+      <div class="card network-card context">
+        <h3>Hipocampo / contexto</h3>
+        <div class="receptor-row"><span class="receptor-pill">GR/MR</span><span class="receptor-pill">CRF1</span><span class="receptor-pill">NMDA</span><span class="receptor-pill">CB1</span></div>
+        <p>El cerebro sigue prediciendo amenaza aunque el contexto actual ya no sea el mismo.</p>
+        <p class="target-line"><strong>Targets:</strong> ISRS/IRSN en PTSD/MDD, ketamina como ventana, CB1/FAAH y GR quedan como frontera.</p>
+      </div>
+      <div class="card network-card body">
+        <h3>Ínsula / cuerpo-atención</h3>
+        <div class="receptor-row"><span class="receptor-pill">5-HT3</span><span class="receptor-pill">β</span><span class="receptor-pill">nAChR</span><span class="receptor-pill">M1/M2</span></div>
+        <p>Interocepción amenazante: palpitaciones, tensión, náusea, inquietud y vigilancia corporal.</p>
+        <p class="target-line"><strong>Targets:</strong> β-bloqueo situacional, 5-HT3/H1/α2 como apoyo somático-sueño, colinérgicos como hipótesis.</p>
+      </div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> un receptor no pertenece a una sola red; aquí se usa como mapa docente de bucles dominantes y targets plausibles, no como prescripción automática.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Targets</span>
+</section>
+
+<section class="slide" id="slide-pharma-targets">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Targets farmacéuticos</p>
+    <h1 class="reveal">Cada clase toca una perilla distinta del circuito</h1>
+    <table class="target-matrix reveal">
+      <thead>
+        <tr><th>Clase / fármaco</th><th>Target receptor-transporte</th><th>Red que puede mover</th><th>Mensaje clínico honesto</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="rx">ISRS</td><td>SERT; adaptación 5-HT1A/5-HT2A/5-HT2C</td><td>Threat, DMN, control emocional</td><td>No corrigen “déficit de serotonina”; facilitan plasticidad lenta.</td></tr>
+        <tr><td class="rx">IRSN</td><td>SERT + NET; salida α/β-adrenérgica</td><td>Salience, PFC, dolor-fatiga</td><td>Útiles si hay ansiedad somática, dolor o baja energía; vigilar activación/PA.</td></tr>
+        <tr><td class="rx">Bupropión</td><td>DAT/NET; antagonismo nAChR</td><td>Reward, atención, esfuerzo</td><td>Hipótesis fuerte si predomina anhedonia/fatiga; puede subir insomnio/ansiedad.</td></tr>
+        <tr><td class="rx">Mirtazapina / trazodona</td><td>α2, 5-HT2/5-HT3, H1 según fármaco</td><td>Sueño, cuerpo, threat</td><td>Sirven como moduladores de sueño/interocepción; no son biotipo-específicos.</td></tr>
+        <tr><td class="rx">Ketamina / esketamina</td><td>NMDA; rebote AMPA-BDNF-mTOR</td><td>DMN, PFC, hipocampo</td><td>Ventana rápida de plasticidad en TRD/riesgo; requiere plan de aprendizaje posterior.</td></tr>
+        <tr><td class="rx">Benzodiacepinas</td><td>PAM GABA-A</td><td>Salience, ínsula, arousal</td><td>Contención aguda; riesgo de dependencia, cognición y interferencia en trauma therapy.</td></tr>
+        <tr><td class="rx">Prazosina</td><td>Antagonismo α1</td><td>Threat/PTSD, sueño</td><td>Target sintomático para pesadillas/hiperarousal; no equivale a tratar todo PTSD.</td></tr>
+        <tr><td class="rx">D2/D3 parcial</td><td>Aripiprazol, brexpiprazol, cariprazina</td><td>Reward, control, motivación</td><td>Augmentación si MDD residual; balancear acatisia, metabolismo y bipolaridad.</td></tr>
+      </tbody>
+    </table>
+    <p class="context-note reveal"><strong>Contexto:</strong> la tabla ayuda a razonar “qué sistema intento mover”; la indicación real depende de diagnóstico, seguridad, bipolaridad, trauma, comorbilidad y preferencia.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Targets</span>
+</section>
+
+<section class="slide" id="slide-target-algorithm">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Uso prudente</p>
+    <h1 class="reveal">Precision psychiatry convierte el receptor en hipótesis medible, no en receta</h1>
+    <div class="precision-steps reveal">
+      <div class="card step-card"><span class="step-num">1</span><h3>Red dominante</h3><p>Threat, DMN, reward, control, contexto o cuerpo.</p></div>
+      <div class="card step-card"><span class="step-num">2</span><h3>Target plausible</h3><p>Receptor/transporte que tenga sentido para ese bucle.</p></div>
+      <div class="card step-card"><span class="step-num">3</span><h3>Fármaco real</h3><p>Usar opciones aprobadas antes que promesas de frontera.</p></div>
+      <div class="card step-card"><span class="step-num">4</span><h3>Riesgo primero</h3><p>BP-II, suicidio, sustancias, embarazo, interacciones, trauma.</p></div>
+      <div class="card step-card"><span class="step-num">5</span><h3>Endpoint</h3><p>Definir qué debe cambiar: sueño, rumiación, SHAPS, PCL, GAD-7.</p></div>
+    </div>
+    <div class="cols-3 reveal">
+      <div class="card"><h3>Ejemplo threat</h3><p>Si domina hiperalerta: SERT/NET + sueño; α1 si pesadillas; GABA-A solo puente corto.</p></div>
+      <div class="card"><h3>Ejemplo rumiación</h3><p>Si domina DMN: serotonérgico o ketamina si TRD; siempre RFCBT/TMS como intervención de red.</p></div>
+      <div class="card"><h3>Ejemplo reward</h3><p>Si domina anhedonia: DAT/NET o D2/D3 parcial como augmentación; medir esfuerzo y placer.</p></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> el target farmacológico debe conversar con psicoterapia y TMS: medicamento abre o estabiliza ventana; la intervención de red entrena el nuevo patrón.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Targets</span>
+</section>
+
+<section class="slide" id="slide-10">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Exposoma</p>
+    <h1 class="reveal">El contexto compite contra la plasticidad que buscamos restaurar</h1>
+    <div class="seesaw reveal">
+      <div class="card stack"><h3>Empuja hacia reparación</h3><span class="tag teal">fármaco</span><span class="tag teal">psicoterapia</span><span class="tag teal">sueño</span><span class="tag teal">seguridad</span></div>
+      <div class="fulcrum"></div>
+      <div class="card stack"><h3>Mantiene el circuito</h3><span class="tag c">racismo</span><span class="tag c">trauma</span><span class="tag c">pobreza</span><span class="tag c">rumiación</span><span class="tag c">inflamación</span></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> un entorno que refuerza amenaza y pérdida puede bloquear lo que la medicación intenta abrir como ventana de aprendizaje.</p>
+    <p class="lead reveal">El tratamiento falla si el mundo sigue entrenando el mismo circuito.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Plasticidad</span>
+</section>
+
+<section class="slide" id="slide-11">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Ketamina</p>
+    <h1 class="reveal">La rapidez no convierte a ketamina en brújula diagnóstica</h1>
+    <div class="cols-3 reveal">
+      <div class="card"><h3>NMDA / glutamato</h3><p>Intervención rápida sobre plasticidad sináptica.</p></div>
+      <div class="card"><h3>Ventana clínica</h3><p>Oportunidad para mover aprendizaje y seguridad.</p></div>
+      <div class="card"><h3>Umbral</h3><p>TRD, severidad, suicidalidad o curso de alto riesgo.</p></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> ketamina puede abrir una ventana rápida de cambio, pero la indicación sigue dependiendo de severidad, riesgo y formulación.</p>
+    <p class="source reveal">Sin formulación psicoterapéutica y seguimiento, la rapidez puede volverse ruido.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Plasticidad</span>
+</section>
+
+<section class="slide" id="slide-12">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Psicodélicos</p>
+    <h1 class="reveal">Plasticidad sin contención puede ser ruido, no tratamiento</h1>
+    <div class="cols-4 reveal">
+      <div class="card"><h3>Molécula</h3><p>Psilocibina / MDMA-AT en marcos regulados.</p></div>
+      <div class="card"><h3>Set</h3><p>Expectativa, preparación, estado mental.</p></div>
+      <div class="card"><h3>Setting</h3><p>Ambiente, vínculo, seguridad.</p></div>
+      <div class="card"><h3>Integración</h3><p>Aprendizaje sostenido tras la ventana.</p></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> psicodélicos no son farmacología sin terapia; el efecto clínico depende de preparación, contención e integración posterior.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Plasticidad</span>
+</section>
+
+<section class="slide" id="slide-13">
+  <div class="slide-content">
+    <p class="eyebrow reveal">MDD como laboratorio</p>
+    <h1 class="reveal">MDD concentra las señales más cercanas a prescripción</h1>
+    <div class="cols-3 reveal">
+      <div class="card"><h3>CRP</h3><p>Inflamación como desempate prudente.</p><span class="tag b">B</span></div>
+      <div class="card"><h3>sgACC / SCC</h3><p>Patrones para CBT versus medicación.</p><span class="tag b">B</span></div>
+      <div class="card"><h3>CYP2C19/2D6</h3><p>Seguridad, metabolismo, dosis e interacciones.</p><span class="tag a">A/B</span></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> MDD concentra más evidencia de precisión, pero incluso ahí las señales todavía no forman un algoritmo cerrado.</p>
+    <p class="lead reveal">La lección es separar pronóstico, prescripción y seguridad.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">MDD</span>
+</section>
+
+<section class="slide" id="slide-14">
+  <div class="slide-content">
+    <p class="eyebrow reveal">CRP</p>
+    <h1 class="reveal">CRP puede orientar, pero todavía no manda sola</h1>
+    <div class="split reveal">
+      <div class="card stack"><h3>CRP baja</h3><p>Escitalopram o nortriptilina según perfil clínico, seguridad e historia.</p></div>
+      <div class="card stack"><h3>CRP elevada</h3><p>Señal hacia nortriptilina o bupropión-combo como hipótesis prudente.</p></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> CRP funciona como desempate probabilístico en MDD inflamatorio, no como una orden automática de prescripción.</p>
+    <p class="source reveal">Uher 2014 · Jha 2017 · falta RCT estratificado definitivo.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">MDD</span>
+</section>
+
+<section class="slide" id="slide-15">
+  <div class="slide-content">
+    <p class="eyebrow reveal">sgACC / SCC</p>
+    <h1 class="reveal">El mejor marcador de imagen sigue esperando validación clínica</h1>
+    <div class="decision-tree reveal">
+      <div class="card"><h3>Patrón A</h3><p>Señal hacia CBT probable.</p></div>
+      <div class="card"><h3>Patrón B</h3><p>Señal hacia escitalopram probable.</p></div>
+      <div class="card"><h3>Pero...</h3><p>No hay deployment prospectivo de rutina.</p><span class="tag b">B</span></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> sgACC/SCC es una de las promesas prescriptivas más interesantes, pero todavía no es herramienta de consulta diaria.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">MDD</span>
+</section>
+
+<section class="slide" id="slide-16">
+  <div class="slide-content">
+    <p class="eyebrow reveal">PGx</p>
+    <h1 class="reveal">Pharmacogenomics ayuda con dosis, no elige el antidepresivo</h1>
+    <div class="split reveal">
+      <div class="card stack"><h3>Sí</h3><span class="tag a">CYP2C19</span><span class="tag a">CYP2D6</span><p>Metabolismo, dosis, interacciones, efectos adversos.</p></div>
+      <div class="card stack"><h3>No</h3><span class="tag c">panel mágico</span><span class="tag c">selector de remisión</span><p>La evidencia no sostiene elegir molécula por panel combinatorio.</p></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> PGx es útil cuando la pregunta es metabolismo y seguridad; se debilita cuando promete elegir el antidepresivo que remitirá.</p>
+    <p class="source reveal">GUIDED y PRIME-CARE: utilidad clínica sobria, no psicopatología personalizada.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">MDD</span>
+</section>
+
+<section class="slide" id="slide-17">
+  <div class="slide-content">
+    <p class="eyebrow reveal">PTSD</p>
+    <h1 class="reveal">A veces precisión significa no pedir un biomarcador</h1>
+    <div class="split reveal">
+      <div class="card stack"><h3>Camino innecesario</h3><p>Biomarcador -> espera -> falsa sofisticación.</p><span class="tag c">C</span></div>
+      <div class="card stack"><h3>Camino clínico</h3><p>CPT/PE disponibles -> preferencia, dropout, seguridad y acceso.</p><span class="tag a">A</span></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> en PTSD, la decisión con mayor evidencia puede ser elegir y sostener bien una terapia disponible, no buscar un marcador más elegante.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Otros trastornos</span>
+</section>
+
+<section class="slide" id="slide-18">
+  <div class="slide-content">
+    <p class="eyebrow reveal">PTSD</p>
+    <h1 class="reveal">CPT y PE equivalen; preferencia y dropout pesan más</h1>
+    <div class="split reveal">
+      <div class="card stack"><h3>CAPS-5</h3><div class="bars"><div class="bar-row"><span>CPT</span><div class="bar-track"><div class="bar-fill" style="width:78%"></div></div><span></span></div><div class="bar-row"><span>PE</span><div class="bar-track"><div class="bar-fill" style="width:76%"></div></div><span></span></div></div></div>
+      <div class="card stack"><h3>Decisión real</h3><span class="tag a">acceso</span><span class="tag a">preferencia</span><span class="tag a">dropout</span><span class="tag a">seguridad</span></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> si dos terapias son equivalentes, la precisión se desplaza a preferencia, barreras, riesgo de abandono y alianza terapéutica.</p>
+    <p class="source reveal">N=916 + cohorte real-world. Precisión no siempre es neurotest.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Otros trastornos</span>
+</section>
+
+<section class="slide" id="slide-19">
+  <div class="slide-content">
+    <p class="eyebrow reveal">PTSD disociativo</p>
+    <h1 class="reveal">Subtipo real no significa selector terapéutico</h1>
+    <div class="split reveal">
+      <div class="card stack"><h3>Existe</h3><p>PTSD + disociación tiene firma descriptiva y relevancia clínica.</p><span class="tag blue">descriptivo</span></div>
+      <div class="card stack"><h3>No hace</h3><p>No selecciona por sí solo CPT, PE u otra terapia trauma-focused.</p><span class="tag c">no prescriptivo</span></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> un subtipo puede ser real y clínicamente importante, pero aun así no demostrar que un tratamiento gane sobre otro.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Otros trastornos</span>
+</section>
+
+<section class="slide" id="slide-20">
+  <div class="slide-content">
+    <p class="eyebrow reveal">GAD</p>
+    <h1 class="reveal">GAD demuestra que internalizing supera a la etiqueta</h1>
+    <div class="cols-3 reveal">
+      <div class="card"><h3>GAD</h3><p>Preocupación, IU, arousal ansioso.</p></div>
+      <div class="card"><h3>MDD</h3><p>Anhedonia, rumiación, pérdida.</p></div>
+      <div class="card"><h3>Anxious misery</h3><p>La zona compartida domina la señal.</p></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> TAG comparte tanto con depresión y neuroticismo que los marcadores suelen capturar internalizing más que una etiqueta pura.</p>
+    <p class="lead reveal">La precisión en TAG sigue siendo más programática que prescriptiva.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Otros trastornos</span>
+</section>
+
+<section class="slide" id="slide-21">
+  <div class="slide-content">
+    <p class="eyebrow reveal">PDD / distimia</p>
+    <h1 class="reveal">Trauma temprano importa, pero no dicta CBASP automáticamente</h1>
+    <div class="cols-3 reveal">
+      <div class="card"><h3>Nemeroff 2003</h3><p>Trauma x CBASP: señal seductora.</p></div>
+      <div class="card"><h3>Bausch 2020</h3><p>Replicación mixta.</p></div>
+      <div class="card"><h3>Serbanescu 2023</h3><p>Señal invertida.</p></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> PDD enseña que cronicidad y trauma son estratificadores potentes, pero las reglas simples se rompen al replicarlas.</p>
+    <p class="lead reveal">Cronicidad, trauma y exposoma son variables de precisión, no reglas simples.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Otros trastornos</span>
+</section>
+
+<section class="slide" id="slide-22">
+  <div class="slide-content">
+    <p class="eyebrow reveal">BP-II depresivo</p>
+    <h1 class="reveal">La precisión empieza evitando llamarlo MDD</h1>
+    <div class="split reveal">
+      <div class="card stack"><h3>Si es unipolar</h3><p>AD, CBT, staging MDD, CRP/PGx si corresponde.</p></div>
+      <div class="card stack"><h3>Si es BP-II</h3><p>Quetiapina, lamotrigina, litio y cautela con AD.</p></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> reconocer bipolaridad cambia la clase terapéutica completa; por eso es una de las decisiones de precisión más accionables.</p>
+    <p class="source reveal">Gate: inicio temprano, atipicidad, mixtura, activación con AD, historia familiar, MDQ/HCL-32.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Otros trastornos</span>
+</section>
+
+<section class="slide" id="slide-23">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Matriz clínica</p>
+    <h1 class="reveal">La precisión ocurre cuando cuatro columnas explican una decisión</h1>
+    <table class="matrix reveal">
+      <thead><tr><th>Sistema</th><th>Trayectoria</th><th>Biología</th><th>Intervención</th></tr></thead>
+      <tbody>
+        <tr><td>Loss, threat, rumiación, IU, anhedonia</td><td>Agudo, recurrente, crónico, trauma temprano</td><td>CRP, sgACC, PGx, sueño, HPA</td><td>Fármaco, psicoterapia, ketamina, trauma therapy, staging</td></tr>
+        <tr><td><strong>Caso</strong>: rumiación + amenaza sostenida</td><td>Recurrente, exposoma activo</td><td>Screening BP-II, CRP si MDD probable</td><td>Plan integrado + medición + umbral de cambio</td></tr>
+      </tbody>
+    </table>
+    <p class="context-note reveal"><strong>Contexto:</strong> esta matriz es el handout mental de la sesión: ninguna intervención queda bien justificada si no conversa con las cuatro columnas.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Matriz</span>
+</section>
+
+<section class="slide" id="slide-24">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Staging</p>
+    <h1 class="reveal">El staging cambia si el circuito sigue recibiendo combustible</h1>
+    <div class="timeline reveal">
+      <div class="card time-card"><h3>Agudo</h3><p>6-12 semanas. ¿Qué apaga el incendio?</p></div>
+      <div class="card time-card"><h3>Mantenimiento</h3><p>6-12 meses mínimo. ¿Qué consolida plasticidad?</p></div>
+      <div class="card time-card"><h3>Prevención</h3><p>Prolongada si hay recurrencia o alto riesgo.</p></div>
+      <div class="card time-card"><h3>Capas</h3><p>Trauma, sueño, inflamación, BP-II, rumiación.</p></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> la duración del tratamiento no depende solo de respuesta inicial; depende de cuánto combustible sigue llegando al circuito.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Staging</span>
+</section>
+
+<section class="slide" id="slide-25">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Fases</p>
+    <h1 class="reveal">Agudo, mantenimiento y prevención responden preguntas distintas</h1>
+    <div class="cols-3 reveal">
+      <div class="card"><h3>Agudo</h3><p>¿Qué reduce síntomas y riesgo ahora?</p></div>
+      <div class="card"><h3>Mantenimiento</h3><p>¿Qué estabiliza aprendizaje, sueño y contexto?</p></div>
+      <div class="card"><h3>Prevención</h3><p>¿Qué evita reactivar el circuito?</p></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> si mezclas fases, aparece retiro prematuro, tratamientos demasiado largos o escalamiento sin umbral.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Staging</span>
+</section>
+
+<section class="slide" id="slide-26">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Plantilla</p>
+    <h1 class="reveal">Todo plan debe mostrar mecanismo y certeza</h1>
+    <div class="card reveal">
+      <ol class="feature-list">
+        <li>Formulación dimensional.</li>
+        <li>Primera línea.</li>
+        <li>Segunda línea y umbral de cambio.</li>
+        <li>Medición de respuesta.</li>
+        <li>Nivel A/B/C de cada decisión.</li>
+      </ol>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> el ejercicio evalúa si cada decisión tiene mecanismo, evidencia y un criterio observable para sostenerla o cambiarla.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Staging</span>
+</section>
+
+<section class="slide" id="slide-27">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Actividad</p>
+    <h1 class="reveal">Equipos: formulen un plan sin vender biomarcadores</h1>
+    <div class="split reveal">
+      <div class="card stack"><h3>Caso</h3><p>MDD recurrente, trauma racial, rumiación, sueño fragmentado, respuesta parcial a ISRS.</p></div>
+      <div class="card stack"><h3>Entregable</h3><p>Plan integrado + nivel de evidencia + criterio de cambio.</p><p class="formula">4:00</p></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> no basta proponer ketamina o cambio de ISRS; el equipo debe explicar cuándo escala, qué mide y qué overclaim evita.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Aplicación</span>
+</section>
+
+<section class="slide" id="slide-28">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Debrief</p>
+    <h1 class="reveal">Un buen plan combina medición, rumiación, trauma y seguridad</h1>
+    <div class="cols-4 reveal">
+      <div class="card"><h3>Medición</h3><p>PHQ-9, GAD-7, PCL-5, sueño, RRS.</p></div>
+      <div class="card"><h3>Psicoterapia</h3><p>RFCBT/ABC + trauma therapy si hay estabilidad.</p></div>
+      <div class="card"><h3>Fármaco</h3><p>Optimizar o cambiar según historia y seguridad.</p></div>
+      <div class="card"><h3>Seguridad</h3><p>BP-II, suicidio, sustancias, adherencia.</p></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> la primera línea debe cerrar el circuito: medir, intervenir rumiación, estabilizar trauma y reducir riesgos que sabotean plasticidad.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Aplicación</span>
+</section>
+
+<section class="slide" id="slide-29">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Segunda línea</p>
+    <h1 class="reveal">CRP y ketamina entran solo con umbral explícito</h1>
+    <div class="decision-tree reveal">
+      <div class="card"><h3>6-8/12 semanas</h3><p>Medición muestra respuesta insuficiente.</p></div>
+      <div class="card"><h3>Auditar</h3><p>Adherencia, sueño, rumiación, exposoma, BP-II.</p></div>
+      <div class="card"><h3>Escalar</h3><p>TRD/severidad -> ketamina. MDD inflamatorio probable -> hs-CRP como desempate.</p></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> la segunda línea empieza con auditoría clínica; después entran biomarcadores o tratamientos rápidos si el umbral está explícito.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Aplicación</span>
+</section>
+
+<section class="slide" id="slide-30">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Metacognición clínica</p>
+    <h1 class="reveal">Predecir mal pronóstico no dice qué tratamiento escoger</h1>
+    <div class="split reveal">
+      <div class="card"><h3>Pronóstico</h3><p>Predice que el paciente irá peor o responderá menos.</p></div>
+      <div class="card"><h3>Prescripción</h3><p>Predice que tratamiento A supera a tratamiento B.</p></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> muchos modelos predicen mal pronóstico; pocos demuestran que una intervención específica sea superior para ese perfil.</p>
+    <p class="lead reveal">No cruces la barrera sin evidencia comparativa.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Aplicación</span>
+</section>
+
+<section class="slide" id="slide-31">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Cierre crítico</p>
+    <h1 class="reveal">Los overclaims destruyen la confianza en precisión</h1>
+    <div class="cols-3 reveal">
+      <div class="card"><p>fMRI test clínico</p></div>
+      <div class="card"><p>panel PGx elige antidepresivo</p></div>
+      <div class="card"><p>blood test diagnostica depresión</p></div>
+      <div class="card"><p>disociación selecciona PTSD therapy</p></div>
+      <div class="card"><p>trauma = CBASP automático</p></div>
+      <div class="card"><p>PRS litio aplicado a BP-II</p></div>
+    </div>
+    <p class="context-note reveal"><strong>Contexto:</strong> esta lista funciona como vacuna docente: investigación válida se vuelve dañina cuando se presenta como promesa clínica prematura.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Cierre</span>
+</section>
+
+<section class="slide" id="slide-32">
+  <div class="slide-content centered">
+    <p class="eyebrow reveal">Take-home</p>
+    <p class="quote reveal">La precisión clínica es <span class="accent">formular mejor</span>, no adivinar mejor.</p>
+    <p class="lead reveal">El tratamiento deja de ser otro ISRS y se vuelve una hipótesis mecanística.</p>
+    <p class="context-note reveal"><strong>Contexto:</strong> precisión en distress significa formular, medir, actualizar y reconocer el límite de la evidencia antes de prometer personalización.</p>
+    <p class="source reveal">Mecanismo + trayectoria + exposoma + evidencia.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Cierre</span>
+</section>
+</main>
+
+<script>
+/* ===========================================
+   SLIDE PRESENTATION CONTROLLER
+   =========================================== */
+const ABBR_FOOTNOTES = {
+  "slide-1": "MDD=trastorno depresivo mayor; GAD=trastorno de ansiedad generalizada; PTSD=trastorno de estres postraumatico; PDD=trastorno depresivo persistente/distimia; II=tipo 2; R1=residente de primer ano.",
+  "slide-2": "ISRS=inhibidores selectivos de recaptacion de serotonina; TRD=depresion resistente al tratamiento.",
+  "slide-3": "S8/S9/S10=sesiones 8, 9 y 10; ABC=antecedente-conducta-consecuencia; RFCBT=terapia cognitivo-conductual centrada en rumiacion.",
+  "slide-4": "CRP=proteina C reactiva; sgACC/SCC=cingulo anterior subgenual/corteza subcallosa; PGx=farmacogenomica; fMRI=resonancia magnetica funcional; ML=aprendizaje automatico; PRS=puntaje de riesgo poligenico.",
+  "slide-5": "A/B/C=niveles de evidencia: A decision clinica, B investigacion validada no rutinaria, C exploratorio.",
+  "slide-6": "D=default mode; S=salience; A=attention; N/P/C=afecto negativo/positivo/control; _C/_A/_X=conectividad/activacion/intacto; SA/NS=tristeza; TC/NTC=amenaza consciente; I-CARE=intervencion conductual.",
+  "slide-7": "TMS/rTMS=estimulacion magnetica transcraneal/repetitiva; B1/B2/B3/B4=biotipos 1 a 4 de Drysdale.",
+  "slide-8": "p=valor de significancia estadistica; clusters=agrupamientos estadisticos.",
+  "slide-9": "BDNF=factor neurotrofico derivado del cerebro.",
+  "slide-network-targets": "CRF1=receptor de corticotropina tipo 1; NMDA/AMPA/mGluR5=glutamato; GABA-A/B=receptores GABA; 5-HT1A/2A/3=serotonina; ISRS/IRSN=recaptacion serotonina/serotonina-noradrenalina; PFC=corteza prefrontal; D1/D2/D3=dopamina; α1/α2/α2A/β=adrenérgicos; μ/κ/KOR=opioides; GR/MR=glucocorticoide/mineralocorticoide; CB1/FAAH=endocannabinoide/anandamida; nAChR=nicotinico; M1/M2=muscarinicos; H1=histamina; PTSD/MDD=estres postraumatico/depresion mayor; TRD=depresion resistente.",
+  "slide-pharma-targets": "ISRS/IRSN=recaptacion serotonina/serotonina-noradrenalina; SERT/NET/DAT=transportadores 5-HT/noradrenalina/dopamina; 5-HT1A/2/2A/2C/3=serotonina; α1/α2/β=adrenérgicos; D2/D3=dopamina; AMPA/NMDA=glutamato; GABA-A=inhibicion; DMN=red por defecto; PFC=corteza prefrontal; PA=presion arterial; nAChR=nicotinico; H1=histamina; BDNF/mTOR=plasticidad; PAM=modulador alosterico positivo; MDD/PTSD=depresion mayor/estres postraumatico; TRD=depresion resistente.",
+  "slide-target-algorithm": "DMN=red por defecto; BP-II=bipolar II; SHAPS=escala de anhedonia; PCL/GAD-7=escalas PTSD/ansiedad; SERT/NET/DAT=transportadores 5-HT/noradrenalina/dopamina; D2/D3=dopamina; GABA-A=inhibicion; α1=adrenergico alfa-1; RFCBT/CBT=terapia cognitivo-conductual centrada en rumiacion/general; TMS=estimulacion magnetica; TRD=depresion resistente.",
+  "slide-11": "NMDA=receptor glutamatergico N-metil-D-aspartato; TRD=depresion resistente al tratamiento.",
+  "slide-12": "MDMA-AT=terapia asistida por MDMA; MDMA=3,4-metilendioximetanfetamina.",
+  "slide-13": "MDD=trastorno depresivo mayor; CRP=proteina C reactiva; sgACC/SCC=cingulo anterior subgenual/corteza subcallosa; CBT=TCC; CYP2C19/2D6=enzimas metabolizadoras; A/B=nivel de evidencia.",
+  "slide-14": "CRP=proteina C reactiva; MDD=trastorno depresivo mayor; RCT=ensayo clinico aleatorizado.",
+  "slide-15": "sgACC/SCC=cingulo anterior subgenual/corteza subcallosa; CBT=TCC; MDD=trastorno depresivo mayor; B=nivel de evidencia.",
+  "slide-16": "PGx=farmacogenomica; CYP2C19/CYP2D6=enzimas CYP450; GUIDED y PRIME-CARE=ensayos clinicos de farmacogenomica; MDD=trastorno depresivo mayor.",
+  "slide-17": "PTSD=trastorno de estres postraumatico; CPT=terapia de procesamiento cognitivo; PE=exposicion prolongada; A/C=nivel de evidencia.",
+  "slide-18": "PTSD=trastorno de estres postraumatico; CAPS-5=Clinician-Administered PTSD Scale-5; CPT=terapia de procesamiento cognitivo; PE=exposicion prolongada.",
+  "slide-19": "PTSD=trastorno de estres postraumatico; CPT=terapia de procesamiento cognitivo; PE=exposicion prolongada.",
+  "slide-20": "GAD/TAG=trastorno de ansiedad generalizada; IU=intolerancia a la incertidumbre; MDD=trastorno depresivo mayor.",
+  "slide-21": "PDD=trastorno depresivo persistente; CBASP=sistema de analisis cognitivo-conductual de psicoterapia.",
+  "slide-22": "BP-II=trastorno bipolar II; MDD=trastorno depresivo mayor; AD=antidepresivo; CBT=TCC; CRP=proteina C reactiva; PGx=farmacogenomica; MDQ/HCL-32=screening de bipolaridad.",
+  "slide-23": "IU=intolerancia a la incertidumbre; CRP=proteina C reactiva; sgACC=cingulo anterior subgenual; PGx=farmacogenomica; HPA=eje hipotalamo-hipofisis-adrenal; BP-II=bipolar II; MDD=depresion mayor.",
+  "slide-24": "BP-II=trastorno bipolar II.",
+  "slide-26": "A/B/C=niveles de evidencia.",
+  "slide-27": "MDD=trastorno depresivo mayor; ISRS=inhibidores selectivos de recaptacion de serotonina.",
+  "slide-28": "PHQ-9=Patient Health Questionnaire-9; GAD-7=escala de ansiedad generalizada; PCL-5=PTSD Checklist-5; RRS=Ruminative Responses Scale; RFCBT/ABC=CBT centrada en rumiacion/antecedente-conducta-consecuencia; BP-II=bipolar II.",
+  "slide-29": "CRP/hs-CRP=proteina C reactiva/de alta sensibilidad; TRD=depresion resistente; MDD=depresion mayor; BP-II=bipolar II.",
+  "slide-30": "A/B=tratamientos comparados; aqui no indican nivel de evidencia.",
+  "slide-31": "fMRI=resonancia magnetica funcional; PGx=farmacogenomica; PTSD=estres postraumatico; CBASP=sistema de analisis cognitivo-conductual; PRS=puntaje de riesgo poligenico; BP-II=bipolar II.",
+  "slide-32": "ISRS=inhibidores selectivos de recaptacion de serotonina."
+};
+
+class SlidePresentation {
+  constructor() {
+    this.slides = Array.from(document.querySelectorAll(".slide"));
+    this.currentSlide = 0;
+    this.navDots = document.getElementById("navDots");
+    this.progressBar = document.getElementById("progressBar");
+    this.wheelLocked = false;
+    this.touchStartY = 0;
+    this.setupSlideLabels();
+    this.setupAbbreviationFootnotes();
+    this.setupIntersectionObserver();
+    this.setupNavDots();
+    this.setupKeyboardNav();
+    this.setupWheelNav();
+    this.setupTouchNav();
+    this.updateProgress();
+  }
+
+  setupSlideLabels() {
+    this.slides.forEach((slide, index) => {
+      const num = slide.querySelector(".slide-num");
+      if (num) num.textContent = `${String(index + 1).padStart(2, "0")} / ${String(this.slides.length).padStart(2, "0")}`;
+    });
+  }
+
+  setupAbbreviationFootnotes() {
+    this.slides.forEach((slide) => {
+      const definition = ABBR_FOOTNOTES[slide.id];
+      if (!definition) return;
+      const existing = slide.querySelector(".abbr-footnote");
+      if (existing) existing.remove();
+      const footnote = document.createElement("p");
+      footnote.className = `abbr-footnote${definition.length > 190 ? " long" : ""}`;
+      const label = document.createElement("strong");
+      label.textContent = "Abrev.: ";
+      footnote.append(label, document.createTextNode(definition));
+      slide.appendChild(footnote);
+    });
+  }
+
+  setupIntersectionObserver() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          this.currentSlide = this.slides.indexOf(entry.target);
+          this.updateProgress();
+          this.updateDots();
+        }
+      });
+    }, { threshold: 0.55 });
+
+    this.slides.forEach((slide) => observer.observe(slide));
+  }
+
+  setupNavDots() {
+    this.navDots.innerHTML = "";
+    this.slides.forEach((slide, index) => {
+      const button = document.createElement("button");
+      button.className = "dot";
+      button.type = "button";
+      button.setAttribute("aria-label", `Ir al slide ${index + 1}`);
+      button.addEventListener("click", () => this.goToSlide(index));
+      this.navDots.appendChild(button);
+    });
+    this.updateDots();
+  }
+
+  setupKeyboardNav() {
+    window.addEventListener("keydown", (event) => {
+      if (["ArrowDown", "ArrowRight", " ", "PageDown"].includes(event.key)) {
+        event.preventDefault();
+        this.nextSlide();
+      }
+      if (["ArrowUp", "ArrowLeft", "PageUp"].includes(event.key)) {
+        event.preventDefault();
+        this.previousSlide();
+      }
+      if (event.key === "Home") {
+        event.preventDefault();
+        this.goToSlide(0);
+      }
+      if (event.key === "End") {
+        event.preventDefault();
+        this.goToSlide(this.slides.length - 1);
+      }
+    });
+  }
+
+  setupWheelNav() {
+    window.addEventListener("wheel", (event) => {
+      if (Math.abs(event.deltaY) < 32 || this.wheelLocked) return;
+      this.wheelLocked = true;
+      if (event.deltaY > 0) this.nextSlide();
+      else this.previousSlide();
+      window.setTimeout(() => { this.wheelLocked = false; }, 520);
+    }, { passive: true });
+  }
+
+  setupTouchNav() {
+    window.addEventListener("touchstart", (event) => {
+      this.touchStartY = event.changedTouches[0].clientY;
+    }, { passive: true });
+
+    window.addEventListener("touchend", (event) => {
+      const delta = this.touchStartY - event.changedTouches[0].clientY;
+      if (Math.abs(delta) < 44) return;
+      if (delta > 0) this.nextSlide();
+      else this.previousSlide();
+    }, { passive: true });
+  }
+
+  goToSlide(index) {
+    const target = Math.max(0, Math.min(index, this.slides.length - 1));
+    this.slides[target].scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  nextSlide() {
+    this.goToSlide(this.currentSlide + 1);
+  }
+
+  previousSlide() {
+    this.goToSlide(this.currentSlide - 1);
+  }
+
+  updateProgress() {
+    const pct = ((this.currentSlide + 1) / this.slides.length) * 100;
+    this.progressBar.style.width = `${pct}%`;
+  }
+
+  updateDots() {
+    const dots = Array.from(this.navDots.querySelectorAll(".dot"));
+    dots.forEach((dot, index) => dot.classList.toggle("active", index === this.currentSlide));
+  }
+}
+
+window.addEventListener("DOMContentLoaded", () => new SlidePresentation());
+</script>
+</body>
+</html>
