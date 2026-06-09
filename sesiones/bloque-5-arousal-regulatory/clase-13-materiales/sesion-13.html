@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Sesion 13: Red regulatoria</title>
+<meta name="description" content="Slides HTML de la Sesion 13 del curso Psicopatologia Dimensional: arousal, ritmo, mania y estabilizadores de red." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;500;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,650;6..72,800&display=swap" rel="stylesheet">
+<style>
+/* ===========================================
+   CSS CUSTOM PROPERTIES: REGULATORY NETWORK LAB
+   =========================================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ===========================================
+   VIEWPORT FITTING: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   These styles ensure slides fit exactly in the viewport.
+   =========================================== */
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+html {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+}
+
+.slide {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.slide-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-height: 100%;
+    overflow: hidden;
+    padding: var(--slide-padding);
+}
+
+:root {
+    --title-size: clamp(1.5rem, 5vw, 4rem);
+    --h2-size: clamp(1.25rem, 3.5vw, 2.5rem);
+    --h3-size: clamp(1rem, 2.5vw, 1.75rem);
+    --body-size: clamp(0.75rem, 1.5vw, 1.125rem);
+    --small-size: clamp(0.65rem, 1vw, 0.875rem);
+    --slide-padding: clamp(1rem, 4vw, 4rem);
+    --content-gap: clamp(0.5rem, 2vw, 2rem);
+    --element-gap: clamp(0.25rem, 1vw, 1rem);
+}
+
+.card, .container, .content-box {
+    max-width: min(90vw, 1000px);
+    max-height: min(80vh, 700px);
+}
+
+.feature-list, .bullet-list {
+    gap: clamp(0.4rem, 1vh, 1rem);
+}
+
+.feature-list li, .bullet-list li {
+    font-size: var(--body-size);
+    line-height: 1.4;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    gap: clamp(0.5rem, 1.5vw, 1rem);
+}
+
+img, .image-container {
+    max-width: 100%;
+    max-height: min(50vh, 400px);
+    object-fit: contain;
+}
+
+@media (max-height: 700px) {
+    :root {
+        --slide-padding: clamp(0.75rem, 3vw, 2rem);
+        --content-gap: clamp(0.4rem, 1.5vw, 1rem);
+        --title-size: clamp(1.25rem, 4.5vw, 2.5rem);
+        --h2-size: clamp(1rem, 3vw, 1.75rem);
+    }
+}
+
+@media (max-height: 600px) {
+    :root {
+        --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem);
+        --content-gap: clamp(0.3rem, 1vw, 0.75rem);
+        --title-size: clamp(1.1rem, 4vw, 2rem);
+        --body-size: clamp(0.7rem, 1.2vw, 0.95rem);
+    }
+
+    .nav-dots, .keyboard-hint, .decorative {
+        display: none;
+    }
+}
+
+@media (max-height: 500px) {
+    :root {
+        --slide-padding: clamp(0.4rem, 2vw, 1rem);
+        --title-size: clamp(1rem, 3.5vw, 1.5rem);
+        --h2-size: clamp(0.9rem, 2.5vw, 1.25rem);
+        --body-size: clamp(0.65rem, 1vw, 0.85rem);
+    }
+}
+
+@media (max-width: 600px) {
+    :root {
+        --title-size: clamp(1.25rem, 7vw, 2.5rem);
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* ===========================================
+   THEME VARIABLES
+   =========================================== */
+:root {
+  --bg-primary: #0f1010;
+  --bg-secondary: #171818;
+  --panel: rgba(23, 24, 24, 0.82);
+  --panel-soft: rgba(23, 24, 24, 0.58);
+  --text-primary: #f7f3e9;
+  --text-secondary: rgba(245, 239, 224, 0.80);
+  --text-muted: rgba(218, 208, 184, 0.58);
+  --line: rgba(245, 239, 224, 0.15);
+  --line-strong: rgba(245, 239, 224, 0.28);
+  --arousal: #f2b85b;
+  --circadian: #29d0c3;
+  --lithium: #83a9ff;
+  --mania: #ef5f7c;
+  --depression: #b995ff;
+  --safety: #7bd66f;
+  --warning: #ff8a5c;
+  --ink: #0f1010;
+  --font-display: "Newsreader", Georgia, serif;
+  --font-body: "IBM Plex Sans", sans-serif;
+  --font-mono: "Azeret Mono", monospace;
+  --title-size: clamp(1.42rem, 4.15vw, 3.35rem);
+  --h2-size: clamp(1rem, 2.45vw, 1.9rem);
+  --h3-size: clamp(0.82rem, 1.38vw, 1.08rem);
+  --body-size: clamp(0.66rem, 1.05vw, 0.92rem);
+  --small-size: clamp(0.54rem, 0.82vw, 0.72rem);
+  --micro-size: clamp(0.45rem, 0.66vw, 0.58rem);
+  --slide-padding: clamp(0.92rem, 3vw, 2.72rem);
+  --content-gap: clamp(0.44rem, 1.28vw, 1rem);
+  --element-gap: clamp(0.28rem, 0.78vw, 0.62rem);
+  --radius: 8px;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-normal: 0.58s;
+}
+
+/* ===========================================
+   BASE PRESENTATION STYLE
+   =========================================== */
+body {
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  font-family: var(--font-body);
+  line-height: 1.34;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(130deg, rgba(41, 208, 195, 0.13) 0 1px, transparent 1px 72px),
+    linear-gradient(42deg, rgba(242, 184, 91, 0.10) 0 1px, transparent 1px 96px),
+    linear-gradient(180deg, #0f1010 0%, #151616 58%, #0b0c0c 100%);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  background-image:
+    linear-gradient(rgba(247, 243, 233, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(247, 243, 233, 0.06) 1px, transparent 1px);
+  background-size: clamp(34px, 5.3vw, 64px) clamp(34px, 5.3vw, 64px);
+  mask-image: linear-gradient(180deg, transparent, #000 12%, #000 84%, transparent);
+}
+
+main, .slide, .progress-bar, .nav-dots { position: relative; z-index: 1; }
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  z-index: 1000;
+  background: linear-gradient(90deg, var(--circadian), var(--arousal), var(--mania), var(--lithium), var(--safety));
+}
+
+.nav-dots {
+  position: fixed;
+  right: clamp(0.3rem, 1vw, 1rem);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-height: 76vh;
+  padding: 8px 6px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(15, 16, 16, 0.60);
+  backdrop-filter: blur(12px);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(247, 243, 233, 0.28);
+  cursor: pointer;
+  transition: transform 180ms ease, background 180ms ease;
+}
+
+.dot.active { background: var(--circadian); transform: scale(1.45); }
+
+.slide::before {
+  content: "";
+  position: absolute;
+  inset: clamp(0.5rem, 1vw, 1rem);
+  border: 1px solid rgba(247, 243, 233, 0.055);
+  pointer-events: none;
+}
+
+.slide-content {
+  width: min(100%, 1140px);
+  margin: 0 auto;
+  gap: var(--content-gap);
+}
+
+.centered { align-items: center; text-align: center; }
+.tight { gap: calc(var(--content-gap) * 0.7); }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--content-gap); align-items: stretch; }
+.split-40 { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--content-gap); align-items: stretch; }
+.stack { display: flex; flex-direction: column; gap: var(--element-gap); }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--micro-size);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--circadian);
+}
+
+h1, h2 {
+  font-family: var(--font-display);
+  line-height: 0.98;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+h1 { font-size: var(--title-size); max-width: 13ch; }
+h2 { font-size: var(--h2-size); max-width: 20ch; }
+h3 { font-size: var(--h3-size); font-weight: 700; letter-spacing: 0; }
+p { font-size: var(--body-size); color: var(--text-secondary); max-width: 64ch; }
+
+.lead {
+  font-size: clamp(0.86rem, 1.35vw, 1.18rem);
+  color: var(--text-secondary);
+  max-width: 58ch;
+}
+
+.quote {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 3vw, 2.42rem);
+  line-height: 1.02;
+  color: var(--text-primary);
+  max-width: 24ch;
+}
+
+.chip-row { display: flex; flex-wrap: wrap; gap: var(--element-gap); align-items: center; }
+.chip {
+  font-family: var(--font-mono);
+  font-size: var(--micro-size);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.42em 0.7em;
+  background: rgba(247, 243, 233, 0.055);
+}
+
+.accent { color: var(--arousal); }
+.cyan { color: var(--circadian); }
+.lithium { color: var(--lithium); }
+.mania { color: var(--mania); }
+.safe { color: var(--safety); }
+.violet { color: var(--depression); }
+
+.panel {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  padding: clamp(0.72rem, 1.55vw, 1.24rem);
+  box-shadow: 0 18px 70px rgba(0,0,0,0.22);
+  overflow: hidden;
+}
+
+.soft-panel {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel-soft);
+  padding: clamp(0.62rem, 1.22vw, 1rem);
+}
+
+.mini-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--element-gap); }
+.quad-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--element-gap); }
+.two-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--element-gap); }
+
+.item {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: clamp(0.58rem, 1.05vw, 0.88rem);
+  background: rgba(247, 243, 233, 0.04);
+}
+
+.item b { display: block; font-size: var(--small-size); margin-bottom: 0.28em; color: var(--text-primary); }
+.item span, .item p { font-size: var(--small-size); color: var(--text-secondary); line-height: 1.32; }
+
+.big-number {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 10vw, 7rem);
+  line-height: 0.82;
+  color: var(--circadian);
+  opacity: 0.92;
+}
+
+/* ===========================================
+   VISUAL COMPONENTS
+   =========================================== */
+.network {
+  position: relative;
+  min-height: clamp(250px, 46vh, 430px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(41, 208, 195, 0.12), transparent 34%),
+    linear-gradient(135deg, rgba(247, 243, 233, 0.045), rgba(247, 243, 233, 0.015));
+  overflow: hidden;
+}
+
+.network::before,
+.network::after {
+  content: "";
+  position: absolute;
+  inset: 10%;
+  border: 1px solid rgba(247, 243, 233, 0.09);
+  border-radius: 50%;
+}
+
+.network::after {
+  inset: 24%;
+  border-style: dashed;
+  border-color: rgba(41, 208, 195, 0.24);
+}
+
+.node {
+  position: absolute;
+  min-width: clamp(74px, 10vw, 110px);
+  text-align: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 0.55em 0.72em;
+  font-family: var(--font-mono);
+  font-size: var(--micro-size);
+  color: var(--text-primary);
+  background: rgba(15,16,16,0.82);
+  box-shadow: 0 0 24px rgba(41, 208, 195, 0.08);
+}
+
+.node.center {
+  left: 50%; top: 50%; transform: translate(-50%, -50%);
+  min-width: clamp(120px, 15vw, 170px);
+  border-color: rgba(41, 208, 195, 0.55);
+  color: var(--circadian);
+}
+
+.node.n1 { left: 8%; top: 14%; color: var(--arousal); }
+.node.n2 { right: 9%; top: 15%; color: var(--mania); }
+.node.n3 { left: 10%; bottom: 16%; color: var(--depression); }
+.node.n4 { right: 10%; bottom: 15%; color: var(--safety); }
+.node.n5 { left: 50%; top: 7%; transform: translateX(-50%); color: var(--lithium); }
+.node.n6 { left: 50%; bottom: 7%; transform: translateX(-50%); color: var(--circadian); }
+
+.dial-board { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--element-gap); }
+.dial {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: clamp(0.58rem, 1.05vw, 0.88rem);
+  background: rgba(247, 243, 233, 0.04);
+}
+
+.dial-label {
+  font-family: var(--font-mono);
+  font-size: var(--micro-size);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dial-track {
+  height: 7px;
+  border-radius: 999px;
+  margin: 0.62rem 0 0.45rem;
+  background: rgba(247, 243, 233, 0.13);
+  overflow: hidden;
+}
+
+.dial-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--circadian), var(--arousal), var(--mania)); }
+.dial-value { font-family: var(--font-display); font-size: clamp(1.05rem, 2.25vw, 1.7rem); color: var(--text-primary); }
+
+.equation {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--element-gap);
+}
+
+.eq-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: clamp(0.58rem, 1.12vw, 0.92rem);
+  background: rgba(247, 243, 233, 0.04);
+  min-height: clamp(78px, 14vh, 115px);
+}
+
+.eq-card strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  line-height: 1;
+  margin-bottom: 0.3em;
+}
+
+.wave-box {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(247, 243, 233, 0.04);
+  padding: clamp(0.55rem, 1.1vw, 0.9rem);
+}
+
+.wave-svg { width: 100%; height: clamp(145px, 26vh, 245px); display: block; }
+.axis { stroke: rgba(247, 243, 233, 0.22); stroke-width: 1; }
+.normal-wave { fill: none; stroke: var(--circadian); stroke-width: 4; }
+.path-wave { fill: none; stroke: var(--mania); stroke-width: 4; }
+.range-band { fill: rgba(123, 214, 111, 0.10); stroke: rgba(123, 214, 111, 0.28); stroke-width: 1; }
+
+.flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--element-gap);
+  align-items: stretch;
+}
+
+.step {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: clamp(0.6rem, 1.12vw, 0.9rem);
+  background: rgba(247, 243, 233, 0.04);
+}
+
+.step::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: calc(-0.5 * var(--element-gap));
+  width: var(--element-gap);
+  border-top: 1px solid var(--line-strong);
+}
+
+.step:last-child::after { display: none; }
+.step b { display: block; font-size: var(--small-size); color: var(--text-primary); margin-bottom: 0.28em; }
+.step span { font-size: var(--small-size); color: var(--text-secondary); }
+
+.matrix {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--small-size);
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+
+.matrix th,
+.matrix td {
+  border: 1px solid var(--line);
+  padding: clamp(0.32rem, 0.7vw, 0.58rem);
+  text-align: left;
+  vertical-align: top;
+}
+
+.matrix th {
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: var(--micro-size);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(247, 243, 233, 0.07);
+}
+
+.codebox {
+  font-family: var(--font-mono);
+  font-size: clamp(0.58rem, 0.95vw, 0.78rem);
+  color: var(--text-secondary);
+  white-space: pre-line;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: clamp(0.7rem, 1.3vw, 1rem);
+  background: rgba(0,0,0,0.20);
+}
+
+.checklist { display: grid; gap: var(--element-gap); }
+.check {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.58rem;
+  align-items: start;
+  font-size: var(--body-size);
+  color: var(--text-secondary);
+}
+.check::before {
+  content: "";
+  width: 0.68rem;
+  height: 0.68rem;
+  margin-top: 0.28em;
+  border-radius: 50%;
+  background: var(--circadian);
+  box-shadow: 0 0 18px rgba(41, 208, 195, 0.24);
+}
+
+/* ===========================================
+   ANIMATIONS
+   =========================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity var(--duration-normal) var(--ease-out-expo),
+    transform var(--duration-normal) var(--ease-out-expo);
+}
+
+.slide.visible .reveal { opacity: 1; transform: translateY(0); }
+.slide.visible .reveal:nth-child(1) { transition-delay: 0.06s; }
+.slide.visible .reveal:nth-child(2) { transition-delay: 0.13s; }
+.slide.visible .reveal:nth-child(3) { transition-delay: 0.20s; }
+.slide.visible .reveal:nth-child(4) { transition-delay: 0.27s; }
+.slide.visible .reveal:nth-child(5) { transition-delay: 0.34s; }
+
+/* ===========================================
+   RESPONSIVE SLIDE ADJUSTMENTS
+   =========================================== */
+@media (max-width: 860px) {
+  .split, .split-40, .mini-grid, .quad-grid, .two-grid, .flow, .equation, .dial-board {
+    grid-template-columns: 1fr;
+  }
+  .quad-grid.mobile-two, .mini-grid.mobile-two, .dial-board.mobile-two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .slide-content.split,
+  .slide-content.split-40 {
+    align-content: center;
+    grid-auto-rows: max-content;
+  }
+  .slide-content { gap: calc(var(--content-gap) * 0.72); }
+  .network { min-height: clamp(250px, 48vh, 390px); }
+  .node { min-width: clamp(66px, 20vw, 96px); }
+  .lead { font-size: clamp(0.78rem, 3.4vw, 1rem); }
+  .quote { font-size: clamp(1.02rem, 6.2vw, 2rem); }
+}
+
+@media (max-height: 700px) {
+  .network { min-height: clamp(210px, 42vh, 330px); }
+  .wave-svg { height: clamp(110px, 23vh, 170px); }
+  .panel, .soft-panel, .item, .eq-card, .step { padding: clamp(0.45rem, 0.9vw, 0.7rem); }
+  .matrix th, .matrix td { padding: 0.32rem; }
+}
+
+@media (max-width: 560px) {
+  :root {
+    --slide-padding: clamp(0.65rem, 4.3vw, 1.05rem);
+    --content-gap: clamp(0.34rem, 2vw, 0.66rem);
+    --element-gap: clamp(0.24rem, 1.6vw, 0.5rem);
+    --body-size: clamp(0.61rem, 2.8vw, 0.82rem);
+    --small-size: clamp(0.52rem, 2.45vw, 0.68rem);
+    --micro-size: clamp(0.42rem, 2vw, 0.55rem);
+  }
+  .panel, .soft-panel, .item, .eq-card, .step, .dial {
+    padding: clamp(0.42rem, 2.3vw, 0.68rem);
+  }
+  .split, .split-40, .flow, .equation, .dial-board {
+    gap: calc(var(--content-gap) * 0.55);
+  }
+  p, .item span, .step span, .check {
+    line-height: 1.24;
+  }
+  .network { min-height: clamp(208px, 38vh, 322px); }
+  .wave-svg { height: clamp(94px, 20vh, 145px); }
+  .matrix th, .matrix td { padding: 0.28rem; }
+  .node.center { min-width: 112px; }
+  .node.n1 { left: 2%; top: 13%; }
+  .node.n2 { right: 2%; top: 13%; }
+  .node.n3 { left: 2%; bottom: 15%; }
+  .node.n4 { right: 2%; bottom: 15%; }
+  .node.n5 { top: 4%; }
+  .node.n6 { bottom: 4%; }
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" aria-hidden="true"></div>
+<nav class="nav-dots" aria-label="Navegacion de slides"></nav>
+
+<main>
+  <section class="slide">
+    <div class="slide-content centered">
+      <div class="eyebrow reveal">Sesion 13 · Bloque 5 · Arousal / Regulatory Systems</div>
+      <h1 class="reveal">La red decide si reward se vuelve proyecto o mania</h1>
+      <p class="lead reveal">Arousal, ritmo, sueño, frontolimbico y estabilizadores de red.</p>
+      <div class="chip-row reveal">
+        <span class="chip">RDoC</span><span class="chip">PVS</span><span class="chip">Bipolaridad</span><span class="chip">Litio</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content split">
+      <div class="stack">
+        <div class="eyebrow reveal">Puente desde S12</div>
+        <h2 class="reveal">S12 mostro el motor; S13 muestra el regulador</h2>
+        <p class="reveal">Wanting, liking, learning y effort no flotan solos. La red regulatoria decide cuando ese motor se coordina, se apaga o se acelera.</p>
+      </div>
+      <div class="network reveal" aria-label="Red con motor, metronomo y freno">
+        <div class="node center">red regulatoria</div>
+        <div class="node n1">PVS motor</div>
+        <div class="node n2">arousal energia</div>
+        <div class="node n3">amenaza</div>
+        <div class="node n4">control</div>
+        <div class="node n5">freno frontolimbico</div>
+        <div class="node n6">metronomo circadiano</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content">
+      <div class="eyebrow reveal">Activacion inicial</div>
+      <h2 class="reveal">La pregunta inicial no es "esta feliz?"</h2>
+      <div class="dial-board mobile-two reveal">
+        <div class="dial"><div class="dial-label">sueño</div><div class="dial-track"><div class="dial-fill" style="width:22%"></div></div><div class="dial-value">bajo</div></div>
+        <div class="dial"><div class="dial-label">energia</div><div class="dial-track"><div class="dial-fill" style="width:91%"></div></div><div class="dial-value">alta</div></div>
+        <div class="dial"><div class="dial-label">velocidad</div><div class="dial-track"><div class="dial-fill" style="width:88%"></div></div><div class="dial-value">alta</div></div>
+        <div class="dial"><div class="dial-label">riesgo</div><div class="dial-track"><div class="dial-fill" style="width:18%"></div></div><div class="dial-value">negado</div></div>
+        <div class="dial"><div class="dial-label">saliencia</div><div class="dial-track"><div class="dial-fill" style="width:94%"></div></div><div class="dial-value">alta</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content centered">
+      <div class="eyebrow reveal">Tesis</div>
+      <p class="quote reveal">Un estabilizador reduce varianza, no humanidad.</p>
+      <p class="lead reveal">La meta no es apagar emocion. Es recuperar rango, ritmo, freno y posibilidad de eleccion.</p>
+      <div class="wave-box reveal" style="width:min(100%,760px)">
+        <svg class="wave-svg" viewBox="0 0 900 260" role="img" aria-label="Onda inestable y onda estabilizada">
+          <rect class="range-band" x="30" y="82" width="840" height="96" rx="8"></rect>
+          <line class="axis" x1="30" y1="130" x2="870" y2="130"></line>
+          <path class="path-wave" d="M30 130 C90 10 140 240 205 42 C270 220 335 16 400 214 C465 28 535 238 600 48 C665 216 720 16 870 154"></path>
+          <path class="normal-wave" d="M30 132 C110 88 180 178 260 130 C340 86 420 176 500 130 C580 88 660 176 740 130 C805 96 840 118 870 130"></path>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content split">
+      <div>
+        <div class="eyebrow reveal">Constructo 1</div>
+        <h2 class="reveal">Arousal regula la ganancia de toda la red</h2>
+        <p class="reveal">La misma señal cambia de tamaño según la ganancia del sistema: amenaza, recompensa, dolor, urgencia e irritabilidad se amplifican o se vuelven inaccesibles.</p>
+      </div>
+      <div class="panel reveal">
+        <div class="big-number">GAIN</div>
+        <div class="mini-grid mobile-two">
+          <div class="item"><b>PVS</b><span>más drive</span></div>
+          <div class="item"><b>NVS</b><span>más alarma</span></div>
+          <div class="item"><b>Cognición</b><span>menos filtro</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content split">
+      <div class="stack">
+        <div class="eyebrow reveal">Constructo 2</div>
+        <h2 class="reveal">El ritmo circadiano funciona como metrónomo clínico</h2>
+        <p class="reveal">Luz, comidas, actividad, contacto social y medicación actúan como zeitgebers. Cuando se desordenan, la red pierde fase.</p>
+      </div>
+      <div class="flow reveal">
+        <div class="step"><b>Luz</b><span>fase y alerta</span></div>
+        <div class="step"><b>Comidas</b><span>metabolismo</span></div>
+        <div class="step"><b>Social</b><span>regularidad</span></div>
+        <div class="step"><b>Sueño</b><span>recuperación</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content split">
+      <div>
+        <div class="eyebrow reveal">Constructo 3</div>
+        <h2 class="reveal">El sueño es el marcador barato de estabilidad</h2>
+        <p class="reveal">Latencia, despertares, hipersomnia, hora de despertar y reducción de necesidad de dormir dan información de red antes que muchas escalas.</p>
+      </div>
+      <div class="panel reveal">
+        <table class="matrix">
+          <tr><th>Señal</th><th>Lectura</th></tr>
+          <tr><td>Duerme 4 h sin cansancio</td><td class="mania">activación maniforme</td></tr>
+          <tr><td>Hipersomnia + fatiga</td><td class="violet">polo depresivo / inflamación</td></tr>
+          <tr><td>Horario rota diario</td><td class="cyan">desfase circadiano</td></tr>
+          <tr><td>Despertares con tensión</td><td class="accent">arousal autonómico</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content">
+      <div class="eyebrow reveal">Mapa</div>
+      <h2 class="reveal">La red une recompensa, amenaza, cuerpo y control</h2>
+      <div class="network reveal">
+        <div class="node center">red regulatoria</div>
+        <div class="node n1">PVS / reward</div>
+        <div class="node n2">arousal</div>
+        <div class="node n3">interocepción</div>
+        <div class="node n4">control cognitivo</div>
+        <div class="node n5">sueño / ritmo</div>
+        <div class="node n6">amenaza</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content split">
+      <div>
+        <div class="eyebrow reveal">Continuo</div>
+        <h2 class="reveal">La misma energía puede ser salud o riesgo</h2>
+        <p class="reveal">El problema no es tener energía. El problema es perder flexibilidad, sueño, corrección por feedback y lectura de riesgo.</p>
+      </div>
+      <div class="quad-grid reveal">
+        <div class="item"><b class="safe">Flexible</b><span>proyecto con pausa</span></div>
+        <div class="item"><b class="cyan">Activado</b><span>más velocidad</span></div>
+        <div class="item"><b class="accent">Acelerado</b><span>menos sueño</span></div>
+        <div class="item"><b class="mania">Desbordado</b><span>riesgo negado</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content centered">
+      <div class="eyebrow reveal">Regla clínica</div>
+      <p class="quote reveal">Pensar en red evita tratar síntomas como islas.</p>
+      <div class="chip-row reveal">
+        <span class="chip">síntoma</span><span class="chip">constructo</span><span class="chip">estado</span><span class="chip">vector</span><span class="chip">intervención</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content">
+      <div class="eyebrow reveal">Mania</div>
+      <h2 class="reveal">Manía no es solo PVS alto</h2>
+      <div class="equation reveal">
+        <div class="eq-card"><strong class="mania">PVS alto</strong><p>wanting, drive, metas</p></div>
+        <div class="eq-card"><strong class="accent">Arousal alto</strong><p>energía, irritabilidad, velocidad</p></div>
+        <div class="eq-card"><strong class="cyan">Sueño bajo</strong><p>menos necesidad de dormir</p></div>
+        <div class="eq-card"><strong class="lithium">Freno bajo</strong><p>menor corrección frontolímbica</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content split">
+      <div>
+        <div class="eyebrow reveal">Effort</div>
+        <h2 class="reveal">El costo subjetivo cae cuando la red acelera</h2>
+        <p class="reveal">Lo que antes parecía difícil ahora parece obvio, urgente y barato. No es eficiencia: es pérdida de calibración costo-riesgo.</p>
+      </div>
+      <div class="dial-board reveal">
+        <div class="dial"><div class="dial-label">wanting</div><div class="dial-track"><div class="dial-fill" style="width:94%"></div></div><div class="dial-value">alto</div></div>
+        <div class="dial"><div class="dial-label">effort</div><div class="dial-track"><div class="dial-fill" style="width:18%"></div></div><div class="dial-value">bajo</div></div>
+        <div class="dial"><div class="dial-label">riesgo</div><div class="dial-track"><div class="dial-fill" style="width:12%"></div></div><div class="dial-value">invisible</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content split">
+      <div class="stack">
+        <div class="eyebrow reveal">Saliencia</div>
+        <h2 class="reveal">La saliencia alta hace que todo parezca señal</h2>
+        <p class="reveal">El sistema no solo quiere más. También asigna significado excesivo: coincidencias, ideas, mensajes y oportunidades se conectan demasiado rápido.</p>
+      </div>
+      <div class="panel reveal">
+        <div class="mini-grid">
+          <div class="item"><b>idea</b><span>parece destino</span></div>
+          <div class="item"><b>contacto</b><span>parece señal</span></div>
+          <div class="item"><b>azar</b><span>parece patrón</span></div>
+          <div class="item"><b>gasto</b><span>parece inversión</span></div>
+          <div class="item"><b>insomnio</b><span>parece claridad</span></div>
+          <div class="item"><b>feedback</b><span>se descarta</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content split">
+      <div>
+        <div class="eyebrow reveal">Frontolímbico</div>
+        <h2 class="reveal">El freno frontolímbico no apaga; organiza</h2>
+        <p class="reveal">PFC/OFC/ACC no cancelan emoción. Ayudan a modular amígdala, estriado, saliencia y acción cuando el sistema se acelera.</p>
+      </div>
+      <div class="network reveal">
+        <div class="node center">modulación</div>
+        <div class="node n5">PFC / OFC / ACC</div>
+        <div class="node n6">amígdala / estriado</div>
+        <div class="node n1">riesgo</div>
+        <div class="node n2">reward</div>
+        <div class="node n3">alarma</div>
+        <div class="node n4">decisión</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content split-40">
+      <div class="panel reveal">
+        <div class="eyebrow">Paper clave</div>
+        <h3>Strakowski et al. 2012</h3>
+        <p>Modelo de consenso: bipolaridad como alteración de redes de control emocional, especialmente modulación ventral prefrontal-límbica.</p>
+        <p class="chip">DOI 10.1111/j.1399-5618.2012.01022.x</p>
+      </div>
+      <div>
+        <h2 class="reveal">Strakowski ubica bipolaridad en redes de control emocional</h2>
+        <p class="reveal">Esto permite hablar de "freno frontolímbico" como metáfora docente, no como mecanismo único.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content split">
+      <div>
+        <div class="eyebrow reveal">Diferencial dimensional</div>
+        <h2 class="reveal">Reward alto sin sueño cambia de ambición a episodio</h2>
+      </div>
+      <div class="two-grid reveal">
+        <div class="item"><b class="safe">Proyecto</b><span>Duerme, revisa feedback, corrige riesgo, mantiene vínculos.</span></div>
+        <div class="item"><b class="mania">Manía</b><span>No duerme, acelera, descarta riesgo, todo parece urgente.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content">
+      <div class="eyebrow reveal">Oscilador</div>
+      <h2 class="reveal">El oscilador bipolar pierde rango, ritmo y recuperación</h2>
+      <div class="wave-box reveal">
+        <svg class="wave-svg" viewBox="0 0 900 260">
+          <rect class="range-band" x="35" y="88" width="830" height="84" rx="8"></rect>
+          <line class="axis" x1="35" y1="130" x2="865" y2="130"></line>
+          <path class="normal-wave" d="M35 130 C110 98 180 162 255 130 C330 98 405 162 480 130 C555 98 630 162 705 130 C780 98 835 120 865 130"></path>
+          <path class="path-wave" d="M35 130 C85 26 150 235 220 52 C285 216 350 22 415 210 C480 38 548 232 615 42 C680 218 742 18 865 150"></path>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content centered">
+      <div class="eyebrow reveal">Regla de seguridad</div>
+      <p class="quote reveal">El tratamiento empieza bajando aceleración, no activando reward.</p>
+      <p class="lead reveal">En PVS bajo activamos. En PVS alto desregulado estabilizamos sueño, ritmo, saliencia y riesgo.</p>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content split">
+      <div>
+        <div class="eyebrow reveal">Staging</div>
+        <h2 class="reveal">El pródromo suele aparecer como ritmo inestable</h2>
+        <p class="reveal">Antes del episodio pleno pueden verse sensibilidad al reward, irregularidad de sueño, irritabilidad y activación por antidepresivos.</p>
+      </div>
+      <div class="panel reveal">
+        <div class="checklist">
+          <div class="check">Sueño cambia antes que el ánimo.</div>
+          <div class="check">La rutina social se rompe.</div>
+          <div class="check">El reward se vuelve más urgente.</div>
+          <div class="check">El feedback pierde peso.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content">
+      <div class="eyebrow reveal">Episodio agudo</div>
+      <h2 class="reveal">El episodio agudo muestra coordinación rota</h2>
+      <div class="dial-board mobile-two reveal">
+        <div class="dial"><div class="dial-label">sueño</div><div class="dial-track"><div class="dial-fill" style="width:16%"></div></div><div class="dial-value">bajo</div></div>
+        <div class="dial"><div class="dial-label">arousal</div><div class="dial-track"><div class="dial-fill" style="width:96%"></div></div><div class="dial-value">alto</div></div>
+        <div class="dial"><div class="dial-label">saliencia</div><div class="dial-track"><div class="dial-fill" style="width:92%"></div></div><div class="dial-value">alta</div></div>
+        <div class="dial"><div class="dial-label">riesgo</div><div class="dial-track"><div class="dial-fill" style="width:12%"></div></div><div class="dial-value">negado</div></div>
+        <div class="dial"><div class="dial-label">control</div><div class="dial-track"><div class="dial-fill" style="width:28%"></div></div><div class="dial-value">bajo</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content split">
+      <div>
+        <div class="eyebrow reveal">Recurrencia</div>
+        <h2 class="reveal">La recurrencia vuelve más fácil cambiar de estado</h2>
+        <p class="reveal">Con episodios repetidos, sueño, estrés, sustancias, antidepresivos o pérdida de rutina pueden gatillar estados con menor umbral.</p>
+      </div>
+      <div class="flow reveal">
+        <div class="step"><b>gatillo</b><span>sueño / estrés</span></div>
+        <div class="step"><b>red</b><span>pierde fase</span></div>
+        <div class="step"><b>estado</b><span>acelera / cae</span></div>
+        <div class="step"><b>umbral</b><span>más sensible</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content split">
+      <div>
+        <div class="eyebrow reveal">Interocepción</div>
+        <h2 class="reveal">El cuerpo también participa en la red regulatoria</h2>
+        <p class="reveal">Fatiga, dolor, tensión, hambre, energía y sueño no son ruido periférico. Son entradas del sistema de regulación.</p>
+      </div>
+      <div class="mini-grid mobile-two reveal">
+        <div class="item"><b>fatiga</b><span>costo alto</span></div>
+        <div class="item"><b>dolor</b><span>alarma corporal</span></div>
+        <div class="item"><b>tensión</b><span>arousal</span></div>
+        <div class="item"><b>hambre</b><span>vulnerabilidad</span></div>
+        <div class="item"><b>energía</b><span>estado</span></div>
+        <div class="item"><b>sueño</b><span>fase</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content centered">
+      <div class="eyebrow reveal">Somático / funcional</div>
+      <p class="quote reveal">Síntoma corporal no siempre significa lesión; puede significar predicción de arousal.</p>
+      <p class="lead reveal">La red puede anticipar peligro corporal, amplificar señal y sostener evitación. No se invalida al paciente: se mapea el mecanismo.</p>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content">
+      <div class="eyebrow reveal">Decisión</div>
+      <h2 class="reveal">El staging cambia la pregunta terapéutica</h2>
+      <div class="flow reveal">
+        <div class="step"><b>Diagnóstico</b><span>¿bipolaridad?</span></div>
+        <div class="step"><b>Estadio</b><span>¿pródromo, episodio, recurrencia?</span></div>
+        <div class="step"><b>Vector</b><span>¿sueño, arousal, saliencia?</span></div>
+        <div class="step"><b>Intervención</b><span>¿qué estabiliza primero?</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content centered">
+      <div class="eyebrow reveal">Estabilizadores</div>
+      <p class="quote reveal">Los estabilizadores acotan cambios de estado.</p>
+      <p class="lead reveal">No todos apuntan al mismo vector, y ninguno debe venderse como reparación simple de un circuito.</p>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content split">
+      <div>
+        <div class="eyebrow reveal">Litio</div>
+        <h2 class="reveal">Litio es prototipo porque estabiliza múltiples niveles</h2>
+        <p class="reveal">Su peso clínico viene de mania, mantenimiento y suicidio; sus mecanismos plausibles conectan señalización, plasticidad, ritmo y circuitos emocionales.</p>
+      </div>
+      <div class="quad-grid reveal">
+        <div class="item"><b class="mania">mania</b><span>antimaníaco</span></div>
+        <div class="item"><b class="lithium">mantenimiento</b><span>recurrencia</span></div>
+        <div class="item"><b class="safe">suicidio</b><span>outcome fuerte</span></div>
+        <div class="item"><b class="cyan">ritmo</b><span>plasticidad</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content split">
+      <div class="panel reveal">
+        <h3 class="mania">Sobreafirmación</h3>
+        <p>"Litio actúa en la red frontolímbica."</p>
+      </div>
+      <div class="panel reveal">
+        <h3 class="safe">Formulación correcta</h3>
+        <p>Litio puede contribuir a estabilización de red, incluyendo mecanismos celulares, circadianos y circuitos emocionales/frontolímbicos.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content split">
+      <div>
+        <div class="eyebrow reveal">Valproato</div>
+        <h2 class="reveal">Valproato estabiliza excitabilidad y arousal caótico</h2>
+        <p class="reveal">Tiene más sentido dimensional cuando predominan manía aguda, irritabilidad, impulsividad, estados mixtos o energía desorganizada.</p>
+      </div>
+      <div class="network reveal">
+        <div class="node center">excitabilidad</div>
+        <div class="node n1">arousal</div>
+        <div class="node n2">impulsividad</div>
+        <div class="node n3">mixto</div>
+        <div class="node n4">irritabilidad</div>
+        <div class="node n5">GABA / glutamato</div>
+        <div class="node n6">RAMS metabólico</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content split">
+      <div>
+        <div class="eyebrow reveal">Lamotrigina</div>
+        <h2 class="reveal">Lamotrigina protege más el polo depresivo que la manía aguda</h2>
+        <p class="reveal">Sirve para enseñar precisión: no todo "estabilizador" es antimaníaco agudo. Su vector principal es mantenimiento y prevención de recaída depresiva.</p>
+      </div>
+      <div class="wave-box reveal">
+        <svg class="wave-svg" viewBox="0 0 900 260">
+          <line class="axis" x1="45" y1="130" x2="855" y2="130"></line>
+          <path class="normal-wave" d="M45 130 C160 115 210 148 300 130 C410 112 460 148 560 130 C680 112 730 146 855 130"></path>
+          <path class="path-wave" d="M45 130 C145 150 180 235 285 215 C405 188 425 92 520 128 C630 170 650 232 760 222 C820 210 840 160 855 135"></path>
+          <text x="50" y="235" fill="#b995ff" font-size="28" font-family="monospace">polo depresivo</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content split">
+      <div>
+        <div class="eyebrow reveal">Saliencia</div>
+        <h2 class="reveal">Antipsicóticos bajan saliencia, aceleración y psicosis</h2>
+        <p class="reveal">En mania con psicosis, agitación o significado excesivo, no solo estabilizamos ánimo: reducimos saliencia dopaminérgica y riesgo inmediato.</p>
+      </div>
+      <div class="mini-grid mobile-two reveal">
+        <div class="item"><b>saliencia</b><span>menos significado excesivo</span></div>
+        <div class="item"><b>dopamina</b><span>menos aceleración</span></div>
+        <div class="item"><b>psicosis</b><span>menos reality distortion</span></div>
+        <div class="item"><b>RAMS</b><span>metabólico, EPS, sedación</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content split">
+      <div class="stack">
+        <div class="eyebrow reveal">Ritmo social</div>
+        <h2 class="reveal">El ritmo social devuelve metrónomo al sistema</h2>
+        <p class="reveal">Regularidad no es consejo wellness. Es una intervención sobre zeitgebers que sostienen fase, sueño y estabilidad.</p>
+      </div>
+      <div class="flow reveal">
+        <div class="step"><b>hora fija</b><span>despertar</span></div>
+        <div class="step"><b>luz</b><span>mañana</span></div>
+        <div class="step"><b>comida</b><span>ancla</span></div>
+        <div class="step"><b>social</b><span>rutina</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content">
+      <div class="eyebrow reveal">Matriz</div>
+      <h2 class="reveal">No todos estabilizan el mismo vector</h2>
+      <div class="panel reveal">
+        <table class="matrix">
+          <tr><th>Intervención</th><th>Vector</th><th>No sobreprometer</th><th>RAMS</th></tr>
+          <tr><td class="lithium">Litio</td><td>oscilación, ritmo, frontolímbico</td><td>no es mecanismo único</td><td>riñón, tiroides, niveles</td></tr>
+          <tr><td class="accent">Valproato</td><td>excitabilidad, arousal, mixto</td><td>no gran antidepresivo</td><td>teratogenicidad, peso</td></tr>
+          <tr><td class="violet">Lamotrigina</td><td>polo depresivo, mantenimiento</td><td>no antimanía aguda</td><td>rash, SJS, titulación</td></tr>
+          <tr><td class="mania">Atípicos</td><td>saliencia, psicosis, manía</td><td>no son equivalentes</td><td>metabólico, EPS</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content split">
+      <div>
+        <div class="eyebrow reveal">Decisión 1</div>
+        <h2 class="reveal">Primero decide si el estado está acelerado</h2>
+        <p class="reveal">No actives reward en una red que ya perdió sueño, riesgo y freno.</p>
+      </div>
+      <div class="flow reveal">
+        <div class="step"><b>¿PVS alto?</b><span>drive, gasto, metas</span></div>
+        <div class="step"><b>¿sueño bajo?</b><span>sin cansancio</span></div>
+        <div class="step"><b>¿riesgo bajo?</b><span>negación</span></div>
+        <div class="step"><b>estabiliza</b><span>antes de activar</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content">
+      <div class="eyebrow reveal">Decisión 2</div>
+      <h2 class="reveal">Luego decide qué vector sostiene la oscilación</h2>
+      <div class="mini-grid mobile-two reveal">
+        <div class="item"><b>reward</b><span>PVS alto o bajo</span></div>
+        <div class="item"><b>arousal</b><span>activación o colapso</span></div>
+        <div class="item"><b>ritmo</b><span>fase inestable</span></div>
+        <div class="item"><b>saliencia</b><span>significado excesivo</span></div>
+        <div class="item"><b>depresión</b><span>caída recurrente</span></div>
+        <div class="item"><b>cuerpo</b><span>fatiga, dolor, inflamación</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content split">
+      <div>
+        <div class="eyebrow reveal">Caso</div>
+        <h2 class="reveal">Depresión recurrente con semanas de aceleración</h2>
+      </div>
+      <div class="panel reveal">
+        <p>Paciente de 27 años. Tres episodios depresivos con hipersomnia y fatiga. Semanas de dormir 4 horas sin cansancio, proyectos múltiples, gasto impulsivo y sensación de que "todo está conectado". Antidepresivo previo lo aceleró.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content">
+      <div class="eyebrow reveal">Reto en parejas</div>
+      <h2 class="reveal">El reto exige constructo, estadio, vector y RAMS</h2>
+      <div class="flow reveal">
+        <div class="step"><b>1. Constructo</b><span>RDoC alterado</span></div>
+        <div class="step"><b>2. Estadio</b><span>probable curso</span></div>
+        <div class="step"><b>3. Vector</b><span>entrada prioritaria</span></div>
+        <div class="step"><b>4. RAMS</b><span>riesgo y monitoreo</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content split">
+      <div>
+        <div class="eyebrow reveal">Respuesta esperada</div>
+        <h2 class="reveal">La respuesta prioriza sueño, seguridad y estabilización</h2>
+        <p class="reveal">No tratar como depresión unipolar simple. Primero estabilizar red; luego trabajar PVS bajo, estilo de vida o psicoterapia específica.</p>
+      </div>
+      <div class="checklist panel reveal">
+        <div class="check">PVS alto episódico + arousal alto.</div>
+        <div class="check">Sueño reducido sin cansancio.</div>
+        <div class="check">Saliencia alta: "todo conectado".</div>
+        <div class="check">Viraje con antidepresivo previo.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content">
+      <div class="eyebrow reveal">RAMS</div>
+      <h2 class="reveal">RAMS protege la red del tratamiento equivocado</h2>
+      <div class="mini-grid mobile-two reveal">
+        <div class="item"><b class="mania">suicidio</b><span>riesgo del sistema completo</span></div>
+        <div class="item"><b class="accent">viraje</b><span>antidepresivo / activación</span></div>
+        <div class="item"><b class="lithium">toxicidad</b><span>niveles e interacciones</span></div>
+        <div class="item"><b class="safe">metabólico</b><span>peso, glucosa, lípidos</span></div>
+        <div class="item"><b class="violet">embarazo</b><span>valproato y planificación</span></div>
+        <div class="item"><b class="cyan">adherencia</b><span>insight y alianza</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content split">
+      <div>
+        <div class="eyebrow reveal">Puente</div>
+        <h2 class="reveal">S14 convertirá el mapa en intervenciones</h2>
+        <p class="reveal">S13 deja el modelo. S14 enseña cómo actuar: DBT/TIPP, ritmo social, estabilizadores, RAMS y plan integrado.</p>
+      </div>
+      <div class="flow reveal">
+        <div class="step"><b>S13</b><span>modelo</span></div>
+        <div class="step"><b>vector</b><span>decisión</span></div>
+        <div class="step"><b>S14</b><span>intervención</span></div>
+        <div class="step"><b>seguimiento</b><span>red estable</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="slide-content centered">
+      <div class="eyebrow reveal">Take-home</div>
+      <p class="quote reveal">El objetivo no es apagar emoción, sino recuperar rango.</p>
+      <p class="lead reveal">La red regulatoria decide si reward se vuelve proyecto, impulsividad o manía. Estabilizar es devolver ritmo, freno y posibilidad.</p>
+      <div class="chip-row reveal">
+        <span class="chip">rango</span><span class="chip">ritmo</span><span class="chip">freno</span><span class="chip">seguridad</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+/* ===========================================
+   SLIDE PRESENTATION CONTROLLER
+   =========================================== */
+class SlidePresentation {
+  constructor() {
+    this.slides = Array.from(document.querySelectorAll(".slide"));
+    this.navDotsContainer = document.querySelector(".nav-dots");
+    this.progressBar = document.querySelector(".progress-bar");
+    this.currentSlide = 0;
+    this.isScrolling = false;
+    this.touchStartY = 0;
+    this.setupIntersectionObserver();
+    this.setupKeyboardNav();
+    this.setupWheelNav();
+    this.setupTouchNav();
+    this.setupProgressBar();
+    this.setupNavDots();
+    this.goToSlide(0, false);
+  }
+
+  setupIntersectionObserver() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          this.currentSlide = this.slides.indexOf(entry.target);
+          this.updateDots();
+          this.updateProgressBar();
+        }
+      });
+    }, { threshold: 0.55 });
+
+    this.slides.forEach(slide => observer.observe(slide));
+  }
+
+  setupKeyboardNav() {
+    document.addEventListener("keydown", (event) => {
+      if (["ArrowDown", "ArrowRight", " ", "PageDown"].includes(event.key)) {
+        event.preventDefault();
+        this.goToSlide(this.currentSlide + 1);
+      }
+      if (["ArrowUp", "ArrowLeft", "PageUp"].includes(event.key)) {
+        event.preventDefault();
+        this.goToSlide(this.currentSlide - 1);
+      }
+      if (event.key === "Home") this.goToSlide(0);
+      if (event.key === "End") this.goToSlide(this.slides.length - 1);
+    });
+  }
+
+  setupWheelNav() {
+    window.addEventListener("wheel", (event) => {
+      if (this.isScrolling) return;
+      const direction = event.deltaY > 0 ? 1 : -1;
+      this.goToSlide(this.currentSlide + direction);
+      this.isScrolling = true;
+      setTimeout(() => { this.isScrolling = false; }, 520);
+    }, { passive: true });
+  }
+
+  setupTouchNav() {
+    window.addEventListener("touchstart", (event) => {
+      this.touchStartY = event.touches[0].clientY;
+    }, { passive: true });
+
+    window.addEventListener("touchend", (event) => {
+      const delta = this.touchStartY - event.changedTouches[0].clientY;
+      if (Math.abs(delta) < 42) return;
+      this.goToSlide(this.currentSlide + (delta > 0 ? 1 : -1));
+    }, { passive: true });
+  }
+
+  setupProgressBar() {
+    this.updateProgressBar();
+    window.addEventListener("scroll", () => this.updateProgressBar(), { passive: true });
+  }
+
+  setupNavDots() {
+    this.navDotsContainer.innerHTML = "";
+    this.slides.forEach((_, index) => {
+      const button = document.createElement("button");
+      button.className = "dot";
+      button.type = "button";
+      button.setAttribute("aria-label", `Ir al slide ${index + 1}`);
+      button.addEventListener("click", () => this.goToSlide(index));
+      this.navDotsContainer.appendChild(button);
+    });
+    this.updateDots();
+  }
+
+  goToSlide(index, smooth = true) {
+    const target = Math.max(0, Math.min(index, this.slides.length - 1));
+    this.currentSlide = target;
+    this.slides[target].scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "start" });
+    this.updateDots();
+    this.updateProgressBar();
+  }
+
+  updateDots() {
+    const dots = this.navDotsContainer.querySelectorAll(".dot");
+    dots.forEach((dot, index) => dot.classList.toggle("active", index === this.currentSlide));
+  }
+
+  updateProgressBar() {
+    const progress = this.slides.length <= 1 ? 1 : this.currentSlide / (this.slides.length - 1);
+    this.progressBar.style.width = `${progress * 100}%`;
+  }
+}
+
+window.addEventListener("DOMContentLoaded", () => new SlidePresentation());
+</script>
+</body>
+</html>
