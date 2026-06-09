@@ -1,22 +1,44 @@
-# Sesión 12: Tratamiento integrado — Positive Valence y Detachment
+# Sesion 12: Psicoterapia dimensional — Positive Valence y Detachment
 
 ## Learning Objectives
 
-- **LO1** (Bloom 2 / Miller: Sabe): Describir el mecanismo de acción de al menos 2 fármacos dopaminérgicos (bupropión, pramipexol) y 1 agente modulador (aripiprazol a dosis bajas) indicando el constructo RDoC sobre el que actúa cada uno
-- **LO2** (Bloom 3 / Miller: Demuestra): Demostrar los pasos básicos del ejercicio IFS de unblending aplicado a anhedonia: identificar la parte protectora, acceder al Self y registrar el cambio subjetivo
-- **LO3** (Bloom 5 / Miller: Sabe cómo): Formular un plan de tratamiento integrado para un paciente con perfil detachment/anhedonia que combine al menos 1 intervención psicoterapéutica (IFS o activación conductual), 1 opción farmacológica justificada por mecanismo dopaminérgico, y ≥2 metas conductuales escalonadas
+- **K1** (Bloom 2 / Miller: Sabe): Explicar por que la psicoterapia de Positive Valence/Detachment no trata "anhedonia" como un bloque unico, sino variables separables: wanting, liking, reward learning, effort valuation, threat social, ritmo y costo de traduccion social.
+- **K2** (Bloom 2 / Miller: Sabe): Describir la fisiopatologia clinica de 5 perfiles: depresion/anhedonia con effort alto, depresion inmune-metabolica, mania/PVS alto, TEA + fobia social/costo social, y sintomas negativos/psychosis-detachment.
+- **K3** (Bloom 3 / Miller: Sabe como): Aplicar el algoritmo hands-on de 6 pasos: fisiopato -> como actuar -> como actua la terapia -> como se hace -> que esperamos -> RAMS.
+- **A1** (Bloom 3 / Miller: Demuestra): Ejecutar en clase 3 microintervenciones: activacion conductual por costo-esfuerzo, mapa de ritmo/mania y exposicion social adaptada por traduccion social.
+- **A2** (Bloom 5 / Miller: Sabe como): Formular un plan terapeutico por mecanismo para una vineta con detachment, especificando target dimensional, tecnica, expectativa medible y alertas de seguridad.
+
+**Detalle formal:** `clase-12-materiales/sesion-12-contenido.md`  
+**Toolkit:** `clase-12-materiales/habilidades-pvs-detachment-toolkit.md`  
+**Casos:** `clase-12-materiales/casos-retos-habilidades-s12.md`  
+**Referencias:** `clase-12-materiales/referencias.md`  
+**Slide outline:** `clase-12-materiales/slide-outline.md`  
+**Slides:** `clase-12-materiales/sesion-12.html`
+
+## Toolkit de habilidades
+
+| Habilidad | Fenotipo principal | Mecanismo |
+|---|---|---|
+| **Activacion conductual por costo-esfuerzo** | PVS bajo depresivo; effort alto | Reintroducir reward prediction errors positivos con friccion baja |
+| **Savoring / registro de micro-placer** | Liking parcialmente preservado | Aumentar atencion, codificacion y aprendizaje de recompensa consumatoria |
+| **IFS/unblending del protector anti-deseo** | Detachment defensivo o protector | Separar Self de parte que bloquea querer para reducir evitacion de deseo |
+| **Exposicion social adaptada por traduccion** | TEA + fobia social / costo social alto | Bajar amenaza y costo de inferencia social; generar PE social tolerable |
+| **IPSRT breve + plan de recaida** | Mania / PVS alto | Estabilizar ritmo, sueno, activacion y escalada de recompensa |
+| **Scaffolding funcional** | Sintomas negativos / psychosis-detachment | Convertir metas abstractas en pasos externos, medibles y sostenibles |
 
 ## Outline (50 min)
 
-| Min | Actividad | Notas |
-|-----|-----------|-------|
-| 0-5 | Recapitulación S11: ¿Qué cambió en cómo piensan la anhedonia? Recoger 2-3 respuestas de la pregunta de salida | Conecta sin repetir contenido |
-| 5-18 | Demo en vivo: ejercicio IFS básico (unblending). "Noten si hay alguna parte que dice que nada vale la pena..." Identificar parte protectora, ponerla a un lado, acceder a calma. Reflexión grupal | 10-13 min activos. Facilitador como terapeuta, grupo observa |
-| 18-28 | IFS aplicado a anhedonia: partes protectoras que bloquean acceso al placer. Activación conductual como complemento: scheduling con valor de esfuerzo bajo → gradual. No es "animarse": es reducir coste percibido del approach | Diferenciar mecanismo IFS vs AC; ambos abordan positive valence por vías distintas |
-| 28-38 | Farmacología PRISM: Bupropión (DA/NA, anhedonia + bajo arousal), Pramipexol (D2/D3, bipolar depresivo refractario), Aripiprazol dosis bajas (agonismo parcial D2, potenciación sin sedación). Mecanismo → constructo RDoC → elección | Tabla PRISM; 1 caso clínico por fármaco en 1 oración |
-| 38-46 | Caso integrador: paciente 34 años, MDD recurrente, sin respuesta a 2 ISRS, aislamiento crónico, anhedonia dominante. Grupos pequeños: plan (terapia + fármaco + metas conductuales). Presentación de 1 grupo | Facilitador sistematiza en pizarra |
-| 46-50 | Tarea: mapear partes IFS en paciente real con anhedonia (nombre de la parte, función protectora, qué bloquea). Take-home | Tarea no evaluada, práctica reflexiva |
+| Min | Actividad | LO |
+|---|---|---|
+| 0-4 | Hook: "el premio esta alli, pero llegar pesa" + recuperacion S11 | K1 |
+| 4-9 | Algoritmo dimensional: reward bajo vs effort alto vs threat social vs ritmo/mania vs traduccion social | K1, K3 |
+| 9-18 | Perfil 1: PVS bajo depresivo + depresion inmune-metabolica. Demo activacion conductual por costo-esfuerzo | K2, A1 |
+| 18-26 | Perfil 2: Detachment social/TEA + fobia social. Demo exposicion adaptada por traduccion social | K2, A1 |
+| 26-33 | Perfil 3: IFS/unblending: cuando una parte protege al paciente de querer | K3, A1 |
+| 33-40 | Perfil 4: Mania/PVS alto. Demo IPSRT breve + plan de freno | K2, A1 |
+| 40-45 | Perfil 5: Sintomas negativos/psychosis-detachment. Scaffolding funcional y expectativas realistas | K2 |
+| 45-50 | Reto integrador: escoger palanca terapeutica y RAMS para 3 casos | A2 |
 
 ## Take-Home Message
 
-> En anhedonia crónica, la primera pregunta farmacológica es si el circuito dopaminérgico está subactivado — y la primera pregunta terapéutica es qué parte interna protege al paciente de querer.
+> El mismo gesto clinico —aislarse, no moverse, no buscar— puede venir de reward bajo, costo alto, amenaza social, traduccion social costosa, sintomas negativos o PVS maniacamente inflado. La psicoterapia dimensional empieza cuando dejamos de preguntar "que tecnica uso" y preguntamos "que variable del sistema estoy intentando recalibrar".

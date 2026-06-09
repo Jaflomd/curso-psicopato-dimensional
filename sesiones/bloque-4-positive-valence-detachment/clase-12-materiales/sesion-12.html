@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Sesion 12: Psicoterapia PVS / Detachment</title>
+<meta name="description" content="Slides HTML de la Sesion 12 del curso Psicopatologia Dimensional: psicoterapia dimensional para Positive Valence y Detachment." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;500;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,800&family=Source+Sans+3:wght@400;500;650;750&display=swap" rel="stylesheet">
+<style>
+/* ===========================================
+   CSS CUSTOM PROPERTIES: POSITIVE VALENCE THERAPY LAB
+   =========================================== */
+:root {
+  --bg-primary: #10100f;
+  --bg-secondary: #171716;
+  --bg-panel: rgba(24, 24, 22, 0.82);
+  --bg-panel-soft: rgba(24, 24, 22, 0.58);
+  --text-primary: #f8f6f0;
+  --text-secondary: rgba(240, 235, 220, 0.82);
+  --text-muted: rgba(212, 204, 186, 0.58);
+  --line: rgba(240, 235, 220, 0.16);
+  --line-strong: rgba(240, 235, 220, 0.30);
+  --reward: #f0c76b;
+  --approach: #2ed3c6;
+  --social: #7bd66f;
+  --caution: #ef6f61;
+  --learning: #7ca7f2;
+  --effort: #d79ef7;
+  --ink: #10100f;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Source Sans 3", sans-serif;
+  --font-mono: "Azeret Mono", monospace;
+  --title-size: clamp(1.45rem, 4.25vw, 3.35rem);
+  --h2-size: clamp(1rem, 2.38vw, 1.82rem);
+  --h3-size: clamp(0.78rem, 1.35vw, 1.06rem);
+  --body-size: clamp(0.68rem, 1.1vw, 0.92rem);
+  --small-size: clamp(0.56rem, 0.86vw, 0.74rem);
+  --micro-size: clamp(0.47rem, 0.68vw, 0.6rem);
+  --slide-padding: clamp(0.95rem, 3.05vw, 2.8rem);
+  --content-gap: clamp(0.48rem, 1.35vw, 1.02rem);
+  --element-gap: clamp(0.3rem, 0.82vw, 0.66rem);
+  --radius: 8px;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-normal: 0.58s;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ===========================================
+   VIEWPORT FITTING: MANDATORY BASE STYLES
+   =========================================== */
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+html {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+}
+
+.slide {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.slide-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-height: 100%;
+    overflow: hidden;
+    padding: var(--slide-padding);
+}
+
+.card, .container, .content-box {
+    max-width: min(90vw, 1000px);
+    max-height: min(80vh, 700px);
+}
+
+.feature-list, .bullet-list {
+    gap: clamp(0.4rem, 1vh, 1rem);
+}
+
+.feature-list li, .bullet-list li {
+    font-size: var(--body-size);
+    line-height: 1.4;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    gap: clamp(0.5rem, 1.5vw, 1rem);
+}
+
+img, .image-container {
+    max-width: 100%;
+    max-height: min(50vh, 400px);
+    object-fit: contain;
+}
+
+@media (max-height: 700px) {
+    :root {
+        --slide-padding: clamp(0.7rem, 2.8vw, 1.8rem);
+        --content-gap: clamp(0.36rem, 1.2vw, 0.82rem);
+        --title-size: clamp(1.18rem, 4.1vw, 2.35rem);
+        --h2-size: clamp(0.94rem, 2.7vw, 1.52rem);
+    }
+}
+
+@media (max-height: 600px) {
+    :root {
+        --slide-padding: clamp(0.45rem, 2.2vw, 1.25rem);
+        --content-gap: clamp(0.25rem, 0.85vw, 0.62rem);
+        --title-size: clamp(1rem, 3.8vw, 1.85rem);
+        --body-size: clamp(0.62rem, 1vw, 0.82rem);
+    }
+
+    .nav-dots, .keyboard-hint, .decorative {
+        display: none;
+    }
+}
+
+@media (max-height: 500px) {
+    :root {
+        --slide-padding: clamp(0.35rem, 1.8vw, 0.86rem);
+        --title-size: clamp(0.92rem, 3.2vw, 1.4rem);
+        --h2-size: clamp(0.82rem, 2.2vw, 1.14rem);
+        --body-size: clamp(0.58rem, 0.9vw, 0.76rem);
+    }
+}
+
+@media (max-width: 600px) {
+    :root {
+        --title-size: clamp(1.18rem, 6.8vw, 2.32rem);
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* ===========================================
+   BASE PRESENTATION STYLE
+   =========================================== */
+body {
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  font-family: var(--font-body);
+  line-height: 1.38;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, rgba(240, 199, 107, 0.12) 0 1px, transparent 1px 74px),
+    linear-gradient(45deg, rgba(46, 211, 198, 0.10) 0 1px, transparent 1px 96px),
+    linear-gradient(180deg, #10100f 0%, #151716 56%, #0d0e0d 100%);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.22;
+  background-image:
+    linear-gradient(rgba(240, 235, 220, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240, 235, 220, 0.06) 1px, transparent 1px);
+  background-size: clamp(34px, 5.4vw, 66px) clamp(34px, 5.4vw, 66px);
+  mask-image: linear-gradient(180deg, transparent, #000 12%, #000 84%, transparent);
+}
+
+main, .slide, .progress-bar, .nav-dots { position: relative; z-index: 1; }
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  z-index: 1000;
+  background: linear-gradient(90deg, var(--reward), var(--approach), var(--social), var(--caution));
+}
+
+.nav-dots {
+  position: fixed;
+  right: clamp(0.35rem, 1vw, 1rem);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-height: 76vh;
+  padding: 8px 6px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(16, 16, 15, 0.56);
+  backdrop-filter: blur(12px);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(248, 246, 240, 0.28);
+  cursor: pointer;
+  transition: transform 180ms ease, background 180ms ease;
+}
+
+.dot.active {
+  background: var(--reward);
+  transform: scale(1.45);
+}
+
+.slide::before {
+  content: "";
+  position: absolute;
+  inset: clamp(0.55rem, 1vw, 1rem);
+  border: 1px solid rgba(240, 235, 220, 0.06);
+  pointer-events: none;
+}
+
+.slide-content {
+  width: min(100%, 1140px);
+  margin: 0 auto;
+  gap: var(--content-gap);
+}
+
+.centered { align-items: center; text-align: center; }
+.tight { gap: calc(var(--content-gap) * 0.74); }
+.stack { display: flex; flex-direction: column; gap: var(--element-gap); }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--content-gap); align-items: stretch; }
+.cols-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--element-gap); align-items: stretch; }
+.cols-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--element-gap); align-items: stretch; }
+.cols-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--element-gap); align-items: stretch; }
+.cols-5 { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: calc(var(--element-gap) * 0.72); align-items: stretch; }
+
+h1 {
+  font-family: var(--font-display);
+  font-size: var(--title-size);
+  font-weight: 650;
+  line-height: 1.05;
+  letter-spacing: 0;
+  max-width: 16ch;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: var(--h2-size);
+  font-weight: 650;
+  line-height: 1.12;
+  letter-spacing: 0;
+  max-width: 24ch;
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-size: var(--h3-size);
+  font-weight: 650;
+  line-height: 1.12;
+  letter-spacing: 0;
+}
+
+p, li {
+  color: var(--text-secondary);
+  font-size: var(--body-size);
+}
+
+strong { color: var(--text-primary); font-weight: 750; }
+
+.eyebrow {
+  color: var(--reward);
+  font: 800 var(--small-size) var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.lead {
+  max-width: 62ch;
+  color: var(--text-secondary);
+  font-size: clamp(0.82rem, 1.42vw, 1.08rem);
+}
+
+.source {
+  color: var(--text-muted);
+  font: 500 var(--small-size) var(--font-mono);
+}
+
+.accent { color: var(--reward); }
+.teal { color: var(--approach); }
+.green { color: var(--social); }
+.coral { color: var(--caution); }
+.blue { color: var(--learning); }
+.violet { color: var(--effort); }
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--bg-panel), rgba(18, 18, 17, 0.68));
+  padding: clamp(0.55rem, 1.32vw, 1rem);
+  min-height: 0;
+}
+
+.card h3 { margin-bottom: clamp(0.2rem, 0.62vw, 0.42rem); }
+.card p { font-size: clamp(0.58rem, 0.92vw, 0.78rem); line-height: 1.32; }
+
+.tag {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  min-height: 24px;
+  padding: 3px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--text-secondary);
+  background: rgba(248, 246, 240, 0.06);
+  font: 700 var(--micro-size) var(--font-mono);
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.tag.reward { color: var(--reward); border-color: rgba(240, 199, 107, 0.42); }
+.tag.approach { color: var(--approach); border-color: rgba(46, 211, 198, 0.42); }
+.tag.social { color: var(--social); border-color: rgba(123, 214, 111, 0.42); }
+.tag.caution { color: var(--caution); border-color: rgba(239, 111, 97, 0.42); }
+.tag.learning { color: var(--learning); border-color: rgba(124, 167, 242, 0.42); }
+.tag.effort { color: var(--effort); border-color: rgba(215, 158, 247, 0.42); }
+
+.num {
+  color: var(--reward);
+  font: 800 clamp(1.25rem, 3.8vw, 2.8rem) var(--font-mono);
+  line-height: 1;
+}
+
+.big-mark {
+  position: absolute;
+  right: clamp(1.2rem, 5vw, 4rem);
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(240, 199, 107, 0.12);
+  font: 800 clamp(7rem, 20vw, 15rem) var(--font-mono);
+  pointer-events: none;
+}
+
+.quote {
+  max-width: 19ch;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 3.8vw, 2.75rem);
+  line-height: 1.08;
+}
+
+.matrix {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(18, 18, 17, 0.76);
+  font-size: var(--small-size);
+}
+
+.matrix th, .matrix td {
+  padding: clamp(0.3rem, 0.82vw, 0.52rem);
+  border-bottom: 1px solid rgba(240, 235, 220, 0.08);
+  border-right: 1px solid rgba(240, 235, 220, 0.08);
+  color: var(--text-secondary);
+  vertical-align: top;
+  text-align: left;
+}
+
+.matrix th {
+  color: var(--text-primary);
+  font: 800 var(--micro-size) var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0;
+  background: rgba(240, 199, 107, 0.11);
+}
+
+.flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--element-gap);
+  align-items: stretch;
+}
+
+.flow .card {
+  position: relative;
+  border-top: 3px solid var(--reward);
+}
+
+.flow .card:nth-child(2) { border-top-color: var(--approach); }
+.flow .card:nth-child(3) { border-top-color: var(--learning); }
+.flow .card:nth-child(4) { border-top-color: var(--effort); }
+.flow .card:nth-child(5) { border-top-color: var(--social); }
+.flow .card:nth-child(6) { border-top-color: var(--caution); }
+
+.decision-map {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: var(--content-gap);
+  align-items: stretch;
+}
+
+.logic-list {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--element-gap) * 0.74);
+}
+
+.logic-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.55rem;
+  align-items: start;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(18, 18, 17, 0.66);
+  padding: clamp(0.38rem, 0.9vw, 0.62rem);
+}
+
+.logic-item span:first-child {
+  color: var(--reward);
+  font: 800 var(--small-size) var(--font-mono);
+}
+
+.logic-item p { font-size: var(--small-size); line-height: 1.25; }
+
+.road {
+  position: relative;
+  min-height: clamp(250px, 44vh, 390px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(90deg, rgba(240, 199, 107, 0.18), rgba(46, 211, 198, 0.12)),
+    rgba(18, 18, 17, 0.68);
+  overflow: hidden;
+}
+
+.road::before {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 18%;
+  height: clamp(32px, 8vh, 60px);
+  border: 1px dashed rgba(248, 246, 240, 0.34);
+  border-radius: 999px;
+  transform: perspective(320px) rotateX(58deg);
+}
+
+.road .goal {
+  position: absolute;
+  right: 10%;
+  top: 18%;
+  width: clamp(58px, 8vw, 92px);
+  height: clamp(58px, 8vw, 92px);
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  background: var(--reward);
+  border-radius: 50%;
+  font: 800 var(--small-size) var(--font-mono);
+}
+
+.road .weight {
+  position: absolute;
+  left: 12%;
+  bottom: 18%;
+  color: var(--effort);
+  font: 800 clamp(2.4rem, 8vw, 5.2rem) var(--font-mono);
+  opacity: 0.8;
+}
+
+.axis {
+  position: relative;
+  min-height: clamp(210px, 40vh, 350px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(90deg, transparent 49.5%, rgba(248, 246, 240, 0.16) 49.5% 50.5%, transparent 50.5%),
+    linear-gradient(0deg, transparent 49.5%, rgba(248, 246, 240, 0.16) 49.5% 50.5%, transparent 50.5%),
+    rgba(18, 18, 17, 0.64);
+}
+
+.axis-label {
+  position: absolute;
+  color: var(--text-muted);
+  font: 700 var(--micro-size) var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.axis-label.x { bottom: 8px; left: 50%; transform: translateX(-50%); }
+.axis-label.y { top: 50%; left: 8px; transform: translateY(-50%) rotate(-90deg); transform-origin: left center; }
+
+.node {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: clamp(42px, 6vw, 64px);
+  height: clamp(42px, 6vw, 64px);
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  background: rgba(16, 16, 15, 0.84);
+  color: var(--reward);
+  font: 800 var(--small-size) var(--font-mono);
+}
+
+.node.teal { color: var(--approach); }
+.node.green { color: var(--social); }
+.node.coral { color: var(--caution); }
+.node.blue { color: var(--learning); }
+.node.violet { color: var(--effort); }
+
+.ladder {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: calc(var(--element-gap) * 0.72);
+  align-items: end;
+}
+
+.ladder .card:nth-child(1) { min-height: 28vh; border-bottom: 3px solid var(--approach); }
+.ladder .card:nth-child(2) { min-height: 32vh; border-bottom: 3px solid var(--learning); }
+.ladder .card:nth-child(3) { min-height: 36vh; border-bottom: 3px solid var(--social); }
+.ladder .card:nth-child(4) { min-height: 40vh; border-bottom: 3px solid var(--reward); }
+.ladder .card:nth-child(5) { min-height: 44vh; border-bottom: 3px solid var(--caution); }
+
+.scenario {
+  border-left: 4px solid var(--reward);
+}
+
+.scenario.social { border-left-color: var(--social); }
+.scenario.caution { border-left-color: var(--caution); }
+.scenario.learning { border-left-color: var(--learning); }
+.scenario.effort { border-left-color: var(--effort); }
+
+.answer {
+  border-left: 4px solid var(--approach);
+  background: linear-gradient(180deg, rgba(46, 211, 198, 0.12), rgba(18, 18, 17, 0.7));
+}
+
+.mini-form {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: calc(var(--element-gap) * 0.65);
+}
+
+.mini-form .card {
+  border-top: 3px solid var(--reward);
+}
+.mini-form .card:nth-child(2) { border-top-color: var(--social); }
+.mini-form .card:nth-child(3) { border-top-color: var(--effort); }
+.mini-form .card:nth-child(4) { border-top-color: var(--approach); }
+.mini-form .card:nth-child(5) { border-top-color: var(--learning); }
+.mini-form .card:nth-child(6) { border-top-color: var(--caution); }
+
+.abbr-footnote {
+  position: absolute;
+  left: clamp(0.75rem, 1.4vw, 1.3rem);
+  right: clamp(0.75rem, 1.4vw, 1.3rem);
+  bottom: clamp(0.46rem, 1vh, 0.82rem);
+  z-index: 4;
+  color: rgba(212, 204, 186, 0.56);
+  font: 500 var(--micro-size) var(--font-mono);
+  line-height: 1.25;
+}
+
+.slide-num {
+  position: absolute;
+  bottom: clamp(0.46rem, 1vh, 0.82rem);
+  left: clamp(0.75rem, 1.4vw, 1.3rem);
+  z-index: 5;
+  color: rgba(248, 246, 240, 0.42);
+  font: 800 var(--micro-size) var(--font-mono);
+}
+
+.section-label {
+  position: absolute;
+  bottom: clamp(0.46rem, 1vh, 0.82rem);
+  right: clamp(0.75rem, 1.4vw, 1.3rem);
+  z-index: 5;
+  color: rgba(248, 246, 240, 0.38);
+  font: 800 var(--micro-size) var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity var(--duration-normal) var(--ease-out-expo),
+    transform var(--duration-normal) var(--ease-out-expo);
+}
+
+.slide.visible .reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal:nth-child(2) { transition-delay: 0.06s; }
+.reveal:nth-child(3) { transition-delay: 0.12s; }
+.reveal:nth-child(4) { transition-delay: 0.18s; }
+.reveal:nth-child(5) { transition-delay: 0.24s; }
+
+@media (max-width: 900px) {
+  .split, .decision-map { grid-template-columns: 1fr; }
+  .cols-4, .flow, .mini-form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cols-5, .ladder { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 620px) {
+  .cols-2, .cols-3, .cols-4, .cols-5, .flow, .mini-form, .ladder { grid-template-columns: 1fr; }
+  .nav-dots { display: none; }
+  .abbr-footnote { display: none; }
+  .ladder .card { min-height: auto !important; }
+}
+
+@media (max-height: 640px) {
+  .abbr-footnote { display: none; }
+  .card p { line-height: 1.22; }
+  .axis { min-height: 200px; }
+  .road { min-height: 220px; }
+  .ladder .card { min-height: auto !important; }
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots" aria-label="Navegacion de slides"></nav>
+
+<main>
+<section class="slide" id="slide-1">
+  <div class="big-mark">12</div>
+  <div class="slide-content centered">
+    <p class="eyebrow reveal">Psicopatologia Dimensional · Bloque 4</p>
+    <h1 class="reveal">Psicoterapia del sistema de recompensa y conexión</h1>
+    <p class="lead reveal">Positive Valence y Detachment como intervención: fisiopatología, acción clínica, mecanismo, demo y RAMS.</p>
+    <p class="source reveal">Sesión 12 de 21 · Javier Flores · R1 Psiquiatría · 2026</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Apertura</span>
+</section>
+
+<section class="slide" id="slide-2">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Hook clinico</p>
+    <h2 class="reveal">El premio esta alli, pero llegar pesa</h2>
+    <div class="split reveal">
+      <div class="road">
+        <div class="goal">premio</div>
+        <div class="weight">EFFORT</div>
+      </div>
+      <div class="card stack">
+        <span class="tag effort">formulacion</span>
+        <h3>No todo PVS bajo es "no disfruta"</h3>
+        <p>Puede gustarle cuando llega, pero el camino se siente demasiado caro.</p>
+        <p><strong>Pregunta:</strong> esta alterado liking, wanting, effort o learning?</p>
+      </div>
+    </div>
+    <p class="lead reveal">La psicoterapia empieza cuando localizamos la variable, no cuando elegimos una escuela.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Hook</span>
+</section>
+
+<section class="slide" id="slide-3">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Puente S11 -> S12</p>
+    <h2 class="reveal">S11 fue mapa; S12 es accion</h2>
+    <div class="mini-form reveal">
+      <div class="card"><h3>Fenotipo</h3><p>Que se ve: no busca, se aisla, acelera o evita.</p></div>
+      <div class="card"><h3>Fisiopato</h3><p>Que variable mantiene el patron.</p></div>
+      <div class="card"><h3>Actuar</h3><p>Que palanca elegir primero.</p></div>
+      <div class="card"><h3>Mecanismo</h3><p>Como la terapia cambia predicciones.</p></div>
+      <div class="card"><h3>Proceder</h3><p>Como se hace en consulta.</p></div>
+      <div class="card"><h3>RAMS</h3><p>Riesgos, adversos, monitoreo y seguridad.</p></div>
+    </div>
+    <p class="lead reveal">La unidad docente de hoy se repite cinco veces para entrenar criterio, no memoria.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Metodo</span>
+</section>
+
+<section class="slide" id="slide-4">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Misma superficie, varios motores</p>
+    <h2 class="reveal">"No salgo" no dice por que el sistema se retiro</h2>
+    <div class="cols-3 reveal">
+      <div class="card"><span class="tag reward">reward bajo</span><h3>El futuro no tira</h3><p>Bajo wanting o bajo aprendizaje positivo.</p></div>
+      <div class="card"><span class="tag effort">effort alto</span><h3>El camino pesa</h3><p>Liking posible, inicio conductual caro.</p></div>
+      <div class="card"><span class="tag caution">threat alto</span><h3>El otro amenaza</h3><p>Social reward bloqueado por peligro.</p></div>
+      <div class="card"><span class="tag social">traduccion</span><h3>Lo social cuesta</h3><p>Reglas implicitas, masking, agotamiento.</p></div>
+      <div class="card"><span class="tag caution">PVS alto</span><h3>Mania acelera</h3><p>Premio enorme, costo bajo, riesgo irrelevante.</p></div>
+      <div class="card"><span class="tag learning">negativos</span><h3>Psicosis mezcla</h3><p>Avolicion, cognicion, depresion, sedacion, paranoia.</p></div>
+    </div>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Mapa</span>
+</section>
+
+<section class="slide" id="slide-5">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Algoritmo de seguridad</p>
+    <h2 class="reveal">Primero pregunta si hay PVS alto</h2>
+    <div class="split reveal">
+      <div class="card stack scenario caution">
+        <span class="tag caution">si aparece</span>
+        <h3>Sueño bajo + energía alta + metas aceleradas</h3>
+        <p>No aumentes activación. No celebres el "por fin estoy bien" sin evaluar manía.</p>
+      </div>
+      <div class="card stack answer">
+        <span class="tag approach">primera palanca</span>
+        <h3>Ritmo, sueño, red y farmacología</h3>
+        <p>En PVS alto, la terapia compra freno antes de comprar más recompensa.</p>
+      </div>
+    </div>
+    <p class="lead reveal">La pregunta de bipolaridad va antes de cualquier intervención dopaminérgica o BA intensa.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Seguridad</span>
+</section>
+
+<section class="slide" id="slide-6">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Decision map</p>
+    <h2 class="reveal">Elige la palanca segun la variable</h2>
+    <div class="decision-map reveal">
+      <div class="logic-list">
+        <div class="logic-item"><span>1</span><p><strong>PVS alto?</strong> IPSRT + plan de freno.</p></div>
+        <div class="logic-item"><span>2</span><p><strong>Liking preservado, effort alto?</strong> BA por costo-esfuerzo.</p></div>
+        <div class="logic-item"><span>3</span><p><strong>Fatiga/inflamacion?</strong> BA limitada + medicina + ritmo.</p></div>
+        <div class="logic-item"><span>4</span><p><strong>Social caro?</strong> exposicion adaptada por traduccion.</p></div>
+        <div class="logic-item"><span>5</span><p><strong>Protector anti-deseo?</strong> IFS/unblending.</p></div>
+        <div class="logic-item"><span>6</span><p><strong>Negativos/psicosis?</strong> scaffolding funcional.</p></div>
+      </div>
+      <div class="card stack">
+        <h3>Regla docente</h3>
+        <p>La tecnica correcta es la experiencia que actualiza la prediccion equivocada sin empeorar riesgo.</p>
+        <p><strong>Output clinico:</strong> variable -> tecnica -> expectativa -> RAMS.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Algoritmo</span>
+</section>
+
+<section class="slide" id="slide-7">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Rohlfing aplicado</p>
+    <h2 class="reveal">Psicoterapia = actualizar evaluaciones, no dar consejos</h2>
+    <div class="flow reveal">
+      <div class="card"><div class="num">1</div><h3>Necesidad</h3><p>Explorar, conectar, sentir competencia, descansar.</p></div>
+      <div class="card"><div class="num">2</div><h3>Evaluacion</h3><p>"No vale", "me costara", "me rechazaran".</p></div>
+      <div class="card"><div class="num">3</div><h3>Sesgo en WM</h3><p>Prediccion rigida de bajo reward o alto costo.</p></div>
+      <div class="card"><div class="num">4</div><h3>Intervencion</h3><p>Experiencia nueva que corrige el modelo.</p></div>
+    </div>
+    <p class="source reveal">Rohlfing et al. 2025: necesidades -> evaluacion -> sesgos/WM -> reappraisal/control.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Marco</span>
+</section>
+
+<section class="slide" id="slide-8">
+  <div class="slide-content centered">
+    <p class="eyebrow reveal">Cinco perfiles</p>
+    <h2 class="reveal">Hoy no memorizamos terapias: entrenamos asignacion mecanistica</h2>
+    <div class="cols-5 reveal">
+      <div class="card"><h3>PVS bajo</h3><p>BA por effort.</p></div>
+      <div class="card"><h3>Inmune-metabolico</h3><p>BA limitada + cuerpo.</p></div>
+      <div class="card"><h3>TEA/social</h3><p>Exposicion adaptada.</p></div>
+      <div class="card"><h3>Protector</h3><p>IFS/unblending.</p></div>
+      <div class="card"><h3>Mania/psicosis</h3><p>Freno o scaffolding.</p></div>
+    </div>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Agenda</span>
+</section>
+
+<section class="slide" id="slide-9">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 1 · Fisiopatologia</p>
+    <h2 class="reveal">PVS bajo depresivo: querer bajo, costo alto, placer variable</h2>
+    <div class="cols-4 reveal">
+      <div class="card"><h3>Wanting</h3><p>Menos energia de aproximacion.</p><span class="tag reward">bajo</span></div>
+      <div class="card"><h3>Liking</h3><p>Puede aparecer cuando el premio llega.</p><span class="tag social">variable</span></div>
+      <div class="card"><h3>Effort</h3><p>Iniciar se siente caro.</p><span class="tag effort">alto</span></div>
+      <div class="card"><h3>Learning</h3><p>Pocas experiencias corrigen la prediccion.</p><span class="tag learning">debil</span></div>
+    </div>
+    <p class="lead reveal">Clinica: "si salgo la paso bien, pero salir me parece imposible".</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">PVS bajo</span>
+</section>
+
+<section class="slide" id="slide-10">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 1 · Como actuar</p>
+    <h2 class="reveal">No empieces con placer: empieza bajando friccion</h2>
+    <div class="flow reveal">
+      <div class="card"><div class="num">1</div><h3>Conducta minima</h3><p>Menos de 10 minutos; alta probabilidad de completar.</p></div>
+      <div class="card"><div class="num">2</div><h3>Prediccion</h3><p>Placer esperado y esfuerzo esperado, ambos 0-10.</p></div>
+      <div class="card"><div class="num">3</div><h3>Accion</h3><p>Hacerla como experimento, no como examen moral.</p></div>
+      <div class="card"><div class="num">4</div><h3>Registro</h3><p>Placer real y esfuerzo real; buscar prediction error.</p></div>
+    </div>
+    <p class="lead reveal">Activacion conductual no es "pon de tu parte"; es laboratorio de recompensa.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">BA</span>
+</section>
+
+<section class="slide" id="slide-11">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 1 · Como actua la terapia</p>
+    <h2 class="reveal">BA es engineering de prediction error</h2>
+    <div class="split reveal">
+      <div class="card stack scenario effort">
+        <span class="tag effort">antes</span>
+        <h3>Prediccion depresiva</h3>
+        <p>"Me costara 9/10 y no disfrutare."</p>
+        <p>El sistema evita; no obtiene datos nuevos.</p>
+      </div>
+      <div class="card stack answer">
+        <span class="tag approach">despues</span>
+        <h3>Experimento conductual</h3>
+        <p>Costó 5/10, hubo placer 4/10 o alivio 3/10.</p>
+        <p>El modelo interno exageraba costo y subestimaba reward.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Mecanismo</span>
+</section>
+
+<section class="slide" id="slide-12">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 1 · Demo</p>
+    <h2 class="reveal">Hoja BA-PVS en seis pasos</h2>
+    <div class="mini-form reveal">
+      <div class="card"><h3>1 Conducta</h3><p>Que accion toma menos de 10 minutos?</p></div>
+      <div class="card"><h3>2 Valor</h3><p>Salud, orden, afiliacion, autonomia, curiosidad.</p></div>
+      <div class="card"><h3>3 Prediccion</h3><p>Placer 0-10; esfuerzo 0-10.</p></div>
+      <div class="card"><h3>4 Ejecucion</h3><p>Sin negociar con el estado de animo.</p></div>
+      <div class="card"><h3>5 Registro</h3><p>Placer real; esfuerzo real.</p></div>
+      <div class="card"><h3>6 Aprendizaje</h3><p>Que aprendio el sistema?</p></div>
+    </div>
+    <p class="source reveal">Ejemplo: ducha + caminar 6 minutos + audio de 20 segundos a alguien seguro.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Demo</span>
+</section>
+
+<section class="slide" id="slide-13">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 1 · Que esperamos</p>
+    <h2 class="reveal">La primera mejora no siempre es felicidad</h2>
+    <div class="cols-4 reveal">
+      <div class="card"><h3>1. Inicio</h3><p>Mas acciones completadas.</p></div>
+      <div class="card"><h3>2. Costo</h3><p>Baja esfuerzo anticipado.</p></div>
+      <div class="card"><h3>3. Futuro</h3><p>Aparece algo de anticipacion.</p></div>
+      <div class="card"><h3>4. Placer</h3><p>Liking puede recuperarse despues.</p></div>
+    </div>
+    <p class="lead reveal">Medicion: DARS/SHAPS, completions, esfuerzo anticipado vs real.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Expectativa</span>
+</section>
+
+<section class="slide" id="slide-14">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 1 · RAMS</p>
+    <h2 class="reveal">El riesgo es convertir terapia en moralina</h2>
+    <div class="cols-4 reveal">
+      <div class="card"><span class="tag caution">riesgo</span><h3>Moralizar</h3><p>"Si no lo hiciste, no quieres mejorar."</p></div>
+      <div class="card"><span class="tag caution">riesgo</span><h3>Escalar rapido</h3><p>Tarea enorme confirma fracaso.</p></div>
+      <div class="card"><span class="tag caution">screen</span><h3>Bipolaridad</h3><p>BA intensa puede empujar activacion.</p></div>
+      <div class="card"><span class="tag learning">seguridad</span><h3>Suicidio</h3><p>BA no reemplaza plan de seguridad.</p></div>
+    </div>
+  </div>
+  <span class="slide-num"></span><span class="section-label">RAMS</span>
+</section>
+
+<section class="slide" id="slide-15">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 1b · Inmune-metabolico</p>
+    <h2 class="reveal">Cuando el cuerpo sube el costo del camino</h2>
+    <div class="split reveal">
+      <div class="card stack scenario effort">
+        <span class="tag effort">fisiopato</span>
+        <h3>No es solo tristeza</h3>
+        <p>Fatiga, dolor, sueño no reparador, niebla mental, inflamacion o carga metabolica elevan effort subjetivo.</p>
+      </div>
+      <div class="card stack answer">
+        <span class="tag approach">formula</span>
+        <h3>Premio intacto, energia patologicamente cara</h3>
+        <p>El paciente puede valorar el premio, pero llegar exige un costo corporal excesivo.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Inmune</span>
+</section>
+
+<section class="slide" id="slide-16">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 1b · Como actuar</p>
+    <h2 class="reveal">Psicoterapia + cuerpo, no psicoterapia contra el cuerpo</h2>
+    <div class="cols-4 reveal">
+      <div class="card"><h3>BA limitada</h3><p>Microacciones de 3-10 min.</p></div>
+      <div class="card"><h3>Ritmo</h3><p>Sueño, luz, comida, movimiento dosificado.</p></div>
+      <div class="card"><h3>Medicina</h3><p>CRP, apnea, dolor, diabetes, obesidad, sedentarismo.</p></div>
+      <div class="card"><h3>Farmaco</h3><p>Integrar cuando el fenotipo lo justifica.</p></div>
+    </div>
+    <p class="lead reveal">Bupropion puede mover wanting/effort; no resuelve por si solo la base inmune-metabolica.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Integracion</span>
+</section>
+
+<section class="slide" id="slide-17">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 1b · Como se hace</p>
+    <h2 class="reveal">BA por zonas de energia</h2>
+    <table class="matrix reveal">
+      <thead><tr><th>Zona</th><th>Regla</th><th>Ejemplo</th><th>RAMS</th></tr></thead>
+      <tbody>
+        <tr><td>Roja</td><td>Solo mantenimiento</td><td>Higiene, comida, seguridad, medicacion</td><td>No exigir rendimiento</td></tr>
+        <tr><td>Amarilla</td><td>Microacciones</td><td>3-10 min de movimiento o orden</td><td>Vigilar sobrecarga</td></tr>
+        <tr><td>Verde</td><td>Actividad con valor</td><td>Social ligero, caminata, tarea funcional</td><td>No saltar a heroicidad</td></tr>
+      </tbody>
+    </table>
+    <p class="lead reveal">Esperamos adherencia y rutina primero; la mejoria puede ser parcial si la biologia persiste.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Zonas</span>
+</section>
+
+<section class="slide" id="slide-18">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 2 · Detachment social</p>
+    <h2 class="reveal">TEA no es sinonimo de social reward bajo</h2>
+    <div class="cols-4 reveal">
+      <div class="card"><h3>Deseo social</h3><p>Puede estar presente y ser intenso.</p></div>
+      <div class="card"><h3>Traduccion</h3><p>Reglas implicitas elevan costo.</p></div>
+      <div class="card"><h3>Amenaza</h3><p>Rechazo, bullying, humillacion aprendida.</p></div>
+      <div class="card"><h3>Sensorial</h3><p>Ambientes sociales pueden agotar.</p></div>
+    </div>
+    <p class="lead reveal">No preguntes solo si quiere gente. Pregunta cuanto cuesta traducir gente.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">TEA</span>
+</section>
+
+<section class="slide" id="slide-19">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 2 · Como actuar</p>
+    <h2 class="reveal">No forzar extroversion: diseñar conexion posible</h2>
+    <div class="flow reveal">
+      <div class="card"><div class="num">1</div><h3>Canal</h3><p>Texto, audio, juego, interes especifico, grupo estructurado.</p></div>
+      <div class="card"><div class="num">2</div><h3>Reglas</h3><p>Hacer explicito lo social antes de pedir performance.</p></div>
+      <div class="card"><div class="num">3</div><h3>Duracion</h3><p>Tiempo breve y salida pactada.</p></div>
+      <div class="card"><div class="num">4</div><h3>PE social</h3><p>Incomodidad tolerable, no desastre.</p></div>
+    </div>
+    <p class="lead reveal">La terapia busca bajar costo, mejorar agencia y aumentar conexion funcional.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Social</span>
+</section>
+
+<section class="slide" id="slide-20">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 2 · Demo</p>
+    <h2 class="reveal">Escalera de conexion adaptada</h2>
+    <div class="ladder reveal">
+      <div class="card"><h3>1 Texto</h3><p>Meme o mensaje a persona segura.</p><span class="tag approach">salida facil</span></div>
+      <div class="card"><h3>2 Audio</h3><p>20-40 segundos sobre interes propio.</p><span class="tag learning">una idea</span></div>
+      <div class="card"><h3>3 Actividad</h3><p>20 min con tarea compartida.</p><span class="tag social">estructura</span></div>
+      <div class="card"><h3>4 Grupo</h3><p>Rol claro y pausa sensorial.</p><span class="tag reward">rol</span></div>
+      <div class="card"><h3>5 Abierta</h3><p>2 preguntas + 1 comentario + salida.</p><span class="tag caution">titulada</span></div>
+    </div>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Escalera</span>
+</section>
+
+<section class="slide" id="slide-21">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 2 · Que esperamos</p>
+    <h2 class="reveal">El objetivo no es extroversion; es menor costo social</h2>
+    <div class="cols-4 reveal">
+      <div class="card"><h3>Costo anticipado</h3><p>Baja de 9/10 a 6/10, luego 4/10.</p></div>
+      <div class="card"><h3>Interacciones</h3><p>Mas contactos completados.</p></div>
+      <div class="card"><h3>Recuperacion</h3><p>Menos agotamiento post-social.</p></div>
+      <div class="card"><h3>Discriminacion</h3><p>Aprende que personas y formatos sirven.</p></div>
+    </div>
+    <p class="lead reveal">Exito = conexion viable desde su sistema, no imitacion neurotipica.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Expectativa</span>
+</section>
+
+<section class="slide" id="slide-22">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 2 · RAMS</p>
+    <h2 class="reveal">Exposicion sin adaptacion puede ser daño</h2>
+    <div class="cols-4 reveal">
+      <div class="card"><span class="tag caution">riesgo</span><h3>Camuflaje</h3><p>Entrenar a parecer normal puede quemar al paciente.</p></div>
+      <div class="card"><span class="tag caution">riesgo</span><h3>Trauma social</h3><p>Bullying previo exige titulación lenta.</p></div>
+      <div class="card"><span class="tag caution">contexto</span><h3>Ambiente hostil</h3><p>No se expone al daño: se protege y rediseña.</p></div>
+      <div class="card"><span class="tag social">clinica</span><h3>Afiliacion</h3><p>Bajo contacto visual no significa bajo deseo social.</p></div>
+    </div>
+  </div>
+  <span class="slide-num"></span><span class="section-label">RAMS</span>
+</section>
+
+<section class="slide" id="slide-23">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 3 · Protector anti-deseo</p>
+    <h2 class="reveal">A veces detachment protege de querer</h2>
+    <div class="cols-4 reveal">
+      <div class="card"><h3>Querer</h3><p>Expone a perdida.</p></div>
+      <div class="card"><h3>Necesitar</h3><p>Expone a dependencia.</p></div>
+      <div class="card"><h3>Disfrutar</h3><p>Expone a bajar guardia.</p></div>
+      <div class="card"><h3>Conectar</h3><p>Expone a rechazo.</p></div>
+    </div>
+    <p class="lead reveal">Aqui detachment puede ser solucion interna, no solo deficit de reward.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">IFS</span>
+</section>
+
+<section class="slide" id="slide-24">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 3 · Como actua IFS</p>
+    <h2 class="reveal">Unblending cambia identidad por relacion</h2>
+    <div class="split reveal">
+      <div class="card stack scenario caution">
+        <span class="tag caution">fusion</span>
+        <h3>"Soy frio, no quiero nada"</h3>
+        <p>La parte protectora queda confundida con todo el yo.</p>
+      </div>
+      <div class="card stack answer">
+        <span class="tag approach">unblending</span>
+        <h3>"Una parte apaga mi deseo"</h3>
+        <p>El Self puede observar, negociar y permitir una accion pequeña.</p>
+      </div>
+    </div>
+    <p class="lead reveal">No peleamos con el protector. Buscamos margen.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Unblending</span>
+</section>
+
+<section class="slide" id="slide-25">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 3 · Demo</p>
+    <h2 class="reveal">Microguion de 5 preguntas</h2>
+    <div class="flow reveal">
+      <div class="card"><div class="num">1</div><h3>Parte</h3><p>Nota si aparece una parte que dice: no vale la pena.</p></div>
+      <div class="card"><div class="num">2</div><h3>Cuerpo</h3><p>Donde la sientes?</p></div>
+      <div class="card"><div class="num">3</div><h3>Miedo</h3><p>Que teme que pase si vuelves a querer?</p></div>
+      <div class="card"><div class="num">4</div><h3>Separacion</h3><p>Puede separarse 5% para observarla?</p></div>
+      <div class="card"><div class="num">5</div><h3>Permiso</h3><p>Que accion pequeña permitiria?</p></div>
+    </div>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Demo</span>
+</section>
+
+<section class="slide" id="slide-26">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 3 · RAMS</p>
+    <h2 class="reveal">IFS aqui es herramienta clinica, no dogma</h2>
+    <div class="cols-4 reveal">
+      <div class="card"><span class="tag learning">evidencia</span><h3>Limitada</h3><p>Mas conceptual para PVS que BA/CBT.</p></div>
+      <div class="card"><span class="tag caution">riesgo</span><h3>Sugestion</h3><p>No inducir recuerdos ni narrativas.</p></div>
+      <div class="card"><span class="tag caution">riesgo</span><h3>Psicosis</h3><p>Evitar si hay desorganizacion activa sin estabilizar.</p></div>
+      <div class="card"><span class="tag approach">seguridad</span><h3>Grounding</h3><p>Si se asusta, volver al presente.</p></div>
+    </div>
+  </div>
+  <span class="slide-num"></span><span class="section-label">RAMS</span>
+</section>
+
+<section class="slide" id="slide-27">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 4 · Mania / PVS alto</p>
+    <h2 class="reveal">El premio parece enorme, el costo bajo y el riesgo lejano</h2>
+    <div class="cols-4 reveal">
+      <div class="card"><h3>Valuation</h3><p>Metas y señales de oportunidad sobredimensionadas.</p><span class="tag caution">alto</span></div>
+      <div class="card"><h3>Wanting</h3><p>Approach acelerado, proyectos, gasto, sexo, sociabilidad.</p><span class="tag reward">alto</span></div>
+      <div class="card"><h3>Effort</h3><p>El camino parece corto o inexistente.</p><span class="tag effort">bajo costo</span></div>
+      <div class="card"><h3>Riesgo</h3><p>Consecuencia pierde peso subjetivo.</p><span class="tag learning">bajo</span></div>
+    </div>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Mania</span>
+</section>
+
+<section class="slide" id="slide-28">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 4 · Como actuar</p>
+    <h2 class="reveal">En PVS alto no activas: estabilizas</h2>
+    <div class="flow reveal">
+      <div class="card"><div class="num">1</div><h3>Sueño</h3><p>Biomarcador conductual central.</p></div>
+      <div class="card"><div class="num">2</div><h3>Ritmos</h3><p>Horarios y zeitgebers sociales.</p></div>
+      <div class="card"><div class="num">3</div><h3>Señales</h3><p>Lista personal de escalada.</p></div>
+      <div class="card"><div class="num">4</div><h3>Red</h3><p>Plan de freno familiar/ambiental.</p></div>
+      <div class="card"><div class="num">5</div><h3>Farmaco</h3><p>Coordinacion psiquiatrica.</p></div>
+    </div>
+    <p class="lead reveal">IPSRT y psicoeducacion protegen el sistema antes de que la recompensa arrastre todo.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">IPSRT</span>
+</section>
+
+<section class="slide" id="slide-29">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 4 · Demo</p>
+    <h2 class="reveal">Mapa de ritmo y freno</h2>
+    <table class="matrix reveal">
+      <thead><tr><th>Señal</th><th>Pregunta</th><th>Accion</th></tr></thead>
+      <tbody>
+        <tr><td>Sueño</td><td>Cuantas horas dormi 3 noches seguidas?</td><td>Regla de consulta/ajuste</td></tr>
+        <tr><td>Velocidad</td><td>Hablo o pienso mas rapido?</td><td>Reducir estimulos</td></tr>
+        <tr><td>Reward</td><td>Nuevos planes, gasto, sexo, proyectos?</td><td>Pausa 24 h + co-decision</td></tr>
+        <tr><td>Riesgo</td><td>Siento que todo encaja?</td><td>Avisar a persona ancla</td></tr>
+        <tr><td>Entorno</td><td>Que dispara escalada?</td><td>Cortar cafe, alcohol, pantallas, noche</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Freno</span>
+</section>
+
+<section class="slide" id="slide-30">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 4 · RAMS</p>
+    <h2 class="reveal">No romantizar hipomania como productividad</h2>
+    <div class="cols-4 reveal">
+      <div class="card"><span class="tag caution">no</span><h3>BA intensa</h3><p>Puede reforzar escalada.</p></div>
+      <div class="card"><span class="tag caution">no</span><h3>Solo insight</h3><p>Insight cae cuando el episodio sube.</p></div>
+      <div class="card"><span class="tag caution">red flag</span><h3>Psicosis/riesgo</h3><p>Escalar nivel de cuidado.</p></div>
+      <div class="card"><span class="tag learning">esperado</span><h3>Menos recaida</h3><p>Deteccion temprana y sueño protegido.</p></div>
+    </div>
+  </div>
+  <span class="slide-num"></span><span class="section-label">RAMS</span>
+</section>
+
+<section class="slide" id="slide-31">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 5 · Psychosis-detachment</p>
+    <h2 class="reveal">No todo apagamiento psicotico es negativo primario</h2>
+    <div class="cols-4 reveal">
+      <div class="card"><h3>Negativos</h3><p>Avolicion, anhedonia anticipatoria, asocialidad.</p></div>
+      <div class="card"><h3>Secundarios</h3><p>Depresion, sedacion, EPS, acatisia.</p></div>
+      <div class="card"><h3>Cognicion</h3><p>Funcion ejecutiva y cognicion social limitan accion.</p></div>
+      <div class="card"><h3>Contexto</h3><p>Estigma, pobreza, cannabis, trauma, paranoia.</p></div>
+    </div>
+    <p class="lead reveal">Antes de formular "negativos", limpia causas reversibles y contexto.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Psicosis</span>
+</section>
+
+<section class="slide" id="slide-32">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Lausanne 2025</p>
+    <h2 class="reveal">Cognicion, depresion/negativos y thought disorder separan funcionamiento</h2>
+    <div class="cols-3 reveal">
+      <div class="card"><h3>Cognition</h3><p>MATRICS y disorganizacion afectan rendimiento y abstraccion.</p><span class="tag learning">funcion</span></div>
+      <div class="card"><h3>Depression / Negative</h3><p>MADRS, PANSS depressed, autoestima y negativos predicen vida real.</p><span class="tag reward">PVS bajo</span></div>
+      <div class="card"><h3>Thought Disorder</h3><p>Positivos, YMRS mania, excitedness y desorganizacion cargan juntos.</p><span class="tag caution">PVS alto</span></div>
+    </div>
+    <p class="source reveal">Schottner Sieler et al. 2025; Schizophrenia 11:97.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Lausanne</span>
+</section>
+
+<section class="slide" id="slide-33">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 5 · Como se hace</p>
+    <h2 class="reveal">Scaffolding funcional: ambiente como protesis ejecutiva</h2>
+    <table class="matrix reveal">
+      <thead><tr><th>Meta abstracta</th><th>Paso externo</th><th>Medida</th></tr></thead>
+      <tbody>
+        <tr><td>Socializar</td><td>Saludar a vecino 2 veces/semana</td><td>Conteo</td></tr>
+        <tr><td>Hacer algo</td><td>Caminar 5 min despues de desayuno</td><td>Adherencia</td></tr>
+        <tr><td>Buscar trabajo</td><td>Actualizar 3 lineas de CV</td><td>Completado/no</td></tr>
+        <tr><td>Cuidarme</td><td>Alarma + pastillero + ducha dia por medio</td><td>Rutina</td></tr>
+      </tbody>
+    </table>
+    <p class="lead reveal">Esperamos funcionamiento observable antes que placer subjetivo completo.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Scaffolding</span>
+</section>
+
+<section class="slide" id="slide-34">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Perfil 5 · RAMS</p>
+    <h2 class="reveal">Expectativas pequeñas no son expectativas pobres</h2>
+    <div class="cols-4 reveal">
+      <div class="card"><span class="tag caution">revisar</span><h3>Medicacion</h3><p>Sedacion, EPS, acatisia, carga anticolinergica.</p></div>
+      <div class="card"><span class="tag caution">revisar</span><h3>Depresion</h3><p>Suicidio post-psicotico o desesperanza.</p></div>
+      <div class="card"><span class="tag caution">evitar</span><h3>Introspeccion excesiva</h3><p>No sobrecargar si hay desorganizacion.</p></div>
+      <div class="card"><span class="tag learning">hacer</span><h3>Red</h3><p>Rehabilitacion, familia, contexto y medicion.</p></div>
+    </div>
+  </div>
+  <span class="slide-num"></span><span class="section-label">RAMS</span>
+</section>
+
+<section class="slide" id="slide-35">
+  <div class="slide-content centered">
+    <p class="eyebrow reveal">Reto integrador</p>
+    <h2 class="reveal">Cinco casos, una matriz</h2>
+    <div class="cols-5 reveal">
+      <div class="card"><h3>Variable</h3><p>Que esta alterado?</p></div>
+      <div class="card"><h3>Tecnica</h3><p>Que palanca eliges?</p></div>
+      <div class="card"><h3>No usar</h3><p>Que empeoraria?</p></div>
+      <div class="card"><h3>Esperar</h3><p>Primer cambio realista.</p></div>
+      <div class="card"><h3>RAMS</h3><p>Riesgo principal.</p></div>
+    </div>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Reto</span>
+</section>
+
+<section class="slide" id="slide-36">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Caso 1</p>
+    <h2 class="reveal">"Cuando llega, lo disfruta"</h2>
+    <div class="split reveal">
+      <div class="card stack scenario effort">
+        <span class="tag effort">viñeta</span>
+        <h3>MDD recurrente, 31 años</h3>
+        <p>"Si mis amigos me sacan, la paso bien. Pero organizarme para salir me parece una montaña."</p>
+      </div>
+      <div class="card stack answer">
+        <span class="tag approach">clave</span>
+        <h3>Effort alto + wanting bajo/moderado</h3>
+        <p>BA por costo-esfuerzo. No usar tarea social grande ni insight sin accion. Esperar menos esfuerzo anticipado.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Caso</span>
+</section>
+
+<section class="slide" id="slide-37">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Caso 2</p>
+    <h2 class="reveal">"El cuerpo no prende"</h2>
+    <div class="split reveal">
+      <div class="card stack scenario effort">
+        <span class="tag effort">viñeta</span>
+        <h3>Depresion + carga metabolica</h3>
+        <p>Dolor, sueño no reparador, CRP elevada previa. "Es como caminar con plomo."</p>
+      </div>
+      <div class="card stack answer">
+        <span class="tag approach">clave</span>
+        <h3>Effort patologicamente alto</h3>
+        <p>BA de energia limitada + ritmo + medicina. No exigir ejercicio intenso. RAMS: sobrecarga e ignorar biologia.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Caso</span>
+</section>
+
+<section class="slide" id="slide-38">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Caso 3</p>
+    <h2 class="reveal">"Quiero amigos, pero no se como entrar"</h2>
+    <div class="split reveal">
+      <div class="card stack scenario social">
+        <span class="tag social">viñeta</span>
+        <h3>TEA + ansiedad social</h3>
+        <p>Desea pareja y amigos; queda agotado tras reuniones. No entiende reglas implicitas y fue ridiculizado.</p>
+      </div>
+      <div class="card stack answer">
+        <span class="tag approach">clave</span>
+        <h3>Costo de traduccion + amenaza social</h3>
+        <p>Exposicion adaptada por canal, regla, duracion y salida. No entrenar camuflaje como meta.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Caso</span>
+</section>
+
+<section class="slide" id="slide-39">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Caso 4</p>
+    <h2 class="reveal">"Todo esta encajando"</h2>
+    <div class="split reveal">
+      <div class="card stack scenario caution">
+        <span class="tag caution">viñeta</span>
+        <h3>Bipolaridad, 28 años</h3>
+        <p>Duerme 4 horas sin cansancio, inicia tres proyectos, gasto alto, sexualidad impulsiva.</p>
+      </div>
+      <div class="card stack answer">
+        <span class="tag approach">clave</span>
+        <h3>PVS alto patologico</h3>
+        <p>IPSRT + plan de freno + red + farmaco. No usar BA ni reforzar proyectos. Escalar si hay psicosis/riesgo.</p>
+      </div>
+    </div>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Caso</span>
+</section>
+
+<section class="slide" id="slide-40">
+  <div class="slide-content centered">
+    <p class="eyebrow reveal">Cierre</p>
+    <p class="quote reveal">La tecnica correcta es la experiencia que actualiza la variable equivocada.</p>
+    <div class="card reveal">
+      <h3>Pregunta de salida</h3>
+      <p>Si un paciente se aisla, que dato pedirias para decidir si es reward bajo, threat social, costo de traduccion, mania o negativos?</p>
+    </div>
+    <p class="lead reveal">Siguiente capa: integrar esta psicoterapia con farmacologia de precision y caso completo.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Cierre</span>
+</section>
+</main>
+
+<script>
+/* ===========================================
+   SLIDE PRESENTATION CONTROLLER
+   =========================================== */
+const ABBR_FOOTNOTES = {
+  "slide-1": "PVS=Positive Valence Systems; RAMS=riesgos, adversos, monitoreo y seguridad; R1=residente de primer ano.",
+  "slide-3": "RAMS=riesgos, adversos, monitoreo y seguridad.",
+  "slide-5": "PVS=Positive Valence Systems; BA=activacion conductual.",
+  "slide-7": "WM=working memory/memoria de trabajo.",
+  "slide-9": "PVS=Positive Valence Systems.",
+  "slide-12": "BA-PVS=activacion conductual orientada a Positive Valence Systems.",
+  "slide-13": "DARS=Dimensional Anhedonia Rating Scale; SHAPS=Snaith-Hamilton Pleasure Scale.",
+  "slide-15": "CRP=proteina C reactiva.",
+  "slide-18": "TEA=trastorno del espectro autista.",
+  "slide-26": "IFS=Internal Family Systems; PVS=Positive Valence Systems.",
+  "slide-28": "IPSRT=Interpersonal and Social Rhythm Therapy.",
+  "slide-29": "Zeitgebers=senales temporales sociales/ambientales que regulan ritmos biologicos.",
+  "slide-31": "EPS=sintomas extrapiramidales.",
+  "slide-32": "MATRICS=Measurement and Treatment Research to Improve Cognition in Schizophrenia; MADRS=Montgomery-Asberg Depression Rating Scale; PANSS=Positive and Negative Syndrome Scale; YMRS=Young Mania Rating Scale.",
+  "slide-34": "EPS=sintomas extrapiramidales.",
+  "slide-35": "RAMS=riesgos, adversos, monitoreo y seguridad.",
+  "slide-36": "MDD=trastorno depresivo mayor; BA=activacion conductual.",
+  "slide-37": "CRP=proteina C reactiva; BA=activacion conductual.",
+  "slide-38": "TEA=trastorno del espectro autista.",
+  "slide-39": "PVS=Positive Valence Systems; IPSRT=Interpersonal and Social Rhythm Therapy.",
+  "slide-40": "PVS=Positive Valence Systems."
+};
+
+class SlidePresentation {
+  constructor() {
+    this.slides = Array.from(document.querySelectorAll(".slide"));
+    this.currentSlide = 0;
+    this.navDots = document.getElementById("navDots");
+    this.progressBar = document.getElementById("progressBar");
+    this.wheelLocked = false;
+    this.touchStartY = 0;
+    this.setupSlideLabels();
+    this.setupAbbreviationFootnotes();
+    this.setupIntersectionObserver();
+    this.setupNavDots();
+    this.setupKeyboardNav();
+    this.setupWheelNav();
+    this.setupTouchNav();
+    this.updateProgress();
+  }
+
+  setupSlideLabels() {
+    this.slides.forEach((slide, index) => {
+      const num = slide.querySelector(".slide-num");
+      if (num) num.textContent = `${String(index + 1).padStart(2, "0")} / ${String(this.slides.length).padStart(2, "0")}`;
+    });
+  }
+
+  setupAbbreviationFootnotes() {
+    this.slides.forEach((slide) => {
+      const definition = ABBR_FOOTNOTES[slide.id];
+      if (!definition) return;
+      const footnote = document.createElement("p");
+      footnote.className = "abbr-footnote";
+      const label = document.createElement("strong");
+      label.textContent = "Abrev.: ";
+      footnote.append(label, document.createTextNode(definition));
+      slide.appendChild(footnote);
+    });
+  }
+
+  setupIntersectionObserver() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          this.currentSlide = this.slides.indexOf(entry.target);
+          this.updateProgress();
+          this.updateDots();
+        }
+      });
+    }, { threshold: 0.55 });
+
+    this.slides.forEach((slide) => observer.observe(slide));
+  }
+
+  setupNavDots() {
+    this.navDots.innerHTML = "";
+    this.slides.forEach((slide, index) => {
+      const button = document.createElement("button");
+      button.className = "dot";
+      button.type = "button";
+      button.setAttribute("aria-label", `Ir al slide ${index + 1}`);
+      button.addEventListener("click", () => this.goToSlide(index));
+      this.navDots.appendChild(button);
+    });
+    this.updateDots();
+  }
+
+  setupKeyboardNav() {
+    window.addEventListener("keydown", (event) => {
+      if (["ArrowDown", "ArrowRight", " ", "PageDown"].includes(event.key)) {
+        event.preventDefault();
+        this.nextSlide();
+      }
+      if (["ArrowUp", "ArrowLeft", "PageUp"].includes(event.key)) {
+        event.preventDefault();
+        this.previousSlide();
+      }
+      if (event.key === "Home") {
+        event.preventDefault();
+        this.goToSlide(0);
+      }
+      if (event.key === "End") {
+        event.preventDefault();
+        this.goToSlide(this.slides.length - 1);
+      }
+    });
+  }
+
+  setupWheelNav() {
+    window.addEventListener("wheel", (event) => {
+      if (Math.abs(event.deltaY) < 32 || this.wheelLocked) return;
+      this.wheelLocked = true;
+      if (event.deltaY > 0) this.nextSlide();
+      else this.previousSlide();
+      window.setTimeout(() => { this.wheelLocked = false; }, 520);
+    }, { passive: true });
+  }
+
+  setupTouchNav() {
+    window.addEventListener("touchstart", (event) => {
+      this.touchStartY = event.changedTouches[0].clientY;
+    }, { passive: true });
+
+    window.addEventListener("touchend", (event) => {
+      const delta = this.touchStartY - event.changedTouches[0].clientY;
+      if (Math.abs(delta) < 44) return;
+      if (delta > 0) this.nextSlide();
+      else this.previousSlide();
+    }, { passive: true });
+  }
+
+  goToSlide(index) {
+    const target = Math.max(0, Math.min(index, this.slides.length - 1));
+    this.slides[target].scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  nextSlide() {
+    this.goToSlide(this.currentSlide + 1);
+  }
+
+  previousSlide() {
+    this.goToSlide(this.currentSlide - 1);
+  }
+
+  updateProgress() {
+    const pct = ((this.currentSlide + 1) / this.slides.length) * 100;
+    this.progressBar.style.width = `${pct}%`;
+  }
+
+  updateDots() {
+    const dots = Array.from(this.navDots.querySelectorAll(".dot"));
+    dots.forEach((dot, index) => dot.classList.toggle("active", index === this.currentSlide));
+  }
+}
+
+window.addEventListener("DOMContentLoaded", () => new SlidePresentation());
+</script>
+</body>
+</html>
