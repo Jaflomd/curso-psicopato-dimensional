@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Sesión 11: Positive Valence / Detachment</title>
+<meta name="description" content="Slides HTML de la Sesión 11 del curso Psicopatología Dimensional: sistema de recompensa, anhedonia y detachment." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;500;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,800&family=Source+Sans+3:wght@400;500;650;750&display=swap" rel="stylesheet">
+<style>
+/* ===========================================
+   CSS CUSTOM PROPERTIES: POSITIVE VALENCE LAB
+   =========================================== */
+:root {
+  --bg-primary: #10100f;
+  --bg-secondary: #171716;
+  --bg-panel: rgba(24, 24, 22, 0.82);
+  --bg-panel-soft: rgba(24, 24, 22, 0.58);
+  --text-primary: #f8f6f0;
+  --text-secondary: rgba(240, 235, 220, 0.82);
+  --text-muted: rgba(212, 204, 186, 0.58);
+  --line: rgba(240, 235, 220, 0.16);
+  --line-strong: rgba(240, 235, 220, 0.30);
+  --reward: #f0c76b;
+  --approach: #2ed3c6;
+  --social: #7bd66f;
+  --caution: #ef6f61;
+  --learning: #7ca7f2;
+  --effort: #d79ef7;
+  --ink: #10100f;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Source Sans 3", sans-serif;
+  --font-mono: "Azeret Mono", monospace;
+  --title-size: clamp(1.55rem, 4.45vw, 3.55rem);
+  --h2-size: clamp(1.05rem, 2.5vw, 1.95rem);
+  --h3-size: clamp(0.82rem, 1.45vw, 1.12rem);
+  --body-size: clamp(0.72rem, 1.18vw, 0.98rem);
+  --small-size: clamp(0.58rem, 0.9vw, 0.78rem);
+  --micro-size: clamp(0.48rem, 0.7vw, 0.62rem);
+  --slide-padding: clamp(1rem, 3.3vw, 3.1rem);
+  --content-gap: clamp(0.52rem, 1.55vw, 1.15rem);
+  --element-gap: clamp(0.32rem, 0.9vw, 0.72rem);
+  --radius: 8px;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-normal: 0.58s;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ===========================================
+   VIEWPORT FITTING: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   These styles ensure slides fit exactly in the viewport.
+   =========================================== */
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+html {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+}
+
+.slide {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.slide-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-height: 100%;
+    overflow: hidden;
+    padding: var(--slide-padding);
+}
+
+.card, .container, .content-box {
+    max-width: min(90vw, 1000px);
+    max-height: min(80vh, 700px);
+}
+
+.feature-list, .bullet-list {
+    gap: clamp(0.4rem, 1vh, 1rem);
+}
+
+.feature-list li, .bullet-list li {
+    font-size: var(--body-size);
+    line-height: 1.4;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    gap: clamp(0.5rem, 1.5vw, 1rem);
+}
+
+img, .image-container {
+    max-width: 100%;
+    max-height: min(50vh, 400px);
+    object-fit: contain;
+}
+
+@media (max-height: 700px) {
+    :root {
+        --slide-padding: clamp(0.75rem, 3vw, 2rem);
+        --content-gap: clamp(0.4rem, 1.5vw, 1rem);
+        --title-size: clamp(1.25rem, 4.5vw, 2.5rem);
+        --h2-size: clamp(1rem, 3vw, 1.75rem);
+    }
+}
+
+@media (max-height: 600px) {
+    :root {
+        --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem);
+        --content-gap: clamp(0.3rem, 1vw, 0.75rem);
+        --title-size: clamp(1.1rem, 4vw, 2rem);
+        --body-size: clamp(0.7rem, 1.2vw, 0.95rem);
+    }
+
+    .nav-dots, .keyboard-hint, .decorative {
+        display: none;
+    }
+}
+
+@media (max-height: 500px) {
+    :root {
+        --slide-padding: clamp(0.4rem, 2vw, 1rem);
+        --title-size: clamp(1rem, 3.5vw, 1.5rem);
+        --h2-size: clamp(0.9rem, 2.5vw, 1.25rem);
+        --body-size: clamp(0.65rem, 1vw, 0.85rem);
+    }
+}
+
+@media (max-width: 600px) {
+    :root {
+        --title-size: clamp(1.25rem, 7vw, 2.5rem);
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* ===========================================
+   BASE PRESENTATION STYLE
+   =========================================== */
+body {
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  font-family: var(--font-body);
+  line-height: 1.42;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, rgba(240, 199, 107, 0.12) 0 1px, transparent 1px 74px),
+    linear-gradient(45deg, rgba(46, 211, 198, 0.10) 0 1px, transparent 1px 96px),
+    linear-gradient(180deg, #10100f 0%, #151716 56%, #0d0e0d 100%);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.22;
+  background-image:
+    linear-gradient(rgba(240, 235, 220, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240, 235, 220, 0.06) 1px, transparent 1px);
+  background-size: clamp(34px, 5.4vw, 66px) clamp(34px, 5.4vw, 66px);
+  mask-image: linear-gradient(180deg, transparent, #000 12%, #000 84%, transparent);
+}
+
+main, .slide, .progress-bar, .nav-dots { position: relative; z-index: 1; }
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  z-index: 1000;
+  background: linear-gradient(90deg, var(--reward), var(--approach), var(--social), var(--caution));
+}
+
+.nav-dots {
+  position: fixed;
+  right: clamp(0.35rem, 1vw, 1rem);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-height: 76vh;
+  padding: 8px 6px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(16, 16, 15, 0.56);
+  backdrop-filter: blur(12px);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(248, 246, 240, 0.28);
+  cursor: pointer;
+  transition: transform 180ms ease, background 180ms ease;
+}
+
+.dot.active {
+  background: var(--reward);
+  transform: scale(1.45);
+}
+
+.slide::before {
+  content: "";
+  position: absolute;
+  inset: clamp(0.55rem, 1vw, 1rem);
+  border: 1px solid rgba(240, 235, 220, 0.06);
+  pointer-events: none;
+}
+
+.slide-content {
+  width: min(100%, 1140px);
+  margin: 0 auto;
+  gap: var(--content-gap);
+}
+
+.centered { align-items: center; text-align: center; }
+.tight { gap: calc(var(--content-gap) * 0.74); }
+.stack { display: flex; flex-direction: column; gap: var(--element-gap); }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--content-gap); align-items: stretch; }
+.cols-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--element-gap); align-items: stretch; }
+.cols-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--element-gap); align-items: stretch; }
+.cols-5 { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: calc(var(--element-gap) * 0.72); align-items: stretch; }
+
+h1 {
+  font-family: var(--font-display);
+  font-size: var(--title-size);
+  font-weight: 650;
+  line-height: 1.05;
+  letter-spacing: 0;
+  max-width: 14ch;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: var(--h2-size);
+  font-weight: 650;
+  line-height: 1.12;
+  letter-spacing: 0;
+  max-width: 22ch;
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-size: var(--h3-size);
+  font-weight: 650;
+  line-height: 1.12;
+  letter-spacing: 0;
+}
+
+p, li {
+  color: var(--text-secondary);
+  font-size: var(--body-size);
+}
+
+strong { color: var(--text-primary); font-weight: 750; }
+
+.eyebrow {
+  color: var(--reward);
+  font: 800 var(--small-size) var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.lead {
+  max-width: 58ch;
+  color: var(--text-secondary);
+  font-size: clamp(0.86rem, 1.55vw, 1.18rem);
+}
+
+.source {
+  color: var(--text-muted);
+  font: 500 var(--small-size) var(--font-mono);
+}
+
+.accent { color: var(--reward); }
+.teal { color: var(--approach); }
+.green { color: var(--social); }
+.coral { color: var(--caution); }
+.blue { color: var(--learning); }
+.violet { color: var(--effort); }
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--bg-panel), rgba(18, 18, 17, 0.68));
+  padding: clamp(0.62rem, 1.5vw, 1.08rem);
+  min-height: 0;
+}
+
+.card h3 { margin-bottom: clamp(0.25rem, 0.7vw, 0.48rem); }
+.card p { font-size: clamp(0.62rem, 0.98vw, 0.82rem); line-height: 1.38; }
+
+.tag {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  min-height: 24px;
+  padding: 3px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--text-secondary);
+  background: rgba(248, 246, 240, 0.06);
+  font: 700 var(--micro-size) var(--font-mono);
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.tag.reward { color: var(--reward); border-color: rgba(240, 199, 107, 0.42); }
+.tag.approach { color: var(--approach); border-color: rgba(46, 211, 198, 0.42); }
+.tag.social { color: var(--social); border-color: rgba(123, 214, 111, 0.42); }
+.tag.caution { color: var(--caution); border-color: rgba(239, 111, 97, 0.42); }
+.tag.learning { color: var(--learning); border-color: rgba(124, 167, 242, 0.42); }
+
+.num {
+  color: var(--reward);
+  font: 800 clamp(1.45rem, 4.4vw, 3.25rem) var(--font-mono);
+  line-height: 1;
+}
+
+.big-mark {
+  position: absolute;
+  right: clamp(1.2rem, 5vw, 4rem);
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(240, 199, 107, 0.12);
+  font: 800 clamp(7rem, 20vw, 15rem) var(--font-mono);
+  pointer-events: none;
+}
+
+.case-box {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: var(--content-gap);
+  align-items: stretch;
+}
+
+.metric-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: calc(var(--element-gap) * 0.72);
+}
+
+.metric {
+  border-left: 3px solid var(--reward);
+}
+
+.metric:nth-child(2) { border-left-color: var(--approach); }
+.metric:nth-child(3) { border-left-color: var(--caution); }
+.metric:nth-child(4) { border-left-color: var(--social); }
+
+.matrix {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(18, 18, 17, 0.76);
+  font-size: var(--small-size);
+}
+
+.matrix th, .matrix td {
+  padding: clamp(0.38rem, 0.95vw, 0.62rem);
+  border-bottom: 1px solid rgba(240, 235, 220, 0.08);
+  border-right: 1px solid rgba(240, 235, 220, 0.08);
+  color: var(--text-secondary);
+  vertical-align: top;
+  text-align: left;
+}
+
+.matrix th {
+  color: var(--text-primary);
+  font: 800 var(--micro-size) var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0;
+  background: rgba(240, 199, 107, 0.11);
+}
+
+.flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--element-gap);
+  align-items: stretch;
+}
+
+.flow .card {
+  position: relative;
+  border-top: 3px solid var(--reward);
+}
+
+.flow .card:nth-child(2) { border-top-color: var(--approach); }
+.flow .card:nth-child(3) { border-top-color: var(--learning); }
+.flow .card:nth-child(4) { border-top-color: var(--effort); }
+
+.axis {
+  position: relative;
+  min-height: clamp(220px, 42vh, 360px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(90deg, transparent 49.5%, rgba(248, 246, 240, 0.16) 49.5% 50.5%, transparent 50.5%),
+    linear-gradient(0deg, transparent 49.5%, rgba(248, 246, 240, 0.16) 49.5% 50.5%, transparent 50.5%),
+    rgba(18, 18, 17, 0.64);
+}
+
+.axis-label {
+  position: absolute;
+  color: var(--text-muted);
+  font: 700 var(--micro-size) var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.axis-label.x { bottom: 8px; left: 50%; transform: translateX(-50%); }
+.axis-label.y { top: 50%; left: 8px; transform: translateY(-50%) rotate(-90deg); transform-origin: left center; }
+
+.node {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: clamp(42px, 6vw, 64px);
+  height: clamp(42px, 6vw, 64px);
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  background: rgba(16, 16, 15, 0.84);
+  color: var(--reward);
+  font: 800 var(--small-size) var(--font-mono);
+}
+
+.node.teal { color: var(--approach); }
+.node.green { color: var(--social); }
+.node.coral { color: var(--caution); }
+.node.blue { color: var(--learning); }
+
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--element-gap);
+}
+
+.time-card {
+  border-bottom: 3px solid var(--reward);
+}
+
+.time-card:nth-child(2) { border-bottom-color: var(--approach); }
+.time-card:nth-child(3) { border-bottom-color: var(--learning); }
+.time-card:nth-child(4) { border-bottom-color: var(--caution); }
+
+.readiness {
+  display: grid;
+  grid-template-columns: 0.7fr 1fr 1fr;
+  gap: var(--element-gap);
+}
+
+.quote {
+  max-width: 18ch;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 4.2vw, 3rem);
+  line-height: 1.08;
+}
+
+.abbr-footnote {
+  position: absolute;
+  left: clamp(0.75rem, 1.4vw, 1.3rem);
+  right: clamp(0.75rem, 1.4vw, 1.3rem);
+  bottom: clamp(0.46rem, 1vh, 0.82rem);
+  z-index: 4;
+  color: rgba(212, 204, 186, 0.56);
+  font: 500 var(--micro-size) var(--font-mono);
+  line-height: 1.25;
+}
+
+.slide-num {
+  position: absolute;
+  bottom: clamp(0.46rem, 1vh, 0.82rem);
+  left: clamp(0.75rem, 1.4vw, 1.3rem);
+  z-index: 5;
+  color: rgba(248, 246, 240, 0.42);
+  font: 800 var(--micro-size) var(--font-mono);
+}
+
+.section-label {
+  position: absolute;
+  bottom: clamp(0.46rem, 1vh, 0.82rem);
+  right: clamp(0.75rem, 1.4vw, 1.3rem);
+  z-index: 5;
+  color: rgba(248, 246, 240, 0.38);
+  font: 800 var(--micro-size) var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity var(--duration-normal) var(--ease-out-expo),
+    transform var(--duration-normal) var(--ease-out-expo);
+}
+
+.slide.visible .reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal:nth-child(2) { transition-delay: 0.06s; }
+.reveal:nth-child(3) { transition-delay: 0.12s; }
+.reveal:nth-child(4) { transition-delay: 0.18s; }
+.reveal:nth-child(5) { transition-delay: 0.24s; }
+
+@media (max-width: 860px) {
+  .split, .case-box, .readiness { grid-template-columns: 1fr; }
+  .cols-4, .metric-strip, .flow, .timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cols-5 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 620px) {
+  .cols-3, .cols-4, .cols-5, .metric-strip, .flow, .timeline { grid-template-columns: 1fr; }
+  .nav-dots { display: none; }
+  .abbr-footnote { display: none; }
+}
+
+@media (max-height: 640px) {
+  .abbr-footnote { display: none; }
+  .card p { line-height: 1.28; }
+  .axis { min-height: 220px; }
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots" aria-label="Navegacion de slides"></nav>
+
+<main>
+<section class="slide" id="slide-1">
+  <div class="big-mark">11</div>
+  <div class="slide-content centered">
+    <p class="eyebrow reveal">Psicopatología Dimensional · Bloque 4</p>
+    <h1 class="reveal">El sistema de recompensa y conexión</h1>
+    <p class="lead reveal">Positive Valence, anhedonia y detachment como formulación dimensional.</p>
+    <p class="source reveal">Sesión 11 de 21 · Javier Flores · R1 Psiquiatría · 2026</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Apertura</span>
+</section>
+
+<section class="slide" id="slide-2">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Hook clínico</p>
+    <h2 class="reveal">Cambiar otro ISRS no es formular anhedonia</h2>
+    <div class="split reveal">
+      <div class="card stack">
+        <span class="tag caution">respuesta barata</span>
+        <h3>Mas serotonina</h3>
+        <p>El paciente dice "nada me da placer" y la respuesta automatica es subir dosis o rotar ISRS.</p>
+      </div>
+      <div class="card stack">
+        <span class="tag reward">respuesta dimensional</span>
+        <h3>Que no funcióna?</h3>
+        <p>Interés, anticipación, esfuerzo, aprendizaje, placer consumatorio o recompensa social.</p>
+      </div>
+    </div>
+    <p class="lead reveal">La pregunta no es solo si hay placer. Es donde se rompio el circuito de acercamiento.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Hook</span>
+</section>
+
+<section class="slide" id="slide-3">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Caso guia</p>
+    <h2 class="reveal">Jimena no esta "sin ganas"; esta desconectada del futuro</h2>
+    <div class="case-box reveal">
+      <div class="card stack">
+        <h3>Paciente</h3>
+        <p>34 años, MDD recurrente, aislamiento progresivo, dos ISRS con respuesta parcial, trabajo conservado por obligacion.</p>
+        <p>No reporta tristeza intensa. Reporta: "se que deberia importarme, pero nada tira de mi".</p>
+      </div>
+      <div class="metric-strip">
+        <div class="card metric"><h3>SHAPS</h3><p>Alto: bajo tono hedónico global.</p></div>
+        <div class="card metric"><h3>DARS</h3><p>Bajo interes y esfuerzo; placer parcial conservado.</p></div>
+        <div class="card metric"><h3>CRP</h3><p>3.8 mg/L: inflamación moderada.</p></div>
+        <div class="card metric"><h3>RSAS</h3><p>Elevada: alerta social, no diagnóstico.</p></div>
+      </div>
+    </div>
+    <p class="source reveal">Caso docente ficticio. No contiene datos identificables.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Caso</span>
+</section>
+
+<section class="slide" id="slide-4">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Puente S8-S10-S11</p>
+    <h2 class="reveal">Del circuito que duele al circuito que no llama</h2>
+    <div class="cols-4 reveal">
+      <div class="card"><h3>S8 · Distress</h3><p>Loss, threat sostenida, rumia, exposoma.</p></div>
+      <div class="card"><h3>S9 · Psicoterapia</h3><p>ABC, defusion, reappraisal, tolerancia al malestar.</p></div>
+      <div class="card"><h3>S10 · Precision</h3><p>Biomarcadores sobrios, staging y overclaim firewall.</p></div>
+      <div class="card"><h3>S11 · Reward</h3><p>Acercamiento, placer, aprendizaje, esfuerzo y conexión.</p></div>
+    </div>
+    <p class="lead reveal">Detachment no siempre es defensa fría. A veces es un sistema de recompensa que dejó de estimar valor.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Mapa</span>
+</section>
+
+<section class="slide" id="slide-5">
+  <div class="slide-content">
+    <p class="eyebrow reveal">RDoC Positive Valence Systems</p>
+    <h2 class="reveal">Positive Valence no es una escala de felicidad</h2>
+    <div class="cols-3 reveal">
+      <div class="card stack"><span class="tag reward">reward responsiveness</span><h3>Respuesta al refuerzo</h3><p>Procesos ante estimulos positivos: buscar, consumir, aprender y repetir.</p></div>
+      <div class="card stack"><span class="tag learning">reward learning</span><h3>Aprendizaje</h3><p>El sistema actualiza predicciones segun premio, error y contingencia.</p></div>
+      <div class="card stack"><span class="tag approach">reward valuation</span><h3>Valuacion</h3><p>Calcula magnitud, probabilidad, demora y costo de esfuerzo.</p></div>
+    </div>
+    <p class="source reveal">Fuente base: NIMH RDoC Definitions of Domains and Constructs.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">RDoC</span>
+</section>
+
+<section class="slide" id="slide-6">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Modelo minimo</p>
+    <h2 class="reveal">Reward tiene piezas separables</h2>
+    <div class="flow reveal">
+      <div class="card"><div class="num">1</div><h3>Wanting</h3><p>Energia de acercamiento. El objeto tira de mi.</p></div>
+      <div class="card"><div class="num">2</div><h3>Liking</h3><p>Impacto hedónico. Disfruto cuando llego.</p></div>
+      <div class="card"><div class="num">3</div><h3>Learning</h3><p>Aprendo que vale repetir o abandonar.</p></div>
+      <div class="card"><div class="num">4</div><h3>Effort</h3><p>Decido si el costo vale el resultado.</p></div>
+    </div>
+    <p class="lead reveal">Decir "anhedonia" sin separar estas piezas es clínicamente demasiado grueso.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Modelo</span>
+</section>
+
+<section class="slide" id="slide-7">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Wanting</p>
+    <h2 class="reveal">Dopamina compra energía de acercamiento, no placer puro</h2>
+    <div class="split reveal">
+      <div class="axis">
+        <span class="axis-label x">valor esperado</span>
+        <span class="axis-label y">energía</span>
+        <span class="node" style="left:14%; top:58%;">bajo</span>
+        <span class="node teal" style="left:58%; top:18%;">alto</span>
+        <span class="node blue" style="left:62%; top:60%;">cue</span>
+      </div>
+      <div class="card stack">
+        <h3>Incentive salience</h3>
+        <p>El estimulo no solo se valora: se vuelve atractivo, captura atencion y organiza conducta.</p>
+        <p><strong>Pregunta bedside:</strong> "Hay algo que todavía le jale hacia adelante, aunque no lo disfrute?"</p>
+        <span class="tag reward">VTA -> NAcc</span>
+      </div>
+    </div>
+    <p class="source reveal">Berridge & Robinson 2016; Treadway & Zald 2011.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Wanting</span>
+</section>
+
+<section class="slide" id="slide-8">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Liking</p>
+    <h2 class="reveal">El placer no vive en la dopamina</h2>
+    <div class="cols-4 reveal">
+      <div class="card"><h3>NAcc shell</h3><p>Hotspot pequeño; opioides y endocannabinoides amplifican liking.</p></div>
+      <div class="card"><h3>Ventral pallidum</h3><p>Salida crítica para impacto hedónico.</p></div>
+      <div class="card"><h3>OFC / insula</h3><p>Representacion consciente, sabor afectivo y valor subjetivo.</p></div>
+      <div class="card"><h3>Brainstem</h3><p>Reacciones primarias de gusto y aversion.</p></div>
+    </div>
+    <p class="lead reveal">Si el wanting sube sin liking, el paciente puede perseguir sin disfrutar. Si liking queda conservado, la puerta terapeutica cambia.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Liking</span>
+</section>
+
+<section class="slide" id="slide-9">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Reward learning</p>
+    <h2 class="reveal">El cerebro aprende que vale repetir</h2>
+    <div class="timeline reveal">
+      <div class="card time-card"><h3>Cue</h3><p>Algo anuncia posible recompensa.</p></div>
+      <div class="card time-card"><h3>Prediccion</h3><p>El sistema estima probabilidad y magnitud.</p></div>
+      <div class="card time-card"><h3>Error</h3><p>La realidad supera o decepciona la expectativa.</p></div>
+      <div class="card time-card"><h3>Actualizacion</h3><p>El organismo ajusta conducta futura.</p></div>
+    </div>
+    <p class="lead reveal">Anhedonia tambien puede ser no aprender de pequeños premios, incluso si el paciente "entiende" racionalmente la recompensa.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Learning</span>
+</section>
+
+<section class="slide" id="slide-10">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Effort valuation</p>
+    <h2 class="reveal">A veces el problema no es el premio: es el precio subjetivo</h2>
+    <div class="split reveal">
+      <div class="card stack">
+        <h3>Clínica</h3>
+        <p>"Se que me haria bien salir, pero se siente como mover una montana".</p>
+        <p>La conducta no inicia porque el costo percibido supera el valor esperado.</p>
+      </div>
+      <div class="card stack">
+        <h3>Circuito</h3>
+        <p>dACC, insula, estriado y dopamina integran esfuerzo, probabilidad y recompensa.</p>
+        <span class="tag learning">EEfRT</span>
+        <span class="tag approach">effort-cost</span>
+      </div>
+    </div>
+    <p class="source reveal">Treadway et al. 2012; Treadway & Zald 2011.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Effort</span>
+</section>
+
+<section class="slide" id="slide-11">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Medición</p>
+    <h2 class="reveal">SHAPS, DARS, TEPS y tareas no miden lo mismo</h2>
+    <table class="matrix reveal">
+      <thead><tr><th>Instrumento</th><th>Mide mejor</th><th>Uso docente</th><th>Limite</th></tr></thead>
+      <tbody>
+        <tr><td>SHAPS</td><td>Tono hedónico global</td><td>Screening rápido</td><td>Poco mecanicista</td></tr>
+        <tr><td>DARS</td><td>Interés, motivación, esfuerzo, placer</td><td>Separar perfil</td><td>Autorreporte</td></tr>
+        <tr><td>TEPS</td><td>Anticipatorio vs consumatorio</td><td>MDD/SZ</td><td>No cubre todo PVS</td></tr>
+        <tr><td>PRT / EEfRT</td><td>Reward learning / effort</td><td>Hipótesis conductual</td><td>No rutina clínica</td></tr>
+        <tr><td>RSAS</td><td>Recompensa social</td><td>Riesgo y funcionamiento</td><td>No diagnostica psicosis</td></tr>
+      </tbody>
+    </table>
+    <p class="source reveal">Snaith 1995; Rizvi 2015; Treadway 2012.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Medición</span>
+</section>
+
+<section class="slide" id="slide-12">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Paradoja self-report vs task</p>
+    <h2 class="reveal">La discordancia no invalida: localiza</h2>
+    <div class="readiness reveal">
+      <div class="card"><div class="num">1</div><h3>Autorreporte alto</h3><p>El paciente vive la perdida como global.</p></div>
+      <div class="card"><div class="num">2</div><h3>Tarea preservada</h3><p>El aprendizaje o esfuerzo aún responde en laboratorio.</p></div>
+      <div class="card"><div class="num">3</div><h3>Hipótesis</h3><p>El cuello de botella puede estar en memoria afectiva, contexto, exposoma o prediccion social.</p></div>
+    </div>
+    <p class="lead reveal">No fuerces una medida a tener razón. Haz que ambas te digan dónde mirar.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Paradoja</span>
+</section>
+
+<section class="slide" id="slide-13">
+  <div class="slide-content">
+    <p class="eyebrow reveal">HiTOP Detachment</p>
+    <h2 class="reveal">Detachment no es solo anhedonia</h2>
+    <div class="cols-4 reveal">
+      <div class="card"><h3>Anhedonia</h3><p>Menos interés, placer y energía positiva.</p></div>
+      <div class="card"><h3>Restricted affectivity</h3><p>Expresion emocional baja o contenida.</p></div>
+      <div class="card"><h3>Social withdrawal</h3><p>Menos contacto interpersonal.</p></div>
+      <div class="card"><h3>Intimacy avoidance</h3><p>Evitar cercania, compromiso o dependencia.</p></div>
+      <div class="card"><h3>Suspiciousness</h3><p>Lectura defensiva del otro.</p></div>
+      <div class="card"><h3>Unassertiveness</h3><p>Bajo reclamo interpersonal.</p></div>
+      <div class="card"><h3>Risk aversion</h3><p>Reducción de exploracion.</p></div>
+      <div class="card"><h3>Clave</h3><p>El fenotipo social puede no ser deficit primario de placer.</p></div>
+    </div>
+    <p class="source reveal">Zimmermann et al. 2022.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">HiTOP</span>
+</section>
+
+<section class="slide" id="slide-14">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Crosswalk RDoC x HiTOP</p>
+    <h2 class="reveal">RDoC ve mecanismo; HiTOP ve territorio</h2>
+    <table class="matrix reveal">
+      <thead><tr><th>Fenotipo HiTOP</th><th>Pregunta RDoC</th><th>Riesgo de mala lectura</th></tr></thead>
+      <tbody>
+        <tr><td>Anhedonia</td><td>Wanting, liking, learning o effort?</td><td>Tratar todo como depresión</td></tr>
+        <tr><td>Withdrawal</td><td>Reward social bajo o threat social alto?</td><td>Confundir evitación con desinterés</td></tr>
+        <tr><td>Restricted affectivity</td><td>Menos experiencia, menos expresión o masking?</td><td>Leer plano como vacío interno</td></tr>
+        <tr><td>Intimacy avoidance</td><td>Costo interpersonal supera valor esperado?</td><td>Interpretar como frialdad moral</td></tr>
+      </tbody>
+    </table>
+    <p class="lead reveal">La precisión aparece cuando el fenómeno social conversa con el mecanismo de recompensa.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Crosswalk</span>
+</section>
+
+<section class="slide" id="slide-15">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Transdiagnóstico</p>
+    <h2 class="reveal">El mismo sistema puede apagarse o sobreactivarse</h2>
+    <div class="cols-4 reveal">
+      <div class="card"><h3>MDD</h3><p>Anticipacion, reward bias y aprendizaje deprimidos.</p><span class="tag learning">reward learning</span></div>
+      <div class="card"><h3>Manía</h3><p>Reward hypersensitivity, approach acelerado, menor sueño y metas sobredimensionadas.</p><span class="tag caution">PVS alto</span></div>
+      <div class="card"><h3>SZ</h3><p>Placer en el momento puede estar preservado; falla anticipar y representar futuro.</p><span class="tag reward">future pleasure</span></div>
+      <div class="card"><h3>PTSD</h3><p>Threat reduce exploracion y amortigua reward.</p><span class="tag caution">threat hijack</span></div>
+    </div>
+    <p class="lead reveal">No es una clase solo sobre deficit. Positive Valence tambien explica el polo alto: manía e hipomanía.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Transdiagnóstico</span>
+</section>
+
+<section class="slide" id="slide-16">
+  <div class="slide-content">
+    <p class="eyebrow reveal">MDD</p>
+    <h2 class="reveal">Depression apaga anticipacion, valuacion y aprendizaje</h2>
+    <div class="split reveal">
+      <div class="card stack">
+        <h3>Meta-analisis conductual</h3>
+        <p>La evidencia sugiere impairments en reward bias, option valuation y reinforcement learning frente a controles saños.</p>
+        <span class="tag learning">JAMA Psychiatry 2020</span>
+      </div>
+      <div class="card stack">
+        <h3>Traducción clínica</h3>
+        <p>No basta preguntar "disfruta?". Hay que preguntar si el sistema todavía aprende de pequeños retornos positivos.</p>
+        <span class="tag reward">PRT / DARS / SHAPS</span>
+      </div>
+    </div>
+    <p class="source reveal">Seow & Gillan 2020; Huys et al. 2013.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">MDD</span>
+</section>
+
+<section class="slide" id="slide-17">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Psicosis x drive</p>
+    <h2 class="reveal">Positive Valence separa fenotipos psicóticos</h2>
+    <div class="cols-3 reveal">
+      <div class="card stack">
+        <h3>PVS bajo</h3>
+        <p>Esquizofrenia negativa: F3.drive bajo, abulia, anhedonia social, futuro poco movilizador.</p>
+        <span class="tag reward">detachment / negativos</span>
+      </div>
+      <div class="card stack">
+        <h3>PVS alto episódico</h3>
+        <p>Manía psicótica: F6 ánimo-meta y F3.drive altos, menor sueño, approach y reward valuation excesivos.</p>
+        <span class="tag caution">bipolaridad / switch</span>
+      </div>
+      <div class="card stack">
+        <h3>B-SNIP</h3>
+        <p>Los biotipos cortan el DSM: control cognitivo y reactividad separan perfiles que el diagnóstico mezcla.</p>
+        <span class="tag learning">biotipo ≠ etiqueta</span>
+      </div>
+    </div>
+    <p class="lead reveal">No preguntes solo "hay psicosis?". Pregunta si el drive está bajo, alto, oscilante o capturado por control/reactividad.</p>
+    <p class="source reveal">Garden: panel-biotipos-psicosis-bsnip; esquizofrenia; bipolar I.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Psicosis</span>
+</section>
+
+<section class="slide" id="slide-17b">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Lausanne Psychosis 2025</p>
+    <h2 class="reveal">Tres ejes explican mejor que una etiqueta</h2>
+    <div class="cols-3 reveal">
+      <div class="card stack">
+        <h3>Cognition</h3>
+        <p>MATRICS carga fuerte; disorganización se pega porque afecta rendimiento y abstracción.</p>
+        <span class="tag learning">funcionamiento</span>
+      </div>
+      <div class="card stack">
+        <h3>Depression / Negative</h3>
+        <p>MADRS, PANSS depressed, autoestima baja y negativos forman el eje más relevante para vida real.</p>
+        <span class="tag reward">PVS bajo / detachment</span>
+      </div>
+      <div class="card stack">
+        <h3>Thought Disorder</h3>
+        <p>Positivos, YMRS manía, excitedness y desorganización cargan juntos: manía no queda aislada.</p>
+        <span class="tag caution">PVS alto + psicosis</span>
+      </div>
+    </div>
+    <p class="lead reveal">Clave para S11: Positive Valence entra por dos puertas en psicosis: bajo como anhedonia/negativos, alto como manía-excitación dentro de Thought Disorder.</p>
+    <p class="source reveal">Schöttner Sieler et al. 2025; Schizophrenia 11:97.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Lausanne</span>
+</section>
+
+<section class="slide" id="slide-18">
+  <div class="slide-content">
+    <p class="eyebrow reveal">PTSD</p>
+    <h2 class="reveal">Threat secuestra reward</h2>
+    <div class="case-box reveal">
+      <div class="card stack">
+        <h3>Si el mundo predice peligro</h3>
+        <p>Explorar, conectar, jugar o planear futuro puede sentirse biológicamente caro.</p>
+        <p>La recompensa no desaparece sola; queda subordinada a vigilancia.</p>
+      </div>
+      <div class="card stack">
+        <h3>Formula</h3>
+        <p><strong class="coral">Amenaza alta</strong> + <strong class="violet">costo de esfuerzo alto</strong> + <strong class="teal">baja seguridad contextual</strong> = reward apagado.</p>
+        <span class="tag caution">negative valence -> positive valence</span>
+      </div>
+    </div>
+    <p class="source reveal">Nawijn et al. 2015; traumatic stress through RDoC/HiTOP, 2022.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">PTSD</span>
+</section>
+
+<section class="slide" id="slide-19">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Recompensa social</p>
+    <h2 class="reveal">Social anhedonia no es introversion extrema</h2>
+    <div class="cols-3 reveal">
+      <div class="card"><h3>Disfrute social</h3><p>Capacidad de sentir valor en contacto interpersonal.</p></div>
+      <div class="card"><h3>Funcionamiento</h3><p>Social anhedonia predice deterioro y aislamiento en espectro psicotico.</p></div>
+      <div class="card"><h3>RSAS</h3><p>Puede ser canario clínico, no detector diagnóstico de psicosis.</p></div>
+    </div>
+    <p class="lead reveal">Un puntaje alto abre vigilancia y formulación. No autoriza etiquetar ni asustar.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Social</span>
+</section>
+
+<section class="slide" id="slide-20">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Inflamacion-recompensa</p>
+    <h2 class="reveal">El cuerpo puede bajar la motivación</h2>
+    <div class="split reveal">
+      <div class="card stack">
+        <h3>Vía biológica</h3>
+        <p>Inflamacion altera neurotransmisores y circuitos de recompensa, especialmente ventral striatum y vmPFC.</p>
+        <span class="tag caution">CRP / IL-6 / TNF</span>
+      </div>
+      <div class="card stack">
+        <h3>Clínica</h3>
+        <p>Menos energía de acercamiento, menor esfuerzo, fatiga, reducción de interés y menor respuesta a terapia estándar.</p>
+        <span class="tag reward">anhedonia inflamatoria</span>
+      </div>
+    </div>
+    <p class="source reveal">Bekhbat, Treadway & Felger 2022.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Inflamacion</span>
+</section>
+
+<section class="slide" id="slide-21">
+  <div class="slide-content">
+    <p class="eyebrow reveal">CRP como decisión support</p>
+    <h2 class="reveal">El umbral cambia la pregunta, no reemplaza juicio clínico</h2>
+    <div class="cols-3 reveal">
+      <div class="card stack"><span class="tag">CRP &lt;2</span><h3>Ruta estándar</h3><p>No justificar antiinflamatorio por "anhedonia" sola.</p></div>
+      <div class="card stack"><span class="tag reward">CRP 2-5</span><h3>Inflamacion leve-moderada</h3><p>Considerar perfil inflamatorio y evidencia de tratamientos dirigidos.</p></div>
+      <div class="card stack"><span class="tag caution">CRP &gt;5</span><h3>Subgrupo claro</h3><p>Mayor plausibilidad biológica; descartar causa médica activa.</p></div>
+    </div>
+    <p class="lead reveal">CRP no prescribe sola. Aumenta la calidad de la hipótesis si encaja con historia, síntomas y seguridad.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">CRP</span>
+</section>
+
+<section class="slide" id="slide-22">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Antiinflamatorios</p>
+    <h2 class="reveal">Preciso no significa nuevo ni caro</h2>
+    <div class="split reveal">
+      <div class="card stack">
+        <h3>Infliximab</h3>
+        <p>Ensayo TRD: señal dependiente de inflamación basal. No es antidepresivo universal.</p>
+        <span class="tag caution">Raison 2013</span>
+      </div>
+      <div class="card stack">
+        <h3>Meta-analisis 2026</h3>
+        <p>En depresión con inflamación elevada, tratamientos antiinflamatorios redujeron síntomas depresivos y anhedonia.</p>
+        <span class="tag reward">Mac Giollabhui 2026</span>
+      </div>
+    </div>
+    <p class="lead reveal">Mensaje docente: elegir poblacion es parte del tratamiento. Sin estratificacion, el promedio borra el subgrupo.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Tratamiento</span>
+</section>
+
+<section class="slide" id="slide-23">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Dopamine challenge</p>
+    <h2 class="reveal">Si inflamación baja reward, dopamina puede reabrirlo</h2>
+    <div class="case-box reveal">
+      <div class="card stack">
+        <h3>Prueba de concepto</h3>
+        <p>En MDD con CRP mayor a 2 mg/L, L-DOPA aumento conectividad VS-vmPFC y se asocio a menor anhedonia.</p>
+        <span class="tag learning">target engagement</span>
+      </div>
+      <div class="card stack">
+        <h3>No significa</h3>
+        <p>No significa que todos deban recibir L-DOPA. Significa que el circuito reward-inflamación es medible y manipulable.</p>
+        <span class="tag caution">no receta</span>
+      </div>
+    </div>
+    <p class="source reveal">Bekhbat et al. 2022; repeated L-DOPA 2025.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Dopamina</span>
+</section>
+
+<section class="slide" id="slide-24">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Ketamina</p>
+    <h2 class="reveal">La anhedonia puede moverse antes que la depresión global</h2>
+    <div class="timeline reveal">
+      <div class="card time-card"><h3>0 h</h3><p>Infusion / exposicion NMDA-glutamato.</p></div>
+      <div class="card time-card"><h3>4 h</h3><p>Ventana neurobiológica temprana.</p></div>
+      <div class="card time-card"><h3>24 h</h3><p>SHAPS puede mejorar antes del MADRS global.</p></div>
+      <div class="card time-card"><h3>72 h</h3><p>Mejora depresiva más amplia si responde.</p></div>
+    </div>
+    <p class="lead reveal">Ketamina no valida el diagnóstico. Valida que reward y depresión global pueden separarse temporalmente.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Ketamina</span>
+</section>
+
+<section class="slide" id="slide-25">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Pramipexol</p>
+    <h2 class="reveal">D3 no es exotico: es una hipótesis medible</h2>
+    <div class="cols-3 reveal">
+      <div class="card stack"><span class="tag reward">mecanismo</span><h3>D2/D3 agonismo</h3><p>Apunta a motivación, estriado y reward anticipation.</p></div>
+      <div class="card stack"><span class="tag learning">evidencia</span><h3>PAX-D 2025</h3><p>RCT en TRD unipolar: reducción de síntomas a 12 semanas con efectos adversos.</p></div>
+      <div class="card stack"><span class="tag caution">seguridad</span><h3>Monitoreo</h3><p>Impulsividad, juego, hipersexualidad, manía, somnolencia, náuseas.</p></div>
+    </div>
+    <p class="lead reveal">No es "dopamina para todos". Es una opción si el deficit wanting/effort domina y el riesgo esta controlado.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Pramipexol</span>
+</section>
+
+<section class="slide" id="slide-26">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Bupropion</p>
+    <h2 class="reveal">NDRI cuando energía, esfuerzo y approach dominan</h2>
+    <div class="split reveal">
+      <div class="card stack">
+        <h3>Cuando tiene sentido</h3>
+        <p>Baja energía, fatiga, bajo esfuerzo, queja de "no arranco", anhedonia con bajo arousal.</p>
+        <span class="tag approach">DAT / NET</span>
+      </div>
+      <div class="card stack">
+        <h3>Cuando tener cuidado</h3>
+        <p>Insomnio, ansiedad activada, riesgo bipolar, epilepsia, TCA activo o interacciones.</p>
+        <span class="tag caution">seguridad primero</span>
+      </div>
+    </div>
+    <p class="source reveal">Bupropion como hipótesis catecolaminergica: evidencia de dominio positiva, no selector absoluto.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Bupropion</span>
+</section>
+
+<section class="slide" id="slide-27">
+  <div class="slide-content">
+    <p class="eyebrow reveal">PVS alto / manía</p>
+    <h2 class="reveal">Manía no es felicidad: es approach desregulado</h2>
+    <div class="cols-4 reveal">
+      <div class="card"><h3>BAS alto</h3><p>Mayor sensibilidad a metas, éxito, incentivos y señales de oportunidad.</p></div>
+      <div class="card"><h3>Effort bajo costo</h3><p>Menos sueño, más energía, más proyectos y menor freno ante consecuencias.</p></div>
+      <div class="card"><h3>Network psychometrics</h3><p>Ánimo elevado puede ser nodo central; irritabilidad, agresión y pensamiento-contenido se acoplan.</p></div>
+      <div class="card"><h3>Firewall clínico</h3><p>Antes de activar dopamina, descartar hipomanía, bipolaridad, switch e impulsividad.</p></div>
+    </div>
+    <p class="lead reveal">La clave docente: PVS bajo produce anhedonia; PVS alto puede producir manía. Ambos son patología dimensional.</p>
+    <p class="source reveal">Johnson et al. 2012; Nusslock & Alloy 2017; Briganti et al. 2021.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Manía</span>
+</section>
+
+<section class="slide" id="slide-28">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Decisión tree</p>
+    <h2 class="reveal">Cuatro preguntas antes de tratar</h2>
+    <div class="flow reveal">
+      <div class="card"><div class="num">1</div><h3>PVS bajo o alto?</h3><p>Anhedonia/detachment versus hipomanía, manía, menor sueño, grandiosidad o irritabilidad activada.</p></div>
+      <div class="card"><div class="num">2</div><h3>Que pieza falla?</h3><p>Wanting, liking, learning, effort o reward social.</p></div>
+      <div class="card"><div class="num">3</div><h3>Hay inflamación?</h3><p>CRP y contexto médico: precisión estrecha pero accionable.</p></div>
+      <div class="card"><div class="num">4</div><h3>Qué intervención calza?</h3><p>Conductual, antiinflamatoria, ketamina/esketamina o dopaminérgica según seguridad.</p></div>
+    </div>
+    <p class="lead reveal">Tratamiento dimensional = mecanismo + subgrupo + seguridad + medición repetida.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Decisión</span>
+</section>
+
+<section class="slide" id="slide-29">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Actividad</p>
+    <h2 class="reveal">Clasifiquen a Jimena en 4 minutos</h2>
+    <div class="cols-4 reveal">
+      <div class="card"><h3>1 · PVS</h3><p>Marquen dirección: drive bajo, alto u oscilante; wanting, liking, learning, effort, social reward.</p></div>
+      <div class="card"><h3>2 · HiTOP</h3><p>Elijan facets: anhedonia, withdrawal, restricted affectivity, intimacy avoidance.</p></div>
+      <div class="card"><h3>3 · Medición</h3><p>Qué escala o tarea pedirían primero y por qué?</p></div>
+      <div class="card"><h3>4 · Match</h3><p>Elijan una hipótesis de tratamiento y un criterio de cambio.</p></div>
+    </div>
+    <p class="source reveal">Entregable oral: una frase por columna.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Actividad</span>
+</section>
+
+<section class="slide" id="slide-30">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Debrief</p>
+    <h2 class="reveal">La respuesta correcta es una matriz, no una molecula</h2>
+    <table class="matrix reveal">
+      <thead><tr><th>Columna</th><th>Ejemplo en Jimena</th><th>Decisión honesta</th></tr></thead>
+      <tbody>
+        <tr><td>PVS</td><td>Wanting + effort bajos; liking parcial</td><td>No asumir "placer abolido"</td></tr>
+        <tr><td>HiTOP</td><td>Anhedonia + withdrawal social</td><td>Separar aislamiento de evitación por threat</td></tr>
+        <tr><td>Biología</td><td>CRP moderada</td><td>Repetir/confirmar y descartar causas médicas</td></tr>
+        <tr><td>Tratamiento</td><td>Dopaminérgico o antiinflamatorio como hipótesis</td><td>Medir SHAPS/DARS/función a 6-8 semanas</td></tr>
+      </tbody>
+    </table>
+    <p class="lead reveal">Precisión no es tener más opciones. Es hacer que cada opción tenga una razón falsable.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Debrief</span>
+</section>
+
+<section class="slide" id="slide-31">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Overclaim firewall</p>
+    <h2 class="reveal">La precisión muere por prometer de más</h2>
+    <div class="cols-3 reveal">
+      <div class="card"><h3>No</h3><p>"CRP alta = infliximab".</p></div>
+      <div class="card"><h3>No</h3><p>"Anhedonia = dopamina baja".</p></div>
+      <div class="card"><h3>No</h3><p>"RSAS alto = prodomo psicotico".</p></div>
+      <div class="card"><h3>No</h3><p>"fMRI ya elige tratamiento".</p></div>
+      <div class="card"><h3>No</h3><p>"Ketamina corrige reward en todos".</p></div>
+      <div class="card"><h3>Si</h3><p>Mecanismo, medición, seguridad y actualización.</p></div>
+    </div>
+    <p class="lead reveal">La honestidad no baja el valor de psiquiatría de precisión. La hace creíble.</p>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Firewall</span>
+</section>
+
+<section class="slide" id="slide-32">
+  <div class="slide-content centered">
+    <p class="eyebrow reveal">Take-home</p>
+    <p class="quote reveal">La anhedonia no es un sintoma: es un mapa de donde el futuro dejo de tirar.</p>
+    <p class="lead reveal">Dimensionalizar positive valence cambia que mides, que tratas y como sabes si funcióno.</p>
+    <div class="card reveal">
+      <h3>Pregunta de salida</h3>
+      <p>Qué cambiaría en tu formulación si piensas en positive valence en lugar de "depresión"?</p>
+    </div>
+  </div>
+  <span class="slide-num"></span><span class="section-label">Cierre</span>
+</section>
+</main>
+
+<script>
+/* ===========================================
+   SLIDE PRESENTATION CONTROLLER
+   =========================================== */
+const ABBR_FOOTNOTES = {
+  "slide-1": "PVS=Positive Valence Systems; R1=residente de primer ano.",
+  "slide-3": "MDD=trastorno depresivo mayor; SHAPS=Snaith-Hamilton Pleasure Scale; DARS=Dimensional Anhedonia Rating Scale; CRP=proteína C reactiva; RSAS=Revised Social Anhedonia Scale.",
+  "slide-5": "RDoC=Research Domain Criteria; PVS=Positive Valence Systems; NIMH=National Institute of Mental Health.",
+  "slide-7": "VTA=área tegmental ventral; NAcc=núcleo accumbens.",
+  "slide-8": "NAcc=núcleo accumbens; OFC=corteza orbitofrontal.",
+  "slide-10": "dACC=corteza cingulada anterior dorsal; EEfRT=Effort Expenditure for Rewards Task.",
+  "slide-11": "SHAPS=Snaith-Hamilton Pleasure Scale; DARS=Dimensional Anhedonia Rating Scale; TEPS=Temporal Experience of Pleasure Scale; PRT=Probabilistic Reward Task; EEfRT=Effort Expenditure for Rewards Task.",
+  "slide-15": "MDD=trastorno depresivo mayor; SZ=esquizofrenia; PTSD/TEP=trastorno de estrés postraumático; PVS=Positive Valence Systems.",
+  "slide-16": "MDD=trastorno depresivo mayor; PRT=Probabilistic Reward Task; DARS=Dimensional Anhedonia Rating Scale; SHAPS=Snaith-Hamilton Pleasure Scale.",
+  "slide-17": "PVS=Positive Valence Systems; F3.drive=ancla pMSE de motivación/drive; F6 ánimo-meta=ancla pMSE de valencia afectiva orientada a metas; B-SNIP=Biotypes in the Bipolar-Schizophrenia Network on Intermediate Phenotypes.",
+  "slide-17b": "MATRICS=Measurement and Treatment Research to Improve Cognition in Schizophrenia; MADRS=Montgomery-Asberg Depression Rating Scale; PANSS=Positive and Negative Syndrome Scale; YMRS=Young Mania Rating Scale; PVS=Positive Valence Systems.",
+  "slide-18": "PTSD/TEP=trastorno de estres postraumatico.",
+  "slide-19": "RSAS=Revised Social Anhedonia Scale.",
+  "slide-20": "CRP=proteína C reactiva; IL-6=interleucina 6; TNF=factor de necrosis tumoral; VS=estriado ventral; vmPFC=corteza prefrontal ventromedial.",
+  "slide-21": "CRP=proteína C reactiva. Umbrales en mg/L; descartar infección, enfermedad inflamatoria activa u otras causas médicas.",
+  "slide-23": "MDD=trastorno depresivo mayor; VS-vmPFC=estriado ventral a corteza prefrontal ventromedial; L-DOPA=levodopa.",
+  "slide-24": "NMDA=N-metil-D-aspartato; SHAPS=Snaith-Hamilton Pleasure Scale; MADRS=Montgomery-Asberg Depression Rating Scale.",
+  "slide-25": "D2/D3=receptores dopaminérgicos 2/3; TRD=depresión resistente al tratamiento; RCT=ensayo clínico aleatorizado.",
+  "slide-26": "NDRI=inhibidor de recaptacion de noradrenalina-dopamina; DAT/NET=transportadores dopamina/noradrenalina; TCA=trastorno de conducta alimentaria.",
+  "slide-27": "BAS=Behavioral Activation System; PVS=Positive Valence Systems; YMRS=Young Mania Rating Scale; ASRM=Altman Self-Rating Mania Scale.",
+  "slide-30": "PVS=Positive Valence Systems; SHAPS/DARS=escalas de anhedonia.",
+  "slide-31": "CRP=proteína C reactiva; RSAS=Revised Social Anhedonia Scale; fMRI=resonancia funciónal."
+};
+
+class SlidePresentation {
+  constructor() {
+    this.slides = Array.from(document.querySelectorAll(".slide"));
+    this.currentSlide = 0;
+    this.navDots = document.getElementById("navDots");
+    this.progressBar = document.getElementById("progressBar");
+    this.wheelLocked = false;
+    this.touchStartY = 0;
+    this.setupSlideLabels();
+    this.setupAbbreviationFootnotes();
+    this.setupIntersectionObserver();
+    this.setupNavDots();
+    this.setupKeyboardNav();
+    this.setupWheelNav();
+    this.setupTouchNav();
+    this.updateProgress();
+  }
+
+  setupSlideLabels() {
+    this.slides.forEach((slide, index) => {
+      const num = slide.querySelector(".slide-num");
+      if (num) num.textContent = `${String(index + 1).padStart(2, "0")} / ${String(this.slides.length).padStart(2, "0")}`;
+    });
+  }
+
+  setupAbbreviationFootnotes() {
+    this.slides.forEach((slide) => {
+      const definition = ABBR_FOOTNOTES[slide.id];
+      if (!definition) return;
+      const footnote = document.createElement("p");
+      footnote.className = "abbr-footnote";
+      const label = document.createElement("strong");
+      label.textContent = "Abrev.: ";
+      footnote.append(label, document.createTextNode(definition));
+      slide.appendChild(footnote);
+    });
+  }
+
+  setupIntersectionObserver() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          this.currentSlide = this.slides.indexOf(entry.target);
+          this.updateProgress();
+          this.updateDots();
+        }
+      });
+    }, { threshold: 0.55 });
+
+    this.slides.forEach((slide) => observer.observe(slide));
+  }
+
+  setupNavDots() {
+    this.navDots.innerHTML = "";
+    this.slides.forEach((slide, index) => {
+      const button = document.createElement("button");
+      button.className = "dot";
+      button.type = "button";
+      button.setAttribute("aria-label", `Ir al slide ${index + 1}`);
+      button.addEventListener("click", () => this.goToSlide(index));
+      this.navDots.appendChild(button);
+    });
+    this.updateDots();
+  }
+
+  setupKeyboardNav() {
+    window.addEventListener("keydown", (event) => {
+      if (["ArrowDown", "ArrowRight", " ", "PageDown"].includes(event.key)) {
+        event.preventDefault();
+        this.nextSlide();
+      }
+      if (["ArrowUp", "ArrowLeft", "PageUp"].includes(event.key)) {
+        event.preventDefault();
+        this.previousSlide();
+      }
+      if (event.key === "Home") {
+        event.preventDefault();
+        this.goToSlide(0);
+      }
+      if (event.key === "End") {
+        event.preventDefault();
+        this.goToSlide(this.slides.length - 1);
+      }
+    });
+  }
+
+  setupWheelNav() {
+    window.addEventListener("wheel", (event) => {
+      if (Math.abs(event.deltaY) < 32 || this.wheelLocked) return;
+      this.wheelLocked = true;
+      if (event.deltaY > 0) this.nextSlide();
+      else this.previousSlide();
+      window.setTimeout(() => { this.wheelLocked = false; }, 520);
+    }, { passive: true });
+  }
+
+  setupTouchNav() {
+    window.addEventListener("touchstart", (event) => {
+      this.touchStartY = event.changedTouches[0].clientY;
+    }, { passive: true });
+
+    window.addEventListener("touchend", (event) => {
+      const delta = this.touchStartY - event.changedTouches[0].clientY;
+      if (Math.abs(delta) < 44) return;
+      if (delta > 0) this.nextSlide();
+      else this.previousSlide();
+    }, { passive: true });
+  }
+
+  goToSlide(index) {
+    const target = Math.max(0, Math.min(index, this.slides.length - 1));
+    this.slides[target].scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  nextSlide() {
+    this.goToSlide(this.currentSlide + 1);
+  }
+
+  previousSlide() {
+    this.goToSlide(this.currentSlide - 1);
+  }
+
+  updateProgress() {
+    const pct = ((this.currentSlide + 1) / this.slides.length) * 100;
+    this.progressBar.style.width = `${pct}%`;
+  }
+
+  updateDots() {
+    const dots = Array.from(this.navDots.querySelectorAll(".dot"));
+    dots.forEach((dot, index) => dot.classList.toggle("active", index === this.currentSlide));
+  }
+}
+
+window.addEventListener("DOMContentLoaded", () => new SlidePresentation());
+</script>
+</body>
+</html>
