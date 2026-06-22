@@ -3,1536 +3,749 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Sesión 2: RDoC — El lenguaje operativo del curso</title>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,300;1,6..72,400&family=Nunito+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<title>Psicopatología Dimensional | Bloque 1, Sesión 02 — RDoC: ¿Qué sistema falla?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
-/* === RESET & CUSTOM PROPERTIES === */
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-
-:root {
-  --bg-primary: #141518;
-  --bg-panel: #1a1b22;
-  --bg-card: #1e2028;
-  --text-primary: #dddad5;
-  --text-secondary: #8a8780;
-  --text-muted: #5a5850;
-  --accent: #c8503c;
-  --accent-glow: rgba(200, 80, 60, 0.15);
-  --accent-soft: rgba(200, 80, 60, 0.08);
-  --white: #f0ede8;
-
-  /* RDoC Domain Colors */
-  --dom-negval: #c8503c;
-  --dom-posval: #5a9a6a;
-  --dom-cogsys: #4a7fb5;
-  --dom-social: #d4a843;
-  --dom-arousal: #d4803a;
-  --dom-sensori: #8a6ab5;
-
-  --font-display: 'Newsreader', serif;
-  --font-body: 'Nunito Sans', sans-serif;
-
-  --title-size: clamp(2rem, 5vw, 4rem);
-  --h2-size: clamp(1.5rem, 3.5vw, 2.8rem);
-  --h3-size: clamp(1.1rem, 2.2vw, 1.6rem);
-  --body-size: clamp(0.75rem, 1.3vw, 1.05rem);
-  --small-size: clamp(0.65rem, 1vw, 0.85rem);
-  --label-size: clamp(0.55rem, 0.85vw, 0.72rem);
-
-  --slide-padding: clamp(1.5rem, 4vw, 4rem);
-  --content-gap: clamp(0.5rem, 1.5vw, 1.5rem);
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg-deep:#050716;--bg-primary:#070811;--bg-panel:#0d1224;--bg-card:rgba(12,18,35,.78);
+--text-primary:#f2fbff;--text-secondary:rgba(213,231,239,.76);--text-muted:rgba(157,183,198,.62);
+--cyan:#00f5ff;--magenta:#ff2ec4;--violet:#8b5cff;--acid:#dcff38;--amber:#ffb627;--pink:#ff4d9d;--rdoc:#1aff8c;
+--line:rgba(0,245,255,.22);--grid-line:rgba(0,245,255,.072);--panel-line:rgba(0,245,255,.22);
+--magnetic-shadow:0 0 24px rgba(0,245,255,.16),0 0 54px rgba(255,46,196,.10);
+--font-display:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;--font-mono:'JetBrains Mono',monospace;
+--title-size:clamp(1.5rem,3.8vw,3.4rem);--h2-size:clamp(1.25rem,2.8vw,2.4rem);--h3-size:clamp(.95rem,1.8vw,1.45rem);
+--body-size:clamp(.72rem,1.1vw,.98rem);--small-size:clamp(.62rem,.86vw,.82rem);--label-size:clamp(.52rem,.72vw,.68rem);
+--footer-size:clamp(.5rem,.7vw,.64rem);--slide-padding:clamp(1.1rem,3vw,3.2rem);--content-gap:clamp(.5rem,1.3vw,1.2rem);
+--ease-out-expo:cubic-bezier(.16,1,.3,1);--duration-normal:.7s;
 }
-
-/* === VIEWPORT BASE === */
-html, body { height: 100%; overflow-x: hidden; }
-html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
-
-.slide {
-  width: 100vw; height: 100vh; height: 100dvh;
-  overflow: hidden; scroll-snap-align: start;
-  display: flex; position: relative;
-  background: var(--bg-primary);
-  font-family: var(--font-body);
-  color: var(--text-primary);
-}
-
-.slide-content {
-  flex: 1; display: flex; flex-direction: column;
-  justify-content: center;
-  max-height: 100%; overflow: hidden;
-  padding: var(--slide-padding);
-}
-
-/* === TYPOGRAPHY === */
-h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.15; }
-h1 { font-size: var(--title-size); }
-h2 { font-size: var(--h2-size); }
-h3 { font-size: var(--h3-size); }
-p, li { font-size: var(--body-size); line-height: 1.55; color: var(--text-secondary); }
-em { color: var(--accent); font-style: italic; }
-strong { color: var(--text-primary); font-weight: 600; }
-
-/* === ANIMATIONS === */
-.reveal {
-  opacity: 0; transform: translateY(20px);
-  transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
-}
-.slide.visible .reveal { opacity: 1; transform: translateY(0); }
-.reveal:nth-child(2) { transition-delay: 0.1s; }
-.reveal:nth-child(3) { transition-delay: 0.2s; }
-.reveal:nth-child(4) { transition-delay: 0.3s; }
-.reveal:nth-child(5) { transition-delay: 0.4s; }
-.reveal:nth-child(6) { transition-delay: 0.5s; }
-.reveal:nth-child(7) { transition-delay: 0.6s; }
-.reveal:nth-child(8) { transition-delay: 0.7s; }
-.reveal:nth-child(9) { transition-delay: 0.8s; }
-
-.reveal-scale {
-  opacity: 0; transform: scale(0.85);
-  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
-}
-.slide.visible .reveal-scale { opacity: 1; transform: scale(1); }
-
-/* === LAYOUT HELPERS === */
-.split { display: flex; height: 100%; }
-.split-left { flex: 0 0 48%; display: flex; flex-direction: column; justify-content: center; padding: var(--slide-padding); position: relative; z-index: 1; }
-.split-right { flex: 1; display: flex; align-items: center; justify-content: center; background: var(--bg-panel); position: relative; overflow: hidden; }
-.centered { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: var(--slide-padding); height: 100%; }
-
-.eyebrow {
-  font-size: var(--label-size); color: var(--accent);
-  letter-spacing: 0.3em; text-transform: uppercase; font-weight: 600;
-  margin-bottom: clamp(0.5rem, 1.5vh, 1.2rem);
-  font-family: var(--font-body);
-}
-.divider { width: 40px; height: 2px; background: var(--accent); margin: clamp(0.8rem, 1.5vh, 1.5rem) 0; }
-.source { font-size: var(--label-size); color: var(--text-muted); margin-top: auto; padding-top: clamp(0.5rem, 1vh, 1rem); }
-
-/* === SECTION HEADERS === */
-.section-slide { background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-panel) 100%); }
-.section-slide .section-number {
-  font-family: var(--font-display); font-size: clamp(4rem, 12vw, 10rem);
-  color: var(--accent-soft); position: absolute; top: clamp(1rem, 3vh, 2rem);
-  right: clamp(2rem, 5vw, 4rem); line-height: 1; font-weight: 600;
-}
-
-/* === QUOTE === */
-.quote {
-  font-family: var(--font-display); font-size: clamp(1.1rem, 2.2vw, 1.7rem);
-  font-style: italic; color: var(--text-primary); line-height: 1.5;
-  border-left: 3px solid var(--accent); padding-left: clamp(1rem, 2vw, 1.5rem);
-  max-width: 700px;
-}
-.quote-author { font-size: var(--small-size); color: var(--text-muted); font-style: normal; margin-top: 0.5rem; font-family: var(--font-body); }
-
-/* === DOMAIN BAR === */
-.domain-bar { position: absolute; top: 0; left: 0; right: 0; height: 4px; }
-
-/* === RDoC MATRIX GRID === */
-.matrix-grid {
-  display: grid;
-  grid-template-columns: clamp(60px, 12vw, 120px) repeat(8, 1fr);
-  grid-template-rows: auto repeat(6, 1fr);
-  gap: 2px; width: 100%; max-height: min(65vh, 500px);
-  font-size: var(--label-size);
-}
-.matrix-header {
-  background: var(--bg-panel); padding: clamp(0.2rem, 0.4vw, 0.4rem);
-  text-align: center; color: var(--text-muted); font-weight: 600;
-  letter-spacing: 0.05em; text-transform: uppercase;
-  display: flex; align-items: center; justify-content: center;
-}
-.matrix-cell {
-  background: rgba(255,255,255,0.02); padding: clamp(0.15rem, 0.3vw, 0.3rem);
-  display: flex; align-items: center; justify-content: center;
-  text-align: center; color: var(--text-muted);
-  transition: background 0.4s ease, box-shadow 0.4s ease;
-}
-.matrix-cell.highlight {
-  background: rgba(200,80,60,0.15);
-  box-shadow: inset 0 0 0 1px var(--accent);
-  color: var(--text-primary);
-}
-.matrix-cell.filled { color: var(--text-secondary); font-size: clamp(0.5rem, 0.7vw, 0.65rem); }
-.matrix-domain {
-  background: var(--bg-card); padding: clamp(0.2rem, 0.4vw, 0.4rem);
-  font-weight: 600; color: var(--text-primary);
-  display: flex; align-items: center; gap: 0.3rem;
-  border-left: 3px solid var(--dom-color, var(--accent));
-}
-
-/* === TIMELINE === */
-.timeline { display: flex; align-items: center; gap: 0; width: 100%; position: relative; }
-.timeline::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 2px; background: var(--text-muted); transform: translateY(-50%); z-index: 0; }
-.timeline-node {
-  flex: 1; display: flex; flex-direction: column; align-items: center;
-  position: relative; z-index: 1;
-}
-.timeline-dot {
-  width: clamp(10px, 1.5vw, 16px); height: clamp(10px, 1.5vw, 16px);
-  border-radius: 50%; background: var(--text-muted);
-  margin-bottom: clamp(0.3rem, 0.6vh, 0.5rem);
-}
-.timeline-dot.accent { background: var(--accent); width: clamp(14px, 2vw, 22px); height: clamp(14px, 2vw, 22px); box-shadow: 0 0 12px var(--accent-glow); }
-.timeline-year { font-size: var(--small-size); font-weight: 600; color: var(--text-primary); }
-.timeline-label { font-size: var(--label-size); color: var(--text-muted); text-align: center; max-width: 100px; }
-
-/* === FAIL BLOCKS === */
-.fail-list { display: flex; flex-direction: column; gap: clamp(0.5rem, 1vh, 0.8rem); }
-.fail-item { display: flex; align-items: center; gap: clamp(0.5rem, 1vw, 0.8rem); }
-.fail-x { color: var(--accent); font-size: var(--h3-size); font-weight: 700; flex-shrink: 0; }
-
-/* === STACKED LEVELS === */
-.stack-levels { display: flex; flex-direction: column; gap: clamp(0.4rem, 0.8vh, 0.6rem); width: 100%; max-width: 600px; }
-.stack-row {
-  display: flex; align-items: center; gap: clamp(0.5rem, 1vw, 0.8rem);
-  padding: clamp(0.5rem, 1vh, 0.8rem) clamp(0.8rem, 1.5vw, 1.2rem);
-  background: var(--bg-card); border-radius: 6px;
-  border-left: 4px solid var(--row-color, var(--text-muted));
-}
-.stack-label { font-size: var(--body-size); font-weight: 600; color: var(--text-primary); min-width: clamp(50px, 8vw, 80px); }
-.stack-desc { font-size: var(--small-size); color: var(--text-secondary); }
-
-/* === PIPELINE === */
-.pipeline { display: flex; align-items: center; gap: 0; width: 100%; flex-wrap: wrap; justify-content: center; }
-.pipeline-box {
-  padding: clamp(0.3rem, 0.6vw, 0.5rem) clamp(0.5rem, 0.8vw, 0.7rem);
-  background: var(--bg-card); border-radius: 6px;
-  border: 1px solid rgba(255,255,255,0.06);
-  text-align: center; font-size: var(--label-size);
-}
-.pipeline-box .pipe-icon { font-size: clamp(0.8rem, 1.2vw, 1.1rem); margin-bottom: 0.15rem; }
-.pipeline-box .pipe-label { color: var(--text-secondary); }
-.pipeline-box.active { border-color: var(--accent); background: var(--accent-glow); }
-.pipeline-arrow { color: var(--text-muted); font-size: var(--small-size); padding: 0 clamp(0.15rem, 0.3vw, 0.3rem); }
-
-/* === UNIT TABLE === */
-.unit-table { width: 100%; border-collapse: collapse; }
-.unit-table td { padding: clamp(0.2rem, 0.4vh, 0.35rem) clamp(0.4rem, 0.8vw, 0.6rem); border-bottom: 1px solid rgba(255,255,255,0.03); }
-.unit-table .ut-icon { font-size: clamp(0.9rem, 1.3vw, 1.2rem); text-align: center; width: clamp(28px, 4vw, 40px); }
-.unit-table .ut-name { color: var(--text-primary); font-weight: 500; font-size: var(--small-size); }
-.unit-table .ut-example { color: var(--text-muted); font-size: var(--label-size); }
-
-/* === DOMAIN CONSTRUCT LIST === */
-.construct-list { display: flex; flex-direction: column; gap: clamp(0.3rem, 0.6vh, 0.5rem); }
-.construct-item {
-  display: flex; align-items: baseline; gap: clamp(0.4rem, 0.8vw, 0.6rem);
-  padding: clamp(0.3rem, 0.5vh, 0.4rem) 0;
-}
-.construct-icon { font-size: clamp(0.8rem, 1.2vw, 1rem); flex-shrink: 0; }
-.construct-name { font-size: var(--body-size); color: var(--text-primary); font-weight: 500; }
-.construct-desc { font-size: var(--small-size); color: var(--text-muted); }
-
-/* === FLOWCHART VERTICAL === */
-.flowchart-v { display: flex; flex-direction: column; align-items: center; gap: 0; }
-.fc-box {
-  padding: clamp(0.3rem, 0.6vh, 0.5rem) clamp(0.8rem, 1.5vw, 1.2rem);
-  background: var(--bg-card); border-radius: 6px;
-  border: 1px solid rgba(255,255,255,0.06);
-  font-size: var(--small-size); color: var(--text-secondary);
-  text-align: center; min-width: clamp(150px, 25vw, 280px);
-}
-.fc-arrow { color: var(--text-muted); font-size: var(--body-size); padding: clamp(0.1rem, 0.2vh, 0.2rem) 0; }
-
-/* === HUB AND SPOKE === */
-.hub-spoke { display: flex; align-items: center; justify-content: center; gap: clamp(0.5rem, 1.5vw, 1.5rem); flex-wrap: wrap; }
-.hub-center {
-  width: clamp(80px, 12vw, 120px); height: clamp(80px, 12vw, 120px);
-  border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  text-align: center; font-size: var(--small-size); font-weight: 600;
-  flex-shrink: 0;
-}
-.spoke-item {
-  display: flex; flex-direction: column; gap: 0.2rem;
-  padding: clamp(0.4rem, 0.8vh, 0.6rem) clamp(0.6rem, 1vw, 0.8rem);
-  background: var(--bg-card); border-radius: 6px;
-  border-left: 3px solid var(--spoke-color, var(--text-muted));
-  font-size: var(--label-size); max-width: clamp(120px, 20vw, 180px);
-}
-.spoke-item strong { font-size: var(--small-size); }
-
-/* === SPECTRUM BAR === */
-.spectrum-container { width: 100%; max-width: 600px; }
-.spectrum-bar {
-  height: clamp(8px, 1.2vh, 14px); border-radius: 99px;
-  background: linear-gradient(90deg, var(--dom-cogsys), var(--dom-social), var(--dom-negval));
-  position: relative; margin: clamp(1rem, 2vh, 1.5rem) 0;
-}
-.spectrum-marker {
-  position: absolute; top: calc(-1 * clamp(1.2rem, 2vh, 1.8rem));
-  transform: translateX(-50%);
-  font-size: var(--label-size); color: var(--text-primary); font-weight: 600;
-  text-align: center; white-space: nowrap;
-}
-.spectrum-marker::after {
-  content: ''; position: absolute; bottom: calc(-1 * clamp(0.4rem, 0.6vh, 0.6rem));
-  left: 50%; transform: translateX(-50%);
-  width: 2px; height: clamp(0.3rem, 0.5vh, 0.5rem); background: var(--text-primary);
-}
-.spectrum-label {
-  position: absolute; bottom: calc(-1 * clamp(1.2rem, 2vh, 1.8rem));
-  transform: translateX(-50%);
-  font-size: var(--label-size); color: var(--text-muted);
-}
-
-/* === VENN DIAGRAM === */
-.venn { position: relative; width: clamp(280px, 40vw, 400px); height: clamp(220px, 30vh, 320px); margin: 0 auto; }
-.venn-circle {
-  position: absolute; border-radius: 50%;
-  width: clamp(140px, 20vw, 200px); height: clamp(140px, 20vw, 200px);
-  display: flex; align-items: center; justify-content: center;
-  text-align: center; font-size: var(--label-size); font-weight: 600;
-  padding: clamp(0.3rem, 0.5vw, 0.5rem);
-}
-.venn-center {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  font-size: var(--small-size); font-weight: 600; color: var(--text-primary);
-  text-align: center; z-index: 2; max-width: 100px;
-}
-
-/* === EXERCISE TEMPLATE === */
-.exercise-box {
-  background: var(--bg-card); border-radius: 8px;
-  padding: clamp(0.8rem, 1.5vw, 1.2rem);
-  border: 1px solid rgba(255,255,255,0.06);
-  font-family: 'Courier New', monospace; font-size: var(--small-size);
-  color: var(--text-secondary); max-width: 500px;
-}
-.exercise-box .field { margin: clamp(0.2rem, 0.3vh, 0.3rem) 0; }
-.exercise-box .field-label { color: var(--text-primary); }
-.exercise-box .blank { border-bottom: 1px dashed var(--text-muted); display: inline-block; min-width: 100px; }
-
-/* === MYTH BLOCKS === */
-.myth-list { display: flex; flex-direction: column; gap: clamp(0.4rem, 0.8vh, 0.6rem); }
-.myth-item { display: flex; align-items: flex-start; gap: clamp(0.5rem, 1vw, 0.8rem); }
-.myth-x { color: var(--accent); font-weight: 700; font-size: var(--body-size); flex-shrink: 0; }
-.myth-strike { text-decoration: line-through; color: var(--text-muted); }
-.myth-real { color: var(--dom-posval); }
-
-/* === CHECK GRID === */
-.check-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr);
-  gap: clamp(0.4rem, 0.8vw, 0.6rem); width: 100%; max-width: 500px;
-}
-.check-box {
-  aspect-ratio: 2/1; border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: var(--h3-size); font-weight: 600; color: rgba(255,255,255,0.3);
-  border: 2px dashed rgba(255,255,255,0.1);
-  transition: all 0.5s var(--ease-out-expo);
-}
-
-/* === CROSS-DOMAIN DIAGRAM === */
-.cross-domain {
-  display: flex; align-items: center; justify-content: center;
-  gap: clamp(0.5rem, 1.5vw, 1.5rem); flex-wrap: wrap;
-}
-.cd-center {
-  padding: clamp(0.5rem, 1vh, 0.8rem) clamp(1rem, 2vw, 1.5rem);
-  border-radius: 20px; font-size: var(--body-size); font-weight: 600;
-  color: var(--text-primary); border: 2px solid var(--accent);
-  background: var(--accent-glow);
-}
-.cd-arrow { color: var(--text-muted); font-size: var(--body-size); }
-.cd-target {
-  padding: clamp(0.4rem, 0.8vh, 0.6rem) clamp(0.8rem, 1.5vw, 1rem);
-  border-radius: 8px; font-size: var(--small-size);
-  background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06);
-}
-
-/* === PROGRESS BAR === */
-.progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: var(--accent); z-index: 9999; transition: width 0.3s ease; }
-
-/* === NAV DOTS === */
-.nav-dots {
-  position: fixed; right: clamp(0.5rem, 1.5vw, 1.2rem); top: 50%;
-  transform: translateY(-50%); z-index: 999; display: flex; flex-direction: column;
-  gap: clamp(3px, 0.4vh, 5px);
-}
-.nav-dot {
-  width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.12);
-  cursor: pointer; transition: all 0.3s ease; border: none; padding: 0;
-}
-.nav-dot.active { background: var(--accent); transform: scale(1.4); }
-.nav-dot:hover { background: rgba(255,255,255,0.3); }
-
-/* === RESPONSIVE === */
-@media (max-height: 700px) {
-  :root { --slide-padding: clamp(0.75rem, 3vw, 2rem); --title-size: clamp(1.5rem, 4.5vw, 2.8rem); --h2-size: clamp(1.2rem, 3vw, 2rem); }
-}
-@media (max-height: 600px) {
-  :root { --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem); --body-size: clamp(0.65rem, 1.1vw, 0.9rem); }
-  .nav-dots { display: none; }
-}
-@media (max-height: 500px) {
-  :root { --title-size: clamp(1rem, 3.5vw, 1.5rem); --h2-size: clamp(0.9rem, 2.5vw, 1.25rem); }
-}
-@media (max-width: 768px) {
-  .split { flex-direction: column; }
-  .split-left { flex: 0 0 auto; padding: clamp(1rem, 3vw, 2rem); }
-  .split-right { flex: 0 0 40%; }
-  .matrix-grid { grid-template-columns: clamp(50px, 10vw, 80px) repeat(8, 1fr); }
-  .check-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 1fr); }
-}
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
-  html { scroll-behavior: auto; }
-}
-
-/* === INLINE EDITING === */
-.edit-hotzone { position: fixed; top: 0; left: 0; width: 80px; height: 80px; z-index: 10000; cursor: pointer; }
-.edit-toggle {
-  position: fixed; top: 12px; left: 12px; z-index: 10001;
-  background: var(--bg-card); border: 1px solid rgba(255,255,255,0.1);
-  color: var(--text-secondary); font-size: 1rem; padding: 6px 10px;
-  border-radius: 6px; cursor: pointer; opacity: 0; pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-.edit-toggle.show, .edit-toggle.active { opacity: 1; pointer-events: auto; }
-.edit-banner {
-  position: fixed; top: 0; left: 0; right: 0; height: 32px; z-index: 9998;
-  background: var(--accent); color: var(--bg-primary); font-family: var(--font-body);
-  font-size: var(--label-size); font-weight: 600; letter-spacing: 0.1em;
-  display: flex; align-items: center; justify-content: center;
-  transform: translateY(-100%); transition: transform 0.3s ease;
-}
-.edit-banner.active { transform: translateY(0); }
-body.edit-active [contenteditable] { outline: 1px dashed rgba(200,80,60,0.3); outline-offset: 2px; cursor: text; }
+html,body{height:100%;overflow-x:hidden}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+body{background:var(--bg-deep);color:var(--text-primary);font-family:var(--font-body)}
+body::before{content:"";position:fixed;inset:0;z-index:100;pointer-events:none;opacity:.11;mix-blend-mode:screen;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.06) 0,rgba(255,255,255,.06) 1px,transparent 1px,transparent clamp(.26rem,.6vw,.5rem));animation:scanDrift 9s linear infinite}
+.slide{width:100vw;height:100vh;height:100dvh;overflow:hidden;scroll-snap-align:start;display:flex;position:relative;isolation:isolate;align-items:center;justify-content:center;background:radial-gradient(circle at 18% 18%,rgba(255,46,196,.16),transparent 26%),radial-gradient(circle at 82% 14%,rgba(0,245,255,.14),transparent 25%),radial-gradient(circle at 70% 78%,rgba(139,92,255,.10),transparent 26%),linear-gradient(var(--grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--grid-line) 1px,transparent 1px),linear-gradient(135deg,#050610 0%,#091120 49%,#07101b 100%);background-size:auto,auto,auto,clamp(1.4rem,3vw,3rem) clamp(1.4rem,3vw,3rem),clamp(1.4rem,3vw,3rem) clamp(1.4rem,3vw,3rem),auto}
+.slide::before{content:"";position:absolute;inset:clamp(.7rem,1.6vw,1.5rem);z-index:0;pointer-events:none;opacity:.4;background:radial-gradient(circle at 18% 30%,var(--cyan) 0 2px,transparent 2.5px),radial-gradient(circle at 37% 18%,var(--magenta) 0 2px,transparent 2.5px),radial-gradient(circle at 57% 35%,var(--acid) 0 2px,transparent 2.5px),radial-gradient(circle at 74% 22%,var(--cyan) 0 2px,transparent 2.5px),radial-gradient(circle at 28% 70%,var(--violet) 0 2px,transparent 2.5px),radial-gradient(circle at 62% 76%,var(--magenta) 0 2px,transparent 2.5px),linear-gradient(30deg,transparent 12%,rgba(0,245,255,.10) 12.4%,transparent 12.8%),linear-gradient(148deg,transparent 28%,rgba(255,46,196,.10) 28.35%,transparent 28.7%),linear-gradient(99deg,transparent 51%,rgba(139,92,255,.08) 51.25%,transparent 51.65%);border:1px solid rgba(0,245,255,.09);border-radius:clamp(.35rem,.7vw,.6rem)}
+.slide::after{content:"Elaborado por Javier A. Flores-Cohaila";position:absolute;right:clamp(1rem,2.8vw,2.4rem);bottom:clamp(.55rem,1.35vw,1.05rem);z-index:12;color:rgba(213,231,239,.45);font-family:var(--font-mono);font-size:var(--footer-size);line-height:1;text-align:right;letter-spacing:0;text-transform:uppercase}
+.slide-content{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;max-height:100%;overflow:hidden;padding:clamp(3rem,7vh,5rem) var(--slide-padding) clamp(3rem,6vh,4rem);position:relative;z-index:2;width:100%;max-width:min(100vw,1360px);margin-inline:auto}
+.slide-content>*{width:100%;max-width:900px}
+.domain-bar{position:absolute;top:0;left:0;right:0;height:clamp(3px,.5vh,5px);z-index:6;box-shadow:0 0 18px currentColor}
+.domain-bar.cyan{background:var(--cyan);color:var(--cyan)}
+.domain-bar.magenta{background:var(--magenta);color:var(--magenta)}
+.domain-bar.violet{background:var(--violet);color:var(--violet)}
+.domain-bar.acid{background:var(--acid);color:var(--acid)}
+.domain-bar.amber{background:var(--amber);color:var(--amber)}
+.domain-bar.rdoc{background:var(--rdoc);color:var(--rdoc)}
+.domain-bar.integracion{background:linear-gradient(90deg,var(--cyan),var(--magenta));color:var(--cyan)}
+h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);font-weight:800;letter-spacing:0;line-height:1.06;text-transform:uppercase}
+h1{font-size:var(--title-size);font-weight:900;text-shadow:0 0 clamp(.5rem,1.2vw,1rem) rgba(0,245,255,.18),clamp(.04rem,.1vw,.08rem) 0 rgba(255,46,196,.38)}
+h2{font-size:var(--h2-size)}
+h3{font-size:var(--h3-size)}
+p,li{font-size:var(--body-size);line-height:1.5;color:var(--text-secondary);font-weight:400}
+strong{color:var(--text-primary);font-weight:700}
+em{color:var(--cyan);font-style:normal;text-shadow:0 0 18px rgba(0,245,255,.34)}
+.eyebrow{font-family:var(--font-mono);font-size:var(--label-size);font-weight:700;color:var(--cyan);letter-spacing:0;text-transform:uppercase;line-height:1;margin-bottom:clamp(.4rem,1vh,.8rem)}
+.eyebrow::before{content:"[ ";color:var(--cyan)}
+.eyebrow::after{content:" ]";color:var(--cyan)}
+.divider{width:clamp(50px,5vw,84px);height:2px;background:linear-gradient(90deg,var(--cyan),var(--magenta),var(--acid));box-shadow:0 0 16px rgba(0,245,255,.45);margin:clamp(.6rem,1.3vh,1.1rem) 0}
+.source{font-family:var(--font-mono);font-size:clamp(.5rem,.7vw,.64rem);color:rgba(213,231,239,.46);letter-spacing:0;margin-top:auto;padding-top:clamp(.5rem,1vh,1rem)}
+.centered{text-align:center;align-items:center}
+.centered>*{margin-left:auto;margin-right:auto}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1rem,2.5vw,2.2rem);align-items:center;width:100%;max-width:1100px}
+.split-left{display:flex;flex-direction:column;justify-content:center;min-width:0}
+.split-right{display:flex;align-items:center;justify-content:center;min-width:0}
+.three-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.5rem,1.3vw,1.2rem);width:100%;max-width:1000px}
+.four-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.4rem,1vw,.8rem);width:100%;max-width:1100px}
+.flow-vertical{display:flex;flex-direction:column;gap:clamp(.3rem,.8vw,.6rem)}
+.tag{display:inline-block;padding:clamp(.15rem,.4vw,.3rem) clamp(.4rem,1vw,.7rem);border-radius:4px;font-size:var(--small-size);font-weight:600;font-family:var(--font-mono);border:1px solid rgba(255,255,255,.08)}
+.tag-cyan{background:rgba(0,245,255,.12);color:var(--cyan);border-color:rgba(0,245,255,.3)}
+.tag-magenta{background:rgba(255,46,196,.12);color:var(--magenta);border-color:rgba(255,46,196,.3)}
+.tag-violet{background:rgba(139,92,255,.12);color:var(--violet);border-color:rgba(139,92,255,.3)}
+.tag-acid{background:rgba(220,255,56,.12);color:var(--acid);border-color:rgba(220,255,56,.3)}
+.tag-amber{background:rgba(255,182,39,.12);color:var(--amber);border-color:rgba(255,182,39,.3)}
+.tag-muted{background:rgba(100,116,139,.12);color:var(--text-muted)}
+.tag-pink{background:rgba(255,77,157,.12);color:var(--pink);border-color:rgba(255,77,157,.3)}
+.tag-rdoc{background:rgba(26,255,140,.12);color:var(--rdoc);border-color:rgba(26,255,140,.3)}
+.card{background:var(--bg-card);border-radius:clamp(.35rem,.65vw,.55rem);padding:clamp(.7rem,1.5vw,1.3rem);border:1px solid var(--panel-line);box-shadow:var(--magnetic-shadow);backdrop-filter:blur(14px)}
+.card h3{margin-bottom:clamp(.3rem,.5vw,.5rem)}
+.card.tight{padding:clamp(.5rem,1vw,.9rem)}
+.big-number{font-family:var(--font-display);font-size:clamp(2.5rem,7vw,6rem);font-weight:900;line-height:1;text-shadow:0 0 clamp(.8rem,2vw,1.6rem) currentColor}
+.data-table{width:100%;border-collapse:collapse;font-size:var(--small-size)}
+.data-table th{text-align:left;padding:clamp(.3rem,.6vw,.5rem);color:var(--text-muted);font-weight:600;font-family:var(--font-mono);border-bottom:1px solid var(--line);text-transform:uppercase;font-size:var(--label-size)}
+.data-table td{padding:clamp(.28rem,.55vw,.45rem);border-bottom:1px solid rgba(0,245,255,.05);color:var(--text-secondary);line-height:1.3}
+.data-table td.head{color:var(--text-primary);font-weight:600}
+.data-table tr:hover td{background:rgba(0,245,255,.03)}
+.data-table .strike{text-decoration:line-through;color:var(--text-muted)}
+.pipeline{display:flex;align-items:center;gap:0;width:100%;flex-wrap:wrap;justify-content:center}
+.pipeline-box{padding:clamp(.3rem,.6vw,.5rem) clamp(.5rem,.8vw,.7rem);background:var(--bg-card);border-radius:clamp(.3rem,.55vw,.5rem);border:1px solid var(--panel-line);text-align:center;font-size:var(--label-size);box-shadow:var(--magnetic-shadow)}
+.pipeline-box .pipe-icon{font-size:clamp(.8rem,1.2vw,1.1rem);margin-bottom:.15rem}
+.pipeline-box .pipe-label{color:var(--text-secondary);font-family:var(--font-mono)}
+.pipeline-box.active{border-color:var(--rdoc);background:rgba(26,255,140,.1)}
+.pipeline-arrow{color:var(--text-muted);font-size:var(--small-size);padding:0 clamp(.15rem,.3vw,.3rem)}
+.flowchart-v{display:flex;flex-direction:column;align-items:center;gap:0}
+.fc-box{padding:clamp(.35rem,.7vw,.55rem) clamp(.7rem,1.3vw,1.1rem);background:var(--bg-card);border-radius:clamp(.3rem,.55vw,.5rem);border:1px solid var(--panel-line);font-size:var(--small-size);color:var(--text-secondary);text-align:center;min-width:clamp(160px,28vw,320px);max-width:520px;box-shadow:var(--magnetic-shadow)}
+.fc-box.bold{color:var(--text-primary);font-weight:600}
+.fc-arrow{color:var(--text-muted);font-size:var(--body-size);padding:clamp(.1rem,.2vh,.2rem) 0}
+.hub-spoke{display:flex;align-items:center;justify-content:center;gap:clamp(.5rem,1.5vw,1.4rem);flex-wrap:wrap}
+.hub-center{width:clamp(70px,11vw,110px);height:clamp(70px,11vw,110px);border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;font-size:var(--small-size);font-weight:700;flex-shrink:0;font-family:var(--font-mono);line-height:1.2}
+.spoke-item{display:flex;flex-direction:column;gap:.2rem;padding:clamp(.4rem,.8vh,.6rem) clamp(.6rem,1vw,.8rem);background:var(--bg-card);border-radius:clamp(.3rem,.55vw,.5rem);border-left:3px solid var(--spoke-color,var(--text-muted));font-size:var(--label-size);max-width:clamp(120px,20vw,190px);box-shadow:var(--magnetic-shadow)}
+.spoke-item strong{font-size:var(--small-size)}
+.construct-list{display:flex;flex-direction:column;gap:clamp(.3rem,.6vh,.5rem)}
+.construct-item{display:flex;align-items:baseline;gap:clamp(.4rem,.8vw,.6rem);padding:clamp(.25rem,.5vh,.4rem) 0}
+.construct-icon{font-size:clamp(.8rem,1.2vw,1rem);flex-shrink:0;font-family:var(--font-mono);font-weight:700}
+.construct-name{font-size:var(--body-size);color:var(--text-primary);font-weight:600}
+.construct-desc{font-size:var(--small-size);color:var(--text-muted)}
+.stack-levels{display:flex;flex-direction:column;gap:clamp(.4rem,.8vh,.6rem);width:100%;max-width:620px}
+.stack-row{display:flex;align-items:center;gap:clamp(.5rem,1vw,.8rem);padding:clamp(.5rem,1vh,.8rem) clamp(.8rem,1.5vw,1.2rem);background:var(--bg-card);border-radius:6px;border-left:4px solid var(--row-color,var(--text-muted));box-shadow:var(--magnetic-shadow)}
+.stack-label{font-size:var(--body-size);font-weight:700;color:var(--text-primary);min-width:clamp(55px,9vw,90px);font-family:var(--font-mono)}
+.stack-desc{font-size:var(--small-size);color:var(--text-secondary)}
+.net-node{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;font-size:var(--label-size);font-weight:700;text-align:center;border:2px solid rgba(255,255,255,.15);font-family:var(--font-mono);line-height:1.1;background:var(--bg-card);box-shadow:var(--magnetic-shadow)}
+.net-node.hub{box-shadow:0 0 22px rgba(255,46,196,.5);border-color:var(--magenta);color:var(--magenta)}
+.net-node.bridge{border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 18px rgba(0,245,255,.4)}
+.exercise-box{background:var(--bg-card);border-radius:8px;padding:clamp(.7rem,1.4vw,1.1rem);border:1px solid var(--panel-line);font-family:var(--font-mono);font-size:var(--small-size);color:var(--text-secondary);box-shadow:var(--magnetic-shadow);max-width:560px}
+.exercise-box .field{margin:clamp(.15rem,.3vh,.25rem) 0}
+.exercise-box .field-label{color:var(--text-primary);font-weight:600}
+.exercise-box .blank{border-bottom:1px dashed var(--text-muted);display:inline-block;min-width:80px}
+.obj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.5rem,1.2vw,1rem);width:100%;max-width:1000px}
+.obj-node{display:grid;grid-template-columns:clamp(2rem,3vw,2.6rem) minmax(0,1fr);gap:clamp(.5rem,1vw,.8rem);align-items:start;padding:clamp(.55rem,1.1vw,.85rem);background:var(--bg-card);border-radius:clamp(.3rem,.55vw,.5rem);border:1px solid var(--panel-line);box-shadow:var(--magnetic-shadow)}
+.obj-code{display:grid;place-items:center;width:clamp(2rem,3vw,2.6rem);aspect-ratio:1;color:#050610;background:linear-gradient(135deg,var(--cyan),var(--magenta));border-radius:50%;font-family:var(--font-mono);font-size:var(--label-size);font-weight:800}
+.obj-node h4{color:var(--text-primary);font-size:clamp(.8rem,1.15vw,1rem);margin-bottom:clamp(.1rem,.3vw,.2rem)}
+.obj-node p{font-size:var(--small-size);line-height:1.3}
+.algo-list{display:flex;flex-direction:column;gap:clamp(.3rem,.6vw,.5rem);width:100%;max-width:700px}
+.algo-step{display:flex;gap:clamp(.6rem,1.2vw,.9rem);align-items:baseline;padding:clamp(.35rem,.7vw,.55rem) clamp(.6rem,1.2vw,.9rem);background:var(--bg-card);border-radius:6px;border-left:3px solid var(--step-color,var(--cyan));box-shadow:var(--magnetic-shadow)}
+.algo-num{color:var(--step-color,var(--cyan));font-weight:800;font-family:var(--font-display);font-size:clamp(.9rem,1.4vw,1.2rem);min-width:clamp(1rem,1.5vw,1.3rem)}
+.algo-text{font-size:var(--body-size);color:var(--text-secondary)}
+.algo-text strong{color:var(--text-primary)}
+.pearl-statement{font-family:var(--font-display);font-size:clamp(1.3rem,3.2vw,2.8rem);font-weight:900;line-height:1.08;max-width:min(86vw,60rem);text-align:center;text-transform:uppercase;text-shadow:0 0 clamp(.5rem,1.2vw,1rem) rgba(0,245,255,.18),clamp(.04rem,.1vw,.08rem) 0 rgba(255,46,196,.4)}
+.pearl-statement mark{background:transparent;color:var(--acid)}
+.pearl-statement em{color:var(--magenta);text-shadow:0 0 18px rgba(255,46,196,.4)}
+.cover-meta{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(.4rem,.9vw,.7rem);margin-top:clamp(.5rem,1.2vw,1rem)}
+.meta-chip{border:1px solid var(--line);box-shadow:inset 0 0 clamp(.4rem,1vw,.9rem) rgba(0,245,255,.08);color:var(--text-muted);font-family:var(--font-mono);font-size:var(--label-size);line-height:1;padding:clamp(.3rem,.6vw,.5rem) clamp(.4rem,.9vw,.7rem);text-transform:uppercase}
+.rdoc-matrix{display:grid;grid-template-columns:auto repeat(8,1fr);gap:2px;width:100%;max-width:580px;font-size:var(--label-size)}
+.rdoc-matrix .mc{background:rgba(255,255,255,.025);border:1px solid rgba(0,245,255,.06);padding:clamp(.18rem,.35vw,.3rem);text-align:center;font-family:var(--font-mono);color:var(--text-muted);line-height:1.1;min-height:clamp(1.6rem,3vh,2.2rem);display:flex;align-items:center;justify-content:center}
+.rdoc-matrix .mc.hcol{background:rgba(0,245,255,.05);color:var(--cyan);font-weight:600;writing-mode:vertical-lr;text-orientation:mixed;transform:rotate(180deg);font-size:clamp(.45rem,.6vw,.58rem)}
+.rdoc-matrix .mc.hrow{background:rgba(0,245,255,.05);font-weight:600;text-align:right;justify-content:flex-end;padding-right:clamp(.3rem,.5vw,.4rem);font-size:clamp(.48rem,.62vw,.6rem)}
+.rdoc-matrix .mc.hrow.nv{color:var(--magenta)}
+.rdoc-matrix .mc.hrow.pv{color:var(--rdoc)}
+.rdoc-matrix .mc.hrow.cs{color:var(--cyan)}
+.rdoc-matrix .mc.hrow.sp{color:var(--acid)}
+.rdoc-matrix .mc.hrow.ar{color:var(--amber)}
+.rdoc-matrix .mc.hrow.sm{color:var(--violet)}
+.rdoc-matrix .mc.empty{background:rgba(255,255,255,.015)}
+.rdoc-matrix .mc.glow{background:rgba(26,255,140,.16);border:1px solid var(--rdoc);box-shadow:0 0 14px rgba(26,255,140,.45);color:var(--rdoc);font-weight:700}
+.rdoc-matrix .mc.mar{background:rgba(255,46,196,.22);border:1px solid var(--magenta);box-shadow:0 0 12px rgba(255,46,196,.4)}
+.rdoc-matrix .mc.cyn{background:rgba(0,245,255,.18);border:1px solid var(--cyan);box-shadow:0 0 12px rgba(0,245,255,.35)}
+.rdoc-matrix .mc.amb{background:rgba(255,182,39,.18);border:1px solid var(--amber);box-shadow:0 0 12px rgba(255,182,39,.35)}
+.rdoc-matrix .mc.vio{background:rgba(139,92,255,.18);border:1px solid var(--violet);box-shadow:0 0 12px rgba(139,92,255,.35)}
+.rdoc-matrix .mc.acd{background:rgba(220,255,56,.18);border:1px solid var(--acid);box-shadow:0 0 12px rgba(220,255,56,.35)}
+.rdoc-matrix .mc.cross-mc{background:linear-gradient(135deg,rgba(255,46,196,.22),rgba(0,245,255,.22));border:1px solid var(--cyan);box-shadow:0 0 12px rgba(255,46,196,.3)}
+.rdoc-matrix .mc.cross-ms{background:linear-gradient(135deg,rgba(255,46,196,.22),rgba(220,255,56,.22));border:1px solid var(--magenta);box-shadow:0 0 12px rgba(220,255,56,.3)}
+.timeline-h{display:flex;align-items:center;justify-content:center;gap:0;width:100%;max-width:700px;position:relative}
+.tl-node{display:flex;flex-direction:column;align-items:center;gap:.2rem;flex-shrink:0;z-index:2}
+.tl-dot{width:clamp(10px,1.5vw,16px);height:clamp(10px,1.5vw,16px);border-radius:50%;background:var(--text-muted);border:2px solid rgba(255,255,255,.15)}
+.tl-dot.big{width:clamp(22px,3vw,32px);height:clamp(22px,3vw,32px);background:var(--magenta);border-color:var(--magenta);box-shadow:0 0 18px rgba(255,46,196,.6)}
+.tl-year{font-family:var(--font-mono);font-size:var(--small-size);color:var(--text-secondary);font-weight:700}
+.tl-year.big{color:var(--magenta);font-size:var(--body-size)}
+.tl-label{font-size:var(--label-size);color:var(--text-muted);text-align:center;line-height:1.2;max-width:80px}
+.tl-line{flex:1;height:1px;background:rgba(213,231,239,.2);min-width:clamp(20px,5vw,60px)}
+.venn-wrap{position:relative;width:clamp(240px,36vw,340px);height:clamp(200px,30vw,280px);margin:0 auto}
+.venn-circle{position:absolute;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;font-family:var(--font-mono);font-size:var(--label-size);font-weight:700;line-height:1.2}
+.venn-c1{left:0;top:0;width:55%;height:75%;border:2px solid var(--cyan);background:rgba(0,245,255,.08);color:var(--cyan);padding:1rem}
+.venn-c2{right:0;top:0;width:55%;height:75%;border:2px solid var(--rdoc);background:rgba(26,255,140,.08);color:var(--rdoc);padding:1rem}
+.venn-c3{left:25%;bottom:0;width:55%;height:70%;border:2px solid var(--amber);background:rgba(255,182,39,.08);color:var(--amber);padding:1rem}
+.venn-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:5;text-align:center;font-family:var(--font-mono);font-size:var(--label-size);color:var(--text-primary);font-weight:700;max-width:120px;line-height:1.2}
+.progress-bar{position:fixed;top:0;left:0;height:clamp(2px,.35vh,4px);z-index:40;background:linear-gradient(90deg,var(--cyan),var(--magenta),var(--acid));box-shadow:0 0 16px rgba(0,245,255,.55);transform:scaleX(0);transform-origin:left center;width:100%}
+.nav-dots{position:fixed;right:clamp(.45rem,1.1vw,1rem);top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:clamp(3px,.4vh,5px)}
+.nav-dot{width:clamp(5px,.6vw,8px);height:clamp(5px,.6vw,8px);border-radius:50%;background:rgba(213,231,239,.18);cursor:pointer;transition:all .3s;border:1px solid rgba(0,245,255,.22);padding:0}
+.nav-dot.active{background:var(--cyan);box-shadow:0 0 14px rgba(0,245,255,.72);transform:scale(1.4)}
+.nav-dot:hover{background:rgba(0,245,255,.4)}
+.slide-counter{position:fixed;left:clamp(.6rem,1.4vw,1.2rem);bottom:clamp(.6rem,1.4vw,1.1rem);z-index:50;font-family:var(--font-mono);font-size:var(--footer-size);color:rgba(213,231,239,.4)}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity var(--duration-normal) var(--ease-out-expo),transform var(--duration-normal) var(--ease-out-expo)}
+.slide.visible .reveal{opacity:1;transform:translateY(0)}
+.reveal:nth-child(2){transition-delay:.1s}
+.reveal:nth-child(3){transition-delay:.2s}
+.reveal:nth-child(4){transition-delay:.3s}
+.reveal:nth-child(5){transition-delay:.4s}
+.reveal:nth-child(6){transition-delay:.5s}
+.reveal:nth-child(7){transition-delay:.6s}
+.reveal:nth-child(8){transition-delay:.7s}
+.reveal-scale{opacity:0;transform:scale(.88);transition:opacity .8s var(--ease-out-expo),transform .8s var(--ease-out-expo)}
+.slide.visible .reveal-scale{opacity:1;transform:scale(1)}
+.reveal-left{opacity:0;transform:translateX(-24px);transition:opacity var(--duration-normal) var(--ease-out-expo),transform var(--duration-normal) var(--ease-out-expo)}
+.slide.visible .reveal-left{opacity:1;transform:translateX(0)}
+@keyframes scanDrift{from{transform:translateY(0)}to{transform:translateY(clamp(1rem,2vw,1.8rem))}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@media (max-height:700px){:root{--slide-padding:clamp(.75rem,3vw,2rem);--title-size:clamp(1.2rem,4.5vw,2.6rem);--h2-size:clamp(1rem,3vw,1.75rem)}}
+@media (max-height:600px){:root{--slide-padding:clamp(.5rem,2.5vw,1.5rem);--body-size:clamp(.65rem,1.1vw,.9rem);--title-size:clamp(1rem,4vw,2rem)}.nav-dots,.slide-counter{display:none}}
+@media (max-width:768px){.split{grid-template-columns:1fr}.three-cols{grid-template-columns:1fr}.four-cols{grid-template-columns:repeat(2,1fr)}.obj-grid{grid-template-columns:1fr}.rdoc-matrix{font-size:clamp(.4rem,.55vw,.5rem)}.slide::after{left:clamp(.8rem,3vw,1.1rem);right:clamp(.8rem,3vw,1.1rem);text-align:center}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
-
-<!-- Edit UI -->
-<div class="edit-hotzone"></div>
-<button class="edit-toggle" id="editToggle" title="Edit mode (E)">&#9998;</button>
-<div class="edit-banner" id="editBanner">EDIT MODE &mdash; Click text to edit &middot; Ctrl+S to save</div>
-
-<!-- Progress -->
 <div class="progress-bar" id="progressBar"></div>
-<nav class="nav-dots" id="navDots"></nav>
+<nav class="nav-dots" id="navDots" aria-label="Navegación de slides"></nav>
+<div class="slide-counter" id="slideCounter">01 / 36</div>
+<main>
 
-<!-- =============================================
-     S1: PORTADA
-     ============================================= -->
-<section class="slide" id="s1">
+<!-- === SECCIÓN A: OBJETIVO (Slides 1-5 | cyan) === -->
+
+<section class="slide" id="s1" data-title="Portada">
+  <div class="domain-bar cyan"></div>
   <div class="split">
     <div class="split-left">
-      <p class="eyebrow reveal">Psicopatología Dimensional &mdash; Sesión 02 / 21</p>
-      <h1 class="reveal" style="transition-delay:0.15s">RDoC &mdash; El lenguaje<br/><em>operativo</em> del curso</h1>
-      <div class="divider reveal" style="transition-delay:0.25s"></div>
-      <p class="reveal" style="transition-delay:0.35s">Dominios, unidades de análisis, lentes evolutivas y la matriz que organiza la investigación en salud mental.</p>
-      <p class="source reveal" style="transition-delay:0.45s">Javier Flores &middot; R1 Psiquiatría &middot; 2026</p>
+      <p class="eyebrow reveal">Psicopatología Dimensional — Sesión 02 / 21</p>
+      <h1 class="reveal" style="transition-delay:.12s">RDoC —<br/><em>¿Qué sistema falla?</em></h1>
+      <div class="divider reveal" style="transition-delay:.22s"></div>
+      <p class="reveal" style="transition-delay:.32s;max-width:480px">Del mapa al mecanismo — HiTOP es el mapa, RDoC es el zoom al circuito.</p>
+      <p class="source reveal" style="transition-delay:.42s">Javier Flores · R1 Psiquiatría · 2026</p>
     </div>
     <div class="split-right">
-      <div style="text-align:center" class="reveal-scale">
-        <div style="font-family:var(--font-display);font-size:clamp(3rem,8vw,6rem);color:var(--accent);line-height:1;font-weight:600">6 &times; 8</div>
-        <div style="font-size:var(--small-size);color:var(--text-muted);margin-top:0.5rem">dominios &times; unidades de análisis</div>
+      <div class="reveal-scale" style="position:relative;width:clamp(220px,32vw,360px)">
+        <div class="rdoc-matrix" style="max-width:none">
+          <div class="mc"></div>
+          <div class="mc hcol">Genes</div><div class="mc hcol">Mol</div><div class="mc hcol">Cél</div><div class="mc hcol">Circ</div><div class="mc hcol">Fis</div><div class="mc hcol">Cond</div><div class="mc hcol">SR</div><div class="mc hcol">Para</div>
+          <div class="mc hrow nv">NegVal</div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div>
+          <div class="mc hrow pv">PosVal</div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc glow">★</div><div class="mc empty"></div>
+          <div class="mc hrow cs">CogSys</div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div>
+          <div class="mc hrow sp">Social</div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div>
+          <div class="mc hrow ar">Arousal</div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div>
+          <div class="mc hrow sm">Sensor</div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div>
+        </div>
+        <p style="text-align:center;font-size:var(--label-size);color:var(--rdoc);font-family:var(--font-mono);margin-top:.4rem;animation:pulse 2.4s infinite">★ = 1 pregunta de investigación</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- =============================================
-     S2: CITA INSEL
-     ============================================= -->
-<section class="slide" id="s2">
-  <div class="centered">
-    <div class="quote reveal" style="max-width:650px">
-      Los pacientes con trastornos mentales merecen algo mejor.
-    </div>
-    <p class="quote-author reveal" style="transition-delay:0.2s">&mdash; Thomas Insel, Director del NIMH, 2013</p>
-  </div>
-</section>
-
-<!-- =============================================
-     S3: TIMELINE RDoC
-     ============================================= -->
-<section class="slide" id="s3">
+<section class="slide" id="s2" data-title="Recap HiTOP → RDoC">
+  <div class="domain-bar cyan"></div>
   <div class="slide-content">
-    <p class="eyebrow reveal">La historia</p>
-    <h2 class="reveal">Del plan estratégico a la <em>primera década</em></h2>
-    <div class="divider reveal"></div>
-    <div class="timeline reveal" style="transition-delay:0.3s">
-      <div class="timeline-node">
-        <div class="timeline-dot"></div>
-        <div class="timeline-year">2008</div>
-        <div class="timeline-label">NIMH Strategic Plan</div>
+    <p class="eyebrow reveal">Caso hilo conductor — del mapa al zoom</p>
+    <h1 class="reveal" style="transition-delay:.1s">Sesión 1: HiTOP nos dijo dónde está María — hoy le preguntamos qué sistema falla</h1>
+    <div class="divider reveal" style="transition-delay:.2s"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:800px">
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--cyan)">
+        <p style="font-size:var(--label-size);color:var(--cyan);font-family:var(--font-mono);font-weight:700">S1 · HiTOP</p>
+        <div style="position:relative;width:clamp(100px,16vw,140px);height:clamp(100px,16vw,140px);margin:.4rem auto">
+          <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 100 100">
+            <polygon points="50,15 85,35 70,80 30,80 15,35" fill="none" stroke="rgba(0,245,255,.3)" stroke-width="1"/>
+            <polygon points="50,25 75,40 65,72 35,72 25,40" fill="rgba(0,245,255,.12)" stroke="var(--cyan)" stroke-width="1"/>
+          </svg>
+          <p style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:var(--label-size);color:var(--cyan);font-family:var(--font-mono);text-align:center;line-height:1.2">distress↑↑<br/>fear↑<br/>detach↑</p>
+        </div>
+        <p style="font-size:var(--small-size);color:var(--text-muted);margin-top:.3rem">¿DÓNDE está?</p>
       </div>
-      <div class="timeline-node">
-        <div class="timeline-dot accent"></div>
-        <div class="timeline-year" style="color:var(--accent)">2010</div>
-        <div class="timeline-label" style="color:var(--text-secondary)">Insel et al. Am J Psychiatry</div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:.3rem">
+        <span style="font-size:clamp(1.5rem,3vw,2.2rem);color:var(--rdoc);font-weight:900;font-family:var(--font-display)">↓</span>
+        <span class="tag tag-rdoc" style="font-weight:700">ZOOM</span>
       </div>
-      <div class="timeline-node">
-        <div class="timeline-dot"></div>
-        <div class="timeline-year">2013</div>
-        <div class="timeline-label">Seven Pillars BMC Med</div>
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--rdoc);border:1px solid rgba(26,255,140,.2)">
+        <p style="font-size:var(--label-size);color:var(--rdoc);font-family:var(--font-mono);font-weight:700">S2 · RDoC</p>
+        <div style="font-size:clamp(2rem,4vw,3rem);margin:.3rem 0">🧠</div>
+        <p style="font-size:var(--small-size);color:var(--text-secondary)">NegVal↑ · PosVal↓<br/>Arousal alterado · Social↓</p>
+        <p style="font-size:var(--small-size);color:var(--rdoc);margin-top:.3rem">¿QUÉ SISTEMA falla?</p>
       </div>
-      <div class="timeline-node">
-        <div class="timeline-dot"></div>
-        <div class="timeline-year">2019</div>
-        <div class="timeline-label">Dominio Sensorimotor</div>
+    </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-style:italic;margin-top:var(--content-gap)">HiTOP es el mapa. RDoC es el zoom al circuito.</p>
+  </div>
+</section>
+
+<section class="slide" id="s3" data-title="Insel 2010">
+  <div class="domain-bar cyan"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal">El origen de RDoC</p>
+    <h1 class="reveal" style="transition-delay:.1s">En 2010, el director del NIMH declaró la guerra al DSM — "los pacientes merecen algo mejor"</h1>
+    <div class="divider reveal" style="transition-delay:.2s"></div>
+    <div class="reveal" style="transition-delay:.3s">
+      <div class="timeline-h" style="margin-bottom:clamp(.8rem,2vh,1.2rem)">
+        <div class="tl-node"><span class="tl-dot"></span><span class="tl-year">2008</span><span class="tl-label">NIMH Strategic Plan</span></div>
+        <div class="tl-line"></div>
+        <div class="tl-node"><span class="tl-dot big"></span><span class="tl-year big">2010</span><span class="tl-label" style="color:var(--magenta)">Insel et al. Am J Psy</span></div>
+        <div class="tl-line"></div>
+        <div class="tl-node"><span class="tl-dot"></span><span class="tl-year">2013</span><span class="tl-label">Seven Pillars BMC Med</span></div>
+        <div class="tl-line"></div>
+        <div class="tl-node"><span class="tl-dot"></span><span class="tl-year">2019</span><span class="tl-label">Dominio Sensoriomotor</span></div>
+        <div class="tl-line"></div>
+        <div class="tl-node"><span class="tl-dot"></span><span class="tl-year">2022</span><span class="tl-label">Primera década Cuthbert</span></div>
       </div>
-      <div class="timeline-node">
-        <div class="timeline-dot"></div>
-        <div class="timeline-year">2022</div>
-        <div class="timeline-label">Progress &amp; Potential</div>
+    </div>
+    <div class="reveal" style="transition-delay:.4s;padding:clamp(.6rem,1.2vw,1rem) clamp(1rem,2vw,1.5rem);border-left:3px solid var(--magenta);background:rgba(255,46,196,.06);max-width:620px">
+      <p style="font-size:clamp(1rem,1.8vw,1.5rem);color:var(--text-primary);font-weight:700;font-style:italic;line-height:1.3">"Los pacientes con trastornos mentales merecen algo mejor."</p>
+      <p style="font-size:var(--small-size);color:var(--magenta);font-family:var(--font-mono);margin-top:.3rem">— Thomas Insel, Director del NIMH, 2013</p>
+    </div>
+    <p class="source reveal" style="transition-delay:.5s">Insel et al., 2010 · Cuthbert & Insel, 2013 · Cuthbert, 2022</p>
+  </div>
+</section>
+
+<section class="slide" id="s4" data-title="Lo que el DSM no logró">
+  <div class="domain-bar cyan"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal">El diagnóstico del problema</p>
+    <h1 class="reveal" style="transition-delay:.1s">Lo que el NIMH no logró con el DSM después de décadas de investigación</h1>
+    <div class="divider reveal" style="transition-delay:.2s"></div>
+    <div class="flow-vertical reveal" style="transition-delay:.3s;max-width:640px;width:100%">
+      <div class="card" style="border-left:3px solid var(--magenta);display:flex;align-items:center;gap:clamp(.8rem,1.5vw,1.2rem)">
+        <span style="font-size:clamp(1.5rem,2.5vw,2rem);color:var(--magenta);font-weight:700;flex-shrink:0">✕</span>
+        <p style="font-size:var(--body-size);color:var(--text-primary)">Ni un <strong>biomarcador diagnóstico</strong> validado</p>
       </div>
+      <div class="card" style="border-left:3px solid var(--magenta);display:flex;align-items:center;gap:clamp(.8rem,1.5vw,1.2rem)">
+        <span style="font-size:clamp(1.5rem,2.5vw,2rem);color:var(--magenta);font-weight:700;flex-shrink:0">✕</span>
+        <p style="font-size:var(--body-size);color:var(--text-primary)">Ni una <strong>prueba de laboratorio</strong> confirmatoria</p>
+      </div>
+      <div class="card" style="border-left:3px solid var(--magenta);display:flex;align-items:center;gap:clamp(.8rem,1.5vw,1.2rem)">
+        <span style="font-size:clamp(1.5rem,2.5vw,2rem);color:var(--magenta);font-weight:700;flex-shrink:0">✕</span>
+        <p style="font-size:var(--body-size);color:var(--text-primary)">Ni un <strong>fármaco descubierto</strong> a partir de la categoría DSM</p>
+      </div>
+    </div>
+    <p class="reveal" style="transition-delay:.5s;font-size:var(--small-size);color:var(--text-muted);text-align:center;font-style:italic;margin-top:var(--content-gap)">Por eso el NIMH creó RDoC — un sistema que empieza por los sistemas cerebrales, no por los síntomas.</p>
+  </div>
+</section>
+
+<section class="slide" id="s5" data-title="Objetivos">
+  <div class="domain-bar cyan"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal">Al salir de esta clase</p>
+    <h1 class="reveal" style="transition-delay:.1s">Al salir van a poder: enumerar dominios, explicar su lógica evolutiva, distinguir frameworks, mapear a María</h1>
+    <div class="divider reveal" style="transition-delay:.2s"></div>
+    <div class="three-cols reveal" style="transition-delay:.3s">
+      <div class="card" style="text-align:center;border-top:3px solid var(--magenta)"><p style="font-size:clamp(1.3rem,2.4vw,1.9rem);margin-bottom:.3rem">⚡</p><p style="font-weight:700;color:var(--magenta);font-family:var(--font-mono);font-size:var(--small-size)">NEGATIVE VALENCE</p><p style="font-size:var(--small-size);margin-top:.3rem"><strong>K1:</strong> enumerar 6 dominios y 8 unidades</p></div>
+      <div class="card" style="text-align:center;border-top:3px solid var(--rdoc)"><p style="font-size:clamp(1.3rem,2.4vw,1.9rem);margin-bottom:.3rem">🎯</p><p style="font-weight:700;color:var(--rdoc);font-family:var(--font-mono);font-size:var(--small-size)">POSITIVE VALENCE</p><p style="font-size:var(--small-size);margin-top:.3rem"><strong>K2:</strong> explicar lente evolutiva de ≥3 dominios</p></div>
+      <div class="card" style="text-align:center;border-top:3px solid var(--cyan)"><p style="font-size:clamp(1.3rem,2.4vw,1.9rem);margin-bottom:.3rem">▦</p><p style="font-weight:700;color:var(--cyan);font-family:var(--font-mono);font-size:var(--small-size)">DOMINIO × UNIDAD</p><p style="font-size:var(--small-size);margin-top:.3rem"><strong>K3:</strong> distinguir RDoC de DSM/HiTOP/Staging</p></div>
+    </div>
+    <div class="reveal" style="transition-delay:.5s;margin-top:clamp(.5rem,1.2vw,.9rem);padding:clamp(.4rem,.8vw,.6rem) clamp(.8rem,1.5vw,1.2rem);border:1px solid var(--rdoc);border-radius:6px;background:rgba(26,255,140,.06);text-align:center;max-width:640px">
+      <p style="font-size:var(--body-size);color:var(--text-primary);font-weight:600"><strong>A1+A2:</strong> Mapear a María en la matriz — incluyendo síntomas que cruzan dominios</p>
     </div>
   </div>
 </section>
 
-<!-- =============================================
-     S4: NIMH FAILURES
-     ============================================= -->
-<section class="slide" id="s4">
-  <div class="slide-content">
-    <p class="eyebrow reveal">El problema</p>
-    <h2 class="reveal">Lo que el NIMH <em>no logró</em> con el DSM</h2>
-    <div class="divider reveal"></div>
-    <div class="fail-list reveal" style="transition-delay:0.3s">
-      <div class="fail-item"><span class="fail-x">✗</span><p>Ni un biomarcador diagnóstico validado</p></div>
-      <div class="fail-item"><span class="fail-x">✗</span><p>Ni una prueba de laboratorio confirmatoria</p></div>
-      <div class="fail-item"><span class="fail-x">✗</span><p>Ni un fármaco descubierto a partir de la categoría DSM</p></div>
-    </div>
-    <p class="source reveal" style="transition-delay:0.5s">Después de décadas de investigación organizada alrededor de categorías.</p>
-  </div>
-</section>
+<!-- === SECCIÓN B.1: LA MATRIZ RDoC (Slides 6-9 | rdoc) === -->
 
-<!-- =============================================
-     S5: PUENTE DSM → HiTOP → RDoC
-     ============================================= -->
-<section class="slide" id="s5">
+<section class="slide" id="s6" data-title="Matriz RDoC">
+  <div class="domain-bar rdoc"></div>
   <div class="slide-content">
-    <p class="eyebrow reveal">De la sesión 1 a hoy</p>
-    <h2 class="reveal">Tres niveles de <em>comprensión</em></h2>
-    <div class="divider reveal"></div>
-    <div class="stack-levels reveal" style="transition-delay:0.3s">
-      <div class="stack-row" style="--row-color:var(--text-muted)">
-        <span class="stack-label">DSM</span>
-        <span class="stack-desc">Te dice <strong>qué tiene</strong> el paciente</span>
+    <p class="eyebrow reveal" style="color:var(--rdoc)">Concepto fundacional</p>
+    <h1 class="reveal" style="transition-delay:.1s">RDoC no es una lista de diagnósticos — es una matriz: dominio × unidad = pregunta de investigación</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--rdoc),var(--cyan))"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:900px">
+      <div class="rdoc-matrix" style="max-width:none">
+        <div class="mc"></div>
+        <div class="mc hcol">Genes</div><div class="mc hcol">Mol</div><div class="mc hcol">Cél</div><div class="mc hcol">Circ</div><div class="mc hcol">Fis</div><div class="mc hcol">Cond</div><div class="mc hcol">SR</div><div class="mc hcol">Para</div>
+        <div class="mc hrow nv">NegVal</div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div>
+        <div class="mc hrow pv">PosVal</div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc glow">★</div><div class="mc empty"></div>
+        <div class="mc hrow cs">CogSys</div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div>
+        <div class="mc hrow sp">Social</div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div>
+        <div class="mc hrow ar">Arousal</div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div>
+        <div class="mc hrow sm">Sensor</div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div><div class="mc empty"></div>
       </div>
-      <div class="stack-row" style="--row-color:var(--dom-cogsys)">
-        <span class="stack-label">HiTOP</span>
-        <span class="stack-desc">Te dice <strong>dónde está</strong> en el mapa</span>
-      </div>
-      <div class="stack-row" style="--row-color:var(--dom-posval)">
-        <span class="stack-label">RDoC</span>
-        <span class="stack-desc">Te dice <strong>qué sistemas están fallando</strong> &mdash; y cómo medirlos</span>
+      <div style="text-align:center">
+        <div class="reveal-scale" style="display:inline-flex;align-items:center;gap:clamp(.4rem,1vw,.7rem);padding:clamp(.5rem,1vw,.8rem) clamp(.8rem,1.5vw,1.2rem);border:1px solid var(--rdoc);border-radius:8px;background:rgba(26,255,140,.08);box-shadow:0 0 18px rgba(26,255,140,.2)">
+          <span style="font-size:clamp(1.2rem,2vw,1.6rem);color:var(--rdoc)">★</span>
+          <span style="font-size:var(--small-size);color:var(--rdoc);font-family:var(--font-mono);font-weight:700">= 1 pregunta de investigación</span>
+        </div>
+        <p style="font-size:var(--small-size);color:var(--text-muted);margin-top:.6rem;font-style:italic">Cada celda: ¿qué pasa con este constructo a nivel de esta unidad?</p>
       </div>
     </div>
-    <p class="reveal" style="transition-delay:0.5s;font-style:italic;margin-top:var(--content-gap)">Si María tiene distress alto y fear moderado... ¿qué circuito? ¿Qué molécula?</p>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-style:italic;margin-top:var(--content-gap);color:var(--rdoc)">RDoC no es una tabla periódica de la mente — es un canvas de preguntas.</p>
   </div>
 </section>
 
-<!-- =============================================
-     S6: LÓGICA DE LA MATRIZ
-     ============================================= -->
-<section class="slide" id="s6">
+<section class="slide" id="s7" data-title="8 unidades de análisis">
+  <div class="domain-bar rdoc"></div>
   <div class="slide-content">
-    <p class="eyebrow reveal">La matriz RDoC</p>
-    <h2 class="reveal">Dominio &times; Unidad = <em>pregunta de investigación</em></h2>
-    <div class="divider reveal"></div>
-    <div class="matrix-grid reveal-scale" style="transition-delay:0.3s">
-      <div class="matrix-header"></div>
-      <div class="matrix-header">Genes</div><div class="matrix-header">Mol</div><div class="matrix-header">Cel</div>
-      <div class="matrix-header">Circ</div><div class="matrix-header">Fisio</div><div class="matrix-header">Cond</div>
-      <div class="matrix-header">Self-R</div><div class="matrix-header">Parad</div>
-      <div class="matrix-domain" style="--dom-color:var(--dom-negval)">NegVal</div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-domain" style="--dom-color:var(--dom-posval)">PosVal</div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-cell highlight">= 1 pregunta</div><div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-domain" style="--dom-color:var(--dom-cogsys)">CogSys</div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-domain" style="--dom-color:var(--dom-social)">Social</div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-domain" style="--dom-color:var(--dom-arousal)">Arousal</div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-domain" style="--dom-color:var(--dom-sensori)">Sensori</div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div>
+    <p class="eyebrow reveal" style="color:var(--rdoc)">Las columnas de la matriz</p>
+    <h1 class="reveal" style="transition-delay:.1s">Las 8 unidades de análisis: de genes a paradigmas — ustedes ya trabajan con las columnas 6 y 7</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--rdoc),var(--cyan))"></div>
+    <div class="reveal" style="transition-delay:.3s">
+      <div class="pipeline" style="margin-bottom:clamp(.6rem,1.5vw,1rem)">
+        <div class="pipeline-box"><div class="pipe-icon">🧬</div><div class="pipe-label">Genes</div></div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-box"><div class="pipe-icon">🧪</div><div class="pipe-label">Moléculas</div></div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-box"><div class="pipe-icon">🔬</div><div class="pipe-label">Células</div></div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-box"><div class="pipe-icon">🧠</div><div class="pipe-label">Circuitos</div></div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-box"><div class="pipe-icon">💓</div><div class="pipe-label">Fisiología</div></div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-box active"><div class="pipe-icon" style="color:var(--rdoc)">🏃</div><div class="pipe-label" style="color:var(--rdoc)">Conducta</div></div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-box active"><div class="pipe-icon" style="color:var(--rdoc)">💬</div><div class="pipe-label" style="color:var(--rdoc)">Self-report</div></div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-box"><div class="pipe-icon">🧩</div><div class="pipe-label">Paradigmas</div></div>
+      </div>
+      <div style="display:flex;justify-content:center;gap:clamp(.8rem,2vw,1.5rem);margin-top:.4rem">
+        <span class="tag tag-rdoc" style="font-weight:700">↑ Aquí trabajan ustedes</span>
+        <span style="font-size:var(--small-size);color:var(--text-muted);align-self:center">micro ← ← ← ← ← ← → → → macro</span>
+      </div>
     </div>
-    <p class="source reveal" style="transition-delay:0.5s">Una tabla periódica de la mente &mdash; cada celda vacía es una pregunta que espera respuesta.</p>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-style:italic;margin-top:var(--content-gap)">RDoC les pide que piensen qué hay debajo.</p>
   </div>
 </section>
 
-<!-- =============================================
-     S7: 8 UNIDADES (PIPELINE)
-     ============================================= -->
-<section class="slide" id="s7">
+<section class="slide" id="s8" data-title="Qué significa cada unidad">
+  <div class="domain-bar rdoc"></div>
   <div class="slide-content">
-    <p class="eyebrow reveal">Unidades de análisis</p>
-    <h2 class="reveal">De lo <em>micro</em> a lo <em>macro</em></h2>
-    <div class="divider reveal"></div>
-    <div class="pipeline reveal" style="transition-delay:0.3s">
-      <div class="pipeline-box"><div class="pipe-icon">🧬</div><div class="pipe-label">Genes</div></div>
-      <span class="pipeline-arrow">→</span>
-      <div class="pipeline-box"><div class="pipe-icon">🧪</div><div class="pipe-label">Moléculas</div></div>
-      <span class="pipeline-arrow">→</span>
-      <div class="pipeline-box"><div class="pipe-icon">🔬</div><div class="pipe-label">Células</div></div>
-      <span class="pipeline-arrow">→</span>
-      <div class="pipeline-box"><div class="pipe-icon">🧠</div><div class="pipe-label">Circuitos</div></div>
-      <span class="pipeline-arrow">→</span>
-      <div class="pipeline-box"><div class="pipe-icon">💓</div><div class="pipe-label">Fisiología</div></div>
-      <span class="pipeline-arrow">→</span>
-      <div class="pipeline-box active"><div class="pipe-icon">🏃</div><div class="pipe-label">Conducta</div></div>
-      <span class="pipeline-arrow">→</span>
-      <div class="pipeline-box active"><div class="pipe-icon">💬</div><div class="pipe-label">Self-report</div></div>
-      <span class="pipeline-arrow">→</span>
-      <div class="pipeline-box"><div class="pipe-icon">🧩</div><div class="pipe-label">Paradigmas</div></div>
+    <p class="eyebrow reveal" style="color:var(--rdoc)">De micro a macro</p>
+    <h1 class="reveal" style="transition-delay:.1s">¿Qué significa cada unidad? — de la variante genética al paradigma experimental</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--rdoc),var(--cyan))"></div>
+    <div class="reveal" style="transition-delay:.3s">
+      <table class="data-table">
+        <tr><th>Unidad</th><th>Qué es — ejemplo concreto</th></tr>
+        <tr><td class="head">🧬 Genes</td><td>Variantes genéticas asociadas — ej: SLC6A4, DRD2, COMT</td></tr>
+        <tr><td class="head">🧪 Moléculas</td><td>Neurotransmisores, hormonas — ej: serotonina, cortisol, dopamina</td></tr>
+        <tr><td class="head">🔬 Células</td><td>Tipos celulares relevantes — ej: interneuronas GABAérgicas, microglía</td></tr>
+        <tr><td class="head">🧠 Circuitos</td><td>Redes cerebrales — ej: amígdala↔PFC, VTA→NAcc</td></tr>
+        <tr><td class="head">💓 Fisiología</td><td>Medidas periféricas — ej: FC, conductancia cutánea, actigrafía</td></tr>
+        <tr><td class="head">🏃 Conducta</td><td>Comportamiento observable — ej: evitación, latencia de respuesta</td></tr>
+        <tr><td class="head">💬 Self-report</td><td>Lo que el paciente reporta — ej: PHQ-9, SHAPS, "me siento vacío"</td></tr>
+        <tr><td class="head">🧩 Paradigmas</td><td>Tareas experimentales que activan el constructo — ej: Go/No-Go, EEfRT</td></tr>
+      </table>
     </div>
-    <p class="reveal" style="transition-delay:0.5s;text-align:center;margin-top:var(--content-gap)">Ustedes ya trabajan con <em>conducta</em> y <em>self-report</em>. RDoC les pide pensar qué hay debajo.</p>
+    <p class="reveal" style="transition-delay:.5s;font-style:italic;margin-top:var(--content-gap);text-align:center">No memoricen los ejemplos — entiendan la lógica: cada unidad es un nivel distinto de mirar el mismo constructo.</p>
   </div>
 </section>
 
-<!-- =============================================
-     S8: QUÉ SIGNIFICA CADA UNIDAD
-     ============================================= -->
-<section class="slide" id="s8">
+<section class="slide" id="s9" data-title="Anhedonia en la matriz">
+  <div class="domain-bar rdoc"></div>
   <div class="slide-content">
-    <p class="eyebrow reveal">Detalle</p>
-    <h2 class="reveal">¿Qué significa <em>cada unidad</em>?</h2>
-    <div class="divider reveal"></div>
-    <table class="unit-table reveal" style="transition-delay:0.3s">
-      <tr><td class="ut-icon">🧬</td><td class="ut-name">Genes</td><td class="ut-example">Variantes asociadas &mdash; SLC6A4, DRD2</td></tr>
-      <tr><td class="ut-icon">🧪</td><td class="ut-name">Moléculas</td><td class="ut-example">Serotonina, cortisol, dopamina</td></tr>
-      <tr><td class="ut-icon">🔬</td><td class="ut-name">Células</td><td class="ut-example">Interneuronas GABAérgicas, microglía</td></tr>
-      <tr><td class="ut-icon">🧠</td><td class="ut-name">Circuitos</td><td class="ut-example">Amígdala↔PFC, VTA→NAcc</td></tr>
-      <tr><td class="ut-icon">💓</td><td class="ut-name">Fisiología</td><td class="ut-example">FC, conductancia cutánea, actigrafía</td></tr>
-      <tr><td class="ut-icon">🏃</td><td class="ut-name">Conducta</td><td class="ut-example">Evitación, latencia de respuesta</td></tr>
-      <tr><td class="ut-icon">💬</td><td class="ut-name">Self-report</td><td class="ut-example">PHQ-9, SHAPS, &ldquo;me siento vacío&rdquo;</td></tr>
-      <tr><td class="ut-icon">🧩</td><td class="ut-name">Paradigmas</td><td class="ut-example">Go/No-Go (inhibición), EEfRT (motivación)</td></tr>
-    </table>
-    <p class="source reveal" style="transition-delay:0.5s">Paradigma = tarea diseñada para activar un constructo. Go/No-Go: &ldquo;aprieta excepto cuando veas X.&rdquo;</p>
-  </div>
-</section>
-
-<!-- =============================================
-     S9: EJEMPLO ANHEDONIA EN LA MATRIZ
-     ============================================= -->
-<section class="slide" id="s9">
-  <div class="slide-content">
-    <p class="eyebrow reveal" style="color:var(--dom-posval)">Positive Valence → Reward Responsiveness</p>
-    <h2 class="reveal"><em>Anhedonia</em> en la matriz</h2>
-    <div class="divider reveal" style="background:var(--dom-posval)"></div>
-    <div class="pipeline reveal" style="transition-delay:0.3s">
-      <div class="pipeline-box"><div class="pipe-icon">🧬</div><div class="pipe-label">DRD2</div></div>
-      <span class="pipeline-arrow">→</span>
-      <div class="pipeline-box"><div class="pipe-icon">🧪</div><div class="pipe-label">Dopamina</div></div>
-      <span class="pipeline-arrow">→</span>
-      <div class="pipeline-box"><div class="pipe-icon">🔬</div><div class="pipe-label">Neuronas DA</div></div>
-      <span class="pipeline-arrow">→</span>
-      <div class="pipeline-box"><div class="pipe-icon">🧠</div><div class="pipe-label">VTA→NAcc</div></div>
-      <span class="pipeline-arrow">→</span>
-      <div class="pipeline-box"><div class="pipe-icon">💓</div><div class="pipe-label">Resp. pupilar</div></div>
-      <span class="pipeline-arrow">→</span>
-      <div class="pipeline-box"><div class="pipe-icon">🏃</div><div class="pipe-label">Deja actividades</div></div>
-      <span class="pipeline-arrow">→</span>
-      <div class="pipeline-box"><div class="pipe-icon">💬</div><div class="pipe-label">SHAPS</div></div>
-      <span class="pipeline-arrow">→</span>
-      <div class="pipeline-box"><div class="pipe-icon">🧩</div><div class="pipe-label">EEfRT</div></div>
+    <p class="eyebrow reveal" style="color:var(--rdoc)">El ejemplo que usaremos toda la sesión</p>
+    <h1 class="reveal" style="transition-delay:.1s">Ejemplo: anhedonia en la matriz — un síntoma, una fila, múltiples niveles de análisis</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--rdoc),var(--cyan))"></div>
+    <div class="reveal" style="transition-delay:.3s;text-align:center">
+      <p style="font-size:var(--small-size);color:var(--rdoc);font-family:var(--font-mono);font-weight:700;margin-bottom:.5rem">Dominio: Positive Valence → Constructo: Reward Responsiveness</p>
+      <div class="pipeline" style="gap:0">
+        <div class="pipeline-box" style="min-width:auto"><div class="pipe-icon">🧬</div><div class="pipe-label">DRD2</div></div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-box" style="min-width:auto"><div class="pipe-icon">🧪</div><div class="pipe-label">Dopamina</div></div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-box" style="min-width:auto"><div class="pipe-icon">🔬</div><div class="pipe-label">Neuronas DA</div></div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-box" style="min-width:auto"><div class="pipe-icon">🧠</div><div class="pipe-label">VTA→NAcc</div></div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-box" style="min-width:auto"><div class="pipe-icon">💓</div><div class="pipe-label">Resp. pupilar</div></div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-box" style="min-width:auto"><div class="pipe-icon">🏃</div><div class="pipe-label">Deja actividades</div></div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-box" style="min-width:auto"><div class="pipe-icon">💬</div><div class="pipe-label">SHAPS / PHQ-9 #1</div></div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-box" style="min-width:auto"><div class="pipe-icon">🧩</div><div class="pipe-label">EEfRT task</div></div>
+      </div>
     </div>
-    <p class="reveal" style="transition-delay:0.5s;text-align:center;margin-top:var(--content-gap)">Un síntoma, una fila, <em>múltiples niveles de análisis</em>.</p>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-style:italic;margin-top:var(--content-gap);color:var(--rdoc)">Un síntoma, una fila, múltiples niveles de análisis.</p>
   </div>
 </section>
 
-<!-- =============================================
-     S10: FRAME EVOLUTIVO
-     ============================================= -->
-<section class="slide" id="s10">
+<!-- === SECCIÓN B.2: LOS 6 DOMINIOS (Slides 10-22) === -->
+
+<section class="slide" id="s10" data-title="Frame evolutivo">
+  <div class="domain-bar rdoc"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--rdoc)">La clave interpretativa</p>
+    <h1 class="reveal" style="transition-delay:.1s">Frame evolutivo: cada dominio es un sistema que evolucionó para sobrevivir — la psicopatología es mismatch</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--rdoc),var(--cyan))"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:900px">
+      <div class="card" style="text-align:center;border-top:2px solid var(--amber)">
+        <p style="font-size:var(--label-size);color:var(--amber);font-family:var(--font-mono);font-weight:700">SABANA</p>
+        <div style="font-size:clamp(2rem,4vw,3rem);margin:.4rem 0">🌅🦌</div>
+        <p style="font-size:var(--small-size);color:var(--text-muted)">Mismos circuitos, distinto mundo</p>
+      </div>
+      <div class="card" style="text-align:center;border-top:2px solid var(--cyan)">
+        <p style="font-size:var(--label-size);color:var(--cyan);font-family:var(--font-mono);font-weight:700">OFICINA</p>
+        <div style="font-size:clamp(2rem,4vw,3rem);margin:.4rem 0">💻📱</div>
+        <p style="font-size:var(--small-size);color:var(--text-muted)">Mismos circuitos, distinto mundo</p>
+      </div>
+    </div>
+    <div class="reveal" style="transition-delay:.4s;padding:clamp(.5rem,1vw,.8rem) clamp(.8rem,1.5vw,1.2rem);border-left:3px solid var(--rdoc);background:rgba(26,255,140,.06);max-width:680px;margin-top:clamp(.4rem,1vw,.6rem)">
+      <p style="font-size:var(--body-size);color:var(--text-primary);font-style:italic;line-height:1.35">"Capacidades para síntomas como la ansiedad y el ánimo bajo son universales porque son útiles en ciertas situaciones."</p>
+      <p style="font-size:var(--small-size);color:var(--rdoc);font-family:var(--font-mono);margin-top:.2rem">— Nesse, World Psychiatry, 2023</p>
+    </div>
+    <p class="reveal" style="transition-delay:.5s;font-size:var(--small-size);text-align:center;color:var(--text-muted);margin-top:.3rem">Cada dominio RDoC es un sistema que evolucionó para sobrevivir. La psicopatología ocurre cuando dispara fuera de contexto.</p>
+  </div>
+</section>
+
+<section class="slide" id="s11" data-title="Dominio 1 Negative Valence">
+  <div class="domain-bar magenta"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--magenta)">Dominio 1 🔴</p>
+    <h1 class="reveal" style="transition-delay:.1s">Dominio 1: Negative Valence Systems — el sistema que detecta amenaza, pérdida y frustración</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--magenta),var(--cyan))"></div>
+    <div class="construct-list reveal" style="transition-delay:.3s;max-width:680px;width:100%">
+      <div class="construct-item"><span class="construct-icon" style="color:var(--magenta)">⚡</span><div><span class="construct-name">Acute Threat ("Fear")</span><br/><span class="construct-desc">peligro AHORA — pánico, fobia — la amígdala dispara</span></div></div>
+      <div class="construct-item"><span class="construct-icon" style="color:var(--magenta)">❓</span><div><span class="construct-name">Potential Threat ("Anxiety")</span><br/><span class="construct-desc">¿y si...? — GAD — anticipación de amenaza incierta</span></div></div>
+      <div class="construct-item"><span class="construct-icon" style="color:var(--magenta)">⏳</span><div><span class="construct-name">Sustained Threat</span><br/><span class="construct-desc">amenaza que no cesa — PTSD — hipervigilancia mantenida</span></div></div>
+      <div class="construct-item"><span class="construct-icon" style="color:var(--magenta)">💔</span><div><span class="construct-name">Loss</span><br/><span class="construct-desc">algo valorado se fue — duelo, depresión reactiva</span></div></div>
+      <div class="construct-item"><span class="construct-icon" style="color:var(--magenta)">😤</span><div><span class="construct-name">Frustrative Nonreward</span><br/><span class="construct-desc">la recompensa esperada no llega — irritabilidad, agresión reactiva</span></div></div>
+    </div>
+    <p class="reveal" style="transition-delay:.5s;font-size:var(--small-size);text-align:center;color:var(--text-muted);margin-top:.3rem;font-style:italic">Fear = peligro presente. Anxiety = peligro anticipado.</p>
+  </div>
+</section>
+
+<section class="slide" id="s12" data-title="Negative Valence lente + research">
+  <div class="domain-bar magenta"></div>
   <div class="split">
     <div class="split-left">
-      <p class="eyebrow reveal">Lente evolutiva</p>
-      <h2 class="reveal" style="transition-delay:0.1s">Mismos circuitos,<br/><em>distinto mundo</em></h2>
-      <div class="divider reveal" style="transition-delay:0.2s"></div>
-      <div class="quote reveal" style="transition-delay:0.3s;font-size:var(--body-size)">
-        Capacidades para síntomas como la ansiedad y el ánimo bajo son universales porque son <em>útiles</em> en ciertas situaciones.
+      <p class="eyebrow reveal" style="color:var(--magenta)">Lente evolutiva</p>
+      <h1 class="reveal" style="transition-delay:.1s">Negative Valence: smoke detector principle + heredabilidad 35-50% — el miedo tiene base genética medible</h1>
+      <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--magenta),var(--cyan))"></div>
+      <div class="reveal" style="transition-delay:.3s">
+        <div style="padding:clamp(.5rem,1vw,.8rem);border-left:3px solid var(--amber);background:rgba(255,182,39,.06);margin-bottom:.6rem">
+          <p style="font-size:var(--body-size);color:var(--text-primary);font-weight:700">Smoke Detector Principle</p>
+          <p style="font-size:var(--small-size);margin-top:.2rem">Mejor 100 falsas alarmas que perder UNA amenaza real.</p>
+          <p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.2rem;font-style:italic">Nuestro sistema de amenaza se diseñó para serpientes. Hoy dispara ante emails.</p>
+        </div>
+        <p style="font-size:var(--small-size);color:var(--magenta);font-family:var(--font-mono);font-weight:700">Heredabilidad de acute threat: 35-50%</p>
+        <p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.15rem">SLC6A4, COMT → activación frontolímbica diferencial</p>
       </div>
-      <p class="quote-author reveal" style="transition-delay:0.4s">&mdash; Nesse, 2023, World Psychiatry</p>
+      <p class="source reveal" style="transition-delay:.4s">Nesse, 2023 · Sumner et al., 2016</p>
     </div>
-    <div class="split-right" style="flex-direction:column;gap:0;background:linear-gradient(180deg, #2a1f15 0%, #141820 100%)">
-      <div class="reveal-scale" style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column">
-        <div style="font-size:clamp(3rem,6vw,5rem)">🌾</div>
-        <div style="font-size:var(--label-size);color:var(--dom-arousal);margin-top:0.3rem">SABANA</div>
-      </div>
-      <div style="width:100%;height:1px;background:rgba(255,255,255,0.08)"></div>
-      <div class="reveal-scale" style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;transition-delay:0.2s">
-        <div style="font-size:clamp(3rem,6vw,5rem)">🖥️</div>
-        <div style="font-size:var(--label-size);color:var(--dom-cogsys);margin-top:0.3rem">OFICINA</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- =============================================
-     S11: NEGATIVE VALENCE — CONSTRUCTOS
-     ============================================= -->
-<section class="slide" id="s11">
-  <div class="domain-bar" style="background:var(--dom-negval)"></div>
-  <div class="slide-content">
-    <p class="eyebrow reveal" style="color:var(--dom-negval)">Dominio 1</p>
-    <h2 class="reveal">Negative Valence Systems</h2>
-    <p class="reveal" style="transition-delay:0.1s;font-style:italic">El sistema que detecta amenaza, pérdida y frustración</p>
-    <div class="divider reveal" style="transition-delay:0.15s;background:var(--dom-negval)"></div>
-    <div class="construct-list reveal" style="transition-delay:0.25s">
-      <div class="construct-item"><span class="construct-icon">⚡</span><span class="construct-name">Acute Threat</span><span class="construct-desc">&mdash; peligro AHORA</span></div>
-      <div class="construct-item"><span class="construct-icon">❓</span><span class="construct-name">Potential Threat</span><span class="construct-desc">&mdash; ¿y si...?</span></div>
-      <div class="construct-item"><span class="construct-icon">⏳</span><span class="construct-name">Sustained Threat</span><span class="construct-desc">&mdash; amenaza que no cesa</span></div>
-      <div class="construct-item"><span class="construct-icon">💔</span><span class="construct-name">Loss</span><span class="construct-desc">&mdash; algo valorado se fue</span></div>
-      <div class="construct-item"><span class="construct-icon">😤</span><span class="construct-name">Frustrative Nonreward</span><span class="construct-desc">&mdash; la recompensa no llegó</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- =============================================
-     S12: NEGATIVE VALENCE — EVOLUTIVA
-     ============================================= -->
-<section class="slide" id="s12">
-  <div class="domain-bar" style="background:var(--dom-negval)"></div>
-  <div class="centered">
-    <p class="eyebrow reveal" style="color:var(--dom-negval)">Lente evolutiva</p>
-    <div style="font-size:clamp(4rem,8vw,7rem)" class="reveal-scale">🔥🍞</div>
-    <h2 class="reveal" style="transition-delay:0.2s;margin-top:var(--content-gap)"><em>Smoke Detector</em> Principle</h2>
-    <p class="reveal" style="transition-delay:0.3s;max-width:500px">Mejor 100 falsas alarmas que perder UNA amenaza real.</p>
-    <p class="reveal" style="transition-delay:0.4s;font-style:italic;max-width:500px">Nuestro sistema de amenaza se diseñó para serpientes. Hoy dispara ante emails.</p>
-    <p class="source reveal" style="transition-delay:0.5s">Nesse, 2023</p>
-  </div>
-</section>
-
-<!-- =============================================
-     S13: NEGATIVE VALENCE — RESEARCH
-     ============================================= -->
-<section class="slide" id="s13">
-  <div class="domain-bar" style="background:var(--dom-negval)"></div>
-  <div class="slide-content">
-    <p class="eyebrow reveal" style="color:var(--dom-negval)">Research hint</p>
-    <h2 class="reveal">Heredabilidad de <em>acute threat</em>: 35-50%</h2>
-    <div class="divider reveal" style="background:var(--dom-negval)"></div>
-    <div class="cross-domain reveal" style="transition-delay:0.3s">
-      <div class="cd-target" style="border-left:3px solid var(--dom-negval)"><strong>SLC6A4</strong><br/>Transportador de serotonina</div>
-      <div class="cd-arrow">⟷</div>
-      <div class="cd-center" style="border-color:var(--dom-negval)">Amígdala ↔ PFC</div>
-      <div class="cd-arrow">⟷</div>
-      <div class="cd-target" style="border-left:3px solid var(--dom-negval)"><strong>COMT</strong><br/>Catecol-O-metiltransferasa</div>
-    </div>
-    <p class="reveal" style="transition-delay:0.5s;margin-top:var(--content-gap)">La reactividad al miedo tiene base genética medible &mdash; no es solo &ldquo;ser nervioso&rdquo;.</p>
-    <p class="source reveal" style="transition-delay:0.6s">Sumner et al., 2016 &middot; Am J Med Genet B</p>
-  </div>
-</section>
-
-<!-- =============================================
-     S14: POSITIVE VALENCE — CONSTRUCTOS
-     ============================================= -->
-<section class="slide" id="s14">
-  <div class="domain-bar" style="background:var(--dom-posval)"></div>
-  <div class="slide-content">
-    <p class="eyebrow reveal" style="color:var(--dom-posval)">Dominio 2</p>
-    <h2 class="reveal">Positive Valence Systems</h2>
-    <p class="reveal" style="transition-delay:0.1s;font-style:italic">El sistema que busca, aprende y valora la recompensa</p>
-    <div class="divider reveal" style="transition-delay:0.15s;background:var(--dom-posval)"></div>
-    <div class="construct-list reveal" style="transition-delay:0.25s">
-      <div class="construct-item"><span class="construct-icon">🎯</span><span class="construct-name">Reward Responsiveness</span><span class="construct-desc">&mdash; anticipación → respuesta → saciación</span></div>
-      <div class="construct-item"><span class="construct-icon">📚</span><span class="construct-name">Reward Learning</span><span class="construct-desc">&mdash; refuerzo, prediction error, hábito</span></div>
-      <div class="construct-item"><span class="construct-icon">⚖️</span><span class="construct-name">Reward Valuation</span><span class="construct-desc">&mdash; probabilidad, demora, esfuerzo</span></div>
-    </div>
-    <p class="reveal" style="transition-delay:0.4s;margin-top:var(--content-gap)"><em>Anhedonia</em> = falla en responsiveness. <em>Adicción</em> = learning desregulado.</p>
-  </div>
-</section>
-
-<!-- =============================================
-     S15: POSITIVE VALENCE — EVOLUTIVA
-     ============================================= -->
-<section class="slide" id="s15">
-  <div class="domain-bar" style="background:var(--dom-posval)"></div>
-  <div class="split">
-    <div class="split-left" style="background:linear-gradient(135deg, #1a1510 0%, var(--bg-primary) 100%)">
-      <div style="font-size:clamp(3rem,5vw,4rem);margin-bottom:0.5rem" class="reveal">🌾🏃</div>
-      <h3 class="reveal" style="transition-delay:0.1s">Recompensa <em>escasa</em></h3>
-      <p class="reveal" style="transition-delay:0.2s">Intermitente, costosa, requería esfuerzo físico</p>
-    </div>
-    <div class="split-right" style="flex-direction:column;justify-content:center;background:linear-gradient(135deg, var(--bg-panel) 0%, #1a1525 100%)">
-      <div style="font-size:clamp(3rem,5vw,4rem);margin-bottom:0.5rem" class="reveal">📱🛋️</div>
-      <h3 class="reveal" style="transition-delay:0.1s;padding:0 var(--slide-padding)">Recompensa <em>hiperabundante</em></h3>
-      <p class="reveal" style="transition-delay:0.2s;padding:0 var(--slide-padding)">Inmediata, sin esfuerzo, inagotable</p>
-      <p class="reveal" style="transition-delay:0.3s;padding:0 var(--slide-padding);font-style:italic;margin-top:0.5rem;font-size:var(--small-size)">Las adicciones no son falta de voluntad &mdash; son un secuestro de un sistema de aprendizaje.</p>
-    </div>
-  </div>
-</section>
-
-<!-- =============================================
-     S16: POSITIVE VALENCE — RESEARCH (CASCADA)
-     ============================================= -->
-<section class="slide" id="s16">
-  <div class="domain-bar" style="background:var(--dom-posval)"></div>
-  <div class="slide-content" style="align-items:center">
-    <p class="eyebrow reveal" style="color:var(--dom-posval)">Inflamación → Anhedonia</p>
-    <h2 class="reveal">La cascada <em>transdiagnóstica</em></h2>
-    <div class="divider reveal" style="background:var(--dom-posval)"></div>
-    <div class="flowchart-v reveal" style="transition-delay:0.3s">
-      <div class="fc-box" style="border-color:var(--dom-negval)">Citoquinas proinflamatorias ↑</div>
-      <div class="fc-arrow">↓</div>
-      <div class="fc-box">IDO ↑ / BH4 ↓</div>
-      <div class="fc-arrow">↓</div>
-      <div class="fc-box" style="border-color:var(--dom-posval)">Dopamina ↓ en VTA→NAcc</div>
-      <div class="fc-arrow">↓</div>
-      <div class="fc-box">Esfuerzo devaluado</div>
-      <div class="fc-arrow">↓</div>
-      <div class="fc-box" style="border-color:var(--accent);background:var(--accent-glow);color:var(--text-primary);font-weight:600">ANHEDONIA</div>
-    </div>
-    <p class="source reveal" style="transition-delay:0.5s">Swardfager et al., 2016 &middot; Depresión, esquizofrenia, autoinmune, post-COVID</p>
-  </div>
-</section>
-
-<!-- =============================================
-     S17: COGNITIVE SYSTEMS — CONSTRUCTOS
-     ============================================= -->
-<section class="slide" id="s17">
-  <div class="domain-bar" style="background:var(--dom-cogsys)"></div>
-  <div class="slide-content">
-    <p class="eyebrow reveal" style="color:var(--dom-cogsys)">Dominio 3</p>
-    <h2 class="reveal">Cognitive Systems</h2>
-    <p class="reveal" style="transition-delay:0.1s;font-style:italic">El sistema que atiende, recuerda, controla y comprende</p>
-    <div class="divider reveal" style="transition-delay:0.15s;background:var(--dom-cogsys)"></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(0.3rem,0.6vw,0.5rem);max-width:500px" class="reveal" style="transition-delay:0.25s">
-      <div class="construct-item"><span class="construct-name">Attention</span></div>
-      <div class="construct-item"><span class="construct-name">Perception</span></div>
-      <div class="construct-item"><span class="construct-name">Declarative Memory</span></div>
-      <div class="construct-item"><span class="construct-name">Language</span></div>
-      <div class="construct-item"><span class="construct-name">Cognitive Control</span></div>
-      <div class="construct-item"><span class="construct-name">Working Memory</span></div>
-    </div>
-    <p class="reveal" style="transition-delay:0.4s;margin-top:var(--content-gap)"><em>Impulsividad</em> = falla en cognitive control. <em>Alucinaciones</em> = falla en perception.</p>
-  </div>
-</section>
-
-<!-- =============================================
-     S18: COGNITIVE — EVOLUTIVA
-     ============================================= -->
-<section class="slide" id="s18">
-  <div class="domain-bar" style="background:var(--dom-cogsys)"></div>
-  <div class="centered">
-    <p class="eyebrow reveal" style="color:var(--dom-cogsys)">Lente evolutiva</p>
-    <div style="font-size:clamp(3rem,6vw,5rem)" class="reveal-scale">🧠🔋</div>
-    <h2 class="reveal" style="transition-delay:0.2s">El sistema más <em>caro</em> del cerebro</h2>
-    <p class="reveal" style="transition-delay:0.3s;max-width:550px">Evolucionó para vida social compleja: inhibir impulsos, planificar caza cooperativa, leer intenciones.</p>
-    <p class="reveal" style="transition-delay:0.4s;max-width:550px;font-style:italic">Los sistemas más caros son los primeros en fallar bajo estrés. El deterioro cognitivo no es efecto secundario &mdash; es falla del sistema más frágil.</p>
-  </div>
-</section>
-
-<!-- =============================================
-     S19: COGNITIVE — RESEARCH
-     ============================================= -->
-<section class="slide" id="s19">
-  <div class="domain-bar" style="background:var(--dom-cogsys)"></div>
-  <div class="slide-content" style="align-items:center">
-    <p class="eyebrow reveal" style="color:var(--dom-cogsys)">Research hint</p>
-    <h2 class="reveal">¿Subdividir el dominio <em>cognitivo</em>?</h2>
-    <div class="divider reveal" style="background:var(--dom-cogsys)"></div>
-    <div class="cross-domain reveal" style="transition-delay:0.3s">
-      <div class="cd-target" style="border-left:3px solid var(--dom-cogsys)"><strong>Actual</strong><br/>1 dominio<br/>Cognitive Systems</div>
-      <div class="cd-arrow">→ ?</div>
-      <div class="cd-target" style="border-left:3px solid var(--dom-cogsys)"><strong>Propuesto</strong><br/>Cognitive Control<br/>&amp; Representation</div>
-    </div>
-    <p class="reveal" style="transition-delay:0.5s;max-width:550px;text-align:center;margin-top:var(--content-gap)">Quah et al. (2024, <em>Nature Comms</em>): análisis bifactorial en 6,192 participantes sugiere que el dominio debería subdividirse. El framework sigue evolucionando &mdash; no es dogma.</p>
-  </div>
-</section>
-
-<!-- =============================================
-     S19b: QUAH 2025 — EL ESTUDIO
-     ============================================= -->
-<section class="slide" id="s19b">
-  <div class="domain-bar" style="background:var(--dom-cogsys)"></div>
-  <div class="slide-content">
-    <p class="eyebrow reveal" style="color:var(--dom-cogsys)">Quah et al. 2025 &middot; Nature Communications</p>
-    <h2 class="reveal">4 modelos, 84 mapas fMRI, <em>6,192 participantes</em></h2>
-    <div class="divider reveal" style="background:var(--dom-cogsys)"></div>
-    <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:clamp(0.2rem,0.4vw,0.3rem);align-items:center;width:100%" class="reveal" style="transition-delay:0.3s">
-      <div class="fc-box" style="font-size:var(--label-size)"><strong style="color:var(--text-primary)">RDoC Specific</strong><br/>5 factores<br/>Sin factor G</div>
-      <span style="color:var(--text-muted);font-size:var(--small-size)">vs</span>
-      <div class="fc-box" style="font-size:var(--label-size)"><strong style="color:var(--text-primary)">RDoC Bifactor</strong><br/>5 factores + G<br/>Mejor que RDoC solo</div>
-      <span style="color:var(--text-muted);font-size:var(--small-size)">vs</span>
-      <div class="fc-box" style="font-size:var(--label-size)"><strong style="color:var(--text-primary)">DD Specific</strong><br/>8 factores EFA<br/>Empírico</div>
-      <span style="color:var(--text-muted);font-size:var(--small-size)">vs</span>
-      <div class="fc-box" style="font-size:var(--label-size);border-color:var(--dom-posval);background:rgba(90,154,106,0.08)"><strong style="color:var(--dom-posval)">DD Bifactor</strong><br/>8 factores + G<br/><em style="color:var(--dom-posval)">GANADOR</em></div>
-    </div>
-    <p class="reveal" style="transition-delay:0.5s;margin-top:var(--content-gap);text-align:center">Añadir un <em>factor general</em> (G) al RDoC mejora significativamente el ajuste &mdash; análogo al factor p en psicopatología.</p>
-    <p class="source reveal" style="transition-delay:0.6s">DOI: 10.1038/s41467-025-55831-z &middot; Stanford, UCLA, WashU, Minnesota</p>
-  </div>
-</section>
-
-<!-- =============================================
-     S19c: QUAH 2025 — RECOMENDACIONES
-     ============================================= -->
-<section class="slide" id="s19c">
-  <div class="domain-bar" style="background:var(--dom-cogsys)"></div>
-  <div class="slide-content">
-    <p class="eyebrow reveal" style="color:var(--dom-cogsys)">Quah et al. 2025 &mdash; Implicaciones</p>
-    <h2 class="reveal">Qué necesita <em>cambiar</em> en RDoC</h2>
-    <div class="divider reveal" style="background:var(--dom-cogsys)"></div>
-    <div class="construct-list reveal" style="transition-delay:0.25s">
-      <div class="construct-item">
-        <span class="construct-icon" style="color:var(--dom-posval)">R1</span>
-        <span class="construct-name">Añadir dominio task-general</span>
-        <span class="construct-desc">&mdash; superordinado tipo factor p/g. Activación visual + motora compartida across tareas.</span>
-      </div>
-      <div class="construct-item">
-        <span class="construct-icon" style="color:var(--dom-cogsys)">R2</span>
-        <span class="construct-name">Dividir Cognitive Systems</span>
-        <span class="construct-desc">&mdash; atención, WM, semántica y ToM forman factores separables. Mantenerlos juntos oscurece distinciones reales.</span>
-      </div>
-      <div class="construct-item">
-        <span class="construct-icon" style="color:var(--dom-negval)">R3</span>
-        <span class="construct-name">Reconsiderar Negative Valence</span>
-        <span class="construct-desc">&mdash; no forma un factor coherente. Recombina memoria, recompensa y conflicto cognitivo.</span>
-      </div>
-      <div class="construct-item">
-        <span class="construct-icon" style="color:var(--dom-arousal)">R4</span>
-        <span class="construct-name">Arousal: el dominio fantasma</span>
-        <span class="construct-desc">&mdash; cero mapas de activación disponibles. El dominio más relevante para psicopatología transdiagnóstica es el más subrepresentado.</span>
+    <div class="split-right">
+      <div class="reveal-scale" style="text-align:center">
+        <div style="position:relative;width:clamp(160px,24vw,220px);height:clamp(140px,22vw,200px);margin:0 auto">
+          <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 100 80">
+            <line x1="30" y1="25" x2="70" y2="55" stroke="rgba(255,46,196,.6)" stroke-width="1.2"/>
+            <line x1="70" y1="55" x2="30" y2="25" stroke="rgba(0,245,255,.6)" stroke-width="1.2"/>
+          </svg>
+          <div class="net-node hub" style="position:absolute;left:22%;top:18%;width:clamp(40px,6vw,54px);height:clamp(40px,6vw,54px);font-size:var(--label-size);border-color:var(--magenta);color:var(--magenta)">Amígdala</div>
+          <div class="net-node" style="position:absolute;right:18%;bottom:18%;width:clamp(44px,7vw,60px);height:clamp(44px,7vw,60px);font-size:var(--label-size);border-color:var(--cyan);color:var(--cyan)">PFC vm</div>
+        </div>
+        <div class="big-number" style="color:var(--magenta);font-size:clamp(1.8rem,4vw,3rem);margin-top:.4rem">35-50%</div>
+        <p style="font-size:var(--small-size);color:var(--text-muted)">heredabilidad</p>
       </div>
     </div>
-    <p class="source reveal" style="transition-delay:0.5s">&ldquo;The end goal is not solely to adopt a data-driven model but to advance conceptual and empirical methods.&rdquo;</p>
   </div>
 </section>
 
-<!-- =============================================
-     S20: SOCIAL PROCESSES — CONSTRUCTOS
-     ============================================= -->
-<section class="slide" id="s20">
-  <div class="domain-bar" style="background:var(--dom-social)"></div>
+<section class="slide" id="s13" data-title="Dominio 2 Positive Valence">
+  <div class="domain-bar rdoc"></div>
   <div class="slide-content">
-    <p class="eyebrow reveal" style="color:var(--dom-social)">Dominio 4</p>
-    <h2 class="reveal">Social Processes</h2>
-    <p class="reveal" style="transition-delay:0.1s;font-style:italic">El sistema que conecta, comunica y mentaliza</p>
-    <div class="divider reveal" style="transition-delay:0.15s;background:var(--dom-social)"></div>
-    <div class="construct-list reveal" style="transition-delay:0.25s">
-      <div class="construct-item"><span class="construct-icon">🤝</span><span class="construct-name">Affiliation &amp; Attachment</span></div>
-      <div class="construct-item"><span class="construct-icon">🗣️</span><span class="construct-name">Social Communication</span><span class="construct-desc">&mdash; facial / no-facial</span></div>
-      <div class="construct-item"><span class="construct-icon">🪞</span><span class="construct-name">Perception of Self</span><span class="construct-desc">&mdash; agencia, autoconocimiento</span></div>
-      <div class="construct-item"><span class="construct-icon">👁️</span><span class="construct-name">Perception of Others</span><span class="construct-desc">&mdash; mentalización / ToM</span></div>
+    <p class="eyebrow reveal" style="color:var(--rdoc)">Dominio 2 🟢</p>
+    <h1 class="reveal" style="transition-delay:.1s">Dominio 2: Positive Valence Systems — el sistema que busca, aprende y valora la recompensa</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--rdoc),var(--cyan))"></div>
+    <div class="construct-list reveal" style="transition-delay:.3s;max-width:680px;width:100%">
+      <div class="construct-item"><span class="construct-icon" style="color:var(--rdoc)">🎯</span><div><span class="construct-name">Reward Responsiveness</span><br/><span class="construct-desc">anticipación → respuesta → saciación — anhedonia = falla aquí</span></div></div>
+      <div class="construct-item"><span class="construct-icon" style="color:var(--rdoc)">📚</span><div><span class="construct-name">Reward Learning</span><br/><span class="construct-desc">refuerzo, prediction error, hábito — adicción = learning desregulado</span></div></div>
+      <div class="construct-item"><span class="construct-icon" style="color:var(--rdoc)">⚖️</span><div><span class="construct-name">Reward Valuation</span><br/><span class="construct-desc">probabilidad, demora, esfuerzo — "no vale la pena" = devaluación del esfuerzo</span></div></div>
     </div>
+    <p class="reveal" style="transition-delay:.5s;font-size:var(--small-size);text-align:center;color:var(--text-muted);margin-top:.3rem;font-style:italic">Anhedonia = falla en responsiveness. Adicción = learning desregulado.</p>
   </div>
 </section>
 
-<!-- =============================================
-     S21: SOCIAL — EVOLUTIVA
-     ============================================= -->
-<section class="slide" id="s21">
-  <div class="domain-bar" style="background:var(--dom-social)"></div>
-  <div class="centered">
-    <p class="eyebrow reveal" style="color:var(--dom-social)">Lente evolutiva</p>
-    <h2 class="reveal">Exclusión social = <em>dolor físico</em></h2>
-    <div class="divider reveal" style="background:var(--dom-social)"></div>
-    <p class="reveal" style="transition-delay:0.2s;max-width:550px">La exclusión social activa los mismos circuitos que el dolor físico: corteza cingulada anterior e ínsula.</p>
-    <p class="reveal" style="transition-delay:0.3s;max-width:550px;font-style:italic">En la sabana, ser excluido del grupo = muerte. La fobia social no es &ldquo;irracional&rdquo; &mdash; es un detector de rechazo ancestral que dispara fuera de contexto.</p>
-    <p class="source reveal" style="transition-delay:0.4s">Hipótesis del cerebro social &mdash; Dunbar</p>
-  </div>
-</section>
-
-<!-- =============================================
-     S22: SOCIAL — RESEARCH (ToM SPECTRUM)
-     ============================================= -->
-<section class="slide" id="s22">
-  <div class="domain-bar" style="background:var(--dom-social)"></div>
-  <div class="slide-content" style="align-items:center">
-    <p class="eyebrow reveal" style="color:var(--dom-social)">Theory of Mind como dimensión</p>
-    <h2 class="reveal">El continuo de la <em>mentalización</em></h2>
-    <div class="divider reveal" style="background:var(--dom-social)"></div>
-    <div class="spectrum-container reveal" style="transition-delay:0.3s">
-      <div class="spectrum-bar">
-        <div class="spectrum-marker" style="left:15%">Déficit</div>
-        <div class="spectrum-marker" style="left:50%">Normal</div>
-        <div class="spectrum-marker" style="left:85%">Exceso</div>
-        <div class="spectrum-label" style="left:15%">Antisocial, Autismo</div>
-        <div class="spectrum-label" style="left:50%;color:var(--dom-negval)">Paranoia (distorsión)*</div>
-        <div class="spectrum-label" style="left:85%">Borderline</div>
+<section class="slide" id="s14" data-title="Positive Valence lente + research">
+  <div class="domain-bar rdoc"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--rdoc)">Mismatch + mecanismo inflamatorio</p>
+    <h1 class="reveal" style="transition-delay:.1s">Positive Valence: el sistema se diseñó para la escasez — lo inundamos de abundancia + inflamación → anhedonia</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--rdoc),var(--cyan))"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:1000px">
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--amber)">
+        <p style="font-size:var(--label-size);color:var(--amber);font-family:var(--font-mono);font-weight:700">ESCASEZ ANCESTRAL</p>
+        <div style="font-size:clamp(1.4rem,2.6vw,2rem);margin:.3rem 0">🦌🌵</div>
+        <p style="font-size:var(--label-size);color:var(--text-muted)">Recompensa escasa, intermitente, costosa</p>
+        <p style="font-size:var(--body-size);color:var(--rdoc);font-weight:700;margin-top:.3rem">≠</p>
+        <p style="font-size:var(--label-size);color:var(--cyan);font-family:var(--font-mono);font-weight:700">ABUNDANCIA MODERNA</p>
+        <div style="font-size:clamp(1.4rem,2.6vw,2rem);margin:.3rem 0">📱🍦</div>
+        <p style="font-size:var(--label-size);color:var(--text-muted)">Hiperabundante, inmediata, sin esfuerzo</p>
+      </div>
+      <div class="flowchart-v" style="gap:.1rem">
+        <div class="fc-box" style="font-size:var(--label-size);min-width:auto;max-width:280px;border-left:3px solid var(--magenta)">Citoquinas proinflamatorias ↑</div>
+        <div class="fc-arrow">↓</div>
+        <div class="fc-box" style="font-size:var(--label-size);min-width:auto;max-width:280px;border-left:3px solid var(--magenta)">IDO ↑ / BH4 ↓</div>
+        <div class="fc-arrow">↓</div>
+        <div class="fc-box" style="font-size:var(--label-size);min-width:auto;max-width:280px;border-left:3px solid var(--violet)">Dopamina ↓ en VTA→NAcc</div>
+        <div class="fc-arrow">↓</div>
+        <div class="fc-box" style="font-size:var(--label-size);min-width:auto;max-width:280px;border-left:3px solid var(--cyan)">Esfuerzo devaluado</div>
+        <div class="fc-arrow">↓</div>
+        <div class="fc-box bold" style="font-size:var(--label-size);min-width:auto;max-width:280px;border-left:3px solid var(--rdoc);color:var(--rdoc)">ANHEDONIA</div>
       </div>
     </div>
-    <p class="reveal" style="transition-delay:0.5s;max-width:500px;text-align:center;margin-top:clamp(2rem,4vh,3rem)">ToM no es categórica &mdash; existe en un continuo. Lo verán en bloques 6-8.</p>
-    <p class="source reveal" style="transition-delay:0.6s">*Simplificación didáctica &mdash; paranoia puede entenderse como hipermentalización con sesgo negativo (Fonagy)</p>
+    <p class="source reveal" style="transition-delay:.5s;text-align:center">Nesse, 2023 · Swardfager et al., 2016 · Transdiagnóstico: depresión, esquizofrenia, autoinmune, post-COVID</p>
   </div>
 </section>
 
-<!-- =============================================
-     S23: AROUSAL — CONSTRUCTOS
-     ============================================= -->
-<section class="slide" id="s23">
-  <div class="domain-bar" style="background:var(--dom-arousal)"></div>
+<section class="slide" id="s15" data-title="Dominio 3 Cognitive Systems">
+  <div class="domain-bar cyan"></div>
   <div class="slide-content">
-    <p class="eyebrow reveal" style="color:var(--dom-arousal)">Dominio 5</p>
-    <h2 class="reveal">Arousal &amp; Regulatory Systems</h2>
-    <p class="reveal" style="transition-delay:0.1s;font-style:italic">El sistema que calibra la activación, el sueño y los ritmos</p>
-    <div class="divider reveal" style="transition-delay:0.15s;background:var(--dom-arousal)"></div>
-    <div class="construct-list reveal" style="transition-delay:0.25s">
-      <div class="construct-item"><span class="construct-icon">📊</span><span class="construct-name">Arousal</span><span class="construct-desc">&mdash; nivel de activación del SNC</span></div>
-      <div class="construct-item"><span class="construct-icon">🔄</span><span class="construct-name">Circadian Rhythms</span><span class="construct-desc">&mdash; sincronización luz-oscuridad</span></div>
-      <div class="construct-item"><span class="construct-icon">😴</span><span class="construct-name">Sleep-Wakefulness</span><span class="construct-desc">&mdash; arquitectura del sueño</span></div>
+    <p class="eyebrow reveal" style="color:var(--cyan)">Dominio 3 🔵</p>
+    <h1 class="reveal" style="transition-delay:.1s">Dominio 3: Cognitive Systems — el sistema que atiende, recuerda, controla y comprende</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--cyan),var(--rdoc))"></div>
+    <div class="reveal" style="transition-delay:.3s;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.4rem,1vw,.8rem);max-width:720px;width:100%">
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--cyan)"><p style="font-size:var(--body-size);color:var(--text-primary);font-weight:700">Attention</p><p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.2rem">TDAH, negligencia</p></div>
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--cyan)"><p style="font-size:var(--body-size);color:var(--text-primary);font-weight:700">Perception</p><p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.2rem">Alucinaciones = percepción sin input</p></div>
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--cyan)"><p style="font-size:var(--body-size);color:var(--text-primary);font-weight:700">Declarative Memory</p><p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.2rem">Deterioro, PTSD</p></div>
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--cyan)"><p style="font-size:var(--body-size);color:var(--text-primary);font-weight:700">Language</p><p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.2rem">Afasia, alogia</p></div>
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--cyan)"><p style="font-size:var(--body-size);color:var(--text-primary);font-weight:700">Cognitive Control</p><p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.2rem">Impulsividad, OCD</p></div>
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--cyan)"><p style="font-size:var(--body-size);color:var(--text-primary);font-weight:700">Working Memory</p><p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.2rem">Déficit ejecutivo transdiagnóstico</p></div>
     </div>
-    <p class="reveal" style="transition-delay:0.4s;margin-top:var(--content-gap)"><em>Manía</em> = arousal excesivo. <em>Insomnio</em> = el hub transdiagnóstico.</p>
+    <p class="reveal" style="transition-delay:.5s;font-size:var(--small-size);text-align:center;color:var(--text-muted);margin-top:.3rem;font-style:italic">Impulsividad = falla en cognitive control. Alucinaciones = falla en perception.</p>
   </div>
 </section>
 
-<!-- =============================================
-     S24: AROUSAL — EVOLUTIVA (FILOGENÉTICO)
-     ============================================= -->
-<section class="slide" id="s24">
-  <div class="domain-bar" style="background:var(--dom-arousal)"></div>
-  <div class="centered">
-    <p class="eyebrow reveal" style="color:var(--dom-arousal)">Lente evolutiva</p>
-    <div class="pipeline reveal" style="transition-delay:0.2s">
-      <div class="pipeline-box"><div class="pipe-icon">🪱</div><div class="pipe-label">Invertebrados 💤</div></div>
-      <span class="pipeline-arrow">→</span>
-      <div class="pipeline-box"><div class="pipe-icon">🐟</div><div class="pipe-label">Peces 💤</div></div>
-      <span class="pipeline-arrow">→</span>
-      <div class="pipeline-box"><div class="pipe-icon">🐦</div><div class="pipe-label">Aves 💤</div></div>
-      <span class="pipeline-arrow">→</span>
-      <div class="pipeline-box"><div class="pipe-icon">🐒</div><div class="pipe-label">Mamíferos 💤</div></div>
-      <span class="pipeline-arrow">→</span>
-      <div class="pipeline-box"><div class="pipe-icon">🧑</div><div class="pipe-label">Humanos 💤</div></div>
-    </div>
-    <h3 class="reveal" style="transition-delay:0.3s;margin-top:var(--content-gap)">Si no fuera esencial, la selección natural lo habría <em>eliminado</em></h3>
-    <p class="reveal" style="transition-delay:0.4s;max-width:500px;font-style:italic">Luz artificial, pantallas, trabajo nocturno &mdash; guerra contra el reloj biológico.</p>
-  </div>
-</section>
-
-<!-- =============================================
-     S25: AROUSAL — RESEARCH (HUB INSOMNIO)
-     ============================================= -->
-<section class="slide" id="s25">
-  <div class="domain-bar" style="background:var(--dom-arousal)"></div>
-  <div class="slide-content" style="align-items:center">
-    <p class="eyebrow reveal" style="color:var(--dom-arousal)">Research hint</p>
-    <h2 class="reveal">Insomnio: el <em>hub transdiagnóstico</em></h2>
-    <div class="divider reveal" style="background:var(--dom-arousal)"></div>
-    <div class="hub-spoke reveal" style="transition-delay:0.3s">
-      <div class="spoke-item" style="--spoke-color:var(--dom-negval)"><strong style="color:var(--dom-negval)">🔴 NegVal</strong><span>↑ reactividad amigdalina, rumiación nocturna</span></div>
-      <div class="hub-center" style="background:var(--dom-arousal);color:var(--bg-primary)">Insomnio<br/>>80%</div>
-      <div class="spoke-item" style="--spoke-color:var(--dom-posval)"><strong style="color:var(--dom-posval)">🟢 PosVal</strong><span>↓ anhedonia por privación</span></div>
-    </div>
-    <div class="hub-spoke reveal" style="transition-delay:0.4s;margin-top:clamp(0.3rem,0.5vh,0.4rem)">
-      <div class="spoke-item" style="--spoke-color:var(--dom-cogsys)"><strong style="color:var(--dom-cogsys)">🔵 CogSys</strong><span>↓ working memory, cognitive control</span></div>
-    </div>
-    <p class="source reveal" style="transition-delay:0.5s">No es síntoma acompañante &mdash; es mecanismo causal.</p>
-  </div>
-</section>
-
-<!-- =============================================
-     S26: SENSORIMOTOR — CONSTRUCTOS
-     ============================================= -->
-<section class="slide" id="s26">
-  <div class="domain-bar" style="background:var(--dom-sensori)"></div>
-  <div class="slide-content">
-    <p class="eyebrow reveal" style="color:var(--dom-sensori)">Dominio 6</p>
-    <h2 class="reveal">Sensorimotor Systems</h2>
-    <p class="reveal" style="transition-delay:0.1s;font-style:italic">El sistema que planifica, ejecuta e integra el movimiento</p>
-    <div class="divider reveal" style="transition-delay:0.15s;background:var(--dom-sensori)"></div>
-    <div class="construct-list reveal" style="transition-delay:0.25s">
-      <div class="construct-item"><span class="construct-icon">🎯</span><span class="construct-name">Motor Actions</span><span class="construct-desc">&mdash; planificación → ejecución → inhibición</span></div>
-      <div class="construct-item"><span class="construct-icon">🫳</span><span class="construct-name">Agency &amp; Ownership</span><span class="construct-desc">&mdash; sentido de autoría</span></div>
-      <div class="construct-item"><span class="construct-icon">🔁</span><span class="construct-name">Habit</span><span class="construct-desc">&mdash; automatización de secuencias</span></div>
-      <div class="construct-item"><span class="construct-icon">🐣</span><span class="construct-name">Innate Motor Patterns</span><span class="construct-desc">&mdash; patrones no aprendidos</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- =============================================
-     S27: SENSORIMOTOR — EVOLUTIVA + RESEARCH
-     ============================================= -->
-<section class="slide" id="s27">
-  <div class="domain-bar" style="background:var(--dom-sensori)"></div>
-  <div class="centered">
-    <p class="eyebrow reveal" style="color:var(--dom-sensori)">Lente evolutiva + Research</p>
-    <div style="display:flex;gap:clamp(1rem,3vw,2rem);align-items:center;justify-content:center;flex-wrap:wrap" class="reveal-scale">
-      <div style="text-align:center"><div style="font-size:clamp(2.5rem,5vw,4rem)">🐭😨</div><div style="font-size:var(--label-size);color:var(--text-muted);margin-top:0.3rem">Ratón: freeze</div></div>
-      <div style="font-size:var(--h2-size);color:var(--text-muted)">=</div>
-      <div style="text-align:center"><div style="font-size:clamp(2.5rem,5vw,4rem)">🛏️😐</div><div style="font-size:var(--label-size);color:var(--text-muted);margin-top:0.3rem">Catatonía: freeze</div></div>
-    </div>
-    <h3 class="reveal" style="transition-delay:0.2s;margin-top:var(--content-gap)">Fight, flight... o <em>freeze</em></h3>
-    <p class="reveal" style="transition-delay:0.3s;max-width:500px">El dominio más nuevo (2019). Demuestra que RDoC se auto-corrige.</p>
-    <p class="source reveal" style="transition-delay:0.4s">Bernard &amp; Mittal, 2015 &middot; Harrison et al., 2019 &middot; Osborne et al., 2024</p>
-  </div>
-</section>
-
-<!-- =============================================
-     S28: QUICK CHECK — 6 DOMINIOS
-     ============================================= -->
-<section class="slide" id="s28">
-  <div class="centered">
-    <p class="eyebrow reveal">Quick check &mdash; LO1</p>
-    <h2 class="reveal" style="transition-delay:0.1s">¿Pueden nombrar los <em>6 dominios</em>?</h2>
-    <div class="divider reveal" style="transition-delay:0.2s"></div>
-    <div class="check-grid reveal-scale" style="transition-delay:0.3s">
-      <div class="check-box" style="border-color:var(--dom-negval);color:rgba(200,80,60,0.3)">?</div>
-      <div class="check-box" style="border-color:var(--dom-posval);color:rgba(90,154,106,0.3)">?</div>
-      <div class="check-box" style="border-color:var(--dom-cogsys);color:rgba(74,127,181,0.3)">?</div>
-      <div class="check-box" style="border-color:var(--dom-social);color:rgba(212,168,67,0.3)">?</div>
-      <div class="check-box" style="border-color:var(--dom-arousal);color:rgba(212,128,58,0.3)">?</div>
-      <div class="check-box" style="border-color:var(--dom-sensori);color:rgba(138,106,181,0.3)">?</div>
-    </div>
-    <p class="reveal" style="transition-delay:0.5s;font-style:italic;margin-top:var(--content-gap)">Bonus: un constructo de cada uno.</p>
-  </div>
-</section>
-
-<!-- =============================================
-     S29: RDoC 2.0 — ACTUALIZACIONES
-     ============================================= -->
-<section class="slide" id="s29">
-  <div class="slide-content">
-    <p class="eyebrow reveal">RDoC 2.0</p>
-    <h2 class="reveal">Qué <em>cambió</em></h2>
-    <div class="divider reveal"></div>
-    <div class="construct-list reveal" style="transition-delay:0.3s">
-      <div class="construct-item"><span class="construct-icon">🔧</span><span class="construct-name">Constructos refinados</span><span class="construct-desc">&mdash; PosVal desagregado, WM y CogControl con subconstructos</span></div>
-      <div class="construct-item"><span class="construct-icon">🔄</span><span class="construct-name">Sistema vivo</span><span class="construct-desc">&mdash; se actualiza con evidencia, no espera décadas (Cuthbert, 2022)</span></div>
-    </div>
-    <p class="reveal" style="transition-delay:0.5s;margin-top:var(--content-gap)">El dominio sensorimotor que acabamos de ver es la actualización más visible.</p>
-  </div>
-</section>
-
-<!-- =============================================
-     S30: LO QUE NO ES RDoC
-     ============================================= -->
-<section class="slide" id="s30">
-  <div class="slide-content">
-    <p class="eyebrow reveal">Aclaraciones</p>
-    <h2 class="reveal">Lo que RDoC <em>no</em> es</h2>
-    <div class="divider reveal"></div>
-    <div class="myth-list reveal" style="transition-delay:0.3s">
-      <div class="myth-item"><span class="myth-x">✗</span><p><span class="myth-strike">Sistema diagnóstico</span> → <span class="myth-real">Framework de investigación</span></p></div>
-      <div class="myth-item"><span class="myth-x">✗</span><p><span class="myth-strike">Solo neuroimagen</span> → <span class="myth-real">Incluye conducta y self-report</span></p></div>
-      <div class="myth-item"><span class="myth-x">✗</span><p><span class="myth-strike">Solo para investigación</span> → <span class="myth-real">Yager 2017: revisión de sistemas psiquiátrica</span></p></div>
-      <div class="myth-item"><span class="myth-x">✗</span><p><span class="myth-strike">Compite con HiTOP</span> → <span class="myth-real">Son complementarios (McGorry, 2025)</span></p></div>
-    </div>
-  </div>
-</section>
-
-<!-- =============================================
-     S31: EL ECOSISTEMA (VENN)
-     ============================================= -->
-<section class="slide" id="s31">
-  <div class="slide-content" style="align-items:center">
-    <p class="eyebrow reveal">El ecosistema</p>
-    <h2 class="reveal">Tres frameworks, una <em>formulación</em></h2>
-    <div class="divider reveal"></div>
-    <div class="venn reveal-scale" style="transition-delay:0.3s">
-      <div class="venn-circle" style="top:10%;left:5%;background:rgba(74,127,181,0.15);border:2px solid var(--dom-cogsys);color:var(--dom-cogsys)">HiTOP<br/><span style="font-size:var(--label-size);font-weight:400;color:var(--text-muted)">¿Dónde está?</span></div>
-      <div class="venn-circle" style="top:10%;right:5%;background:rgba(90,154,106,0.15);border:2px solid var(--dom-posval);color:var(--dom-posval)">RDoC<br/><span style="font-size:var(--label-size);font-weight:400;color:var(--text-muted)">¿Qué falla?</span></div>
-      <div class="venn-circle" style="bottom:5%;left:50%;transform:translateX(-50%);background:rgba(212,128,58,0.15);border:2px solid var(--dom-arousal);color:var(--dom-arousal)">Staging<br/><span style="font-size:var(--label-size);font-weight:400;color:var(--text-muted)">¿En qué punto?</span></div>
-      <div class="venn-center">Formulación<br/>integradora</div>
-    </div>
-    <p class="source reveal" style="transition-delay:0.5s">Sesión 4: esto conecta con psicofarmacología de precisión &mdash; farmacología por dominio. &middot; McGorry et al., 2025</p>
-  </div>
-</section>
-
-<!-- =============================================
-     S32: RECAP MARÍA
-     ============================================= -->
-<section class="slide section-slide" id="s32">
-  <div class="section-number reveal-scale">E</div>
-  <div class="slide-content" style="justify-content:center">
-    <p class="eyebrow reveal">Ejercicio</p>
-    <h1 class="reveal" style="transition-delay:0.15s"><em>María</em> en la matriz RDoC</h1>
-    <div class="divider reveal" style="transition-delay:0.25s"></div>
-    <p class="reveal" style="transition-delay:0.35s;max-width:500px">Depresión &middot; Ansiedad social &middot; Atracones &middot; Rumiación &middot; Insomnio &middot; Anhedonia</p>
-    <p class="reveal" style="transition-delay:0.45s;font-style:italic">¿Qué sistemas RDoC están fallando?</p>
-  </div>
-</section>
-
-<!-- =============================================
-     S33: INSTRUCCIÓN EJERCICIO
-     ============================================= -->
-<section class="slide" id="s33">
+<section class="slide" id="s16" data-title="Cognitive lente + research">
+  <div class="domain-bar cyan"></div>
   <div class="split">
     <div class="split-left">
-      <p class="eyebrow reveal">4 grupos, 1 síntoma cada uno</p>
-      <h2 class="reveal" style="transition-delay:0.1s">Llenen la <em>plantilla</em></h2>
-      <div class="divider reveal" style="transition-delay:0.2s"></div>
-      <div class="construct-list reveal" style="transition-delay:0.3s">
-        <div class="construct-item"><span class="construct-icon" style="color:var(--dom-negval)">1</span><span class="construct-name">Rumiación</span></div>
-        <div class="construct-item"><span class="construct-icon" style="color:var(--dom-arousal)">2</span><span class="construct-name">Insomnio</span></div>
-        <div class="construct-item"><span class="construct-icon" style="color:var(--dom-posval)">3</span><span class="construct-name">Anhedonia</span></div>
-        <div class="construct-item"><span class="construct-icon" style="color:var(--dom-social)">4</span><span class="construct-name">Evitación social</span></div>
+      <p class="eyebrow reveal" style="color:var(--cyan)">Lente evolutiva</p>
+      <h1 class="reveal" style="transition-delay:.1s">Cognitive: la joya de la corona — el sistema más costoso y frágil + ¿subdividir el dominio?</h1>
+      <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--cyan),var(--rdoc))"></div>
+      <p class="reveal" style="transition-delay:.3s">Working memory consume <strong>glucosa desproporcionadamente</strong>. Los sistemas más caros son los primeros en fallar bajo estrés.</p>
+      <p class="reveal" style="transition-delay:.4s;font-size:var(--small-size);color:var(--text-muted);font-style:italic;margin-top:.3rem">El deterioro cognitivo en esquizofrenia y depresión no es efecto secundario — es falla del sistema más frágil.</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(.4rem,1vh,.6rem);max-width:340px">
+        <div class="card tight" style="text-align:center;border:1px solid var(--cyan)">
+          <p style="font-size:var(--label-size);color:var(--text-muted);font-family:var(--font-mono);margin-bottom:.2rem">RDoC actual</p>
+          <div style="padding:clamp(.3rem,.6vw,.5rem);background:rgba(0,245,255,.12);border-radius:4px;font-size:var(--small-size);color:var(--cyan);font-weight:700">1 bloque · Cognitive Systems</div>
+        </div>
+        <p style="text-align:center;font-size:var(--body-size);color:var(--magenta);font-weight:700;font-family:var(--font-mono)">↓ ¿subdividir?</p>
+        <div class="card tight" style="text-align:center;border:1px dashed var(--magenta)">
+          <p style="font-size:var(--label-size);color:var(--text-muted);font-family:var(--font-mono);margin-bottom:.2rem">Quah et al. 2024</p>
+          <div style="display:flex;gap:.3rem;justify-content:center">
+            <div style="padding:clamp(.2rem,.4vw,.35rem) clamp(.4rem,.8vw,.6rem);background:rgba(255,46,196,.12);border-radius:4px;font-size:var(--label-size);color:var(--magenta);font-weight:700">Cog-A</div>
+            <div style="padding:clamp(.2rem,.4vw,.35rem) clamp(.4rem,.8vw,.6rem);background:rgba(139,92,255,.12);border-radius:4px;font-size:var(--label-size);color:var(--violet);font-weight:700">Cog-B</div>
+          </div>
+          <p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.2rem">n=6,192 · fMRI bifactorial</p>
+        </div>
+        <p style="font-size:var(--label-size);color:var(--text-muted);text-align:center;font-style:italic">El framework sigue evolucionando — no es dogma.</p>
       </div>
     </div>
-    <div class="split-right" style="padding:var(--slide-padding)">
-      <div class="exercise-box reveal-scale">
-        <div class="field"><span class="field-label">SÍNTOMA:</span> <span class="blank"></span></div>
-        <div class="field">1. Dominio RDoC: <span class="blank"></span></div>
-        <div class="field">2. Constructo: <span class="blank"></span></div>
-        <div class="field">3. Unidades (≥3):</div>
-        <div class="field" style="padding-left:1rem">- Molécula/circuito: <span class="blank"></span></div>
-        <div class="field" style="padding-left:1rem">- Fisiología: <span class="blank"></span></div>
-        <div class="field" style="padding-left:1rem">- Conducta: <span class="blank"></span></div>
-        <div class="field" style="padding-left:1rem">- Self-report: <span class="blank"></span></div>
-        <div class="field">4. (Bonus) ¿Paradigma? <span class="blank"></span></div>
-        <div class="field">5. ¿Medible en tu hospital?</div>
-      </div>
-    </div>
   </div>
 </section>
 
-<!-- =============================================
-     S34: TIMER
-     ============================================= -->
-<section class="slide" id="s34">
-  <div class="centered">
-    <div class="reveal-scale" style="font-family:var(--font-display);font-size:clamp(6rem,15vw,12rem);color:var(--accent);line-height:1;font-weight:300" id="timer">5:00</div>
-    <p class="reveal" style="transition-delay:0.2s;font-style:italic;margin-top:var(--content-gap)">Trabajo en grupos</p>
-  </div>
-</section>
-
-<!-- =============================================
-     S35: PLENARIO — RUMIACIÓN (LO5)
-     ============================================= -->
-<section class="slide" id="s35">
-  <div class="slide-content" style="align-items:center">
-    <p class="eyebrow reveal">Plenario &mdash; LO5</p>
-    <h2 class="reveal">La rumiación: ¿<em>Cognitive</em> o <em>Negative Valence</em>?</h2>
-    <div class="divider reveal"></div>
-    <div class="cross-domain reveal" style="transition-delay:0.3s">
-      <div class="cd-target" style="border-left:3px solid var(--dom-cogsys)"><strong style="color:var(--dom-cogsys)">Cognitive Systems</strong><br/>Cognitive control → inhibición fallida</div>
-      <div class="cd-arrow">←</div>
-      <div class="cd-center">Rumiación</div>
-      <div class="cd-arrow">→</div>
-      <div class="cd-target" style="border-left:3px solid var(--dom-negval)"><strong style="color:var(--dom-negval)">Negative Valence</strong><br/>Sustained threat → contenido amenazante</div>
-    </div>
-    <div class="reveal" style="transition-delay:0.5s;margin-top:var(--content-gap);padding:clamp(0.4rem,0.8vh,0.6rem) clamp(0.8rem,1.5vw,1.2rem);background:var(--accent-glow);border:1px solid var(--accent);border-radius:6px;max-width:550px;text-align:center">
-      <p style="color:var(--text-primary);font-weight:500">Cruza dominios &mdash; eso es un <em>feature</em>, no un bug.</p>
-    </div>
-  </div>
-</section>
-
-<!-- =============================================
-     S36: PLENARIO — ANHEDONIA
-     ============================================= -->
-<section class="slide" id="s36">
+<section class="slide" id="s17" data-title="Dominio 4 Social Processes">
+  <div class="domain-bar acid"></div>
   <div class="slide-content">
-    <p class="eyebrow reveal" style="color:var(--dom-posval)">Plenario</p>
-    <h2 class="reveal">Anhedonia: vive en <em>Positive Valence</em></h2>
-    <div class="divider reveal" style="background:var(--dom-posval)"></div>
-    <div class="construct-list reveal" style="transition-delay:0.3s">
-      <div class="construct-item"><span class="construct-icon">🧠</span><span class="construct-name">Circuito:</span><span class="construct-desc">VTA→NAcc (dopamina)</span></div>
-      <div class="construct-item"><span class="construct-icon">💬</span><span class="construct-name">Self-report:</span><span class="construct-desc">SHAPS (Snaith-Hamilton Anhedonia Scale)</span></div>
-      <div class="construct-item"><span class="construct-icon">🏃</span><span class="construct-name">Conducta:</span><span class="construct-desc">effort-based decision making</span></div>
-      <div class="construct-item"><span class="construct-icon">🧩</span><span class="construct-name">Paradigma:</span><span class="construct-desc">EEfRT task</span></div>
+    <p class="eyebrow reveal" style="color:var(--acid)">Dominio 4 🟡</p>
+    <h1 class="reveal" style="transition-delay:.1s">Dominio 4: Social Processes — el sistema que conecta, comunica y mentaliza</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--acid),var(--cyan))"></div>
+    <div class="construct-list reveal" style="transition-delay:.3s;max-width:680px;width:100%">
+      <div class="construct-item"><span class="construct-icon" style="color:var(--acid)">🤝</span><div><span class="construct-name">Affiliation & Attachment</span><br/><span class="construct-desc">apego desorganizado, aislamiento</span></div></div>
+      <div class="construct-item"><span class="construct-icon" style="color:var(--acid)">🗣️</span><div><span class="construct-name">Social Communication</span><br/><span class="construct-desc">facial / no-facial — autismo, afecto plano</span></div></div>
+      <div class="construct-item"><span class="construct-icon" style="color:var(--acid)">🪞</span><div><span class="construct-name">Perception of Self</span><br/><span class="construct-desc">agencia, autoconocimiento — despersonalización, BPD</span></div></div>
+      <div class="construct-item"><span class="construct-icon" style="color:var(--acid)">👁️</span><div><span class="construct-name">Perception of Others</span><br/><span class="construct-desc">mentalización / ToM — paranoia = distorsión</span></div></div>
     </div>
-    <p class="reveal" style="transition-delay:0.5s;margin-top:var(--content-gap);font-style:italic">¿Miden anhedonia con el PHQ-9 ítem 1? Eso es self-report DSM, no constructo RDoC.</p>
+    <p class="reveal" style="transition-delay:.5s;font-size:var(--small-size);text-align:center;color:var(--text-muted);margin-top:.3rem;font-style:italic">Mentalización vive en Perception of Others — la verán en bloques 6-8.</p>
   </div>
 </section>
 
-<!-- =============================================
-     S37: PLENARIO — INSOMNIO + EVITACIÓN
-     ============================================= -->
-<section class="slide" id="s37">
+<section class="slide" id="s18" data-title="Social lente + research">
+  <div class="domain-bar acid"></div>
   <div class="split">
-    <div class="split-left" style="border-right:1px solid rgba(255,255,255,0.05)">
-      <p class="eyebrow reveal" style="color:var(--dom-arousal)">Insomnio</p>
-      <h3 class="reveal" style="transition-delay:0.1s">El <em>hub</em> transdiagnóstico</h3>
-      <p class="reveal" style="transition-delay:0.2s">Arousal/Regulatory → Sleep-Wakefulness, pero con flechas a NegVal, PosVal, CogSys.</p>
+    <div class="split-left">
+      <p class="eyebrow reveal" style="color:var(--acid)">Lente evolutiva</p>
+      <h1 class="reveal" style="transition-delay:.1s">Social: la exclusión activa los circuitos del dolor físico + ToM como dimensión continua</h1>
+      <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--acid),var(--cyan))"></div>
+      <p class="reveal" style="transition-delay:.3s">La exclusión social activa las <strong>mismas regiones</strong> que el dolor físico (cingulada anterior, ínsula).</p>
+      <p class="reveal" style="transition-delay:.4s;font-size:var(--small-size);color:var(--text-muted);font-style:italic;margin-top:.2rem">En la sabana, exclusión = muerte.</p>
     </div>
-    <div class="split-right" style="flex-direction:column;justify-content:center;padding:var(--slide-padding);background:var(--bg-primary)">
-      <p class="eyebrow reveal" style="color:var(--dom-social)">Evitación social</p>
-      <h3 class="reveal" style="transition-delay:0.1s">¿Problema <em>social</em> o de <em>amenaza</em>?</h3>
-      <p class="reveal" style="transition-delay:0.2s">NegVal (potential threat) activada en contexto Social Processes.</p>
-      <p class="reveal" style="transition-delay:0.3s;font-style:italic;margin-top:0.5rem">¿La fobia social es una categoría natural &mdash; o es negative valence que dispara ante estímulos sociales?</p>
-    </div>
-  </div>
-</section>
-
-<!-- =============================================
-     S38: MARÍA MAPEADA EN LA MATRIZ
-     ============================================= -->
-<section class="slide" id="s38">
-  <div class="slide-content">
-    <p class="eyebrow reveal">Síntesis</p>
-    <h2 class="reveal">María en la <em>matriz RDoC</em></h2>
-    <div class="divider reveal"></div>
-    <div class="matrix-grid reveal-scale" style="transition-delay:0.3s">
-      <div class="matrix-header"></div>
-      <div class="matrix-header">Genes</div><div class="matrix-header">Mol</div><div class="matrix-header">Cel</div>
-      <div class="matrix-header">Circ</div><div class="matrix-header">Fisio</div><div class="matrix-header">Cond</div>
-      <div class="matrix-header">Self-R</div><div class="matrix-header">Parad</div>
-      <div class="matrix-domain" style="--dom-color:var(--dom-negval)">NegVal</div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-cell filled" style="background:rgba(200,80,60,0.12)">Amíg↔PFC</div>
-      <div class="matrix-cell"></div>
-      <div class="matrix-cell filled" style="background:rgba(200,80,60,0.12)">Evitación</div>
-      <div class="matrix-cell filled" style="background:rgba(200,80,60,0.12)">LSAS</div>
-      <div class="matrix-cell"></div>
-      <div class="matrix-domain" style="--dom-color:var(--dom-posval)">PosVal</div>
-      <div class="matrix-cell"></div>
-      <div class="matrix-cell filled" style="background:rgba(90,154,106,0.15)">DA ↓</div>
-      <div class="matrix-cell"></div>
-      <div class="matrix-cell filled" style="background:rgba(90,154,106,0.15)">VTA→NAcc</div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-cell filled" style="background:rgba(90,154,106,0.15)">SHAPS</div>
-      <div class="matrix-cell filled" style="background:rgba(90,154,106,0.15)">EEfRT</div>
-      <div class="matrix-domain" style="--dom-color:var(--dom-cogsys)">CogSys</div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-cell filled" style="background:rgba(74,127,181,0.12)">DLPFC</div>
-      <div class="matrix-cell"></div>
-      <div class="matrix-cell filled" style="background:rgba(74,127,181,0.12)">Rumiación</div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-domain" style="--dom-color:var(--dom-social)">Social</div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-cell filled" style="background:rgba(212,168,67,0.12)">Evitación</div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-domain" style="--dom-color:var(--dom-arousal)">Arousal</div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-cell"></div>
-      <div class="matrix-cell filled" style="background:rgba(212,128,58,0.12)">Actigrafía</div>
-      <div class="matrix-cell filled" style="background:rgba(212,128,58,0.12)">Insomnio</div>
-      <div class="matrix-cell filled" style="background:rgba(212,128,58,0.12)">ISI</div>
-      <div class="matrix-cell"></div>
-      <div class="matrix-domain" style="--dom-color:var(--dom-sensori)">Sensori</div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div><div class="matrix-cell"></div>
-      <div class="matrix-cell"></div><div class="matrix-cell"></div>
-    </div>
-    <p class="reveal" style="transition-delay:0.5s;text-align:center;margin-top:0.5rem">UNA paciente → <em>múltiples dominios</em> → los síntomas cruzan la matriz.</p>
-  </div>
-</section>
-
-<!-- =============================================
-     S39: SÍNTESIS DSM vs HiTOP vs RDoC
-     ============================================= -->
-<section class="slide" id="s39">
-  <div class="slide-content">
-    <p class="eyebrow reveal">Cierre</p>
-    <h2 class="reveal">Tres <em>niveles de zoom</em> sobre María</h2>
-    <div class="divider reveal"></div>
-    <div class="stack-levels reveal" style="transition-delay:0.3s">
-      <div class="stack-row" style="--row-color:var(--text-muted)">
-        <span class="stack-label">DSM</span>
-        <span class="stack-desc">3-4 etiquetas diagnósticas separadas</span>
-      </div>
-      <div class="stack-row" style="--row-color:var(--dom-cogsys)">
-        <span class="stack-label">HiTOP</span>
-        <span class="stack-desc">Perfil: distress alto, fear moderado, detachment moderado</span>
-      </div>
-      <div class="stack-row" style="--row-color:var(--dom-posval)">
-        <span class="stack-label">RDoC</span>
-        <span class="stack-desc">Sistemas fallando a nivel de circuitos, moléculas, conducta y self-report</span>
+    <div class="split-right">
+      <div class="reveal-scale" style="max-width:320px">
+        <p style="font-size:var(--label-size);color:var(--text-muted);font-family:var(--font-mono);text-align:center;margin-bottom:.3rem">Continuo de mentalización (ToM)</p>
+        <div style="position:relative;height:clamp(20px,3vh,28px);background:linear-gradient(90deg,var(--cyan),var(--magenta),var(--pink));border-radius:99px;margin-bottom:.4rem"></div>
+        <div style="display:flex;justify-content:space-between;font-size:var(--label-size);font-family:var(--font-mono);color:var(--text-muted)"><span>DÉFICIT</span><span>NORMAL</span><span>EXCESO</span></div>
+        <div style="display:flex;justify-content:space-between;margin-top:.3rem;gap:.2rem">
+          <div style="text-align:center;flex:1"><p style="font-size:var(--label-size);color:var(--cyan);font-weight:700">Antisocial</p><p style="font-size:var(--label-size);color:var(--text-muted)">Autismo</p></div>
+          <div style="text-align:center;flex:1"><p style="font-size:var(--label-size);color:var(--magenta);font-weight:700">Paranoia</p><p style="font-size:var(--label-size);color:var(--text-muted)">(distorsión)</p></div>
+          <div style="text-align:center;flex:1"><p style="font-size:var(--label-size);color:var(--pink);font-weight:700">Borderline</p><p style="font-size:var(--label-size);color:var(--text-muted)">(hipermental.)</p></div>
+        </div>
+        <p style="font-size:var(--label-size);color:var(--text-muted);text-align:center;margin-top:.3rem;font-style:italic">ToM no es categórica — existe en un continuo.</p>
       </div>
     </div>
-    <p class="reveal" style="transition-delay:0.5s;font-style:italic;margin-top:var(--content-gap)">Cada nivel hace zoom un paso más profundo que el anterior.</p>
   </div>
 </section>
 
-<!-- =============================================
-     S40: TAKE-HOME
-     ============================================= -->
-<section class="slide" id="s40">
-  <div class="centered">
-    <div class="quote reveal" style="border-left-color:var(--accent);max-width:600px;font-size:var(--h3-size)">
-      RDoC no reemplaza al DSM en tu consulta.<br/><br/>
-      Te da un lenguaje para preguntarte:<br/>
-      <strong style="color:var(--accent)">¿Qué sistema está fallando y cómo lo mido?</strong>
-    </div>
-    <p class="reveal" style="transition-delay:0.3s;margin-top:var(--content-gap);font-style:italic">Esa pregunta va a guiar todo este curso.</p>
-  </div>
-</section>
-
-<!-- =============================================
-     S41: LO QUE VIENE
-     ============================================= -->
-<section class="slide" id="s41">
+<section class="slide" id="s19" data-title="Dominio 5 Arousal">
+  <div class="domain-bar amber"></div>
   <div class="slide-content">
-    <p class="eyebrow reveal">Próxima sesión</p>
-    <h2 class="reveal">Exposoma + <em>Staging</em></h2>
-    <div class="divider reveal"></div>
-    <p class="reveal" style="transition-delay:0.2s">¿Qué activa estos sistemas y cómo progresa la enfermedad?</p>
-    <div class="construct-list reveal" style="transition-delay:0.3s;margin-top:var(--content-gap)">
-      <div class="construct-item"><span class="construct-icon">📖</span><span class="construct-name">Lectura:</span><span class="construct-desc">McGorry et al. (2025) &mdash; New diagnosis in psychiatry: beyond heuristics</span></div>
-      <div class="construct-item"><span class="construct-icon">🤔</span><span class="construct-name">Pregunta:</span><span class="construct-desc">De los síntomas de María, ¿cuál apareció primero? ¿Cuál activó a los demás?</span></div>
+    <p class="eyebrow reveal" style="color:var(--amber)">Dominio 5 🟠</p>
+    <h1 class="reveal" style="transition-delay:.1s">Dominio 5: Arousal & Regulatory Systems — el sistema que calibra la activación, el sueño y los ritmos</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--amber),var(--cyan))"></div>
+    <div class="three-cols reveal" style="transition-delay:.3s;max-width:780px">
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--amber)"><p style="font-size:clamp(1.4rem,2.4vw,1.9rem);margin-bottom:.2rem">📊</p><p style="font-size:var(--body-size);color:var(--text-primary);font-weight:700">Arousal</p><p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.15rem">Nivel de activación del SNC</p><p style="font-size:var(--label-size);color:var(--amber);margin-top:.2rem">Manía = excesivo</p></div>
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--amber)"><p style="font-size:clamp(1.4rem,2.4vw,1.9rem);margin-bottom:.2rem">🔄</p><p style="font-size:var(--body-size);color:var(--text-primary);font-weight:700">Circadian Rhythms</p><p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.15rem">Sincronización luz-oscuridad</p><p style="font-size:var(--label-size);color:var(--amber);margin-top:.2rem">Bipolar, depresión</p></div>
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--amber)"><p style="font-size:clamp(1.4rem,2.4vw,1.9rem);margin-bottom:.2rem">😴</p><p style="font-size:var(--body-size);color:var(--text-primary);font-weight:700">Sleep-Wakefulness</p><p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.15rem">Arquitectura del sueño</p><p style="font-size:var(--label-size);color:var(--amber);margin-top:.2rem">Insomnio = hub transdiag.</p></div>
+    </div>
+    <p class="reveal" style="transition-delay:.5s;font-size:var(--small-size);text-align:center;color:var(--text-muted);margin-top:.3rem;font-style:italic">El sistema que calibra todo lo demás. Insomnio = el nodo más transdiagnóstico de la matriz.</p>
+  </div>
+</section>
+
+<section class="slide" id="s20" data-title="Arousal lente + research">
+  <div class="domain-bar amber"></div>
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal" style="color:var(--amber)">Lente evolutiva</p>
+      <h1 class="reveal" style="transition-delay:.1s">Arousal: el sueño es el comportamiento más conservado filogenéticamente + insomnio como hub transdiagnóstico</h1>
+      <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--amber),var(--cyan))"></div>
+      <p class="reveal" style="transition-delay:.3s">El sueño existe en <strong>invertebrados, peces, aves, mamíferos</strong>. Si no fuera esencial, la selección natural lo habría eliminado.</p>
+      <p class="reveal" style="transition-delay:.4s;font-size:var(--small-size);color:var(--text-muted);font-style:italic;margin-top:.2rem">Mismatch: luz artificial, pantallas, trabajo nocturno — guerra contra el reloj biológico.</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;align-items:center;gap:clamp(.3rem,.6vw,.5rem)">
+        <div class="hub-spoke" style="gap:clamp(.3rem,.8vw,.6rem)">
+          <div class="spoke-item" style="--spoke-color:var(--magenta);text-align:center"><strong style="color:var(--magenta)">→ NegVal</strong><span style="font-size:var(--label-size)">↑ reactividad amigdalina</span></div>
+          <div class="hub-center" style="border:2px solid var(--amber);color:var(--amber);background:rgba(255,182,39,.1);box-shadow:0 0 22px rgba(255,182,39,.4)">Insomnio</div>
+          <div class="spoke-item" style="--spoke-color:var(--rdoc);text-align:center"><strong style="color:var(--rdoc)">→ PosVal</strong><span style="font-size:var(--label-size)">↓ anhedonia</span></div>
+        </div>
+        <div class="spoke-item" style="--spoke-color:var(--cyan);text-align:center;max-width:200px"><strong style="color:var(--cyan)">→ CogSys</strong><span style="font-size:var(--label-size)">↓ working memory, cog. control</span></div>
+        <p style="font-size:var(--label-size);color:var(--amber);font-family:var(--font-mono);font-weight:700;text-align:center;margin-top:.2rem">>80% de trastornos psiquiátricos</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- =============================================
-     S42: REFERENCIAS
-     ============================================= -->
-<section class="slide" id="s42">
-  <div class="slide-content" style="font-size:var(--label-size);justify-content:flex-start;padding-top:clamp(2rem,4vh,3rem)">
-    <p class="eyebrow reveal">Referencias</p>
-    <h3 class="reveal">Fuentes de esta sesión</h3>
-    <div class="divider reveal"></div>
-    <div class="reveal" style="transition-delay:0.2s;columns:2;column-gap:clamp(1rem,2vw,2rem);color:var(--text-muted);line-height:1.6">
-      <p>1. Insel et al. (2010) Am J Psychiatry 167:748</p>
-      <p>2. Cuthbert &amp; Insel (2013) BMC Med 11:126</p>
-      <p>3. Insel (2014) Am J Psychiatry 171:395</p>
-      <p>4. Cuthbert (2014) World Psychiatry 13:28</p>
-      <p>5. Cuthbert (2022) Curr Dir Psychol Sci 31:107</p>
-      <p>6. Bernard &amp; Mittal (2015) Psychol Med 45:2685</p>
-      <p>7. Harrison et al. (2019) Front Psychol 10:103</p>
-      <p>8. Osborne et al. (2024) Clin Psychol Rev 114:102511</p>
-      <p>9. Quah et al. (2024) Nat Commun 15:4631</p>
-      <p>10. Sumner et al. (2016) Am J Med Genet B 171B:44</p>
-      <p>11. Swardfager et al. (2016) Neurosci Biobehav Rev 64:148</p>
-      <p>12. Yager &amp; Feinstein (2017) J Clin Psychiatry 78:423</p>
-      <p>13. McGorry et al. (2025) Psychol Med 55:e26</p>
-      <p>14. Nesse (2023) World Psychiatry 22:177</p>
-      <p>15. Li et al. (2018) Curr Dir Psychol Sci 27:38</p>
+<section class="slide" id="s21" data-title="Dominio 6 Sensorimotor">
+  <div class="domain-bar violet"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--violet)">Dominio 6 🟣</p>
+    <h1 class="reveal" style="transition-delay:.1s">Dominio 6: Sensorimotor Systems — el sistema que planifica, ejecuta e integra el movimiento</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--violet),var(--cyan))"></div>
+    <div class="construct-list reveal" style="transition-delay:.3s;max-width:680px;width:100%">
+      <div class="construct-item"><span class="construct-icon" style="color:var(--violet)">🎯</span><div><span class="construct-name">Motor Actions</span><br/><span class="construct-desc">planificación → ejecución → inhibición — catatonía, retardo psicomotor, acatisia</span></div></div>
+      <div class="construct-item"><span class="construct-icon" style="color:var(--violet)">🫳</span><div><span class="construct-name">Agency & Ownership</span><br/><span class="construct-desc">sentido de autoría — síntomas de pasividad en esquizofrenia</span></div></div>
+      <div class="construct-item"><span class="construct-icon" style="color:var(--violet)">🔁</span><div><span class="construct-name">Habit (Sensorimotor)</span><br/><span class="construct-desc">automatización de secuencias — compulsiones en OCD, estereotipias</span></div></div>
+      <div class="construct-item"><span class="construct-icon" style="color:var(--violet)">🐣</span><div><span class="construct-name">Innate Motor Patterns</span><br/><span class="construct-desc">patrones no aprendidos — reflejos primitivos reaparecidos en demencia</span></div></div>
     </div>
+    <p class="reveal" style="transition-delay:.5s;font-size:var(--small-size);text-align:center;color:var(--text-muted);margin-top:.3rem;font-style:italic">Catatonía = freeze. Compulsiones = habit. Síntomas de pasividad = agency roto.</p>
   </div>
 </section>
 
-<script>
-/* === SLIDE PRESENTATION CONTROLLER === */
-class SlidePresentation {
-  constructor() {
-    this.slides = document.querySelectorAll('.slide');
-    this.currentSlide = 0;
-    this.setupIntersectionObserver();
-    this.setupKeyboardNav();
-    this.setupTouchNav();
-    this.setupProgressBar();
-    this.setupNavDots();
-  }
+<section class="slide" id="s22" data-title="Sensorimotor lente + research">
+  <div class="domain-bar violet"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--violet)">Lente evolutiva + research hint</p>
+    <h1 class="reveal" style="transition-delay:.1s">Sensorimotor: fight, flight o freeze — la catatonía como programa motor ancestral + el dominio que se auto-corrigió</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--violet),var(--cyan))"></div>
+    <div class="three-cols reveal" style="transition-delay:.3s;max-width:780px">
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--violet)">
+        <p style="font-size:var(--label-size);color:var(--text-muted);font-family:var(--font-mono)">Ratón</p>
+        <div style="font-size:clamp(1.8rem,3vw,2.4rem);margin:.3rem 0">🐭🧊</div>
+        <p style="font-size:var(--label-size);color:var(--violet)">freeze</p>
+      </div>
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--violet)">
+        <p style="font-size:var(--label-size);color:var(--text-muted);font-family:var(--font-mono)">Paciente</p>
+        <div style="font-size:clamp(1.8rem,3vw,2.4rem);margin:.3rem 0">🛏️🧊</div>
+        <p style="font-size:var(--label-size);color:var(--violet)">catatonía</p>
+      </div>
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--violet)">
+        <p style="font-size:var(--label-size);color:var(--text-muted);font-family:var(--font-mono)">=</p>
+        <div style="font-size:clamp(1rem,1.6vw,1.3rem);margin:.3rem 0;color:var(--violet);font-weight:700;font-family:var(--font-mono);line-height:1.2">mismo programa motor ancestral</div>
+        <p style="font-size:var(--label-size);color:var(--text-muted)">fight · flight · <strong style="color:var(--violet)">freeze</strong></p>
+      </div>
+    </div>
+    <div class="reveal" style="transition-delay:.5s;display:flex;justify-content:center;gap:clamp(.5rem,1.2vw,.9rem);margin-top:clamp(.4rem,1vw,.6rem);flex-wrap:wrap">
+      <span class="tag tag-violet">Dominio más nuevo (2019)</span>
+      <span class="tag tag-cyan">RDoC se auto-corrige</span>
+      <span class="tag tag-muted">DSM tarda décadas</span>
+    </div>
+    <p class="source reveal" style="transition-delay:.6s;text-align:center">Bernard & Mittal, 2015 · Harrison et al., 2019 · Osborne et al., 2024</p>
+  </div>
+</section>
 
-  setupIntersectionObserver() {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          const index = Array.from(this.slides).indexOf(entry.target);
-          if (index !== -1) { this.currentSlide = index; this.updateProgressBar(); this.updateNavDots(); }
-        }
-      });
-    }, { threshold: 0.5 });
-    this.slides.forEach(s => observer.observe(s));
-  }
+<!-- PLACEHOLDER_SLIDES_23_36 -->
 
-  setupKeyboardNav() {
-    document.addEventListener('keydown', (e) => {
-      if (e.target.getAttribute('contenteditable')) return;
-      if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
-        e.preventDefault(); this.goTo(Math.min(this.currentSlide + 1, this.slides.length - 1));
-      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') {
-        e.preventDefault(); this.goTo(Math.max(this.currentSlide - 1, 0));
-      } else if (e.key === 'Home') { e.preventDefault(); this.goTo(0); }
-      else if (e.key === 'End') { e.preventDefault(); this.goTo(this.slides.length - 1); }
-    });
-  }
+</main>
 
-  setupTouchNav() {
-    let startY = 0;
-    document.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, { passive: true });
-    document.addEventListener('touchend', e => {
-      const diff = startY - e.changedTouches[0].clientY;
-      if (Math.abs(diff) > 50) {
-        diff > 0 ? this.goTo(Math.min(this.currentSlide + 1, this.slides.length - 1))
-                  : this.goTo(Math.max(this.currentSlide - 1, 0));
-      }
-    }, { passive: true });
-  }
+<!-- PLACEHOLDER_JS -->
 
-  setupProgressBar() { this.progressBar = document.getElementById('progressBar'); this.updateProgressBar(); }
-
-  setupNavDots() {
-    this.navDotsContainer = document.getElementById('navDots');
-    this.navDotsContainer.innerHTML = '';
-    this.slides.forEach((_, i) => {
-      const dot = document.createElement('button');
-      dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
-      dot.setAttribute('aria-label', `Slide ${i + 1}`);
-      dot.addEventListener('click', () => this.goTo(i));
-      this.navDotsContainer.appendChild(dot);
-    });
-    this.navDots = this.navDotsContainer.querySelectorAll('.nav-dot');
-  }
-
-  goTo(index) { this.slides[index].scrollIntoView({ behavior: 'smooth' }); }
-
-  updateProgressBar() {
-    const pct = ((this.currentSlide + 1) / this.slides.length) * 100;
-    this.progressBar.style.width = pct + '%';
-  }
-
-  updateNavDots() {
-    if (!this.navDots) return;
-    this.navDots.forEach((dot, i) => dot.classList.toggle('active', i === this.currentSlide));
-  }
-}
-
-/* === INLINE EDITOR === */
-class InlineEditor {
-  constructor() {
-    this.isActive = false;
-    this.toggle = document.getElementById('editToggle');
-    this.banner = document.getElementById('editBanner');
-    this.setupHotzone();
-    this.setupKeyboard();
-  }
-
-  setupHotzone() {
-    const hotzone = document.querySelector('.edit-hotzone');
-    let hideTimeout = null;
-    const show = () => { clearTimeout(hideTimeout); this.toggle.classList.add('show'); };
-    const hide = () => { hideTimeout = setTimeout(() => { if (!this.isActive) this.toggle.classList.remove('show'); }, 400); };
-    hotzone.addEventListener('mouseenter', show);
-    hotzone.addEventListener('mouseleave', hide);
-    this.toggle.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
-    this.toggle.addEventListener('mouseleave', hide);
-    this.toggle.addEventListener('click', () => this.toggleEditMode());
-    hotzone.addEventListener('click', () => this.toggleEditMode());
-  }
-
-  setupKeyboard() {
-    document.addEventListener('keydown', (e) => {
-      if ((e.key === 'e' || e.key === 'E') && !e.target.getAttribute('contenteditable')) this.toggleEditMode();
-      if (e.ctrlKey && e.key === 's' && this.isActive) { e.preventDefault(); this.exportFile(); }
-    });
-  }
-
-  toggleEditMode() {
-    this.isActive = !this.isActive;
-    document.body.classList.toggle('edit-active', this.isActive);
-    this.toggle.classList.toggle('active', this.isActive);
-    this.banner.classList.toggle('active', this.isActive);
-    this.toggle.textContent = this.isActive ? '✔' : '✎';
-    const editables = document.querySelectorAll('h1,h2,h3,h4,p:not(.source),li,.quote,.construct-name,.construct-desc,.fc-box,.eyebrow,td');
-    editables.forEach(el => {
-      if (this.isActive) el.setAttribute('contenteditable', 'true');
-      else el.removeAttribute('contenteditable');
-    });
-  }
-
-  exportFile() {
-    const editableEls = Array.from(document.querySelectorAll('[contenteditable]'));
-    editableEls.forEach(el => el.removeAttribute('contenteditable'));
-    document.body.classList.remove('edit-active');
-    this.toggle.classList.remove('active', 'show');
-    this.banner.classList.remove('active', 'show');
-    const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-    document.body.classList.add('edit-active');
-    editableEls.forEach(el => el.setAttribute('contenteditable', 'true'));
-    this.toggle.classList.add('active');
-    this.banner.classList.add('active');
-    const blob = new Blob([html], { type: 'text/html' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'sesion-02-slides.html';
-    a.click();
-    URL.revokeObjectURL(a.href);
-  }
-}
-
-new SlidePresentation();
-const editor = new InlineEditor();
-</script>
 </body>
 </html>

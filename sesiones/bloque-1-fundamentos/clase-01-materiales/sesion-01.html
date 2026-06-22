@@ -3,1226 +3,1120 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Sesión 1: De categorías a dimensiones</title>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,300;1,6..72,400&family=Nunito+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<title>Psicopatología Dimensional | Bloque 1, Sesión 01 — HiTOP: ¿Dónde está en el mapa?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
-/* === RESET & CUSTOM PROPERTIES === */
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-
-:root {
-  --bg-primary: #141518;
-  --bg-panel: #1a1b22;
-  --bg-card: #1e2028;
-  --text-primary: #dddad5;
-  --text-secondary: #8a8780;
-  --text-muted: #5a5850;
-  --accent: #c8503c;
-  --accent-glow: rgba(200, 80, 60, 0.15);
-  --accent-soft: rgba(200, 80, 60, 0.08);
-  --accent-blue: #4a7fb5;
-  --accent-green: #5a9a6a;
-  --accent-amber: #b8963c;
-  --accent-violet: #8a6ab5;
-  --white: #f0ede8;
-
-  --font-display: 'Newsreader', serif;
-  --font-body: 'Nunito Sans', sans-serif;
-
-  --title-size: clamp(2rem, 5vw, 4rem);
-  --h2-size: clamp(1.5rem, 3.5vw, 2.8rem);
-  --h3-size: clamp(1.1rem, 2.2vw, 1.6rem);
-  --body-size: clamp(0.75rem, 1.3vw, 1.05rem);
-  --small-size: clamp(0.65rem, 1vw, 0.85rem);
-  --label-size: clamp(0.55rem, 0.85vw, 0.72rem);
-
-  --slide-padding: clamp(1.5rem, 4vw, 4rem);
-  --content-gap: clamp(0.5rem, 1.5vw, 1.5rem);
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg-deep:#050716;--bg-primary:#070811;--bg-panel:#0d1224;--bg-card:rgba(12,18,35,.78);
+--text-primary:#f2fbff;--text-secondary:rgba(213,231,239,.76);--text-muted:rgba(157,183,198,.62);
+--cyan:#00f5ff;--magenta:#ff2ec4;--violet:#8b5cff;--acid:#dcff38;--amber:#ffb627;--pink:#ff4d9d;
+--line:rgba(0,245,255,.22);--grid-line:rgba(0,245,255,.072);--panel-line:rgba(0,245,255,.22);
+--magnetic-shadow:0 0 24px rgba(0,245,255,.16),0 0 54px rgba(255,46,196,.10);
+--font-display:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;--font-mono:'JetBrains Mono',monospace;
+--title-size:clamp(1.5rem,3.8vw,3.4rem);--h2-size:clamp(1.25rem,2.8vw,2.4rem);--h3-size:clamp(.95rem,1.8vw,1.45rem);
+--body-size:clamp(.72rem,1.1vw,.98rem);--small-size:clamp(.62rem,.86vw,.82rem);--label-size:clamp(.52rem,.72vw,.68rem);
+--footer-size:clamp(.5rem,.7vw,.64rem);--slide-padding:clamp(1.1rem,3vw,3.2rem);--content-gap:clamp(.5rem,1.3vw,1.2rem);
+--ease-out-expo:cubic-bezier(.16,1,.3,1);--duration-normal:.7s;
 }
-
-/* === VIEWPORT BASE (mandatory) === */
-html, body { height: 100%; overflow-x: hidden; }
-html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
-
-.slide {
-  width: 100vw; height: 100vh; height: 100dvh;
-  overflow: hidden; scroll-snap-align: start;
-  display: flex; position: relative;
-  background: var(--bg-primary);
-  font-family: var(--font-body);
-  color: var(--text-primary);
-}
-
-.slide-content {
-  flex: 1; display: flex; flex-direction: column;
-  justify-content: center;
-  max-height: 100%; overflow: hidden;
-  padding: var(--slide-padding);
-}
-
-img, .image-container {
-  max-width: 100%;
-  max-height: min(50vh, 400px);
-  object-fit: contain;
-}
-
-/* === TYPOGRAPHY === */
-h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.15; }
-h1 { font-size: var(--title-size); }
-h2 { font-size: var(--h2-size); }
-h3 { font-size: var(--h3-size); }
-p, li { font-size: var(--body-size); line-height: 1.55; color: var(--text-secondary); }
-em { color: var(--accent); font-style: italic; }
-strong { color: var(--text-primary); font-weight: 600; }
-
-/* === ANIMATIONS === */
-.reveal {
-  opacity: 0; transform: translateY(20px);
-  transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
-}
-.slide.visible .reveal { opacity: 1; transform: translateY(0); }
-.reveal:nth-child(2) { transition-delay: 0.1s; }
-.reveal:nth-child(3) { transition-delay: 0.2s; }
-.reveal:nth-child(4) { transition-delay: 0.3s; }
-.reveal:nth-child(5) { transition-delay: 0.4s; }
-.reveal:nth-child(6) { transition-delay: 0.5s; }
-.reveal:nth-child(7) { transition-delay: 0.6s; }
-
-.reveal-scale {
-  opacity: 0; transform: scale(0.85);
-  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
-}
-.slide.visible .reveal-scale { opacity: 1; transform: scale(1); }
-
-/* === LAYOUT HELPERS === */
-.split { display: flex; height: 100%; }
-.split-left { flex: 0 0 48%; display: flex; flex-direction: column; justify-content: center; padding: var(--slide-padding); position: relative; z-index: 1; }
-.split-right { flex: 1; display: flex; align-items: center; justify-content: center; background: var(--bg-panel); position: relative; overflow: hidden; }
-.centered { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: var(--slide-padding); height: 100%; }
-
-.eyebrow {
-  font-size: var(--label-size); color: var(--accent);
-  letter-spacing: 0.3em; text-transform: uppercase; font-weight: 600;
-  margin-bottom: clamp(0.5rem, 1.5vh, 1.2rem);
-  font-family: var(--font-body);
-}
-.divider { width: 40px; height: 2px; background: var(--accent); margin: clamp(0.8rem, 1.5vh, 1.5rem) 0; }
-.source { font-size: var(--label-size); color: var(--text-muted); margin-top: auto; padding-top: clamp(0.5rem, 1vh, 1rem); }
-
-/* === SECTION HEADERS === */
-.section-slide { background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-panel) 100%); }
-.section-slide .section-number {
-  font-family: var(--font-display); font-size: clamp(4rem, 12vw, 10rem);
-  color: var(--accent-soft); position: absolute; top: clamp(1rem, 3vh, 2rem);
-  right: clamp(2rem, 5vw, 4rem); line-height: 1; font-weight: 600;
-}
-
-/* === DATA HIGHLIGHT === */
-.hero-number {
-  font-family: var(--font-display); font-size: clamp(5rem, 15vw, 12rem);
-  color: var(--accent); line-height: 1; font-weight: 600;
-}
-.hero-label {
-  font-size: var(--small-size); color: var(--text-muted);
-  margin-top: clamp(0.3rem, 0.8vh, 0.6rem); letter-spacing: 0.08em;
-}
-
-/* === QUOTE === */
-.quote {
-  font-family: var(--font-display); font-size: clamp(1.1rem, 2.2vw, 1.7rem);
-  font-style: italic; color: var(--text-primary); line-height: 1.5;
-  border-left: 3px solid var(--accent); padding-left: clamp(1rem, 2vw, 1.5rem);
-  max-width: 700px;
-}
-.quote-author { font-size: var(--small-size); color: var(--text-muted); font-style: normal; margin-top: 0.5rem; font-family: var(--font-body); }
-
-/* === TABLES === */
-.data-table { width: 100%; border-collapse: collapse; font-size: var(--body-size); }
-.data-table th {
-  text-align: left; font-weight: 600; color: var(--accent);
-  font-size: var(--label-size); letter-spacing: 0.1em; text-transform: uppercase;
-  padding: clamp(0.3rem, 0.6vh, 0.5rem) clamp(0.5rem, 1vw, 1rem);
-  border-bottom: 1px solid rgba(200,80,60,0.2);
-}
-.data-table td {
-  padding: clamp(0.25rem, 0.5vh, 0.4rem) clamp(0.5rem, 1vw, 1rem);
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  color: var(--text-secondary);
-}
-.data-table td:first-child { color: var(--text-primary); font-weight: 500; }
-
-/* === BAR CHARTS (CSS) === */
-.bar-chart { display: flex; flex-direction: column; gap: clamp(0.3rem, 0.6vh, 0.5rem); width: 100%; }
-.bar-row { display: flex; align-items: center; gap: clamp(0.5rem, 1vw, 0.8rem); }
-.bar-label { flex: 0 0 clamp(100px, 18vw, 180px); font-size: var(--small-size); color: var(--text-secondary); text-align: right; }
-.bar-track { flex: 1; height: clamp(16px, 2.5vh, 24px); background: rgba(255,255,255,0.04); border-radius: 3px; overflow: hidden; }
-.bar-fill { height: 100%; border-radius: 3px; transition: width 1.2s var(--ease-out-expo); }
-.slide.visible .bar-fill { width: var(--bar-width); }
-.bar-fill:not(.slide.visible .bar-fill) { width: 0; }
-.bar-value { flex: 0 0 clamp(40px, 5vw, 60px); font-size: var(--small-size); color: var(--text-muted); }
-
-/* === CARDS === */
-.card-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(0.5rem, 1vw, 0.8rem); }
-.card {
-  background: var(--bg-card); border-radius: 8px;
-  padding: clamp(0.6rem, 1.2vw, 1rem);
-  border: 1px solid rgba(255,255,255,0.04);
-}
-.card h4 { font-family: var(--font-display); font-size: var(--body-size); color: var(--text-primary); font-weight: 400; margin-bottom: 0.3rem; }
-.card p { font-size: var(--small-size); color: var(--text-muted); line-height: 1.4; }
-
-/* === COMPARISON TABLE === */
-.compare-grid { display: grid; grid-template-columns: auto 1fr 1fr; gap: 0; font-size: var(--small-size); }
-.compare-header { padding: clamp(0.3rem, 0.5vh, 0.5rem) clamp(0.5rem, 1vw, 0.8rem); font-weight: 600; color: var(--accent); font-size: var(--label-size); letter-spacing: 0.1em; text-transform: uppercase; border-bottom: 1px solid rgba(200,80,60,0.2); }
-.compare-cell { padding: clamp(0.25rem, 0.4vh, 0.4rem) clamp(0.5rem, 1vw, 0.8rem); border-bottom: 1px solid rgba(255,255,255,0.03); color: var(--text-secondary); }
-.compare-cell:first-child { color: var(--text-primary); font-weight: 500; }
-.compare-cell.highlight { color: var(--accent-green); }
-
-/* === DIAGRAM: CONSTRUCTION MODEL === */
-.model-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: clamp(0.4rem, 0.8vw, 0.6rem); max-width: min(90vw, 800px); width: 100%; }
-.model-box {
-  background: var(--bg-card); border-radius: 8px;
-  padding: clamp(0.6rem, 1.2vw, 1rem);
-  border: 1px solid rgba(255,255,255,0.06);
-  position: relative;
-}
-.model-box h4 { font-family: var(--font-body); font-size: var(--label-size); color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600; margin-bottom: 0.4rem; }
-.model-box ul { list-style: none; }
-.model-box li { font-size: var(--small-size); color: var(--text-muted); padding: 0.1rem 0; }
-.model-box li::before { content: '·'; color: var(--accent); margin-right: 0.4rem; }
-.model-arrows { position: absolute; inset: 0; pointer-events: none; display: flex; align-items: center; justify-content: center; }
-.model-arrows span { font-size: 1.5rem; color: rgba(200,80,60,0.3); }
-
-/* === HIERARCHY PYRAMID === */
-.pyramid { display: flex; flex-direction: column; align-items: center; gap: clamp(0.2rem, 0.4vh, 0.3rem); width: 100%; }
-.pyramid-level {
-  display: flex; align-items: center; gap: clamp(0.4rem, 0.8vw, 0.6rem);
-  padding: clamp(0.3rem, 0.5vh, 0.5rem) clamp(0.8rem, 1.5vw, 1.2rem);
-  border-radius: 6px; background: var(--bg-card); border: 1px solid rgba(255,255,255,0.04);
-  font-size: var(--small-size);
-}
-.pyramid-level .level-tag { font-size: var(--label-size); color: var(--accent); font-weight: 600; min-width: clamp(20px, 3vw, 35px); }
-.pyramid-level .level-name { color: var(--text-primary); font-weight: 500; }
-.pyramid-level .level-examples { color: var(--text-muted); }
-
-/* === RADAR / PROFILE BARS === */
-.profile-bars { display: flex; flex-direction: column; gap: clamp(0.25rem, 0.5vh, 0.4rem); width: 100%; max-width: 600px; }
-.profile-row { display: flex; align-items: center; gap: clamp(0.4rem, 0.8vw, 0.6rem); }
-.profile-label { flex: 0 0 clamp(80px, 15vw, 140px); font-size: var(--small-size); color: var(--text-secondary); text-align: right; }
-.profile-track { flex: 1; height: clamp(14px, 2vh, 20px); background: rgba(255,255,255,0.04); border-radius: 3px; overflow: hidden; }
-.profile-fill { height: 100%; border-radius: 3px; transition: width 1s var(--ease-out-expo) 0.3s; }
-.slide.visible .profile-fill { width: var(--fill); }
-.profile-fill:not(.slide.visible .profile-fill) { width: 0; }
-.profile-tag { font-size: var(--label-size); color: var(--text-muted); min-width: clamp(50px, 8vw, 80px); }
-
-/* === NODE DIAGRAM === */
-.node-diagram { display: flex; align-items: center; justify-content: center; gap: clamp(0.5rem, 1.5vw, 1.5rem); flex-wrap: wrap; }
-.node { padding: clamp(0.4rem, 0.8vw, 0.6rem) clamp(0.8rem, 1.5vw, 1.2rem); border-radius: 20px; font-size: var(--small-size); border: 1px solid rgba(255,255,255,0.08); background: var(--bg-card); color: var(--text-secondary); }
-.node-central { background: var(--accent); color: var(--bg-primary); font-weight: 600; border-color: var(--accent); font-size: var(--body-size); }
-.node-arrow { color: var(--text-muted); font-size: var(--body-size); }
-
-/* === PROGRESS BAR === */
-.progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: var(--accent); z-index: 9999; transition: width 0.3s ease; }
-
-/* === NAV DOTS === */
-.nav-dots {
-  position: fixed; right: clamp(0.5rem, 1.5vw, 1.2rem); top: 50%;
-  transform: translateY(-50%); z-index: 999; display: flex; flex-direction: column;
-  gap: clamp(4px, 0.6vh, 8px);
-}
-.nav-dot {
-  width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.15);
-  cursor: pointer; transition: all 0.3s ease; border: none; padding: 0;
-}
-.nav-dot.active { background: var(--accent); transform: scale(1.4); }
-.nav-dot:hover { background: rgba(255,255,255,0.3); }
-
-/* === RESPONSIVE === */
-@media (max-height: 700px) {
-  :root { --slide-padding: clamp(0.75rem, 3vw, 2rem); --title-size: clamp(1.5rem, 4.5vw, 2.8rem); --h2-size: clamp(1.2rem, 3vw, 2rem); }
-}
-@media (max-height: 600px) {
-  :root { --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem); --body-size: clamp(0.65rem, 1.1vw, 0.9rem); }
-  .nav-dots, .decorative { display: none; }
-}
-@media (max-height: 500px) {
-  :root { --title-size: clamp(1rem, 3.5vw, 1.5rem); --h2-size: clamp(0.9rem, 2.5vw, 1.25rem); }
-}
-@media (max-width: 768px) {
-  .split { flex-direction: column; }
-  .split-left { flex: 0 0 auto; padding: clamp(1rem, 3vw, 2rem); }
-  .split-right { flex: 0 0 40%; }
-  .card-grid { grid-template-columns: 1fr; }
-  .model-grid { grid-template-columns: 1fr; }
-}
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
-  html { scroll-behavior: auto; }
-}
-
-/* === INLINE EDITING === */
-.edit-hotzone { position: fixed; top: 0; left: 0; width: 80px; height: 80px; z-index: 10000; cursor: pointer; }
-.edit-toggle {
-  position: fixed; top: 12px; left: 12px; z-index: 10001;
-  background: var(--bg-card); border: 1px solid rgba(255,255,255,0.1);
-  color: var(--text-secondary); font-size: 1rem; padding: 6px 10px;
-  border-radius: 6px; cursor: pointer; opacity: 0; pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-.edit-toggle.show, .edit-toggle.active { opacity: 1; pointer-events: auto; }
-.edit-banner {
-  position: fixed; top: 0; left: 0; right: 0; height: 32px; z-index: 9998;
-  background: var(--accent); color: var(--bg-primary); font-family: var(--font-body);
-  font-size: var(--label-size); font-weight: 600; letter-spacing: 0.1em;
-  display: flex; align-items: center; justify-content: center;
-  transform: translateY(-100%); transition: transform 0.3s ease;
-}
-.edit-banner.active { transform: translateY(0); }
-body.edit-active [contenteditable] { outline: 1px dashed rgba(200,80,60,0.3); outline-offset: 2px; cursor: text; }
+html,body{height:100%;overflow-x:hidden}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+body{background:var(--bg-deep);color:var(--text-primary);font-family:var(--font-body)}
+body::before{content:"";position:fixed;inset:0;z-index:100;pointer-events:none;opacity:.11;mix-blend-mode:screen;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.06) 0,rgba(255,255,255,.06) 1px,transparent 1px,transparent clamp(.26rem,.6vw,.5rem));animation:scanDrift 9s linear infinite}
+.slide{width:100vw;height:100vh;height:100dvh;overflow:hidden;scroll-snap-align:start;display:flex;position:relative;isolation:isolate;align-items:center;justify-content:center;background:radial-gradient(circle at 18% 18%,rgba(255,46,196,.16),transparent 26%),radial-gradient(circle at 82% 14%,rgba(0,245,255,.14),transparent 25%),radial-gradient(circle at 70% 78%,rgba(139,92,255,.10),transparent 26%),linear-gradient(var(--grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--grid-line) 1px,transparent 1px),linear-gradient(135deg,#050610 0%,#091120 49%,#07101b 100%);background-size:auto,auto,auto,clamp(1.4rem,3vw,3rem) clamp(1.4rem,3vw,3rem),clamp(1.4rem,3vw,3rem) clamp(1.4rem,3vw,3rem),auto}
+.slide::before{content:"";position:absolute;inset:clamp(.7rem,1.6vw,1.5rem);z-index:0;pointer-events:none;opacity:.4;background:radial-gradient(circle at 18% 30%,var(--cyan) 0 2px,transparent 2.5px),radial-gradient(circle at 37% 18%,var(--magenta) 0 2px,transparent 2.5px),radial-gradient(circle at 57% 35%,var(--acid) 0 2px,transparent 2.5px),radial-gradient(circle at 74% 22%,var(--cyan) 0 2px,transparent 2.5px),radial-gradient(circle at 28% 70%,var(--violet) 0 2px,transparent 2.5px),radial-gradient(circle at 62% 76%,var(--magenta) 0 2px,transparent 2.5px),linear-gradient(30deg,transparent 12%,rgba(0,245,255,.10) 12.4%,transparent 12.8%),linear-gradient(148deg,transparent 28%,rgba(255,46,196,.10) 28.35%,transparent 28.7%),linear-gradient(99deg,transparent 51%,rgba(139,92,255,.08) 51.25%,transparent 51.65%);border:1px solid rgba(0,245,255,.09);border-radius:clamp(.35rem,.7vw,.6rem)}
+.slide::after{content:"Elaborado por Javier A. Flores-Cohaila";position:absolute;right:clamp(1rem,2.8vw,2.4rem);bottom:clamp(.55rem,1.35vw,1.05rem);z-index:12;color:rgba(213,231,239,.45);font-family:var(--font-mono);font-size:var(--footer-size);line-height:1;text-align:right;letter-spacing:0;text-transform:uppercase}
+.slide-content{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;max-height:100%;overflow:hidden;padding:clamp(3rem,7vh,5rem) var(--slide-padding) clamp(3rem,6vh,4rem);position:relative;z-index:2;width:100%;max-width:min(100vw,1360px);margin-inline:auto}
+.slide-content>*{width:100%;max-width:900px}
+.domain-bar{position:absolute;top:0;left:0;right:0;height:clamp(3px,.5vh,5px);z-index:6;box-shadow:0 0 18px currentColor}
+.domain-bar.cyan{background:var(--cyan);color:var(--cyan)}
+.domain-bar.magenta{background:var(--magenta);color:var(--magenta)}
+.domain-bar.violet{background:var(--violet);color:var(--violet)}
+.domain-bar.acid{background:var(--acid);color:var(--acid)}
+.domain-bar.amber{background:var(--amber);color:var(--amber)}
+.domain-bar.integracion{background:linear-gradient(90deg,var(--cyan),var(--magenta));color:var(--cyan)}
+h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);font-weight:800;letter-spacing:0;line-height:1.06;text-transform:uppercase}
+h1{font-size:var(--title-size);font-weight:900;text-shadow:0 0 clamp(.5rem,1.2vw,1rem) rgba(0,245,255,.18),clamp(.04rem,.1vw,.08rem) 0 rgba(255,46,196,.38)}
+h2{font-size:var(--h2-size)}
+h3{font-size:var(--h3-size)}
+p,li{font-size:var(--body-size);line-height:1.5;color:var(--text-secondary);font-weight:400}
+strong{color:var(--text-primary);font-weight:700}
+em{color:var(--cyan);font-style:normal;text-shadow:0 0 18px rgba(0,245,255,.34)}
+.eyebrow{font-family:var(--font-mono);font-size:var(--label-size);font-weight:700;color:var(--cyan);letter-spacing:0;text-transform:uppercase;line-height:1;margin-bottom:clamp(.4rem,1vh,.8rem)}
+.eyebrow::before{content:"[ ";color:var(--cyan)}
+.eyebrow::after{content:" ]";color:var(--cyan)}
+.divider{width:clamp(50px,5vw,84px);height:2px;background:linear-gradient(90deg,var(--cyan),var(--magenta),var(--acid));box-shadow:0 0 16px rgba(0,245,255,.45);margin:clamp(.6rem,1.3vh,1.1rem) 0}
+.source{font-family:var(--font-mono);font-size:clamp(.5rem,.7vw,.64rem);color:rgba(213,231,239,.46);letter-spacing:0;margin-top:auto;padding-top:clamp(.5rem,1vh,1rem)}
+.centered{text-align:center;align-items:center}
+.centered>*{margin-left:auto;margin-right:auto}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1rem,2.5vw,2.2rem);align-items:center;width:100%;max-width:1100px}
+.split-left{display:flex;flex-direction:column;justify-content:center;min-width:0}
+.split-right{display:flex;align-items:center;justify-content:center;min-width:0}
+.three-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.5rem,1.3vw,1.2rem);width:100%;max-width:1000px}
+.four-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.4rem,1vw,.8rem);width:100%;max-width:1100px}
+.flow-horizontal{display:flex;align-items:center;gap:clamp(.3rem,.8vw,.7rem);flex-wrap:wrap;justify-content:center}
+.flow-vertical{display:flex;flex-direction:column;gap:clamp(.3rem,.8vw,.6rem)}
+.tag{display:inline-block;padding:clamp(.15rem,.4vw,.3rem) clamp(.4rem,1vw,.7rem);border-radius:4px;font-size:var(--small-size);font-weight:600;font-family:var(--font-mono);border:1px solid rgba(255,255,255,.08)}
+.tag-cyan{background:rgba(0,245,255,.12);color:var(--cyan);border-color:rgba(0,245,255,.3)}
+.tag-magenta{background:rgba(255,46,196,.12);color:var(--magenta);border-color:rgba(255,46,196,.3)}
+.tag-violet{background:rgba(139,92,255,.12);color:var(--violet);border-color:rgba(139,92,255,.3)}
+.tag-acid{background:rgba(220,255,56,.12);color:var(--acid);border-color:rgba(220,255,56,.3)}
+.tag-amber{background:rgba(255,182,39,.12);color:var(--amber);border-color:rgba(255,182,39,.3)}
+.tag-muted{background:rgba(100,116,139,.12);color:var(--text-muted)}
+.tag-pink{background:rgba(255,77,157,.12);color:var(--pink);border-color:rgba(255,77,157,.3)}
+.card{background:var(--bg-card);border-radius:clamp(.35rem,.65vw,.55rem);padding:clamp(.7rem,1.5vw,1.3rem);border:1px solid var(--panel-line);box-shadow:var(--magnetic-shadow);backdrop-filter:blur(14px)}
+.card h3{margin-bottom:clamp(.3rem,.5vw,.5rem)}
+.card.tight{padding:clamp(.5rem,1vw,.9rem)}
+.flow-box{background:var(--bg-card);border-radius:clamp(.3rem,.55vw,.5rem);padding:clamp(.4rem,.9vw,.7rem) clamp(.6rem,1.2vw,1rem);font-size:var(--small-size);text-align:center;min-width:clamp(90px,14vw,160px);border:1px solid var(--panel-line);box-shadow:var(--magnetic-shadow)}
+.flow-box.border-cyan{border-left:3px solid var(--cyan)}
+.flow-box.border-magenta{border-left:3px solid var(--magenta)}
+.flow-box.border-violet{border-left:3px solid var(--violet)}
+.flow-box.border-acid{border-left:3px solid var(--acid)}
+.flow-box.border-amber{border-left:3px solid var(--amber)}
+.flow-box.bold{font-weight:700;color:var(--text-primary)}
+.flow-arrow{font-size:clamp(.8rem,1.5vw,1.2rem);color:var(--text-muted)}
+.big-number{font-family:var(--font-display);font-size:clamp(2.5rem,7vw,6rem);font-weight:900;line-height:1;text-shadow:0 0 clamp(.8rem,2vw,1.6rem) currentColor}
+.data-table{width:100%;border-collapse:collapse;font-size:var(--small-size)}
+.data-table th{text-align:left;padding:clamp(.3rem,.6vw,.5rem);color:var(--text-muted);font-weight:600;font-family:var(--font-mono);border-bottom:1px solid var(--line);text-transform:uppercase;font-size:var(--label-size)}
+.data-table td{padding:clamp(.28rem,.55vw,.45rem);border-bottom:1px solid rgba(0,245,255,.05);color:var(--text-secondary);line-height:1.3}
+.data-table td.head{color:var(--text-primary);font-weight:600}
+.data-table tr:hover td{background:rgba(0,245,255,.03)}
+.data-table .strike{text-decoration:line-through;color:var(--text-muted)}
+.data-table .nbn{color:var(--acid);font-family:var(--font-mono)}
+.pipeline{display:flex;align-items:center;gap:0;width:100%;flex-wrap:wrap;justify-content:center}
+.pipeline-box{padding:clamp(.3rem,.6vw,.5rem) clamp(.5rem,.8vw,.7rem);background:var(--bg-card);border-radius:clamp(.3rem,.55vw,.5rem);border:1px solid var(--panel-line);text-align:center;font-size:var(--label-size);box-shadow:var(--magnetic-shadow)}
+.pipeline-box .pipe-icon{font-size:clamp(.8rem,1.2vw,1.1rem);margin-bottom:.15rem}
+.pipeline-box .pipe-label{color:var(--text-secondary);font-family:var(--font-mono)}
+.pipeline-box.active{border-color:var(--cyan);background:rgba(0,245,255,.1)}
+.pipeline-arrow{color:var(--text-muted);font-size:var(--small-size);padding:0 clamp(.15rem,.3vw,.3rem)}
+.flowchart-v{display:flex;flex-direction:column;align-items:center;gap:0}
+.fc-box{padding:clamp(.35rem,.7vw,.55rem) clamp(.7rem,1.3vw,1.1rem);background:var(--bg-card);border-radius:clamp(.3rem,.55vw,.5rem);border:1px solid var(--panel-line);font-size:var(--small-size);color:var(--text-secondary);text-align:center;min-width:clamp(160px,28vw,320px);max-width:520px;box-shadow:var(--magnetic-shadow)}
+.fc-box.bold{color:var(--text-primary);font-weight:600}
+.fc-arrow{color:var(--text-muted);font-size:var(--body-size);padding:clamp(.1rem,.2vh,.2rem) 0}
+.hub-spoke{display:flex;align-items:center;justify-content:center;gap:clamp(.5rem,1.5vw,1.4rem);flex-wrap:wrap}
+.hub-center{width:clamp(70px,11vw,110px);height:clamp(70px,11vw,110px);border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;font-size:var(--small-size);font-weight:700;flex-shrink:0;font-family:var(--font-mono);line-height:1.2}
+.spoke-item{display:flex;flex-direction:column;gap:.2rem;padding:clamp(.4rem,.8vh,.6rem) clamp(.6rem,1vw,.8rem);background:var(--bg-card);border-radius:clamp(.3rem,.55vw,.5rem);border-left:3px solid var(--spoke-color,var(--text-muted));font-size:var(--label-size);max-width:clamp(120px,20vw,190px);box-shadow:var(--magnetic-shadow)}
+.spoke-item strong{font-size:var(--small-size)}
+.stack-levels{display:flex;flex-direction:column;gap:clamp(.4rem,.8vh,.6rem);width:100%;max-width:620px}
+.stack-row{display:flex;align-items:center;gap:clamp(.5rem,1vw,.8rem);padding:clamp(.5rem,1vh,.8rem) clamp(.8rem,1.5vw,1.2rem);background:var(--bg-card);border-radius:6px;border-left:4px solid var(--row-color,var(--text-muted));box-shadow:var(--magnetic-shadow)}
+.stack-label{font-size:var(--body-size);font-weight:700;color:var(--text-primary);min-width:clamp(55px,9vw,90px);font-family:var(--font-mono)}
+.stack-desc{font-size:var(--small-size);color:var(--text-secondary)}
+.net-node{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;font-size:var(--label-size);font-weight:700;text-align:center;border:2px solid rgba(255,255,255,.15);font-family:var(--font-mono);line-height:1.1;background:var(--bg-card);box-shadow:var(--magnetic-shadow)}
+.net-node.hub{box-shadow:0 0 22px rgba(255,46,196,.5);border-color:var(--magenta);color:var(--magenta)}
+.net-node.bridge{border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 18px rgba(0,245,255,.4)}
+.net-node.dim{opacity:.4}
+.dim-bar{display:flex;align-items:center;gap:clamp(.3rem,.6vw,.5rem);margin:clamp(.15rem,.3vh,.25rem) 0}
+.dim-bar-label{font-size:var(--label-size);color:var(--text-muted);min-width:clamp(50px,8vw,70px);font-family:var(--font-mono)}
+.dim-bar-track{flex:1;height:clamp(6px,1vh,10px);background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden}
+.dim-bar-fill{height:100%;border-radius:99px}
+.exercise-box{background:var(--bg-card);border-radius:8px;padding:clamp(.7rem,1.4vw,1.1rem);border:1px solid var(--panel-line);font-family:var(--font-mono);font-size:var(--small-size);color:var(--text-secondary);box-shadow:var(--magnetic-shadow);max-width:560px}
+.exercise-box .field{margin:clamp(.15rem,.3vh,.25rem) 0}
+.exercise-box .field-label{color:var(--text-primary);font-weight:600}
+.pearl-statement{font-family:var(--font-display);font-size:clamp(1.3rem,3.2vw,2.8rem);font-weight:900;line-height:1.08;max-width:min(86vw,60rem);text-align:center;text-transform:uppercase;text-shadow:0 0 clamp(.5rem,1.2vw,1rem) rgba(0,245,255,.18),clamp(.04rem,.1vw,.08rem) 0 rgba(255,46,196,.4)}
+.pearl-statement mark{background:transparent;color:var(--acid)}
+.pearl-statement em{color:var(--magenta);text-shadow:0 0 18px rgba(255,46,196,.4)}
+.cover-meta{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(.4rem,.9vw,.7rem);margin-top:clamp(.5rem,1.2vw,1rem)}
+.meta-chip{border:1px solid var(--line);box-shadow:inset 0 0 clamp(.4rem,1vw,.9rem) rgba(0,245,255,.08);color:var(--text-muted);font-family:var(--font-mono);font-size:var(--label-size);line-height:1;padding:clamp(.3rem,.6vw,.5rem) clamp(.4rem,.9vw,.7rem);text-transform:uppercase}
+.progress-bar{position:fixed;top:0;left:0;height:clamp(2px,.35vh,4px);z-index:40;background:linear-gradient(90deg,var(--cyan),var(--magenta),var(--acid));box-shadow:0 0 16px rgba(0,245,255,.55);transform:scaleX(0);transform-origin:left center;width:100%}
+.nav-dots{position:fixed;right:clamp(.45rem,1.1vw,1rem);top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:clamp(3px,.4vh,5px)}
+.nav-dot{width:clamp(5px,.6vw,8px);height:clamp(5px,.6vw,8px);border-radius:50%;background:rgba(213,231,239,.18);cursor:pointer;transition:all .3s;border:1px solid rgba(0,245,255,.22);padding:0}
+.nav-dot.active{background:var(--cyan);box-shadow:0 0 14px rgba(0,245,255,.72);transform:scale(1.4)}
+.nav-dot:hover{background:rgba(0,245,255,.4)}
+.slide-counter{position:fixed;left:clamp(.6rem,1.4vw,1.2rem);bottom:clamp(.6rem,1.4vw,1.1rem);z-index:50;font-family:var(--font-mono);font-size:var(--footer-size);color:rgba(213,231,239,.4)}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity var(--duration-normal) var(--ease-out-expo),transform var(--duration-normal) var(--ease-out-expo)}
+.slide.visible .reveal{opacity:1;transform:translateY(0)}
+.reveal:nth-child(2){transition-delay:.1s}
+.reveal:nth-child(3){transition-delay:.2s}
+.reveal:nth-child(4){transition-delay:.3s}
+.reveal:nth-child(5){transition-delay:.4s}
+.reveal:nth-child(6){transition-delay:.5s}
+.reveal:nth-child(7){transition-delay:.6s}
+.reveal:nth-child(8){transition-delay:.7s}
+.reveal-scale{opacity:0;transform:scale(.88);transition:opacity .8s var(--ease-out-expo),transform .8s var(--ease-out-expo)}
+.slide.visible .reveal-scale{opacity:1;transform:scale(1)}
+.reveal-left{opacity:0;transform:translateX(-24px);transition:opacity var(--duration-normal) var(--ease-out-expo),transform var(--duration-normal) var(--ease-out-expo)}
+.slide.visible .reveal-left{opacity:1;transform:translateX(0)}
+@keyframes scanDrift{from{transform:translateY(0)}to{transform:translateY(clamp(1rem,2vw,1.8rem))}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@media (max-height:700px){:root{--slide-padding:clamp(.75rem,3vw,2rem);--title-size:clamp(1.2rem,4.5vw,2.6rem);--h2-size:clamp(1rem,3vw,1.75rem)}}
+@media (max-height:600px){:root{--slide-padding:clamp(.5rem,2.5vw,1.5rem);--body-size:clamp(.65rem,1.1vw,.9rem);--title-size:clamp(1rem,4vw,2rem)}.nav-dots,.slide-counter{display:none}}
+@media (max-width:768px){.split{grid-template-columns:1fr}.three-cols{grid-template-columns:1fr}.four-cols{grid-template-columns:repeat(2,1fr)}.slide::after{left:clamp(.8rem,3vw,1.1rem);right:clamp(.8rem,3vw,1.1rem);text-align:center}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
-
-<!-- Edit UI -->
-<div class="edit-hotzone"></div>
-<button class="edit-toggle" id="editToggle" title="Edit mode (E)">&#9998;</button>
-<div class="edit-banner" id="editBanner">EDIT MODE &mdash; Click text to edit &middot; Ctrl+S to save file</div>
-
-<!-- Progress -->
 <div class="progress-bar" id="progressBar"></div>
-<nav class="nav-dots" id="navDots"></nav>
+<nav class="nav-dots" id="navDots" aria-label="Navegación de slides"></nav>
+<div class="slide-counter" id="slideCounter">01 / 38</div>
+<main>
 
-<!-- =============================================
-     SLIDE 1: TITLE
-     ============================================= -->
-<section class="slide" id="s1">
+<!-- === SECCIÓN A: OBJETIVO (Slides 1-8 | cyan) === -->
+
+<section class="slide" id="s1" data-title="Portada">
+  <div class="domain-bar cyan"></div>
   <div class="split">
     <div class="split-left">
-      <p class="eyebrow reveal">Psicopatología Dimensional &mdash; Sesión 01 / 21</p>
-      <h1 class="reveal" style="transition-delay:0.15s">De categorías<br/>a <em>dimensiones</em></h1>
-      <div class="divider reveal" style="transition-delay:0.25s"></div>
-      <p class="reveal" style="transition-delay:0.35s">Por qué el DSM no alcanza, hacia dónde va el DSM-6, y cómo el HiTOP reorganiza la psicopatología.</p>
-      <p class="source reveal" style="transition-delay:0.45s">Javier Flores &middot; R1 Psiquiatría &middot; Mayo 2026</p>
+      <p class="eyebrow reveal">Psicopatología Dimensional — Sesión 01 / 21</p>
+      <h1 class="reveal" style="transition-delay:.12s">HiTOP<br/><em>¿Dónde está en el mapa?</em></h1>
+      <div class="divider reveal" style="transition-delay:.22s"></div>
+      <p class="reveal" style="transition-delay:.32s;max-width:480px">Sesión inaugural — Bloque 1: Fundamentos. El mapa dimensional construido empíricamente que reemplaza las fronteras inventadas del DSM.</p>
+      <p class="source reveal" style="transition-delay:.42s">Javier Flores · R1 Psiquiatría · 2026</p>
     </div>
     <div class="split-right">
-      <div style="text-align:center" class="reveal-scale">
-        <div class="hero-number">227</div>
-        <div class="hero-label">combinaciones de síntomas para TDM</div>
+      <div class="reveal-scale" style="position:relative;width:clamp(220px,32vw,360px);height:clamp(220px,32vw,360px)">
+        <div style="position:absolute;inset:0;border-radius:50%;border:1px solid rgba(0,245,255,.12);background:radial-gradient(circle,rgba(0,245,255,.06),transparent 70%)"></div>
+        <div style="position:absolute;inset:14%;border-radius:50%;border:1px dashed rgba(0,245,255,.18)"></div>
+        <div style="position:absolute;inset:28%;border-radius:50%;border:1px dashed rgba(255,46,196,.18)"></div>
+        <div style="position:absolute;inset:42%;border-radius:50%;border:1px dashed rgba(139,92,255,.18)"></div>
+        <div style="position:absolute;left:58%;top:38%;width:clamp(10px,1.6vw,14px);height:clamp(10px,1.6vw,14px);border-radius:50%;background:var(--acid);box-shadow:0 0 16px rgba(220,255,56,.8);animation:pulse 2s infinite"></div>
+        <p style="position:absolute;left:62%;top:30%;font-size:var(--label-size);color:var(--acid);font-family:var(--font-mono);font-weight:700">¿DÓNDE?</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- =============================================
-     SLIDE 2: THE QUESTION
-     ============================================= -->
-<section class="slide" id="s2">
-  <div class="centered">
-    <h2 class="reveal" style="font-size:var(--h2-size);max-width:700px">¿Cuántas combinaciones de síntomas pueden dar un diagnóstico de<br/><em>Trastorno Depresivo Mayor?</em></h2>
+<section class="slide" id="s2" data-title="La pregunta que rompe">
+  <div class="domain-bar cyan"></div>
+  <div class="slide-content centered">
+    <p class="eyebrow reveal" style="color:var(--cyan)">La pregunta que rompe</p>
+    <h1 class="reveal" style="transition-delay:.15s;font-size:clamp(1.8rem,4.5vw,4rem);max-width:min(86vw,60rem)">¿Cuántas combinaciones de síntomas dan diagnóstico de <em>Trastorno Depresivo Mayor</em>?</h1>
+    <div class="divider reveal" style="transition-delay:.3s"></div>
+    <p class="reveal" style="transition-delay:.45s;font-size:var(--body-size);color:var(--text-muted);font-style:italic">Pausa. Pidan respuestas en voz alta. Que digan 10, 20, 50. No corregir.</p>
   </div>
 </section>
 
-<!-- =============================================
-     SLIDE 3: THE ANSWER — 227
-     ============================================= -->
-<section class="slide" id="s3">
+<section class="slide" id="s3" data-title="227 combinaciones">
+  <div class="domain-bar cyan"></div>
   <div class="split">
-    <div class="split-right" style="flex:0 0 55%;background:var(--bg-primary)">
+    <div class="split-left">
+      <p class="eyebrow reveal" style="color:var(--cyan)">La respuesta</p>
+      <h1 class="reveal" style="transition-delay:.1s">227 combinaciones: dos pacientes con el mismo diagnóstico pueden no compartir ni un solo síntoma</h1>
+      <div class="divider reveal" style="transition-delay:.2s"></div>
+      <p class="reveal" style="transition-delay:.3s">9 criterios DSM-5, ≥5 requeridos, al menos 1 de los 2 primeros.</p>
+      <p class="reveal" style="transition-delay:.4s;font-style:italic;color:var(--text-muted)">¿Qué tan útil es la etiqueta que comparten?</p>
+    </div>
+    <div class="split-right">
       <div class="reveal-scale" style="text-align:center">
-        <div class="hero-number" style="font-size:clamp(6rem,18vw,14rem)">227</div>
-      </div>
-    </div>
-    <div class="split-left" style="flex:1">
-      <h3 class="reveal">Dos pacientes con <em>el mismo diagnóstico</em> pueden no compartir ni un solo síntoma.</h3>
-      <div class="divider reveal"></div>
-      <p class="reveal">9 criterios, ≥5 requeridos, al menos 1 de los 2 primeros. Resultado: 227 perfiles distintos bajo una sola etiqueta.</p>
-    </div>
-  </div>
-</section>
-
-<!-- =============================================
-     SLIDE 4: THE REAL QUESTION
-     ============================================= -->
-<section class="slide" id="s4">
-  <div class="centered">
-    <div class="quote reveal" style="border-left-color:var(--accent);max-width:650px">
-      Si dos pacientes con TDM pueden ser tan distintos... ¿qué tan útil es la etiqueta que comparten?
-    </div>
-  </div>
-</section>
-
-<!-- =============================================
-     SLIDE 5: SECTION B HEADER
-     ============================================= -->
-<section class="slide section-slide" id="s5">
-  <div class="section-number reveal-scale">5</div>
-  <div class="slide-content" style="justify-content:center">
-    <p class="eyebrow reveal">LO1</p>
-    <h1 class="reveal" style="transition-delay:0.15s"><em>5 razones</em> por las que el DSM no alcanza</h1>
-    <div class="divider reveal" style="transition-delay:0.25s"></div>
-    <p class="reveal" style="transition-delay:0.35s;max-width:500px">Identificar ≥4 limitaciones del modelo categórico DSM-5-TR</p>
-  </div>
-</section>
-
-<!-- =============================================
-     SLIDE 6: COMORBIDITY
-     ============================================= -->
-<section class="slide" id="s6">
-  <div class="slide-content">
-    <p class="eyebrow reveal">Limitación 1</p>
-    <h2 class="reveal">La <em>comorbilidad</em> es la regla, no la excepción</h2>
-    <div class="divider reveal"></div>
-    <div class="bar-chart reveal" style="transition-delay:0.3s;max-width:600px">
-      <div class="bar-row">
-        <span class="bar-label">MDD + GAD</span>
-        <div class="bar-track"><div class="bar-fill" style="--bar-width:70%;background:var(--accent)"></div></div>
-        <span class="bar-value">60-70%</span>
-      </div>
-      <div class="bar-row">
-        <span class="bar-label">MDD + Ansiedad Social</span>
-        <div class="bar-track"><div class="bar-fill" style="--bar-width:38%;background:var(--accent-amber)"></div></div>
-        <span class="bar-value">~35%</span>
-      </div>
-      <div class="bar-row">
-        <span class="bar-label">MDD + PTSD</span>
-        <div class="bar-track"><div class="bar-fill" style="--bar-width:32%;background:var(--accent-blue)"></div></div>
-        <span class="bar-value">~30%</span>
-      </div>
-      <div class="bar-row">
-        <span class="bar-label">MDD + Sustancias</span>
-        <div class="bar-track"><div class="bar-fill" style="--bar-width:25%;background:var(--accent-violet)"></div></div>
-        <span class="bar-value">~25%</span>
-      </div>
-    </div>
-    <p class="source reveal" style="transition-delay:0.4s">Krueger &amp; Eaton, 2015 &middot; World Psychiatry</p>
-  </div>
-</section>
-
-<!-- =============================================
-     SLIDE 7: MAP METAPHOR
-     ============================================= -->
-<section class="slide" id="s7">
-  <div class="centered">
-    <h3 class="reveal" style="max-width:650px">La comorbilidad no es que el paciente tenga dos enfermedades.</h3>
-    <div class="divider reveal"></div>
-    <p class="reveal" style="max-width:550px;font-size:var(--h3-size);color:var(--text-primary);font-family:var(--font-display);font-style:italic">Es que los <em>límites entre categorías</em> son artificiales.</p>
-    <p class="reveal" style="margin-top:clamp(1rem,2vh,2rem);max-width:450px">Como un mapa político con fronteras rectas dibujadas sobre un terreno continuo de montañas y valles.</p>
-  </div>
-</section>
-
-<!-- =============================================
-     SLIDE 8: HETEROGENEITY
-     ============================================= -->
-<section class="slide" id="s8">
-  <div class="slide-content">
-    <p class="eyebrow reveal">Limitación 2</p>
-    <h2 class="reveal">Mismo diagnóstico, <em>distintos pacientes</em></h2>
-    <div class="divider reveal"></div>
-    <div class="card-grid reveal" style="transition-delay:0.3s;max-width:700px">
-      <div class="card">
-        <h4>Paciente A &mdash; TDM (F32.1)</h4>
-        <p>Insomnio &middot; Agitación &middot; Culpa excesiva &middot; Concentración &darr; &middot; Peso &darr;</p>
-      </div>
-      <div class="card">
-        <h4>Paciente B &mdash; TDM (F32.1)</h4>
-        <p>Hipersomnia &middot; Retardo psicomotor &middot; Vacío &middot; Fatiga &middot; Peso &uarr;</p>
-      </div>
-    </div>
-    <p class="reveal" style="transition-delay:0.4s;margin-top:var(--content-gap)"><strong>Comparten:</strong> la etiqueta. <strong>Nada más.</strong></p>
-    <p class="source reveal" style="transition-delay:0.5s">Allsopp et al., 2019 &middot; Psychiatry Research</p>
-  </div>
-</section>
-
-<!-- =============================================
-     SLIDE 9: RELIABILITY DATA
-     ============================================= -->
-<section class="slide" id="s9">
-  <div class="slide-content">
-    <p class="eyebrow reveal">Dato duro</p>
-    <h2 class="reveal">Las dimensiones son <em>~2x más confiables</em></h2>
-    <div class="divider reveal"></div>
-    <div class="bar-chart reveal" style="transition-delay:0.3s;max-width:550px">
-      <div class="bar-row">
-        <span class="bar-label">Esquizofrenia (DSM)</span>
-        <div class="bar-track"><div class="bar-fill" style="--bar-width:46%;background:var(--text-muted)"></div></div>
-        <span class="bar-value">κ 0.46</span>
-      </div>
-      <div class="bar-row">
-        <span class="bar-label">Psicoticismo (HiTOP)</span>
-        <div class="bar-track"><div class="bar-fill" style="--bar-width:81%;background:var(--accent)"></div></div>
-        <span class="bar-value">ICC 0.81</span>
-      </div>
-      <div class="bar-row">
-        <span class="bar-label">Desapego (HiTOP)</span>
-        <div class="bar-track"><div class="bar-fill" style="--bar-width:85%;background:var(--accent-green)"></div></div>
-        <span class="bar-value">ICC 0.85</span>
-      </div>
-    </div>
-    <p class="source reveal" style="transition-delay:0.4s">Kotov et al., 2024 &middot; Molecular Psychiatry</p>
-  </div>
-</section>
-
-<!-- =============================================
-     SLIDE 10: ARBITRARY CUTOFFS
-     ============================================= -->
-<section class="slide" id="s10">
-  <div class="centered">
-    <p class="eyebrow reveal">Limitación 3</p>
-    <h2 class="reveal">¿Por qué <em>5 de 9</em> y no 4?</h2>
-    <div class="divider reveal"></div>
-    <p class="reveal" style="max-width:500px">¿Por qué 2 semanas y no 10 días? Los umbrales se decidieron por <strong>consenso de expertos</strong>, no por evidencia de discontinuidad natural.</p>
-    <p class="source reveal">Kendell &amp; Jablensky, 2003 &middot; Am J Psychiatry</p>
-  </div>
-</section>
-
-<!-- =============================================
-     SLIDE 11: NO ZONES OF RARITY
-     ============================================= -->
-<section class="slide" id="s11">
-  <div class="centered">
-    <div class="quote reveal" style="max-width:600px">
-      Patients are distributed smoothly from low to high on all dimensions without leaving clear gaps between clusters of patients.
-      <div class="quote-author">&mdash; Öngür et al., 2026 &middot; Am J Psychiatry</div>
-    </div>
-    <p class="reveal" style="margin-top:var(--content-gap);max-width:450px">La esperanza de encontrar categorías naturales &mdash; <em>"carving nature at its joints"</em> &mdash; no se ha cumplido en psiquiatría.</p>
-  </div>
-</section>
-
-<!-- =============================================
-     SLIDE 12: SUBTHRESHOLD (ICEBERG)
-     ============================================= -->
-<section class="slide" id="s12">
-  <div class="split">
-    <div class="split-left">
-      <p class="eyebrow reveal">Limitación 4</p>
-      <h2 class="reveal">Bajo el umbral hay <em>sufrimiento real</em></h2>
-      <div class="divider reveal"></div>
-      <p class="reveal">4 de 9 síntomas × 13 días = "no tiene depresión" según el DSM.</p>
-      <p class="reveal">El DSM-5 introdujo medidas dimensionales de severidad en Sección III. Son <strong>opcionales</strong>. Casi nadie las usa.</p>
-      <p class="source reveal">Narrow et al., 2011</p>
-    </div>
-    <div class="split-right" style="flex-direction:column;gap:0">
-      <div style="flex:1;background:linear-gradient(to bottom,var(--accent-glow),transparent);display:flex;align-items:center;justify-content:center" class="reveal-scale">
-        <div style="text-align:center;padding:1rem">
-          <div style="font-size:var(--small-size);color:var(--accent);letter-spacing:0.15em;text-transform:uppercase;font-weight:600">Sobre el umbral</div>
-          <div style="font-size:var(--body-size);color:var(--text-muted);margin-top:0.3rem">Cumple criterios DSM</div>
+        <div class="big-number" style="color:var(--magenta);margin-bottom:.4rem">227</div>
+        <p style="font-size:var(--small-size);color:var(--text-muted);margin-bottom:clamp(.8rem,2vh,1.2rem)">combinaciones sintomáticas únicas</p>
+        <div style="position:relative;width:clamp(180px,26vw,240px);height:clamp(120px,18vw,160px);margin:0 auto">
+          <div style="position:absolute;left:0;top:50%;transform:translateY(-50%);width:45%;height:80%;border-radius:50%;border:2px solid var(--cyan);background:rgba(0,245,255,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:var(--label-size);color:var(--cyan);font-family:var(--font-mono);gap:.15rem">
+            <span style="font-weight:700">PACIENTE A</span>
+            <span style="font-size:clamp(.45rem,.62vw,.6rem);color:var(--text-muted)">insomnio · agitación</span>
+            <span style="font-size:clamp(.45rem,.62vw,.6rem);color:var(--text-muted)">culpa · concentración↓</span>
+            <span style="font-size:clamp(.45rem,.62vw,.6rem);color:var(--text-muted)">peso↓</span>
+          </div>
+          <div style="position:absolute;right:0;top:50%;transform:translateY(-50%);width:45%;height:80%;border-radius:50%;border:2px solid var(--magenta);background:rgba(255,46,196,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:var(--label-size);color:var(--magenta);font-family:var(--font-mono);gap:.15rem">
+            <span style="font-weight:700">PACIENTE B</span>
+            <span style="font-size:clamp(.45rem,.62vw,.6rem);color:var(--text-muted)">hipersomnia · retardo</span>
+            <span style="font-size:clamp(.45rem,.62vw,.6rem);color:var(--text-muted)">vacío · fatiga</span>
+            <span style="font-size:clamp(.45rem,.62vw,.6rem);color:var(--text-muted)">peso↑</span>
+          </div>
+          <p style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:clamp(.5rem,.7vw,.66rem);color:var(--acid);font-family:var(--font-mono);font-weight:700;background:var(--bg-deep);padding:.2rem .4rem;border:1px solid var(--acid)">ánimo ↓</p>
         </div>
+        <p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.5rem;font-style:italic">Intersección: solo ánimo deprimido</p>
       </div>
-      <div style="width:80%;height:1px;background:var(--accent);margin:0 auto;opacity:0.5"></div>
-      <div style="flex:2.5;background:linear-gradient(to bottom,transparent,rgba(200,80,60,0.03));display:flex;align-items:center;justify-content:center" class="reveal-scale" style="transition-delay:0.3s">
-        <div style="text-align:center;padding:1rem">
-          <div style="font-size:var(--small-size);color:var(--text-muted);letter-spacing:0.1em;text-transform:uppercase">Bajo el umbral</div>
-          <div style="font-size:var(--small-size);color:var(--text-muted);margin-top:0.5rem;max-width:200px;line-height:1.5">Sufrimiento subumbral &middot; Disfunción &middot; Riesgo de progresión &middot; Necesita intervención</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s4" data-title="5 razones">
+  <div class="domain-bar cyan"></div>
+  <div class="slide-content centered">
+    <p class="eyebrow reveal" style="color:var(--cyan)">El diagnóstico del problema</p>
+    <h1 class="reveal" style="transition-delay:.1s">5 razones por las que el DSM no alcanza — hoy construimos la alternativa</h1>
+    <div class="divider reveal" style="transition-delay:.2s"></div>
+    <div class="reveal-scale" style="transition-delay:.3s;display:flex;align-items:center;gap:clamp(1rem,3vw,2rem);justify-content:center">
+      <div class="big-number" style="color:var(--magenta)">5</div>
+      <div class="flow-vertical" style="align-items:flex-start;gap:.2rem">
+        <p style="font-size:var(--small-size);color:var(--text-secondary)">1. Comorbilidad artificial</p>
+        <p style="font-size:var(--small-size);color:var(--text-secondary)">2. Heterogeneidad intradiagnóstica</p>
+        <p style="font-size:var(--small-size);color:var(--text-secondary)">3. Cortes arbitrarios</p>
+        <p style="font-size:var(--small-size);color:var(--text-secondary)">4. Info subumbral perdida</p>
+        <p style="font-size:var(--small-size);color:var(--text-secondary)">5. Baja validez de constructo</p>
+      </div>
+    </div>
+    <p class="reveal" style="transition-delay:.5s;margin-top:clamp(.4rem,1vw,.7rem);padding:clamp(.35rem,.7vw,.55rem) clamp(.7rem,1.3vw,1.1rem);border:1px solid var(--cyan);border-radius:6px;background:rgba(0,245,255,.06);text-align:center;max-width:560px"><strong style="color:var(--cyan);font-family:var(--font-mono);font-size:var(--small-size)">K1:</strong> <span style="font-size:var(--small-size)">al final de esta sección identificarán ≥4 de estas 5 limitaciones.</span></p>
+  </div>
+</section>
+
+<section class="slide" id="s5" data-title="Limitación 1: comorbilidad">
+  <div class="domain-bar cyan"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--cyan)">Limitación 1 — comorbilidad artificial</p>
+    <h1 class="reveal" style="transition-delay:.1s">La comorbilidad es la regla, no la excepción — las fronteras son inventadas</h1>
+    <div class="divider reveal" style="transition-delay:.2s"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:900px">
+      <div>
+        <div class="dim-bar"><span class="dim-bar-label" style="min-width:110px">MDD+GAD</span><div class="dim-bar-track"><div class="dim-bar-fill" style="width:67%;background:var(--magenta)"></div></div><span style="font-size:var(--label-size);color:var(--magenta);font-family:var(--font-mono)">60-70%</span></div>
+        <div class="dim-bar"><span class="dim-bar-label" style="min-width:110px">MDD+PTSD</span><div class="dim-bar-track"><div class="dim-bar-fill" style="width:30%;background:var(--violet)"></div></div><span style="font-size:var(--label-size);color:var(--violet);font-family:var(--font-mono)">~30%</span></div>
+        <div class="dim-bar"><span class="dim-bar-label" style="min-width:110px">MDD+Ans.Soc.</span><div class="dim-bar-track"><div class="dim-bar-fill" style="width:35%;background:var(--cyan)"></div></div><span style="font-size:var(--label-size);color:var(--cyan);font-family:var(--font-mono)">~35%</span></div>
+        <div class="dim-bar"><span class="dim-bar-label" style="min-width:110px">MDD+Sust.</span><div class="dim-bar-track"><div class="dim-bar-fill" style="width:25%;background:var(--amber)"></div></div><span style="font-size:var(--label-size);color:var(--amber);font-family:var(--font-mono)">~25%</span></div>
+        <p class="source" style="margin-top:.5rem">Krueger & Eaton, World Psychiatry, 2015</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.4rem">
+        <div class="card tight" style="text-align:center;border-top:2px solid var(--text-muted);opacity:.6">
+          <p style="font-size:var(--label-size);color:var(--text-muted);font-family:var(--font-mono);font-weight:700">DSM</p>
+          <p style="font-size:var(--small-size);margin-top:.2rem">Mapa político con fronteras rectas</p>
+        </div>
+        <div class="card tight" style="text-align:center;border-top:2px solid var(--cyan)">
+          <p style="font-size:var(--label-size);color:var(--cyan);font-family:var(--font-mono);font-weight:700">REALIDAD</p>
+          <p style="font-size:var(--small-size);margin-top:.2rem">Mapa topográfico sin fronteras</p>
         </div>
       </div>
     </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-style:italic;margin-top:var(--content-gap);font-size:var(--small-size)">La comorbilidad no es que el paciente tenga dos enfermedades — es que los límites son artificiales.</p>
   </div>
 </section>
 
-<!-- =============================================
-     SLIDE 13: CONSTRUCT VALIDITY
-     ============================================= -->
-<section class="slide" id="s13">
-  <div class="centered">
-    <p class="eyebrow reveal">Limitación 5</p>
-    <div class="quote reveal" style="transition-delay:0.15s;max-width:600px">
-      La reificación de categorías DSM ha encerrado a la investigación psiquiátrica en una <em>prisión epistémica</em>.
-      <div class="quote-author">&mdash; Steven Hyman, 2010 &middot; Annu Rev Clin Psychol</div>
-    </div>
-    <p class="reveal" style="margin-top:var(--content-gap);max-width:500px">Los diagnósticos tienen <strong>utilidad</strong> (comunican) pero no <strong>validez</strong> (no son entidades naturales).</p>
-    <p class="source reveal">Jablensky, 2016 &middot; Waszczuk et al., 2023</p>
-  </div>
-</section>
-
-<!-- =============================================
-     SLIDE 14: LO1 SUMMARY
-     ============================================= -->
-<section class="slide" id="s14">
+<section class="slide" id="s6" data-title="Limitación 2: heterogeneidad">
+  <div class="domain-bar cyan"></div>
   <div class="slide-content">
-    <p class="eyebrow reveal">Resumen LO1</p>
-    <h2 class="reveal">5 limitaciones del <em>modelo categórico</em></h2>
-    <div class="divider reveal"></div>
-    <table class="data-table reveal" style="transition-delay:0.3s;max-width:650px">
-      <thead><tr><th>#</th><th>Limitación</th><th>En una frase</th></tr></thead>
-      <tbody>
-        <tr><td>1</td><td>Comorbilidad artificial</td><td>Las fronteras entre diagnósticos son inventadas</td></tr>
-        <tr><td>2</td><td>Heterogeneidad</td><td>Mismo diagnóstico, distintos pacientes</td></tr>
-        <tr><td>3</td><td>Cortes arbitrarios</td><td>¿Por qué 5 de 9 y no 4?</td></tr>
-        <tr><td>4</td><td>Info subumbral perdida</td><td>Bajo el umbral hay sufrimiento real</td></tr>
-        <tr><td>5</td><td>Baja validez</td><td>Útil para comunicar, no para explicar</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- =============================================
-     SLIDE 15: SECTION C HEADER — DSM-6
-     ============================================= -->
-<section class="slide section-slide" id="s15">
-  <div class="section-number reveal-scale">B</div>
-  <div class="slide-content" style="justify-content:center">
-    <p class="eyebrow reveal">LO2</p>
-    <h1 class="reveal" style="transition-delay:0.15s">El DSM ya está <em>cambiando</em></h1>
-    <div class="divider reveal" style="transition-delay:0.25s"></div>
-    <p class="reveal" style="transition-delay:0.35s;max-width:550px">Identificar ≥2 propuestas concretas del proceso DSM-6 que incorporan pensamiento dimensional.</p>
-  </div>
-</section>
-
-<!-- =============================================
-     SLIDE 16: TIMELINE
-     ============================================= -->
-<section class="slide" id="s16">
-  <div class="slide-content" style="align-items:center">
-    <p class="eyebrow reveal">45 años del mismo framework</p>
-    <div class="reveal" style="transition-delay:0.2s;display:flex;align-items:center;gap:clamp(0.3rem,0.8vw,0.5rem);flex-wrap:wrap;justify-content:center;margin:var(--content-gap) 0">
-      <div class="card" style="text-align:center;min-width:100px"><h4>DSM-III</h4><p>1980</p></div>
-      <span style="color:var(--text-muted)">&rarr;</span>
-      <div class="card" style="text-align:center;min-width:100px"><h4>DSM-IV</h4><p>1994</p></div>
-      <span style="color:var(--text-muted)">&rarr;</span>
-      <div class="card" style="text-align:center;min-width:100px"><h4>DSM-5</h4><p>2013</p></div>
-      <span style="color:var(--text-muted)">&rarr;</span>
-      <div class="card" style="text-align:center;min-width:100px"><h4>DSM-5-TR</h4><p>2023</p></div>
-      <span style="color:var(--accent)">&rarr;</span>
-      <div class="card" style="text-align:center;min-width:120px;border-color:var(--accent)"><h4 style="color:var(--accent)">Future DSM</h4><p>en desarrollo</p></div>
-    </div>
-    <p class="reveal" style="transition-delay:0.35s;max-width:550px;text-align:center"><strong>2024:</strong> APA nombra Future DSM Strategic Committee<br/><strong>2026:</strong> Structure &amp; Dimensions Subcommittee publica propuesta</p>
-    <p class="source reveal" style="transition-delay:0.45s">Oquendo et al., 2026 &middot; Öngür et al., 2026 &middot; Am J Psychiatry</p>
-  </div>
-</section>
-
-<!-- =============================================
-     SLIDE 17: DIAGNOSTIC CONSTRUCTION MODEL
-     ============================================= -->
-<section class="slide" id="s17">
-  <div class="slide-content" style="align-items:center">
-    <p class="eyebrow reveal">El nuevo modelo</p>
-    <h2 class="reveal" style="text-align:center">Diagnostic Construction Model &mdash; <em>4 dominios</em></h2>
-    <div class="divider reveal" style="margin-left:auto;margin-right:auto"></div>
-    <div class="model-grid reveal" style="transition-delay:0.3s">
-      <div class="model-box">
-        <h4>1. Factores Contextuales</h4>
-        <ul><li>Determinantes socioeconómicos</li><li>Desarrollo</li><li>Comorbilidad médica</li><li>Calidad de vida (auto-reporte)</li></ul>
+    <p class="eyebrow reveal" style="color:var(--cyan)">Limitación 2 — heterogeneidad intradiagnóstica</p>
+    <h1 class="reveal" style="transition-delay:.1s">Mismo diagnóstico, distintos pacientes — las dimensiones son ~2x más confiables</h1>
+    <div class="divider reveal" style="transition-delay:.2s"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:900px">
+      <div style="display:flex;gap:.5rem">
+        <div class="card tight" style="text-align:center;border-top:2px solid var(--cyan);flex:1">
+          <p style="font-size:var(--label-size);color:var(--cyan);font-family:var(--font-mono);font-weight:700">PACIENTE A</p>
+          <p style="font-size:var(--small-size);color:var(--text-muted);margin-top:.2rem">F32.1</p>
+          <p style="font-size:var(--label-size);margin-top:.3rem;color:var(--text-secondary)">ánimo↓ · insomnio · agitación · culpa · peso↓</p>
+        </div>
+        <div class="card tight" style="text-align:center;border-top:2px solid var(--magenta);flex:1">
+          <p style="font-size:var(--label-size);color:var(--magenta);font-family:var(--font-mono);font-weight:700">PACIENTE B</p>
+          <p style="font-size:var(--small-size);color:var(--text-muted);margin-top:.2rem">F32.1</p>
+          <p style="font-size:var(--label-size);margin-top:.3rem;color:var(--text-secondary)">anhedonia · hipersomnia · retardo · fatiga · peso↑</p>
+        </div>
       </div>
-      <div class="model-box">
-        <h4>2. Biomarcadores</h4>
-        <ul><li>Neuroimagen, genética</li><li>Metabolómica, cognición</li><li>Fenotipos digitales</li><li style="color:var(--accent)">Primera vez en el DSM</li></ul>
-      </div>
-      <div class="model-box">
-        <h4>3. Diagnóstico</h4>
-        <ul><li>Categoría mayor (ej: "psicosis")</li><li>Dx específico + especificadores</li><li>Severidad independiente</li><li>Código CIE</li></ul>
-      </div>
-      <div class="model-box">
-        <h4>4. Features Transdiagnósticas</h4>
-        <ul><li>Ansiedad</li><li>Dificultades cognitivas</li><li>Alteraciones del sueño</li><li>Trascienden categorías Dx</li></ul>
+      <div>
+        <p style="font-size:var(--small-size);color:var(--text-muted);font-family:var(--font-mono);margin-bottom:.4rem">Confiabilidad interobservador</p>
+        <div class="dim-bar"><span class="dim-bar-label">DSM</span><div class="dim-bar-track"><div class="dim-bar-fill" style="width:46%;background:var(--magenta)"></div></div><span style="font-size:var(--label-size);color:var(--magenta);font-family:var(--font-mono)">κ=0.46</span></div>
+        <div class="dim-bar"><span class="dim-bar-label">HiTOP</span><div class="dim-bar-track"><div class="dim-bar-fill" style="width:83%;background:var(--cyan)"></div></div><span style="font-size:var(--label-size);color:var(--cyan);font-family:var(--font-mono)">ICC=0.81-0.85</span></div>
+        <p style="font-size:var(--label-size);color:var(--acid);font-family:var(--font-mono);margin-top:.4rem;font-weight:700">~2x más confiable</p>
+        <p class="source" style="margin-top:.3rem">Allsopp et al., 2019 · Kotov et al., 2024</p>
       </div>
     </div>
-    <p class="source reveal" style="transition-delay:0.4s">Öngür et al., 2026, Figure 1</p>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-style:italic;margin-top:var(--content-gap);font-size:var(--small-size)">Comparten: NADA (excepto la etiqueta F32.1).</p>
   </div>
 </section>
 
-<!-- =============================================
-     SLIDE 18: PROPOSAL 1 — VARIABLE SPECIFICITY
-     ============================================= -->
-<section class="slide" id="s18">
+<section class="slide" id="s7" data-title="Limitaciones 3-5">
+  <div class="domain-bar cyan"></div>
   <div class="slide-content">
-    <p class="eyebrow reveal">Propuesta 1</p>
-    <h2 class="reveal"><em>Especificidad variable</em></h2>
-    <div class="divider reveal"></div>
-    <div class="card-grid reveal" style="transition-delay:0.3s;max-width:650px;grid-template-columns:1fr 1fr">
-      <div class="card" style="border-color:rgba(200,80,60,0.2)">
-        <h4 style="color:var(--accent)">Categoría mayor</h4>
-        <p>"Psicosis" &mdash; cuando la información es insuficiente. Evaluación de emergencia, primer contacto.</p>
+    <p class="eyebrow reveal" style="color:var(--cyan)">Limitaciones 3-5 — tres ángulos del mismo problema</p>
+    <h1 class="reveal" style="transition-delay:.1s">Cortes arbitrarios, info subumbral perdida, baja validez de constructo</h1>
+    <div class="divider reveal" style="transition-delay:.2s"></div>
+    <div class="three-cols reveal" style="transition-delay:.3s;max-width:1000px">
+      <div class="card tight" style="border-top:2px solid var(--magenta)">
+        <p style="font-size:var(--label-size);color:var(--magenta);font-family:var(--font-mono);font-weight:700;margin-bottom:.3rem">3 · CORTE ARBITRARIO</p>
+        <div style="position:relative;height:clamp(30px,5vh,42px);background:linear-gradient(90deg,var(--cyan),var(--magenta));border-radius:4px;margin:.3rem 0">
+          <div style="position:absolute;left:55%;top:-2px;bottom:-2px;width:2px;background:var(--acid);box-shadow:0 0 8px var(--acid)"></div>
+          <p style="position:absolute;left:56%;top:50%;transform:translateY(-50%);font-size:var(--label-size);color:var(--acid);font-family:var(--font-mono)">5/9</p>
+        </div>
+        <p style="font-size:var(--label-size);color:var(--text-secondary);margin-top:.2rem">¿Por qué 5 y no 4? ¿Por qué 2 semanas y no 10 días?</p>
+        <p class="source" style="margin-top:.3rem">Kendell & Jablensky, 2003</p>
       </div>
-      <div class="card" style="border-color:rgba(90,154,106,0.2)">
-        <h4 style="color:var(--accent-green)">Diagnóstico específico</h4>
-        <p>"Esquizofrenia" &mdash; cuando hay certeza. Seguimiento longitudinal, evaluación completa.</p>
+      <div class="card tight" style="border-top:2px solid var(--violet)">
+        <p style="font-size:var(--label-size);color:var(--violet);font-family:var(--font-mono);font-weight:700;margin-bottom:.3rem">4 · ICEBERG SUBUMBRAL</p>
+        <div style="text-align:center;margin:.3rem 0">
+          <div style="display:inline-block;width:60%;height:clamp(16px,3vh,24px);background:rgba(0,245,255,.2);border:1px solid var(--cyan);border-bottom:none;border-radius:4px 4px 0 0"></div>
+          <div style="display:inline-block;width:80%;height:clamp(28px,5vh,40px);background:rgba(139,92,255,.15);border:1px solid var(--violet);border-radius:0 0 4px 4px"></div>
+        </div>
+        <p style="font-size:var(--label-size);color:var(--text-secondary);margin-top:.2rem">Sobre: cumple DSM. Bajo: sufrimiento, disfunción, riesgo.</p>
+        <p class="source" style="margin-top:.3rem">Narrow et al., 2011</p>
+      </div>
+      <div class="card tight" style="border-top:2px solid var(--amber)">
+        <p style="font-size:var(--label-size);color:var(--amber);font-family:var(--font-mono);font-weight:700;margin-bottom:.3rem">5 · PRISIÓN EPISTÉMICA</p>
+        <p style="font-size:var(--label-size);color:var(--text-secondary);font-style:italic;margin-top:.2rem">"La reificación de categorías DSM ha encerrado a la investigación en una prisión epistémica."</p>
+        <p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.3rem">Utilidad ≠ validez</p>
+        <p class="source" style="margin-top:.3rem">Hyman, 2010 · Jablensky, 2016</p>
       </div>
     </div>
-    <p class="reveal" style="transition-delay:0.4s;max-width:550px">Ya no se fuerza a elegir entre un diagnóstico específico o "no especificado".</p>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-style:italic;margin-top:var(--content-gap);font-size:var(--small-size)">Útil para comunicar, no para explicar.</p>
   </div>
 </section>
 
-<!-- =============================================
-     SLIDE 19: PROPOSAL 2 — SEVERITY
-     ============================================= -->
-<section class="slide" id="s19">
+<section class="slide" id="s8" data-title="Transición a HiTOP">
+  <div class="domain-bar cyan"></div>
+  <div class="slide-content centered">
+    <p class="eyebrow reveal" style="color:var(--cyan)">La pregunta de transición</p>
+    <h1 class="reveal" style="transition-delay:.1s">Si el DSM no alcanza, ¿qué modelo dimensional existe ya?</h1>
+    <div class="divider reveal" style="transition-delay:.2s"></div>
+    <div class="reveal-scale" style="transition-delay:.35s;margin-top:clamp(.4rem,1vw,.7rem)">
+      <div style="font-family:var(--font-display);font-size:clamp(2rem,5vw,4.5rem);font-weight:900;color:var(--magenta);text-shadow:0 0 clamp(.8rem,2vw,1.6rem) rgba(255,46,196,.5);letter-spacing:.02em">HiTOP</div>
+      <p style="font-size:var(--body-size);color:var(--text-secondary);margin-top:.4rem;max-width:540px">Hierarchical Taxonomy of Psychopathology — el mapa dimensional construido empíricamente.</p>
+    </div>
+  </div>
+</section>
+
+<!-- === SECCIÓN B.1: DSM-6 (Slides 9-13 | amber) === -->
+
+<section class="slide" id="s9" data-title="DSM ya cambia">
+  <div class="domain-bar amber"></div>
   <div class="slide-content">
-    <p class="eyebrow reveal">Propuesta 2</p>
-    <h2 class="reveal"><em>Severidad</em> como dimensión independiente</h2>
-    <div class="divider reveal"></div>
-    <div class="card-grid reveal" style="transition-delay:0.3s;max-width:650px;grid-template-columns:1fr 1fr">
-      <div class="card">
-        <h4>Paciente A: Esquizofrenia</h4>
-        <div style="background:rgba(255,255,255,0.04);border-radius:3px;height:14px;margin:0.5rem 0"><div style="width:25%;height:100%;background:var(--accent-green);border-radius:3px"></div></div>
-        <p>Severidad leve &rarr; Antipsicótico dosis baja</p>
-      </div>
-      <div class="card">
-        <h4>Paciente B: Esquizofrenia</h4>
-        <div style="background:rgba(255,255,255,0.04);border-radius:3px;height:14px;margin:0.5rem 0"><div style="width:90%;height:100%;background:var(--accent);border-radius:3px"></div></div>
-        <p>Severidad severa &rarr; Clozapina + rehabilitación</p>
+    <p class="eyebrow reveal" style="color:var(--amber)">El DSM ya reconoce el problema</p>
+    <h1 class="reveal" style="transition-delay:.1s">El DSM ya está cambiando — el Future DSM Strategic Committee fue nombrado en 2024</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--amber),var(--cyan))"></div>
+    <div class="reveal" style="transition-delay:.3s">
+      <div class="pipeline" style="margin-bottom:clamp(.5rem,1.2vw,.8rem)">
+        <div class="pipeline-box"><span class="pipe-label">DSM-III</span><div style="font-size:var(--label-size);color:var(--text-muted)">1980</div></div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-box"><span class="pipe-label">DSM-IV</span><div style="font-size:var(--label-size);color:var(--text-muted)">1994</div></div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-box"><span class="pipe-label">DSM-5</span><div style="font-size:var(--label-size);color:var(--text-muted)">2013</div></div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-box"><span class="pipe-label">DSM-5-TR</span><div style="font-size:var(--label-size);color:var(--text-muted)">2023</div></div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-box active" style="border-color:var(--amber);background:rgba(255,182,39,.1)"><span class="pipe-label" style="color:var(--amber)">FUTURE DSM</span><div style="font-size:var(--label-size);color:var(--amber)">2026→</div></div>
       </div>
     </div>
-    <p class="reveal" style="transition-delay:0.4s;max-width:550px">La severidad deja de ser un especificador opcional &mdash; se convierte en <strong>parámetro obligatorio</strong>.</p>
+    <div class="split reveal" style="transition-delay:.4s;max-width:800px;gap:clamp(.5rem,1.2vw,1rem)">
+      <div class="card tight" style="border-left:3px solid var(--amber)">
+        <p style="font-size:var(--small-size);color:var(--amber);font-family:var(--font-mono);font-weight:700">2024</p>
+        <p style="font-size:var(--small-size);color:var(--text-secondary)">APA nombra Future DSM Strategic Committee</p>
+        <p class="source" style="margin-top:.2rem">Oquendo et al., 2026</p>
+      </div>
+      <div class="card tight" style="border-left:3px solid var(--amber)">
+        <p style="font-size:var(--small-size);color:var(--amber);font-family:var(--font-mono);font-weight:700">2026</p>
+        <p style="font-size:var(--small-size);color:var(--text-secondary)">Structure and Dimensions Subcommittee publica propuesta</p>
+        <p class="source" style="margin-top:.2rem">Öngür et al., 2026 · Am J Psychiatry</p>
+      </div>
+    </div>
+    <p class="reveal" style="transition-delay:.5s;margin-top:clamp(.4rem,1vw,.6rem);padding:clamp(.35rem,.7vw,.55rem) clamp(.7rem,1.3vw,1.1rem);border:1px solid var(--amber);border-radius:6px;background:rgba(255,182,39,.06);text-align:center;max-width:580px"><strong style="color:var(--amber);font-family:var(--font-mono);font-size:var(--small-size)">K2:</strong> <span style="font-size:var(--small-size)">identificar ≥2 propuestas concretas del proceso DSM-6 que incorporan pensamiento dimensional.</span></p>
   </div>
 </section>
 
-<!-- =============================================
-     SLIDE 20: PROPOSAL 3 — TRANSDIAGNOSTIC
-     ============================================= -->
-<section class="slide" id="s20">
-  <div class="centered">
-    <p class="eyebrow reveal">Propuesta 3</p>
-    <h2 class="reveal">Features <em>transdiagnósticas</em></h2>
-    <div class="divider reveal" style="margin-left:auto;margin-right:auto"></div>
-    <div class="node-diagram reveal" style="transition-delay:0.3s">
-      <div class="node">Ansiedad</div>
-      <div class="node-arrow">&larr;</div>
-      <div class="node node-central">Diagnóstico principal</div>
-      <div class="node-arrow">&rarr;</div>
-      <div class="node">Dificultades cognitivas</div>
-    </div>
-    <div class="node-diagram reveal" style="transition-delay:0.4s;margin-top:clamp(0.3rem,0.8vh,0.6rem)">
-      <div class="node">Alteraciones del sueño</div>
-      <div class="node-arrow">&larr;</div>
-      <div class="node" style="opacity:0;pointer-events:none">placeholder</div>
-      <div class="node-arrow">&rarr;</div>
-      <div class="node">Dolor crónico</div>
-    </div>
-    <p class="reveal" style="transition-delay:0.5s;max-width:500px;margin-top:var(--content-gap)">Dimensiones que cruzan diagnósticos se documentan <strong>formalmente</strong> por primera vez.</p>
-  </div>
-</section>
-
-<!-- =============================================
-     SLIDE 21: PROPOSAL 4 — LIVING DOCUMENT
-     ============================================= -->
-<section class="slide" id="s21">
+<section class="slide" id="s10" data-title="Diagnostic Construction Model">
+  <div class="domain-bar amber"></div>
   <div class="slide-content">
-    <p class="eyebrow reveal">Propuesta 4</p>
-    <h2 class="reveal">El DSM deja de ser un <em>libro estático</em></h2>
-    <div class="divider reveal"></div>
-    <div class="card-grid reveal" style="transition-delay:0.3s;max-width:600px;grid-template-columns:1fr 1fr">
-      <div class="card" style="text-align:center">
-        <h4>Antes</h4>
-        <p style="font-size:clamp(2rem,5vw,3rem);margin:0.3rem 0">&#128214;</p>
-        <p>Publicación cada 15-20 años. Cambio = revolución.</p>
+    <p class="eyebrow reveal" style="color:var(--amber)">El modelo propuesto</p>
+    <h1 class="reveal" style="transition-delay:.1s">El Diagnostic Construction Model: 4 dominios simultáneos — el diagnóstico es solo uno</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--amber),var(--cyan))"></div>
+    <div class="reveal" style="transition-delay:.3s;position:relative;width:100%;max-width:600px;margin:0 auto">
+      <svg style="width:100%;height:clamp(180px,28vh,260px)" viewBox="0 0 100 70">
+        <rect x="10" y="5" width="35" height="27" rx="2" fill="rgba(255,182,39,.1)" stroke="var(--amber)" stroke-width=".6"/>
+        <rect x="55" y="5" width="35" height="27" rx="2" fill="rgba(0,245,255,.1)" stroke="var(--cyan)" stroke-width=".6"/>
+        <rect x="10" y="38" width="35" height="27" rx="2" fill="rgba(255,46,196,.1)" stroke="var(--magenta)" stroke-width=".6"/>
+        <rect x="55" y="38" width="35" height="27" rx="2" fill="rgba(220,255,56,.1)" stroke="var(--acid)" stroke-width=".6"/>
+        <line x1="27" y1="32" x2="72" y2="38" stroke="rgba(255,255,255,.2)" stroke-width=".4" stroke-dasharray="1,1"/>
+        <line x1="72" y1="32" x2="27" y2="38" stroke="rgba(255,255,255,.2)" stroke-width=".4" stroke-dasharray="1,1"/>
+      </svg>
+      <div style="position:absolute;left:11%;top:7%;width:33%;text-align:center">
+        <p style="font-size:var(--label-size);color:var(--amber);font-family:var(--font-mono);font-weight:700">1 · CONTEXTUAL</p>
+        <p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.1rem">Determinantes sociales, desarrollo, QoL, funcionamiento</p>
       </div>
-      <div class="card" style="text-align:center;border-color:rgba(200,80,60,0.2)">
-        <h4 style="color:var(--accent)">Futuro</h4>
-        <p style="font-size:clamp(2rem,5vw,3rem);margin:0.3rem 0">&#128187;</p>
-        <p>Actualización continua. Digital = siempre actual. Print = periódico.</p>
+      <div style="position:absolute;right:11%;top:7%;width:33%;text-align:center">
+        <p style="font-size:var(--label-size);color:var(--cyan);font-family:var(--font-mono);font-weight:700">2 · BIOMARCADORES</p>
+        <p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.1rem">Neuroimagen, genética, cognición, fenotipos digitales</p>
+      </div>
+      <div style="position:absolute;left:11%;bottom:7%;width:33%;text-align:center">
+        <p style="font-size:var(--label-size);color:var(--magenta);font-family:var(--font-mono);font-weight:700">3 · DIAGNÓSTICO</p>
+        <p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.1rem">Categoría mayor, específico, severidad, código CIE</p>
+      </div>
+      <div style="position:absolute;right:11%;bottom:7%;width:33%;text-align:center">
+        <p style="font-size:var(--label-size);color:var(--acid);font-family:var(--font-mono);font-weight:700">4 · TRANSDIAGNÓSTICO</p>
+        <p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.1rem">Ansiedad, cognición, sueño — cruzan categorías</p>
       </div>
     </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-size:var(--small-size);font-style:italic;margin-top:clamp(.3rem,.6vw,.5rem)">La formulación completa = los 4 dominios. No uno solo. <span style="color:var(--amber)">Öngür et al., 2026, Figure 1</span></p>
   </div>
 </section>
 
-<!-- =============================================
-     SLIDE 22: WHY THIS MATTERS
-     ============================================= -->
-<section class="slide" id="s22">
-  <div class="centered">
-    <h2 class="reveal" style="max-width:650px">Lo que aprenden hoy será el <em>lenguaje estándar</em> cuando sean psiquiatras senior.</h2>
-    <div class="divider reveal" style="margin-left:auto;margin-right:auto"></div>
-    <p class="reveal" style="max-width:450px">Las categorías no desaparecen. Se complementan con dimensiones.</p>
+<section class="slide" id="s11" data-title="4 propuestas DSM-6">
+  <div class="domain-bar amber"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--amber)">Las 4 propuestas clave</p>
+    <h1 class="reveal" style="transition-delay:.1s">Cuatro propuestas clave del DSM-6 — especificidad variable, severidad, features transdiagnósticas, living document</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--amber),var(--cyan))"></div>
+    <div class="four-cols reveal" style="transition-delay:.3s">
+      <div class="card tight" style="text-align:center;border-top:3px solid var(--amber)">
+        <p style="font-size:clamp(1.2rem,2.2vw,1.7rem);margin-bottom:.2rem">①</p>
+        <p style="font-size:var(--label-size);color:var(--amber);font-family:var(--font-mono);font-weight:700">ESPECIFICIDAD VARIABLE</p>
+        <p style="font-size:var(--label-size);margin-top:.3rem;color:var(--text-secondary)">No siempre necesitas un diagnóstico específico</p>
+      </div>
+      <div class="card tight" style="text-align:center;border-top:3px solid var(--cyan)">
+        <p style="font-size:clamp(1.2rem,2.2vw,1.7rem);margin-bottom:.2rem">②</p>
+        <p style="font-size:var(--label-size);color:var(--cyan);font-family:var(--font-mono);font-weight:700">SEVERIDAD INDEPENDIENTE</p>
+        <p style="font-size:var(--label-size);margin-top:.3rem;color:var(--text-secondary)">Parámetro obligatorio, no especificador opcional</p>
+      </div>
+      <div class="card tight" style="text-align:center;border-top:3px solid var(--magenta);border:1px solid rgba(255,46,196,.2)">
+        <p style="font-size:clamp(1.2rem,2.2vw,1.7rem);margin-bottom:.2rem">③</p>
+        <p style="font-size:var(--label-size);color:var(--magenta);font-family:var(--font-mono);font-weight:700">FEATURES TRANSDIAGNÓSTICAS</p>
+        <p style="font-size:var(--label-size);margin-top:.3rem;color:var(--text-secondary)">Dimensiones que cruzan diagnósticos se documentan formalmente</p>
+      </div>
+      <div class="card tight" style="text-align:center;border-top:3px solid var(--acid)">
+        <p style="font-size:clamp(1.2rem,2.2vw,1.7rem);margin-bottom:.2rem">④</p>
+        <p style="font-size:var(--label-size);color:var(--acid);font-family:var(--font-mono);font-weight:700">LIVING DOCUMENT</p>
+        <p style="font-size:var(--label-size);margin-top:.3rem;color:var(--text-secondary)">Actualización continua, no cada 15 años</p>
+      </div>
+    </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-size:var(--small-size);font-style:italic;margin-top:clamp(.4rem,1vw,.6rem)">La propuesta ③ conecta directamente con la visión HiTOP de dimensiones transdiagnósticas. <span style="color:var(--amber)">Öngür et al., 2026</span></p>
   </div>
 </section>
 
-<!-- =============================================
-     SLIDE 23: SECTION D HEADER — HiTOP
-     ============================================= -->
-<section class="slide section-slide" id="s23">
-  <div class="section-number reveal-scale">C</div>
-  <div class="slide-content" style="justify-content:center">
-    <p class="eyebrow reveal">LO3</p>
-    <h1 class="reveal" style="transition-delay:0.15s"><em>HiTOP</em></h1>
-    <div class="divider reveal" style="transition-delay:0.25s"></div>
-    <p class="reveal" style="transition-delay:0.35s;max-width:550px">Hierarchical Taxonomy of Psychopathology &mdash; el mapa dimensional construido empíricamente</p>
-    <p class="source reveal" style="transition-delay:0.45s">Kotov et al., 2017, 2021 &middot; >100 investigadores</p>
+<section class="slide" id="s12" data-title="Lo que NO cambia">
+  <div class="domain-bar amber"></div>
+  <div class="slide-content centered">
+    <p class="eyebrow reveal" style="color:var(--amber)">Honestidad sobre el cambio</p>
+    <h1 class="reveal" style="transition-delay:.1s">Lo que NO cambia — las categorías se complementan, no desaparecen</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--amber),var(--cyan))"></div>
+    <div class="flow-vertical reveal" style="transition-delay:.3s;max-width:560px">
+      <div class="card tight" style="border-left:3px solid var(--cyan);display:flex;align-items:center;gap:.5rem"><span style="color:var(--cyan);font-size:var(--h3-size)">✓</span><p style="font-size:var(--small-size)">Categorías diagnósticas se mantienen — se <strong>complementan</strong> con dimensiones</p></div>
+      <div class="card tight" style="border-left:3px solid var(--cyan);display:flex;align-items:center;gap:.5rem"><span style="color:var(--cyan);font-size:var(--h3-size)">✓</span><p style="font-size:var(--small-size)">Códigos CIE se mantienen — facturación y comunicación</p></div>
+      <div class="card tight" style="border-left:3px solid var(--cyan);display:flex;align-items:center;gap:.5rem"><span style="color:var(--cyan);font-size:var(--h3-size)">✓</span><p style="font-size:var(--small-size)">Sigue siendo un sistema por consenso basado en evidencia</p></div>
+    </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-style:italic;margin-top:var(--content-gap);font-size:var(--small-size);color:var(--text-muted)">Nadie les pide que dejen de diagnosticar con DSM.</p>
   </div>
 </section>
 
-<!-- =============================================
-     SLIDE 24: THE P FACTOR
-     ============================================= -->
-<section class="slide" id="s24">
+<section class="slide" id="s13" data-title="Por qué les importa">
+  <div class="domain-bar amber"></div>
+  <div class="slide-content centered">
+    <p class="eyebrow reveal" style="color:var(--amber)">Punto de inflexión</p>
+    <h1 class="reveal" style="transition-delay:.1s">Por qué esto les importa: lo que aprenden hoy será el lenguaje estándar cuando sean psiquiatras senior</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--amber),var(--cyan))"></div>
+    <div class="pearl-statement reveal-scale" style="transition-delay:.3s;font-size:clamp(1rem,2.2vw,1.8rem);line-height:1.3;max-width:min(86vw,52rem)">
+      <p>Pensar dimensionalmente no es <em>teoría académica</em>.</p>
+      <p>Es la dirección hacia donde va el <mark>DSM-6</mark>.</p>
+    </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-size:var(--small-size);color:var(--text-muted);margin-top:clamp(.4rem,1vw,.6rem)">Pero si el DSM está caminando hacia lo dimensional... ¿qué modelo dimensional existe ya?</p>
+  </div>
+</section>
+
+<!-- === SECCIÓN B.2: FACTOR P (Slides 14-17 | violet) === -->
+
+<section class="slide" id="s14" data-title="Factor p">
+  <div class="domain-bar violet"></div>
   <div class="split">
     <div class="split-left">
-      <p class="eyebrow reveal">El factor p</p>
-      <h2 class="reveal">¿Qué tienen en común <em>todos</em> los trastornos mentales?</h2>
-      <div class="divider reveal"></div>
-      <p class="reveal"><strong>Estudio Dunedin</strong> (Caspi et al., 2014)<br/>N = 1,037 &middot; Seguimiento: 3 &rarr; 38 años</p>
-      <p class="reveal">El modelo bifactorial con factor p general fue <strong>superior</strong> al modelo de factores separados.</p>
-      <p class="source reveal">Caspi et al., 2014 &middot; Clin Psychol Sci</p>
+      <p class="eyebrow reveal" style="color:var(--violet)">¿Qué tienen en común todos los trastornos?</p>
+      <h1 class="reveal" style="transition-delay:.1s">El factor p: ¿qué tienen en común todos los trastornos mentales?</h1>
+      <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--violet),var(--cyan))"></div>
+      <p class="reveal" style="transition-delay:.3s">El factor p es a la psicopatología lo que el factor <em>g</em> es a la inteligencia.</p>
+      <p class="reveal" style="transition-delay:.4s;font-size:var(--small-size);color:var(--text-muted)">No dice que depresión = esquizofrenia — dice que comparten una vulnerabilidad general.</p>
+      <p class="source reveal" style="transition-delay:.5s">Caspi et al., Clin Psychol Sci, 2014 · Estudio Dunedin · N=1,037 · 3→38 años · pérdida 5%</p>
     </div>
     <div class="split-right">
-      <div class="node-diagram reveal-scale" style="flex-direction:column;gap:clamp(0.5rem,1.5vh,1rem)">
-        <div class="node" style="font-size:var(--body-size)">Internalizing</div>
-        <div class="node-arrow">&uarr;</div>
-        <div class="node node-central" style="font-size:var(--h3-size);padding:clamp(0.8rem,1.5vw,1.2rem) clamp(1.5rem,3vw,2.5rem)">p</div>
-        <div style="display:flex;gap:clamp(1rem,3vw,2rem)">
-          <div style="text-align:center"><div class="node-arrow">&swarr;</div><div class="node" style="font-size:var(--body-size)">Externalizing</div></div>
-          <div style="text-align:center"><div class="node-arrow">&searr;</div><div class="node" style="font-size:var(--body-size)">Thought Disorder</div></div>
+      <div class="reveal-scale" style="position:relative;width:clamp(200px,30vw,280px);height:clamp(200px,30vw,280px)">
+        <div class="hub-center" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(139,92,255,.15);border:2px solid var(--violet);color:var(--violet);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:900;width:clamp(50px,8vw,70px);height:clamp(50px,8vw,70px);box-shadow:0 0 24px rgba(139,92,255,.5)">p</div>
+        <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 100 100">
+          <line x1="50" y1="50" x2="20" y2="25" stroke="rgba(139,92,255,.5)" stroke-width=".8"/>
+          <line x1="50" y1="50" x2="80" y2="25" stroke="rgba(139,92,255,.5)" stroke-width=".8"/>
+          <line x1="50" y1="50" x2="50" y2="88" stroke="rgba(139,92,255,.5)" stroke-width=".8"/>
+        </svg>
+        <div class="net-node" style="position:absolute;left:10%;top:18%;width:clamp(38px,6vw,50px);height:clamp(38px,6vw,50px);font-size:var(--label-size);border-color:var(--cyan);color:var(--cyan)">INT</div>
+        <div class="net-node" style="position:absolute;right:10%;top:18%;width:clamp(38px,6vw,50px);height:clamp(38px,6vw,50px);font-size:var(--label-size);border-color:var(--magenta);color:var(--magenta)">EXT</div>
+        <div class="net-node" style="position:absolute;left:50%;bottom:4%;transform:translateX(-50%);width:clamp(42px,6.5vw,54px);height:clamp(42px,6.5vw,54px);font-size:var(--label-size);border-color:var(--acid);color:var(--acid)">THOUGHT</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s15" data-title="Factor p predice">
+  <div class="domain-bar violet"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--violet)">Lo que un solo número predice</p>
+    <h1 class="reveal" style="transition-delay:.1s">Un solo factor predice lo que más importa — suicidio, hospitalizaciones, violencia</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--violet),var(--cyan))"></div>
+    <div class="three-cols reveal" style="transition-delay:.3s;max-width:800px">
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--magenta)"><div style="font-size:clamp(1.4rem,2.6vw,2rem);margin-bottom:.2rem">🔴</div><p style="font-size:var(--label-size);color:var(--magenta);font-family:var(--font-mono);font-weight:700">SUCIDIO</p><p style="font-size:var(--label-size);color:var(--acid);margin-top:.2rem;font-family:var(--font-mono)">✓ predicho</p></div>
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--violet)"><div style="font-size:clamp(1.4rem,2.6vw,2rem);margin-bottom:.2rem">🏥</div><p style="font-size:var(--label-size);color:var(--violet);font-family:var(--font-mono);font-weight:700">HOSPITALIZACIONES</p><p style="font-size:var(--label-size);color:var(--acid);margin-top:.2rem;font-family:var(--font-mono)">✓ predicho</p></div>
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--amber)"><div style="font-size:clamp(1.4rem,2.6vw,2rem);margin-bottom:.2rem">⚖️</div><p style="font-size:var(--label-size);color:var(--amber);font-family:var(--font-mono);font-weight:700">VIOLENCIA</p><p style="font-size:var(--label-size);color:var(--acid);margin-top:.2rem;font-family:var(--font-mono)">✓ predicho</p></div>
+    </div>
+    <div class="split reveal" style="transition-delay:.4s;max-width:760px;gap:clamp(.5rem,1.2vw,.9rem);margin-top:clamp(.3rem,.6vw,.5rem)">
+      <div class="card tight" style="border-left:3px solid var(--violet)"><p style="font-size:var(--label-size);color:var(--text-secondary)">Asociado a: maltrato infantil + historia familiar | CI bajo + bajo autocontrol</p></div>
+      <div class="card tight" style="border-left:3px solid var(--violet)"><p style="font-size:var(--label-size);color:var(--text-secondary)">Heredabilidad 64-73% (Avinun, 2021) | Detectable desde los 3 años</p></div>
+    </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-style:italic;margin-top:var(--content-gap);font-size:var(--small-size)">Mejor que cualquier diagnóstico categórico individual. ¿No deberíamos medirlo?</p>
+  </div>
+</section>
+
+<section class="slide" id="s16" data-title="Factor p base genética">
+  <div class="domain-bar violet"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--violet)">Evidencia genómica</p>
+    <h1 class="reveal" style="transition-delay:.1s">El factor p tiene base biológica — 92-97% de varianza genética compartida entre INT y EXT</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--violet),var(--cyan))"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:900px">
+      <div class="card tight" style="border-top:3px solid var(--violet)">
+        <p style="font-size:var(--label-size);color:var(--violet);font-family:var(--font-mono);font-weight:700">DAVIS (2025)</p>
+        <p style="font-size:var(--small-size);margin-top:.3rem">Genomic SEM con GWAS de 16 rasgos. Dos factores (INT/EXT) comparten <strong>92-97% de varianza genética</strong>.</p>
+        <p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.3rem">DRD2 como receptor clave. Amígdala → INT. Corteza → EXT.</p>
+      </div>
+      <div class="card tight" style="border-top:3px solid var(--cyan)">
+        <p style="font-size:var(--label-size);color:var(--cyan);font-family:var(--font-mono);font-weight:700">EHTESHAMI (2025)</p>
+        <p style="font-size:var(--small-size);margin-top:.3rem"><strong>N=127,963</strong> | EHR | 6 factores bajo un p-factor:</p>
+        <p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.2rem">neurodesarrollo · externalizante · sustancias · thought disorder · distress · miedo</p>
+      </div>
+    </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-style:italic;margin-top:var(--content-gap);font-size:var(--small-size);color:var(--violet)">Los genes no leen el DSM.</p>
+  </div>
+</section>
+
+<section class="slide" id="s17" data-title="Transición a jerarquía">
+  <div class="domain-bar" style="background:linear-gradient(90deg,var(--violet),var(--magenta));color:var(--violet)"></div>
+  <div class="slide-content centered">
+    <p class="eyebrow reveal" style="color:var(--violet)">Del factor general al mapa</p>
+    <h1 class="reveal" style="transition-delay:.1s">Transición: del factor general al mapa jerárquico — HiTOP</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--violet),var(--magenta))"></div>
+    <div class="reveal" style="transition-delay:.3s;display:flex;align-items:center;gap:clamp(.8rem,2vw,1.6rem);justify-content:center;flex-wrap:wrap">
+      <div class="card tight" style="text-align:center;border:2px solid var(--violet);min-width:100px">
+        <div style="font-family:var(--font-display);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:900;color:var(--violet)">p</div>
+        <p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.2rem">factor general</p>
+      </div>
+      <span style="font-size:clamp(1.2rem,2.5vw,1.8rem);color:var(--text-muted)">→</span>
+      <div style="text-align:center;max-width:320px">
+        <p style="font-size:var(--body-size);color:var(--text-primary);font-weight:700">¿Cómo se organiza la psicopatología debajo de p?</p>
+      </div>
+      <span style="font-size:clamp(1.2rem,2.5vw,1.8rem);color:var(--magenta)">→</span>
+      <div class="card tight" style="text-align:center;border:2px solid var(--magenta);min-width:100px">
+        <div style="font-family:var(--font-display);font-size:clamp(1rem,2vw,1.4rem);font-weight:900;color:var(--magenta)">HiTOP</div>
+        <p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.2rem">jerarquía</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- === SECCIÓN B.3: JERARQUÍA HiTOP (Slides 18-24 | magenta) === -->
+
+<section class="slide" id="s18" data-title="Jerarquía HiTOP 6 niveles">
+  <div class="domain-bar magenta"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--magenta)">El mapa dimensional</p>
+    <h1 class="reveal" style="transition-delay:.1s">HiTOP: 6 niveles de síntomas a factor general — construido empíricamente, no por consenso</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--magenta),var(--cyan))"></div>
+    <div class="reveal" style="transition-delay:.3s;position:relative;width:100%;max-width:560px;margin:0 auto">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:clamp(.15rem,.3vh,.25rem)">
+        <div class="card tight" style="text-align:center;width:100%;max-width:480px;border-left:4px solid var(--violet);padding:clamp(.25rem,.5vh,.4rem) clamp(.5rem,1vw,.8rem)"><span style="font-size:var(--label-size);color:var(--violet);font-family:var(--font-mono);font-weight:700">NIVEL 6 · FACTOR P</span><span style="font-size:var(--label-size);color:var(--text-muted);margin-left:.4rem">(general)</span></div>
+        <span style="font-size:var(--label-size);color:var(--text-muted)">↓</span>
+        <div class="card tight" style="text-align:center;width:78%;border-left:4px solid var(--violet);padding:clamp(.2rem,.4vh,.35rem) clamp(.5rem,1vw,.8rem)"><span style="font-size:var(--label-size);color:var(--violet);font-family:var(--font-mono);font-weight:700">NIVEL 5 · SUPERESPECTROS</span><span style="font-size:var(--label-size);color:var(--text-muted);margin-left:.3rem">Disf. emocional · Psicosis · Externalizing</span></div>
+        <span style="font-size:var(--label-size);color:var(--text-muted)">↓</span>
+        <div class="card tight" style="text-align:center;width:88%;border-left:4px solid var(--magenta);padding:clamp(.2rem,.4vh,.35rem) clamp(.5rem,1vw,.8rem)"><span style="font-size:var(--label-size);color:var(--magenta);font-family:var(--font-mono);font-weight:700">NIVEL 4 · 6 ESPECTROS</span><span style="font-size:var(--label-size);color:var(--text-muted);margin-left:.3rem">Internalizing · Somatoform · Thought Disorder · Detachment · Disinh.Ext · Antag.Ext</span></div>
+        <span style="font-size:var(--label-size);color:var(--text-muted)">↓</span>
+        <div class="card tight" style="text-align:center;width:75%;border-left:4px solid var(--cyan);padding:clamp(.2rem,.4vh,.35rem) clamp(.5rem,1vw,.8rem)"><span style="font-size:var(--label-size);color:var(--cyan);font-family:var(--font-mono);font-weight:700">NIVEL 3 · SUBFACTORES</span><span style="font-size:var(--label-size);color:var(--text-muted);margin-left:.3rem">Fear · Distress · Mania · Eating...</span></div>
+        <span style="font-size:var(--label-size);color:var(--text-muted)">↓</span>
+        <div class="card tight" style="text-align:center;width:62%;border-left:4px solid var(--cyan);padding:clamp(.2rem,.4vh,.35rem) clamp(.5rem,1vw,.8rem)"><span style="font-size:var(--label-size);color:var(--cyan);font-family:var(--font-mono);font-weight:700">NIVEL 2 · SÍNDROMES</span><span style="font-size:var(--label-size);color:var(--text-muted);margin-left:.3rem">Pánico · Dep. vegetativa · Manía...</span></div>
+        <span style="font-size:var(--label-size);color:var(--text-muted)">↓</span>
+        <div class="card tight" style="text-align:center;width:50%;border-left:4px solid var(--acid);padding:clamp(.2rem,.4vh,.35rem) clamp(.5rem,1vw,.8rem)"><span style="font-size:var(--label-size);color:var(--acid);font-family:var(--font-mono);font-weight:700">NIVEL 1 · SÍNTOMAS</span><span style="font-size:var(--label-size);color:var(--text-muted);margin-left:.3rem">Insomnio · labilidad · rumiación</span></div>
+      </div>
+    </div>
+    <p class="source reveal" style="transition-delay:.5s;text-align:center">Kotov et al., Annu Rev Clin Psychol, 2021 · Bottom-up: análisis factorial, no consenso de expertos</p>
+  </div>
+</section>
+
+<section class="slide" id="s19" data-title="6 espectros HiTOP">
+  <div class="domain-bar magenta"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--magenta)">Los 6 espectros</p>
+    <h1 class="reveal" style="transition-delay:.1s">Los 6 espectros del HiTOP y sus trastornos DSM afines</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--magenta),var(--cyan))"></div>
+    <div class="reveal" style="transition-delay:.3s">
+      <table class="data-table">
+        <tr><th>Espectro</th><th>Síndromes clave</th><th>Trastornos DSM afines</th></tr>
+        <tr><td class="head" style="color:var(--cyan)">Internalizing</td><td>Distress, Fear, Eating, Sexual</td><td>MDD, GAD, PTSD, Fobias, TCA</td></tr>
+        <tr><td class="head" style="color:var(--violet)">Somatoform</td><td>Conversivo, Somatización</td><td>T. conversivo, T. somatización</td></tr>
+        <tr><td class="head" style="color:var(--magenta)">Thought Disorder</td><td>Psicosis, Manía</td><td>Esquizofrenia, Bipolar I</td></tr>
+        <tr><td class="head" style="color:var(--amber)">Detachment</td><td>Esquizoide, Evitativo, Anhedonia</td><td>T. esquizoide, T. evitativo</td></tr>
+        <tr><td class="head" style="color:var(--acid)">Disinhibited Ext.</td><td>Sustancias, TDAH, Conducta</td><td>TUS, TDAH, T. conducta</td></tr>
+        <tr><td class="head" style="color:var(--pink)">Antagonistic Ext.</td><td>Antisocial, Narcisista, Agresión</td><td>TASP, T. narcisista</td></tr>
+      </table>
+    </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-style:italic;margin-top:var(--content-gap);font-size:var(--small-size);color:var(--magenta)">Algunos trastornos DSM no caben limpiamente en un solo espectro. Eso no es un defecto — es información. <span style="color:var(--text-muted)">Kotov et al., 2021</span></p>
+  </div>
+</section>
+
+<section class="slide" id="s20" data-title="Comorbilidad por factores latentes">
+  <div class="domain-bar magenta"></div>
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal" style="color:var(--magenta)">Slide conceptual clave</p>
+      <h1 class="reveal" style="transition-delay:.1s">Comorbilidad por factores latentes compartidos — no son dos enfermedades, es un perfil</h1>
+      <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--magenta),var(--cyan))"></div>
+      <div class="card tight reveal" style="transition-delay:.3s;opacity:.55;text-decoration:line-through;margin-bottom:.4rem;border-left:3px solid var(--text-muted)">
+        <p style="font-size:var(--small-size);color:var(--text-muted)">DSM dice: MDD + GAD + fobia social = <strong style="color:var(--text-muted)">3 enfermedades separadas</strong></p>
+      </div>
+      <div class="card tight reveal" style="transition-delay:.4s;border-left:3px solid var(--cyan)">
+        <p style="font-size:var(--small-size);color:var(--cyan)">HiTOP dice: perfil <strong>internalizing</strong> con distress alto + fear elevado</p>
+        <p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.2rem">Las "comorbilidades" son la expresión de un mismo factor latente en subfactores distintos.</p>
+      </div>
+      <p class="source reveal" style="transition-delay:.5s">Krueger & Eaton, 2015 · Kotov et al., 2021</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="text-align:center">
+        <div class="hub-center" style="background:rgba(0,245,255,.12);border:2px solid var(--cyan);color:var(--cyan);margin:0 auto clamp(.4rem,1vh,.6rem);font-size:var(--small-size)">INTERNALIZING</div>
+        <div style="display:flex;flex-direction:column;gap:clamp(.25rem,.5vh,.4rem);align-items:center">
+          <div class="spoke-item" style="--spoke-color:var(--magenta);width:80%;text-align:center"><strong>DISTRESS</strong><span style="font-size:var(--label-size);color:var(--text-muted)">ánimo↓ · rumiación · anhedonia</span></div>
+          <div class="spoke-item" style="--spoke-color:var(--violet);width:80%;text-align:center"><strong>FEAR</strong><span style="font-size:var(--label-size);color:var(--text-muted)">ansiedad social · evitación</span></div>
+          <div class="spoke-item" style="--spoke-color:var(--amber);width:80%;text-align:center"><strong>EATING</strong><span style="font-size:var(--label-size);color:var(--text-muted)">atracones · regulación emocional</span></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- =============================================
-     SLIDE 25: P FACTOR — WHAT IT PREDICTS
-     ============================================= -->
-<section class="slide" id="s25">
+<section class="slide" id="s21" data-title="DSM vs HiTOP">
+  <div class="domain-bar magenta"></div>
   <div class="slide-content">
-    <p class="eyebrow reveal">El factor p predice lo que más importa</p>
-    <h2 class="reveal"><em>Un solo factor</em>, múltiples outcomes</h2>
-    <div class="divider reveal"></div>
-    <div class="card-grid reveal" style="transition-delay:0.3s;max-width:650px">
-      <div class="card"><h4 style="color:var(--accent)">Intentos de suicidio</h4><p>Predicho por p en análisis longitudinal</p></div>
-      <div class="card"><h4 style="color:var(--accent)">Hospitalizaciones</h4><p>Mayor p = mayor uso de servicios</p></div>
-      <div class="card"><h4 style="color:var(--accent-amber)">Heredabilidad 64-73%</h4><p>Alta carga genética desde los 3 años</p></div>
-      <div class="card"><h4 style="color:var(--accent-blue)">CI + autocontrol</h4><p>Asociación inversa con ambos</p></div>
+    <p class="eyebrow reveal" style="color:var(--magenta)">La comparación directa</p>
+    <h1 class="reveal" style="transition-delay:.1s">DSM vs HiTOP: la comparación directa — ~2x mejor en confiabilidad, poder y alineación genética</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--magenta),var(--cyan))"></div>
+    <div class="reveal" style="transition-delay:.3s">
+      <table class="data-table">
+        <tr><th>Dimensión</th><th>DSM</th><th>HiTOP</th></tr>
+        <tr><td class="head">Confiabilidad</td><td>1x (κ esquizofrenia: 0.46)</td><td class="nbn">~2x (ICC psicoticismo/desapego: 0.81-0.85)</td></tr>
+        <tr><td class="head">Poder explicativo (discapacidad)</td><td>Limitado</td><td class="nbn">~2x mayor</td></tr>
+        <tr><td class="head">Alineación genética</td><td>Pobre</td><td class="nbn">Fuerte (Waszczuk et al., 2023)</td></tr>
+        <tr><td class="head">Comorbilidad</td><td>"Problema" / complejidad</td><td class="nbn">Información / perfil esperable</td></tr>
+        <tr><td class="head">Construcción</td><td>Consenso de expertos</td><td class="nbn">Empírica (análisis factorial, bottom-up)</td></tr>
+      </table>
     </div>
-    <p class="reveal" style="transition-delay:0.4s;font-family:var(--font-display);font-style:italic;max-width:500px">El factor p es a la psicopatología lo que el <em>factor g</em> es a la inteligencia.</p>
-    <p class="source reveal" style="transition-delay:0.5s">Caspi, 2014 &middot; Avinun, 2021</p>
+    <p class="source reveal" style="transition-delay:.5s;text-align:center">Kotov et al., 2021 · Kotov et al., 2024</p>
   </div>
 </section>
 
-<!-- =============================================
-     SLIDE 26: P FACTOR — GENOMIC EVIDENCE
-     ============================================= -->
-<section class="slide" id="s26">
+<section class="slide" id="s22" data-title="Ejercicio clasificación">
+  <div class="domain-bar magenta"></div>
   <div class="slide-content">
-    <p class="eyebrow reveal">Evidencia genómica</p>
-    <h2 class="reveal">Los genes <em>no leen</em> el DSM</h2>
-    <div class="divider reveal"></div>
-    <div class="card-grid reveal" style="transition-delay:0.3s;max-width:650px;grid-template-columns:1fr 1fr">
-      <div class="card">
-        <h4>Davis, 2025</h4>
-        <p>gSEM + GWAS de 16 rasgos. INT y EXT comparten <strong>92-97%</strong> de varianza genética. DRD2 como receptor clave.</p>
-      </div>
-      <div class="card">
-        <h4>Ehteshami, 2025</h4>
-        <p>N = 127,963 (EHR). 6 factores bajo un p-factor: neurodesarrollo, externalizante, sustancias, thought disorder, distress, miedo.</p>
-      </div>
+    <p class="eyebrow reveal" style="color:var(--magenta)">Ejercicio grupal — 2-3 min</p>
+    <h1 class="reveal" style="transition-delay:.1s">Ejercicio: ¿dónde van estos trastornos DSM en HiTOP?</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--magenta),var(--cyan))"></div>
+    <div class="reveal" style="transition-delay:.3s">
+      <table class="data-table">
+        <tr><th>Trastorno DSM</th><th>Espectro HiTOP</th></tr>
+        <tr><td class="head">T. de pánico</td><td style="color:var(--text-muted)">?</td></tr>
+        <tr><td class="head">TDM</td><td style="color:var(--text-muted)">?</td></tr>
+        <tr><td class="head">Esquizofrenia</td><td style="color:var(--text-muted)">?</td></tr>
+        <tr><td class="head">TUS</td><td style="color:var(--text-muted)">?</td></tr>
+        <tr><td class="head">TASP</td><td style="color:var(--text-muted)">?</td></tr>
+        <tr><td class="head">PTSD</td><td style="color:var(--text-muted)">?</td></tr>
+        <tr><td class="head" style="color:var(--magenta)">⚡ Bipolar (manía)</td><td style="color:var(--magenta)">?</td></tr>
+        <tr><td class="head" style="color:var(--magenta)">⚡ OCD</td><td style="color:var(--magenta)">?</td></tr>
+      </table>
     </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-style:italic;margin-top:var(--content-gap);font-size:var(--small-size);color:var(--magenta)">Los ⚡ son deliberadamente ambiguos — cruzan espectros.</p>
   </div>
 </section>
 
-<!-- =============================================
-     SLIDE 27: HiTOP HIERARCHY
-     ============================================= -->
-<section class="slide" id="s27">
-  <div class="slide-content" style="align-items:center">
-    <p class="eyebrow reveal">La jerarquía</p>
-    <h2 class="reveal" style="text-align:center">6 niveles: de síntomas a <em>factor general</em></h2>
-    <div class="divider reveal" style="margin-left:auto;margin-right:auto"></div>
-    <div class="pyramid reveal" style="transition-delay:0.3s;max-width:700px">
-      <div class="pyramid-level" style="width:30%;justify-content:center;border-color:var(--accent);background:var(--accent-glow)">
-        <span class="level-tag">6</span><span class="level-name">Factor P</span>
-      </div>
-      <div class="pyramid-level" style="width:45%;justify-content:center">
-        <span class="level-tag">5</span><span class="level-name">Superespectros</span><span class="level-examples">&mdash; Disf. Emocional, Psicosis, Externalizing</span>
-      </div>
-      <div class="pyramid-level" style="width:58%">
-        <span class="level-tag">4</span><span class="level-name">Espectros (6)</span><span class="level-examples">&mdash; INT, SOM, TD, DET, DIS, ANT</span>
-      </div>
-      <div class="pyramid-level" style="width:70%">
-        <span class="level-tag">3</span><span class="level-name">Subfactores</span><span class="level-examples">&mdash; Fear, Distress, Mania...</span>
-      </div>
-      <div class="pyramid-level" style="width:82%">
-        <span class="level-tag">2</span><span class="level-name">Síndromes</span><span class="level-examples">&mdash; Pánico, Dep. vegetativa, Manía...</span>
-      </div>
-      <div class="pyramid-level" style="width:95%">
-        <span class="level-tag">1</span><span class="level-name">Síntomas / Rasgos</span><span class="level-examples">&mdash; Insomnio, labilidad, rumiación...</span>
-      </div>
-    </div>
-    <p class="source reveal" style="transition-delay:0.4s">Kotov et al., 2021 &middot; Annu Rev Clin Psychol</p>
-  </div>
-</section>
-
-<!-- =============================================
-     SLIDE 28: 6 SPECTRA
-     ============================================= -->
-<section class="slide" id="s28">
+<section class="slide" id="s23" data-title="Respuestas ejercicio">
+  <div class="domain-bar magenta"></div>
   <div class="slide-content">
-    <p class="eyebrow reveal">Los 6 espectros</p>
-    <h2 class="reveal">HiTOP: <em>espectros y síndromes</em></h2>
-    <div class="divider reveal"></div>
-    <table class="data-table reveal" style="transition-delay:0.3s;max-width:700px">
-      <thead><tr><th>Espectro</th><th>Síndromes clave</th><th>Trastornos DSM afines</th></tr></thead>
-      <tbody>
-        <tr><td style="color:var(--accent-blue)">Internalizing</td><td>Distress, Fear, Eating</td><td>MDD, GAD, PTSD, Fobias, TCA</td></tr>
-        <tr><td style="color:var(--accent-green)">Somatoform</td><td>Conversivo, Somatización</td><td>T. conversivo, T. somatización</td></tr>
-        <tr><td style="color:var(--accent-violet)">Thought Disorder</td><td>Psicosis, Manía</td><td>Esquizofrenia, Bipolar I</td></tr>
-        <tr><td style="color:var(--text-muted)">Detachment</td><td>Esquizoide, Evitativo</td><td>T. esquizoide, T. evitativo</td></tr>
-        <tr><td style="color:var(--accent-amber)">Disinhibited Ext.</td><td>Sustancias, TDAH</td><td>TUS, TDAH, T. conducta</td></tr>
-        <tr><td style="color:var(--accent)">Antagonistic Ext.</td><td>Antisocial, Narcisista</td><td>TASP, T. narcisista</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- =============================================
-     SLIDE 29: WHY HiTOP IS BETTER
-     ============================================= -->
-<section class="slide" id="s29">
-  <div class="slide-content">
-    <p class="eyebrow reveal">La comparación directa</p>
-    <h2 class="reveal">DSM vs HiTOP: <em>los números</em></h2>
-    <div class="divider reveal"></div>
-    <div class="bar-chart reveal" style="transition-delay:0.3s;max-width:550px">
-      <div class="bar-row"><span class="bar-label" style="font-weight:600;color:var(--text-primary)">Confiabilidad</span><span class="bar-value"></span><span class="bar-value"></span></div>
-      <div class="bar-row">
-        <span class="bar-label">DSM</span>
-        <div class="bar-track"><div class="bar-fill" style="--bar-width:40%;background:var(--text-muted)"></div></div>
-        <span class="bar-value">1x</span>
-      </div>
-      <div class="bar-row">
-        <span class="bar-label">HiTOP</span>
-        <div class="bar-track"><div class="bar-fill" style="--bar-width:80%;background:var(--accent)"></div></div>
-        <span class="bar-value">~2x</span>
-      </div>
-      <div class="bar-row" style="margin-top:0.5rem"><span class="bar-label" style="font-weight:600;color:var(--text-primary)">Poder explicativo</span><span class="bar-value"></span><span class="bar-value"></span></div>
-      <div class="bar-row">
-        <span class="bar-label">DSM</span>
-        <div class="bar-track"><div class="bar-fill" style="--bar-width:35%;background:var(--text-muted)"></div></div>
-        <span class="bar-value">1x</span>
-      </div>
-      <div class="bar-row">
-        <span class="bar-label">HiTOP</span>
-        <div class="bar-track"><div class="bar-fill" style="--bar-width:75%;background:var(--accent-green)"></div></div>
-        <span class="bar-value">~2x</span>
-      </div>
+    <p class="eyebrow reveal" style="color:var(--magenta)">Respuestas — los que cruzan son información</p>
+    <h1 class="reveal" style="transition-delay:.1s">Respuestas: los que cruzan espectros son información, no error de clasificación</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--magenta),var(--cyan))"></div>
+    <div class="reveal" style="transition-delay:.3s">
+      <table class="data-table">
+        <tr><th>Trastorno DSM</th><th>Espectro HiTOP</th></tr>
+        <tr><td class="head">T. de pánico</td><td style="color:var(--cyan)">Internalizing → Fear</td></tr>
+        <tr><td class="head">TDM</td><td style="color:var(--cyan)">Internalizing → Distress</td></tr>
+        <tr><td class="head">Esquizofrenia</td><td style="color:var(--magenta)">Thought Disorder</td></tr>
+        <tr><td class="head">TUS</td><td style="color:var(--acid)">Disinhibited Externalizing</td></tr>
+        <tr><td class="head">TASP</td><td style="color:var(--pink)">Antagonistic Externalizing</td></tr>
+        <tr><td class="head">PTSD</td><td style="color:var(--cyan)">Internalizing → Distress</td></tr>
+        <tr><td class="head" style="color:var(--magenta)">⚡ Bipolar (manía)</td><td class="nbn"><strong>Cruza: Internalizing + Thought Disorder</strong></td></tr>
+        <tr><td class="head" style="color:var(--magenta)">⚡ OCD</td><td class="nbn"><strong>Cruza: Fear + Thought Disorder</strong></td></tr>
+      </table>
     </div>
-    <p class="source reveal" style="transition-delay:0.4s">Kotov et al., 2024 &middot; Kotov et al., 2021</p>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-style:italic;margin-top:var(--content-gap);font-size:var(--small-size);color:var(--magenta)">El DSM fuerza una categoría. HiTOP permite perfiles que cruzan dimensiones. Eso es información clínica, no un bug.</p>
   </div>
 </section>
 
-<!-- =============================================
-     SLIDE 30: EXERCISE — CLASSIFY
-     ============================================= -->
-<section class="slide" id="s30">
+<section class="slide" id="s24" data-title="Transición al caso">
+  <div class="domain-bar" style="background:linear-gradient(90deg,var(--magenta),var(--cyan));color:var(--magenta)"></div>
+  <div class="slide-content centered">
+    <p class="eyebrow reveal" style="color:var(--magenta)">Del mapa al paciente</p>
+    <h1 class="reveal" style="transition-delay:.1s">Transición: del mapa al caso — ubiquemos a un paciente real en HiTOP</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--magenta),var(--cyan))"></div>
+    <div class="reveal-scale" style="transition-delay:.3s;position:relative;width:clamp(180px,26vw,240px);height:clamp(180px,26vw,240px);margin:0 auto">
+      <div style="position:absolute;inset:0;border-radius:50%;border:1px solid rgba(255,46,196,.15);background:radial-gradient(circle,rgba(255,46,196,.06),transparent 70%)"></div>
+      <div style="position:absolute;inset:20%;border-radius:50%;border:1px dashed rgba(0,245,255,.2)"></div>
+      <div style="position:absolute;inset:40%;border-radius:50%;border:1px dashed rgba(139,92,255,.2)"></div>
+      <div style="position:absolute;left:58%;top:42%;width:clamp(12px,2vw,18px);height:clamp(12px,2vw,18px);border-radius:50%;background:var(--acid);box-shadow:0 0 20px rgba(220,255,56,.8);animation:pulse 1.8s infinite"></div>
+      <p style="position:absolute;left:62%;top:34%;font-size:var(--label-size);color:var(--acid);font-family:var(--font-mono);font-weight:700">MARÍA</p>
+      <p style="position:absolute;left:50%;bottom:8%;transform:translateX(-50%);font-size:var(--label-size);color:var(--cyan);font-family:var(--font-mono)">¿Dónde está?</p>
+    </div>
+  </div>
+</section>
+
+<!-- === SECCIÓN C: CASO (Slides 25-34 | integracion) === -->
+
+<section class="slide" id="s25" data-title="María intro">
+  <div class="domain-bar integracion"></div>
+  <div class="slide-content centered">
+    <p class="eyebrow reveal" style="color:var(--magenta)">Caso hilo conductor</p>
+    <h1 class="reveal" style="transition-delay:.1s">María, 28 años — el caso hilo conductor del Bloque 1</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--cyan),var(--magenta))"></div>
+    <div class="reveal-scale" style="transition-delay:.3s;width:clamp(80px,12vw,120px);height:clamp(80px,12vw,120px);border-radius:50%;background:rgba(255,46,196,.1);border:2px solid var(--magenta);display:flex;align-items:center;justify-content:center;font-size:clamp(1.5rem,3vw,2.4rem);box-shadow:0 0 30px rgba(255,46,196,.3)">👤</div>
+    <p class="reveal" style="transition-delay:.4s;font-size:var(--small-size);color:var(--text-muted);font-style:italic;margin-top:clamp(.4rem,1vw,.6rem)">Primera formulación dimensional del curso — hoy la ubicamos en HiTOP.</p>
+  </div>
+</section>
+
+<section class="slide" id="s26" data-title="Caso María viñeta">
+  <div class="domain-bar integracion"></div>
   <div class="slide-content">
-    <p class="eyebrow reveal">Ejercicio grupal</p>
-    <h2 class="reveal">¿Dónde van en <em>HiTOP</em>?</h2>
-    <div class="divider reveal"></div>
-    <table class="data-table reveal" style="transition-delay:0.3s;max-width:600px">
-      <thead><tr><th>Trastorno DSM</th><th>&rarr; Espectro HiTOP</th></tr></thead>
-      <tbody>
-        <tr><td>Trastorno de pánico</td><td style="color:var(--text-muted)">?</td></tr>
-        <tr><td>TDM</td><td style="color:var(--text-muted)">?</td></tr>
-        <tr><td>Esquizofrenia</td><td style="color:var(--text-muted)">?</td></tr>
-        <tr><td>T. por uso de sustancias</td><td style="color:var(--text-muted)">?</td></tr>
-        <tr><td>T. antisocial de personalidad</td><td style="color:var(--text-muted)">?</td></tr>
-        <tr><td>PTSD</td><td style="color:var(--text-muted)">?</td></tr>
-        <tr><td style="color:var(--accent)">&#9889; T. bipolar (manía)</td><td style="color:var(--text-muted)">?</td></tr>
-        <tr><td style="color:var(--accent)">&#9889; OCD</td><td style="color:var(--text-muted)">?</td></tr>
-      </tbody>
-    </table>
-    <p class="reveal" style="transition-delay:0.4s;font-style:italic">Los &#9889; son deliberadamente ambiguos &mdash; cruzan espectros.</p>
-  </div>
-</section>
-
-<!-- =============================================
-     SLIDE 31: SECTION E HEADER — CASE
-     ============================================= -->
-<section class="slide section-slide" id="s31">
-  <div class="section-number reveal-scale">D</div>
-  <div class="slide-content" style="justify-content:center">
-    <p class="eyebrow reveal">LO4</p>
-    <h1 class="reveal" style="transition-delay:0.15s"><em>María</em>, 28 años</h1>
-    <div class="divider reveal" style="transition-delay:0.25s"></div>
-    <p class="reveal" style="transition-delay:0.35s;max-width:400px">Formulación categórica vs dimensional</p>
-  </div>
-</section>
-
-<!-- =============================================
-     SLIDE 32: CASE PRESENTATION
-     ============================================= -->
-<section class="slide" id="s32">
-  <div class="slide-content">
-    <p class="eyebrow reveal">El caso</p>
-    <h2 class="reveal"><em>María</em>, 28 años, diseñadora gráfica</h2>
-    <div class="divider reveal"></div>
-    <div class="card-grid reveal" style="transition-delay:0.3s;max-width:700px">
-      <div class="card">
-        <h4>Cuadro actual (3 meses)</h4>
-        <p>Ánimo deprimido &middot; Insomnio severo (3-4h) &middot; Anhedonia marcada &middot; Ansiedad social intensa &middot; Rumiación constante &middot; Atracones 2-3x/sem</p>
+    <p class="eyebrow reveal" style="color:var(--magenta)">Viñeta clínica</p>
+    <h1 class="reveal" style="transition-delay:.1s">El caso: María, 28 años, diseñadora gráfica — "ya no puedo más, todo me sale mal"</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--cyan),var(--magenta))"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:900px">
+      <div class="card tight" style="border-left:3px solid var(--magenta)">
+        <p style="font-size:var(--label-size);color:var(--magenta);font-family:var(--font-mono);font-weight:700;margin-bottom:.3rem">CUADRO ACTUAL (3 MESES)</p>
+        <div class="flow-vertical" style="gap:.15rem;font-size:var(--label-size)">
+          <p>• Ánimo deprimido la mayor parte del día</p>
+          <p>• Insomnio de conciliación severo (3-4 h/noche)</p>
+          <p>• Anhedonia marcada — dejó el gimnasio</p>
+          <p>• Ansiedad intensa en situaciones sociales → evita</p>
+          <p>• Rumiación: "todo me va a salir mal"</p>
+          <p>• Atracones nocturnos 2-3x/semana → culpa</p>
+        </div>
       </div>
-      <div class="card">
-        <h4>Historia</h4>
-        <p>"Siempre ansiosa desde chica" &middot; Bullying severo × 3 años &middot; Padre: alcoholismo &middot; Madre: depresión</p>
+      <div class="card tight" style="border-left:3px solid var(--violet)">
+        <p style="font-size:var(--label-size);color:var(--violet);font-family:var(--font-mono);font-weight:700;margin-bottom:.3rem">HISTORIA</p>
+        <div class="flow-vertical" style="gap:.15rem;font-size:var(--label-size)">
+          <p>• "Siempre ansiosa desde chica"</p>
+          <p>• Bullying severo en secundaria (3 años)</p>
+          <p>• Padre: alcoholismo</p>
+          <p>• Madre: "depresión nerviosa"</p>
+        </div>
       </div>
     </div>
-    <p class="reveal" style="transition-delay:0.4s;font-style:italic;color:var(--accent)">"Ya no puedo más, todo me sale mal"</p>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-style:italic;margin-top:var(--content-gap);font-size:var(--small-size);color:var(--text-muted)">¿Cuántos diagnósticos DSM le pondrían?</p>
   </div>
 </section>
 
-<!-- =============================================
-     SLIDE 33: CATEGORICAL FORMULATION
-     ============================================= -->
-<section class="slide" id="s33">
+<section class="slide" id="s27" data-title="DSM dice 4 diagnósticos">
+  <div class="domain-bar integracion"></div>
   <div class="slide-content">
-    <p class="eyebrow reveal">Formulación categórica</p>
-    <h2 class="reveal">El DSM dice...</h2>
-    <div class="divider reveal"></div>
-    <div class="reveal" style="transition-delay:0.3s;max-width:500px">
-      <p style="color:var(--text-primary);margin-bottom:0.3rem"><strong>1.</strong> F32.1 &mdash; TDM, episodio único, moderado</p>
-      <p style="color:var(--text-primary);margin-bottom:0.3rem"><strong>2.</strong> F40.10 &mdash; Trastorno de ansiedad social</p>
-      <p style="color:var(--text-primary);margin-bottom:0.3rem"><strong>3.</strong> F50.81 &mdash; Trastorno por atracón</p>
-      <p style="color:var(--text-muted);margin-bottom:0.3rem"><strong>4.</strong> ¿F60.6 &mdash; T. personalidad evitativa? (diferir)</p>
+    <p class="eyebrow reveal" style="color:var(--magenta)">Formulación categórica</p>
+    <h1 class="reveal" style="transition-delay:.1s">El DSM dice... 4 diagnósticos. ¿Cuál tratas primero? ¿Cuál es el mecanismo compartido?</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--cyan),var(--magenta))"></div>
+    <div class="flow-vertical reveal" style="transition-delay:.3s;max-width:560px">
+      <div class="card tight" style="border-left:3px solid var(--magenta);display:flex;gap:.5rem;align-items:baseline"><span class="tag tag-magenta" style="font-size:.55rem">1</span><p style="font-size:var(--small-size)"><strong>F32.1</strong> Trastorno Depresivo Mayor — Episodio único, moderado</p></div>
+      <div class="card tight" style="border-left:3px solid var(--magenta);display:flex;gap:.5rem;align-items:baseline"><span class="tag tag-magenta" style="font-size:.55rem">2</span><p style="font-size:var(--small-size)"><strong>F40.10</strong> Trastorno de Ansiedad Social</p></div>
+      <div class="card tight" style="border-left:3px solid var(--magenta);display:flex;gap:.5rem;align-items:baseline"><span class="tag tag-magenta" style="font-size:.55rem">3</span><p style="font-size:var(--small-size)"><strong>F50.81</strong> Trastorno por Atracón</p></div>
+      <div class="card tight" style="border-left:3px solid var(--magenta);display:flex;gap:.5rem;align-items:baseline"><span class="tag tag-magenta" style="font-size:.55rem">4</span><p style="font-size:var(--small-size)"><strong>F60.6</strong> ¿Trastorno de Personalidad Evitativa? (diferir)</p></div>
     </div>
-    <div class="quote reveal" style="transition-delay:0.4s;margin-top:var(--content-gap);max-width:500px;font-size:var(--body-size)">
-      4 diagnósticos. ¿Cuál tratas primero? ¿Cuál es el mecanismo compartido?
-    </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-size:var(--body-size);color:var(--magenta);font-weight:700;margin-top:clamp(.4rem,1vw,.6rem)">4 diagnósticos. ¿Cuál tratas primero? ¿Cuál es el mecanismo compartido?</p>
   </div>
 </section>
 
-<!-- =============================================
-     SLIDE 34: DIMENSIONAL FORMULATION
-     ============================================= -->
-<section class="slide" id="s34">
-  <div class="slide-content" style="align-items:center">
-    <p class="eyebrow reveal">Formulación dimensional</p>
-    <h2 class="reveal" style="text-align:center">El modelo dimensional dice...</h2>
-    <div class="divider reveal" style="margin-left:auto;margin-right:auto"></div>
-    <div class="profile-bars reveal" style="transition-delay:0.3s">
-      <div class="profile-row"><span class="profile-label">Distress (INT)</span><div class="profile-track"><div class="profile-fill" style="--fill:85%;background:var(--accent)"></div></div><span class="profile-tag">Alto</span></div>
-      <div class="profile-row"><span class="profile-label">Fear (INT)</span><div class="profile-track"><div class="profile-fill" style="--fill:65%;background:var(--accent-amber)"></div></div><span class="profile-tag">Mod-alto</span></div>
-      <div class="profile-row"><span class="profile-label">Eating (INT)</span><div class="profile-track"><div class="profile-fill" style="--fill:45%;background:var(--accent-blue)"></div></div><span class="profile-tag">Moderado</span></div>
-      <div class="profile-row"><span class="profile-label">Detachment</span><div class="profile-track"><div class="profile-fill" style="--fill:40%;background:var(--accent-violet)"></div></div><span class="profile-tag">Moderado</span></div>
-      <div class="profile-row"><span class="profile-label">Factor p</span><div class="profile-track"><div class="profile-fill" style="--fill:70%;background:var(--accent)"></div></div><span class="profile-tag">Elevado</span></div>
-    </div>
-    <div class="node-diagram reveal" style="transition-delay:0.5s;margin-top:var(--content-gap)">
-      <div class="node">Distress</div>
-      <div class="node-arrow">&larr;</div>
-      <div class="node node-central">Rumiación</div>
-      <div class="node-arrow">&rarr;</div>
-      <div class="node">Ansiedad social</div>
-    </div>
-    <p class="reveal" style="transition-delay:0.6s;text-align:center;margin-top:0.3rem"><span class="node-arrow">&darr;</span></p>
-    <div class="reveal" style="transition-delay:0.6s;text-align:center"><div class="node" style="display:inline-block">Atracones</div></div>
-  </div>
-</section>
-
-<!-- =============================================
-     SLIDE 35: COMPARISON — WHAT CHANGES
-     ============================================= -->
-<section class="slide" id="s35">
+<section class="slide" id="s28" data-title="Perfil dimensional María">
+  <div class="domain-bar integracion"></div>
   <div class="slide-content">
-    <p class="eyebrow reveal">¿Qué cambia?</p>
-    <h2 class="reveal">Categórico vs <em>Dimensional</em></h2>
-    <div class="divider reveal"></div>
-    <table class="data-table reveal" style="transition-delay:0.3s;max-width:700px">
-      <thead><tr><th></th><th>Categórico</th><th style="color:var(--accent)">Dimensional</th></tr></thead>
-      <tbody>
-        <tr><td>Descripción</td><td>4 diagnósticos separados</td><td style="color:var(--accent-green)">1 perfil integrado</td></tr>
-        <tr><td>Target</td><td>¿Cuál tratar primero?</td><td style="color:var(--accent-green)">Nodo central: rumiación</td></tr>
-        <tr><td>Tratamiento</td><td>TCC específica × cada Dx</td><td style="color:var(--accent-green)">Unified Protocol transdiagnóstico</td></tr>
-        <tr><td>Severidad</td><td>"Moderado" (¿en qué?)</td><td style="color:var(--accent-green)">Severidad por dimensión</td></tr>
-        <tr><td>Comorbilidad</td><td>"Caso difícil"</td><td style="color:var(--accent-green)">Información / perfil esperable</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- =============================================
-     SLIDE 36: TAKE-HOME MESSAGE
-     ============================================= -->
-<section class="slide" id="s36">
-  <div class="centered">
-    <div class="reveal">
-      <h2 style="font-family:var(--font-display);font-weight:300;line-height:1.4;max-width:650px">
-        El DSM te dice <strong>qué tiene</strong> el paciente.<br/><br/>
-        El modelo dimensional te dice <em>cómo está organizado su sufrimiento</em><br/><br/>
-        &mdash; y eso cambia lo que haces con él.
-      </h2>
+    <p class="eyebrow reveal" style="color:var(--cyan)">Formulación dimensional</p>
+    <h1 class="reveal" style="transition-delay:.1s">El modelo dimensional dice... un perfil internalizing con distress dominante</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--cyan),var(--magenta))"></div>
+    <div class="reveal" style="transition-delay:.3s;max-width:620px;margin:0 auto">
+      <div class="dim-bar"><span class="dim-bar-label" style="min-width:120px">Distress (INT)</span><div class="dim-bar-track"><div class="dim-bar-fill" style="width:85%;background:var(--magenta)"></div></div><span style="font-size:var(--label-size);color:var(--magenta);font-family:var(--font-mono)">Alto</span></div>
+      <div class="dim-bar"><span class="dim-bar-label" style="min-width:120px">Fear (INT)</span><div class="dim-bar-track"><div class="dim-bar-fill" style="width:68%;background:var(--violet)"></div></div><span style="font-size:var(--label-size);color:var(--violet);font-family:var(--font-mono)">Mod-alto</span></div>
+      <div class="dim-bar"><span class="dim-bar-label" style="min-width:120px">Eating (INT)</span><div class="dim-bar-track"><div class="dim-bar-fill" style="width:48%;background:var(--amber)"></div></div><span style="font-size:var(--label-size);color:var(--amber);font-family:var(--font-mono)">Moderado</span></div>
+      <div class="dim-bar"><span class="dim-bar-label" style="min-width:120px">Detachment</span><div class="dim-bar-track"><div class="dim-bar-fill" style="width:45%;background:var(--cyan)"></div></div><span style="font-size:var(--label-size);color:var(--cyan);font-family:var(--font-mono)">Moderado</span></div>
+      <div class="dim-bar"><span class="dim-bar-label" style="min-width:120px">Disinh. Ext</span><div class="dim-bar-track"><div class="dim-bar-fill" style="width:12%;background:var(--text-muted)"></div></div><span style="font-size:var(--label-size);color:var(--text-muted);font-family:var(--font-mono)">Bajo</span></div>
+      <div class="dim-bar"><span class="dim-bar-label" style="min-width:120px">Antag. Ext</span><div class="dim-bar-track"><div class="dim-bar-fill" style="width:3%;background:var(--text-muted)"></div></div><span style="font-size:var(--label-size);color:var(--text-muted);font-family:var(--font-mono)">Mínimo</span></div>
+      <div class="dim-bar"><span class="dim-bar-label" style="min-width:120px">Thought Dis.</span><div class="dim-bar-track"><div class="dim-bar-fill" style="width:3%;background:var(--text-muted)"></div></div><span style="font-size:var(--label-size);color:var(--text-muted);font-family:var(--font-mono)">Mínimo</span></div>
+      <div class="dim-bar"><span class="dim-bar-label" style="min-width:120px">Factor p</span><div class="dim-bar-track"><div class="dim-bar-fill" style="width:65%;background:linear-gradient(90deg,var(--cyan),var(--magenta))"></div></div><span style="font-size:var(--label-size);color:var(--acid);font-family:var(--font-mono)">Elevado</span></div>
     </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-style:italic;margin-top:var(--content-gap);font-size:var(--small-size);color:var(--cyan)">No son 4 enfermedades — es un perfil internalizing con distress dominante.</p>
   </div>
 </section>
 
-<!-- =============================================
-     SLIDE 37: NEXT SESSION
-     ============================================= -->
-<section class="slide" id="s37">
+<section class="slide" id="s29" data-title="Rumiación conecta todo">
+  <div class="domain-bar integracion"></div>
   <div class="slide-content">
-    <p class="eyebrow reveal">Sesión 2</p>
-    <h2 class="reveal"><em>RDoC</em> &mdash; El lenguaje operativo del curso</h2>
-    <div class="divider reveal"></div>
-    <div class="card reveal" style="transition-delay:0.3s;max-width:550px">
-      <h4>Lectura</h4>
-      <p>Clark LA, Cuthbert B, Lewis-Fernández R, Narrow WE, Reed GM. Three Approaches to Understanding and Classifying Mental Disorder: ICD-11, DSM-5, and RDoC. <em>Psychol Sci Public Interest.</em> 2017;18(2):72-145.</p>
-    </div>
-    <div class="card reveal" style="transition-delay:0.4s;max-width:550px;margin-top:var(--content-gap);border-color:rgba(200,80,60,0.2)">
-      <h4 style="color:var(--accent)">Pregunta para pensar</h4>
-      <p style="font-family:var(--font-display);font-style:italic;color:var(--text-primary)">"Si pudieras medir UNA dimensión de cada paciente que ves esta semana, ¿cuál elegirías?"</p>
+    <p class="eyebrow reveal" style="color:var(--magenta)">Nodo central</p>
+    <h1 class="reveal" style="transition-delay:.1s">La rumiación conecta todo: distress ↔ ansiedad social ↔ atracones</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--cyan),var(--magenta))"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:900px">
+      <div style="position:relative;width:100%;height:clamp(180px,28vh,260px)">
+        <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 100 70">
+          <line x1="50" y1="35" x2="15" y2="15" stroke="rgba(255,46,196,.6)" stroke-width="1.2"/>
+          <line x1="50" y1="35" x2="85" y2="15" stroke="rgba(0,245,255,.5)" stroke-width="1"/>
+          <line x1="50" y1="35" x2="50" y2="60" stroke="rgba(255,46,196,.5)" stroke-width="1"/>
+        </svg>
+        <div class="net-node hub" style="position:absolute;left:46%;top:42%;width:clamp(48px,7vw,62px);height:clamp(48px,7vw,62px);font-size:var(--label-size)">RUMIACIÓN</div>
+        <div class="net-node" style="position:absolute;left:5%;top:14%;width:clamp(38px,6vw,50px);height:clamp(38px,6vw,50px);font-size:var(--label-size);border-color:var(--magenta);color:var(--magenta)">Distress</div>
+        <div class="net-node" style="position:absolute;right:5%;top:14%;width:clamp(38px,6vw,50px);height:clamp(38px,6vw,50px);font-size:var(--label-size);border-color:var(--cyan);color:var(--cyan)">Ansiedad social</div>
+        <div class="net-node" style="position:absolute;left:50%;bottom:5%;transform:translateX(-50%);width:clamp(38px,6vw,50px);height:clamp(38px,6vw,50px);font-size:var(--label-size);border-color:var(--amber);color:var(--amber)">Atracones</div>
+      </div>
+      <div class="card tight" style="border-left:3px solid var(--cyan)">
+        <p style="font-size:var(--small-size);color:var(--text-primary);font-weight:700">Nodo central</p>
+        <p style="font-size:var(--small-size);margin-top:.3rem">Anticipo de Network Theory (sesión 4). Si atacas la rumiación, afectas las tres "comorbilidades".</p>
+        <p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.4rem;font-style:italic">Factores contextuales (DSM-6): trauma relacional (bullying) | HF sustancias (padre) + internalizing (madre) | adversidad acumulativa</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- =============================================
-     JAVASCRIPT
-     ============================================= -->
+<section class="slide" id="s30" data-title="Categórico vs Dimensional">
+  <div class="domain-bar integracion"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--cyan)">Comparación práctica</p>
+    <h1 class="reveal" style="transition-delay:.1s">Categórico vs Dimensional: ¿qué cambia en la práctica?</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--cyan),var(--magenta))"></div>
+    <div class="reveal" style="transition-delay:.3s">
+      <table class="data-table">
+        <tr><th></th><th>Categórico</th><th>Dimensional</th></tr>
+        <tr><td class="head">Descripción</td><td>4 diagnósticos separados</td><td class="nbn">1 perfil integrado</td></tr>
+        <tr><td class="head">Target</td><td>¿Cuál tratar primero?</td><td class="nbn">Nodo central: rumiación</td></tr>
+        <tr><td class="head">Tratamiento</td><td>ISRS + TCC específica × cada Dx</td><td class="nbn">Unified Protocol transdiagnóstico</td></tr>
+        <tr><td class="head">Severidad</td><td>"Moderado" (¿en qué?)</td><td class="nbn">Severidad por dimensión</td></tr>
+        <tr><td class="head">Comorbilidad</td><td>= Complejidad / "caso difícil"</td><td class="nbn">= Información / perfil esperable</td></tr>
+      </table>
+    </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-style:italic;margin-top:var(--content-gap);font-size:var(--small-size);color:var(--cyan)">El DSM dice qué tiene. El dimensional dice cómo está organizado su sufrimiento.</p>
+  </div>
+</section>
+
+<section class="slide" id="s31" data-title="5 ventajas dimensionales">
+  <div class="domain-bar integracion"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--cyan)">Ventajas clínicas concretas</p>
+    <h1 class="reveal" style="transition-delay:.1s">5 ventajas clínicas concretas del abordaje dimensional</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--cyan),var(--magenta))"></div>
+    <div class="flow-vertical reveal" style="transition-delay:.3s;max-width:680px">
+      <div class="card tight" style="border-left:3px solid var(--magenta);display:flex;gap:.5rem;align-items:baseline"><span style="font-size:var(--h3-size);color:var(--magenta)">🎯</span><p style="font-size:var(--small-size)"><strong>1. Identifica mecanismos compartidos</strong> → rumiación como nodo central</p></div>
+      <div class="card tight" style="border-left:3px solid var(--violet);display:flex;gap:.5rem;align-items:baseline"><span style="font-size:var(--h3-size);color:var(--violet)">💊</span><p style="font-size:var(--small-size)"><strong>2. Guía tratamiento transdiagnóstico</strong> → Unified Protocol > TCC × cada trastorno</p></div>
+      <div class="card tight" style="border-left:3px solid var(--cyan);display:flex;gap:.5rem;align-items:baseline"><span style="font-size:var(--h3-size);color:var(--cyan)">📊</span><p style="font-size:var(--small-size)"><strong>3. Captura severidad diferencial</strong> → no todo está igual de afectado</p></div>
+      <div class="card tight" style="border-left:3px solid var(--acid);display:flex;gap:.5rem;align-items:baseline"><span style="font-size:var(--h3-size);color:var(--acid)">🔗</span><p style="font-size:var(--small-size)"><strong>4. Explica la "comorbilidad"</strong> → perfil internalizing, no 4 enfermedades</p></div>
+      <div class="card tight" style="border-left:3px solid var(--amber);display:flex;gap:.5rem;align-items:baseline"><span style="font-size:var(--h3-size);color:var(--amber)">🌍</span><p style="font-size:var(--small-size)"><strong>5. Integra contexto</strong> → el trauma relacional alimenta el perfil completo</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s32" data-title="Ejercicio parejas">
+  <div class="domain-bar integracion"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--magenta)">Ejercicio — A1 núcleo</p>
+    <h1 class="reveal" style="transition-delay:.1s">Ejercicio: discutan en parejas — ¿qué les da el dimensional que el categórico no?</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--cyan),var(--magenta))"></div>
+    <div class="flow-vertical reveal" style="transition-delay:.3s;max-width:680px">
+      <div class="card tight" style="border-left:3px solid var(--cyan)"><p style="font-size:var(--small-size);color:var(--cyan);font-weight:700;margin-bottom:.2rem">1.</p><p style="font-size:var(--small-size)">¿Qué información les da la formulación dimensional que la categórica no?</p></div>
+      <div class="card tight" style="border-left:3px solid var(--magenta)"><p style="font-size:var(--small-size);color:var(--magenta);font-weight:700;margin-bottom:.2rem">2.</p><p style="font-size:var(--small-size)">¿Cómo cambia su plan de tratamiento si piensan dimensionalmente?</p></div>
+      <div class="card tight" style="border-left:3px solid var(--acid)"><p style="font-size:var(--small-size);color:var(--acid);font-weight:700;margin-bottom:.2rem">3.</p><p style="font-size:var(--small-size)">¿Dónde entraría la severidad del DSM-6?</p></div>
+    </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-size:var(--body-size);color:var(--magenta);font-family:var(--font-mono);font-weight:700;margin-top:clamp(.4rem,1vw,.6rem)">⏱ 3 min parejas + plenario</p>
+  </div>
+</section>
+
+<section class="slide" id="s33" data-title="Plenario respuestas">
+  <div class="domain-bar integracion"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--cyan)">Plenario — respuestas esperadas</p>
+    <h1 class="reveal" style="transition-delay:.1s">Plenario: respuestas esperadas — severidad por dimensión, target compartido, DSM-6 captura el gradiente</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--cyan),var(--magenta))"></div>
+    <div class="flow-vertical reveal" style="transition-delay:.3s;max-width:760px">
+      <div class="card tight" style="border-left:3px solid var(--cyan)"><p style="font-size:var(--label-size);color:var(--cyan);font-weight:700;margin-bottom:.15rem">1. ¿Qué les da el dimensional?</p><p style="font-size:var(--label-size);color:var(--text-muted)">→ Severidad por dimensión, mecanismo compartido, target de tratamiento, comorbilidad esperable.</p></div>
+      <div class="card tight" style="border-left:3px solid var(--magenta)"><p style="font-size:var(--label-size);color:var(--magenta);font-weight:700;margin-bottom:.15rem">2. ¿Cómo cambia el plan?</p><p style="font-size:var(--label-size);color:var(--text-muted)">→ Tratar rumiación transdiagnósticamente (Unified Protocol) vs. tratar 3-4 Dx por separado.</p></div>
+      <div class="card tight" style="border-left:3px solid var(--acid)"><p style="font-size:var(--label-size);color:var(--acid);font-weight:700;margin-bottom:.15rem">3. ¿Dónde entra la severidad DSM-6?</p><p style="font-size:var(--label-size);color:var(--text-muted)">→ María no es "moderada" en todo — distress severo, fear moderado. El DSM-6 captura ese gradiente.</p></div>
+    </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-size:var(--label-size);color:var(--magenta);font-style:italic;margin-top:clamp(.3rem,.6vw,.5rem)">Error a corregir: "en la práctica seguimos con DSM" → correcto, las categorías se complementan, no se eliminan. El pensamiento dimensional cambia lo que haces CON el diagnóstico.</p>
+  </div>
+</section>
+
+<section class="slide" id="s34" data-title="María arco">
+  <div class="domain-bar integracion"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--cyan)">María es el inicio de un arco</p>
+    <h1 class="reveal" style="transition-delay:.1s">María es el inicio de un arco: hoy la ubicamos, en sesión 4 la formulan completa</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--cyan),var(--magenta))"></div>
+    <div class="stack-levels reveal" style="transition-delay:.3s;max-width:660px">
+      <div class="stack-row" style="--row-color:var(--cyan);border:1px solid rgba(0,245,255,.2)"><span class="stack-label">S1</span><span class="stack-desc"><strong>HiTOP</strong> → ¿DÓNDE está en el mapa? → <em>perfil dimensional</em> <span style="color:var(--acid)">✓ hoy</span></span></div>
+      <div class="stack-row" style="--row-color:var(--cyan);opacity:.5"><span class="stack-label">S2</span><span class="stack-desc"><strong>RDoC</strong> → ¿QUÉ sistema falla?</span></div>
+      <div class="stack-row" style="--row-color:var(--cyan);opacity:.5"><span class="stack-label">S3</span><span class="stack-desc"><strong>Exposoma + Staging</strong> → ¿POR QUÉ? ¿CUÁNTO?</span></div>
+      <div class="stack-row" style="--row-color:var(--magenta);opacity:.5"><span class="stack-label">S4</span><span class="stack-desc"><strong>Networks + Comp Psych + psicofarmacología</strong> → ¿CÓMO se conecta? ¿QUÉ fármaco?</span></div>
+    </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-style:italic;margin-top:var(--content-gap);font-size:var(--small-size);color:var(--text-muted)">María no termina hoy. La retomamos cada sesión con una lente nueva.</p>
+  </div>
+</section>
+
+<!-- === SECCIÓN D: CONCLUSIONES (Slides 35-38 | cyan) === -->
+
+<section class="slide" id="s35" data-title="Take-home">
+  <div class="domain-bar cyan"></div>
+  <div class="slide-content centered">
+    <p class="eyebrow reveal" style="color:var(--cyan)">Take-home</p>
+    <h1 class="reveal" style="transition-delay:.1s">Take-home: el DSM dice qué tiene el paciente; el dimensional dice cómo está organizado su sufrimiento</h1>
+    <div class="divider reveal" style="transition-delay:.2s"></div>
+    <div class="pearl-statement reveal-scale" style="transition-delay:.3s;font-size:clamp(1rem,2.2vw,1.9rem);line-height:1.3;max-width:min(86vw,52rem)">
+      <p>El DSM te dice <em>qué tiene</em> el paciente.</p>
+      <p>El modelo dimensional te dice <em>cómo está organizado</em> su sufrimiento</p>
+      <p>— y eso <mark>cambia lo que haces con él</mark>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s36" data-title="Mapa del curso">
+  <div class="domain-bar cyan"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--cyan)">El mapa del curso</p>
+    <h1 class="reveal" style="transition-delay:.1s">El mapa del curso: HiTOP es el mapa, los siguientes son zooms sucesivos</h1>
+    <div class="divider reveal" style="transition-delay:.2s"></div>
+    <div class="stack-levels reveal" style="transition-delay:.3s;max-width:660px">
+      <div class="stack-row" style="--row-color:var(--cyan);border:1px solid rgba(0,245,255,.2)"><span class="stack-label">S1</span><span class="stack-desc"><strong>HiTOP</strong> → ¿DÓNDE está en el mapa? <em>(estructura)</em> <span style="color:var(--acid)">✓ hoy</span></span></div>
+      <div class="stack-row" style="--row-color:var(--cyan);opacity:.5"><span class="stack-label">S2</span><span class="stack-desc"><strong>RDoC</strong> → ¿QUÉ sistema falla? <em>(mecanismo)</em></span></div>
+      <div class="stack-row" style="--row-color:var(--cyan);opacity:.5"><span class="stack-label">S3</span><span class="stack-desc"><strong>Exposoma</strong> → ¿POR QUÉ llegó ahí? <em>(riesgo)</em> · <strong>Staging</strong> → ¿QUÉ TAN LEJOS? <em>(trayectoria)</em></span></div>
+      <div class="stack-row" style="--row-color:var(--magenta);opacity:.5"><span class="stack-label">S4</span><span class="stack-desc"><strong>Networks</strong> → ¿CÓMO SE CONECTAN? · <strong>Computational</strong> → ¿QUÉ MECANISMO? · <strong>psicofarmacología</strong> → ¿QUÉ FÁRMACO?</span></div>
+    </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-style:italic;margin-top:var(--content-gap);font-size:var(--small-size);color:var(--cyan)">Sin el mapa, los zoomes no tienen dónde anclar.</p>
+  </div>
+</section>
+
+<section class="slide" id="s37" data-title="Sesión 2 RDoC">
+  <div class="domain-bar cyan"></div>
+  <div class="slide-content centered">
+    <p class="eyebrow reveal" style="color:var(--cyan)">Preview sesión 2</p>
+    <h1 class="reveal" style="transition-delay:.1s">Sesión 2: RDoC — el lenguaje operativo del curso — ¿qué sistema falla?</h1>
+    <div class="divider reveal" style="transition-delay:.2s"></div>
+    <div class="flow-vertical reveal" style="transition-delay:.3s;max-width:580px;align-items:center">
+      <div class="card tight" style="border-left:3px solid var(--cyan);text-align:center;width:100%">
+        <p style="font-size:var(--small-size);color:var(--cyan);font-family:var(--font-mono);font-weight:700">SESIÓN 2</p>
+        <p style="font-size:var(--body-size);color:var(--text-primary);margin-top:.2rem">RDoC — el zoom a nivel de circuitos, moléculas y genes</p>
+      </div>
+      <div class="card tight" style="border-left:3px solid var(--violet);text-align:center;width:100%">
+        <p style="font-size:var(--label-size);color:var(--text-muted);font-family:var(--font-mono)">LECTURA</p>
+        <p style="font-size:var(--small-size);margin-top:.2rem">Clark et al. (2017) — ICD-11, DSM-5, and RDoC. <em>Psychol Sci Public Interest</em>.</p>
+      </div>
+    </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-size:var(--body-size);color:var(--magenta);font-weight:700;margin-top:clamp(.4rem,1vw,.6rem)">Si pudieras medir UNA dimensión de cada paciente que ves esta semana, ¿cuál elegirías?</p>
+  </div>
+</section>
+
+<section class="slide" id="s38" data-title="Tarea">
+  <div class="domain-bar cyan"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--cyan)">Tarea + cierre</p>
+    <h1 class="reveal" style="transition-delay:.1s">Tarea: medir UNA dimensión de cada paciente esta semana + lectura Clark et al. 2017</h1>
+    <div class="divider reveal" style="transition-delay:.2s"></div>
+    <div class="flow-vertical reveal" style="transition-delay:.3s;max-width:580px">
+      <div class="card tight" style="border-left:3px solid var(--cyan);display:flex;gap:.5rem;align-items:baseline"><span style="color:var(--cyan)">☐</span><p style="font-size:var(--small-size)"><strong>1.</strong> Elegir UNA dimensión para medir en cada paciente de su rotación esta semana</p></div>
+      <div class="card tight" style="border-left:3px solid var(--cyan);display:flex;gap:.5rem;align-items:baseline"><span style="color:var(--cyan)">☐</span><p style="font-size:var(--small-size)"><strong>2.</strong> Leer Clark et al. (2017) antes de sesión 2</p></div>
+      <div class="card tight" style="border-left:3px solid var(--acid);display:flex;gap:.5rem;align-items:baseline"><span style="color:var(--acid)">☐</span><p style="font-size:var(--small-size)"><strong>3.</strong> Traer la respuesta a: "Si pudieras medir UNA dimensión de cada paciente, ¿cuál elegirías?"</p></div>
+    </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-style:italic;margin-top:var(--content-gap);font-size:var(--small-size);color:var(--text-muted)">El pensamiento dimensional empieza con una pregunta simple: ¿qué medirías?</p>
+  </div>
+</section>
+
+</main>
+
 <script>
-/* === SLIDE PRESENTATION CONTROLLER === */
 class SlidePresentation {
   constructor() {
-    this.slides = document.querySelectorAll('.slide');
+    this.slides = Array.from(document.querySelectorAll('.slide'));
     this.currentSlide = 0;
+    this.navDotsContainer = document.getElementById('navDots');
+    this.progressBar = document.getElementById('progressBar');
+    this.slideCounter = document.getElementById('slideCounter');
+    this.touchStartY = 0;
+    this.wheelLocked = false;
     this.setupIntersectionObserver();
     this.setupKeyboardNav();
     this.setupTouchNav();
-    this.setupProgressBar();
+    this.setupWheelNav();
     this.setupNavDots();
+    this.updateProgress();
+    this.updateCounter();
   }
 
   setupIntersectionObserver() {
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
+          const index = this.slides.indexOf(entry.target);
+          this.currentSlide = index;
           entry.target.classList.add('visible');
-          const idx = Array.from(this.slides).indexOf(entry.target);
-          if (idx !== -1) {
-            this.currentSlide = idx;
-            this.updateProgressBar();
-            this.updateNavDots();
-          }
+          this.updateNavDots();
+          this.updateProgress();
+          this.updateCounter();
         }
       });
-    }, { threshold: 0.4 });
-    this.slides.forEach(slide => observer.observe(slide));
+    }, { threshold: 0.55 });
+    this.slides.forEach((slide) => observer.observe(slide));
+    this.slides[0]?.classList.add('visible');
   }
 
   setupKeyboardNav() {
-    document.addEventListener('keydown', (e) => {
-      if (e.target.getAttribute && e.target.getAttribute('contenteditable')) return;
-      if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
-        e.preventDefault();
-        this.goTo(Math.min(this.currentSlide + 1, this.slides.length - 1));
-      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') {
-        e.preventDefault();
-        this.goTo(Math.max(this.currentSlide - 1, 0));
-      } else if (e.key === 'Home') {
-        e.preventDefault(); this.goTo(0);
-      } else if (e.key === 'End') {
-        e.preventDefault(); this.goTo(this.slides.length - 1);
+    document.addEventListener('keydown', (event) => {
+      const forwardKeys = ['ArrowDown', 'ArrowRight', 'PageDown', ' '];
+      const backKeys = ['ArrowUp', 'ArrowLeft', 'PageUp'];
+      if (forwardKeys.includes(event.key)) {
+        event.preventDefault();
+        this.goTo(this.currentSlide + 1);
+      }
+      if (backKeys.includes(event.key)) {
+        event.preventDefault();
+        this.goTo(this.currentSlide - 1);
+      }
+      if (event.key === 'Home') {
+        event.preventDefault();
+        this.goTo(0);
+      }
+      if (event.key === 'End') {
+        event.preventDefault();
+        this.goTo(this.slides.length - 1);
       }
     });
   }
 
   setupTouchNav() {
-    let startY = 0;
-    document.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, { passive: true });
-    document.addEventListener('touchend', e => {
-      const diff = startY - e.changedTouches[0].clientY;
-      if (Math.abs(diff) > 50) {
-        diff > 0 ? this.goTo(Math.min(this.currentSlide + 1, this.slides.length - 1))
-                  : this.goTo(Math.max(this.currentSlide - 1, 0));
-      }
+    document.addEventListener('touchstart', (event) => {
+      this.touchStartY = event.touches[0].clientY;
+    }, { passive: true });
+    document.addEventListener('touchend', (event) => {
+      const delta = this.touchStartY - event.changedTouches[0].clientY;
+      if (Math.abs(delta) < 42) return;
+      this.goTo(this.currentSlide + (delta > 0 ? 1 : -1));
     }, { passive: true });
   }
 
-  setupProgressBar() {
-    this.progressBar = document.getElementById('progressBar');
-    this.updateProgressBar();
+  setupWheelNav() {
+    document.addEventListener('wheel', (event) => {
+      if (Math.abs(event.deltaY) < 28 || this.wheelLocked) return;
+      event.preventDefault();
+      this.wheelLocked = true;
+      this.goTo(this.currentSlide + (event.deltaY > 0 ? 1 : -1));
+      window.setTimeout(() => { this.wheelLocked = false; }, 720);
+    }, { passive: false });
   }
 
   setupNavDots() {
-    this.navDotsContainer = document.getElementById('navDots');
     this.navDotsContainer.innerHTML = '';
-    this.slides.forEach((_, i) => {
-      const dot = document.createElement('button');
-      dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
-      dot.setAttribute('aria-label', `Slide ${i + 1}`);
-      dot.addEventListener('click', () => this.goTo(i));
-      this.navDotsContainer.appendChild(dot);
+    this.slides.forEach((slide, index) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'nav-dot' + (index === 0 ? ' active' : '');
+      button.title = slide.dataset.title || ('Slide ' + (index + 1));
+      button.setAttribute('aria-label', button.title);
+      button.addEventListener('click', () => this.goTo(index));
+      this.navDotsContainer.appendChild(button);
     });
-    this.navDots = this.navDotsContainer.querySelectorAll('.nav-dot');
-  }
-
-  goTo(index) {
-    this.slides[index].scrollIntoView({ behavior: 'smooth' });
-  }
-
-  updateProgressBar() {
-    const pct = ((this.currentSlide + 1) / this.slides.length) * 100;
-    this.progressBar.style.width = pct + '%';
   }
 
   updateNavDots() {
-    if (!this.navDots) return;
-    this.navDots.forEach((dot, i) => dot.classList.toggle('active', i === this.currentSlide));
-  }
-}
-
-/* === INLINE EDITOR === */
-class InlineEditor {
-  constructor() {
-    this.isActive = false;
-    this.toggle = document.getElementById('editToggle');
-    this.banner = document.getElementById('editBanner');
-    this.setupHotzone();
-    this.setupKeyboard();
-  }
-
-  setupHotzone() {
-    const hotzone = document.querySelector('.edit-hotzone');
-    let hideTimeout = null;
-    const show = () => { clearTimeout(hideTimeout); this.toggle.classList.add('show'); };
-    const hide = () => { hideTimeout = setTimeout(() => { if (!this.isActive) this.toggle.classList.remove('show'); }, 400); };
-    hotzone.addEventListener('mouseenter', show);
-    hotzone.addEventListener('mouseleave', hide);
-    this.toggle.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
-    this.toggle.addEventListener('mouseleave', hide);
-    this.toggle.addEventListener('click', () => this.toggleEditMode());
-    hotzone.addEventListener('click', () => this.toggleEditMode());
-  }
-
-  setupKeyboard() {
-    document.addEventListener('keydown', (e) => {
-      if ((e.key === 'e' || e.key === 'E') && !e.target.getAttribute('contenteditable')) {
-        this.toggleEditMode();
-      }
-      if (e.ctrlKey && e.key === 's' && this.isActive) {
-        e.preventDefault(); this.exportFile();
-      }
+    const dots = Array.from(this.navDotsContainer.querySelectorAll('.nav-dot'));
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === this.currentSlide);
     });
   }
 
-  toggleEditMode() {
-    this.isActive = !this.isActive;
-    document.body.classList.toggle('edit-active', this.isActive);
-    this.toggle.classList.toggle('active', this.isActive);
-    this.banner.classList.toggle('active', this.isActive);
-    this.toggle.textContent = this.isActive ? '✔' : '✎';
-    const editables = document.querySelectorAll('h1,h2,h3,h4,p:not(.source),li,.hero-number,.hero-label,.quote,.bar-label,.bar-value,.profile-label,.profile-tag,.node,.eyebrow,td');
-    editables.forEach(el => {
-      if (this.isActive) el.setAttribute('contenteditable', 'true');
-      else el.removeAttribute('contenteditable');
-    });
+  updateProgress() {
+    const maxIndex = Math.max(this.slides.length - 1, 1);
+    const progress = this.currentSlide / maxIndex;
+    this.progressBar.style.transform = 'scaleX(' + progress + ')';
   }
 
-  exportFile() {
-    const editableEls = Array.from(document.querySelectorAll('[contenteditable]'));
-    editableEls.forEach(el => el.removeAttribute('contenteditable'));
-    document.body.classList.remove('edit-active');
-    this.toggle.classList.remove('active', 'show');
-    this.banner.classList.remove('active', 'show');
-    const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-    document.body.classList.add('edit-active');
-    editableEls.forEach(el => el.setAttribute('contenteditable', 'true'));
-    this.toggle.classList.add('active');
-    this.banner.classList.add('active');
-    const blob = new Blob([html], { type: 'text/html' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'sesion-01-slides.html';
-    a.click();
-    URL.revokeObjectURL(a.href);
+  updateCounter() {
+    const current = String(this.currentSlide + 1).padStart(2, '0');
+    const total = String(this.slides.length).padStart(2, '0');
+    this.slideCounter.textContent = current + ' / ' + total;
+  }
+
+  goTo(index) {
+    const targetIndex = Math.max(0, Math.min(index, this.slides.length - 1));
+    this.slides[targetIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }
 
 new SlidePresentation();
-const editor = new InlineEditor();
 </script>
 </body>
 </html>
