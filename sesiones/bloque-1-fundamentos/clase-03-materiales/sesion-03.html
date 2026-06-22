@@ -165,6 +165,10 @@ em{color:var(--cyan);font-style:normal;text-shadow:0 0 18px rgba(0,245,255,.34)}
 @media (max-height:600px){:root{--slide-padding:clamp(.5rem,2.5vw,1.5rem);--body-size:clamp(.65rem,1.1vw,.9rem);--title-size:clamp(1rem,4vw,2rem)}.nav-dots,.slide-counter{display:none}}
 @media (max-width:768px){.split{grid-template-columns:1fr}.three-cols{grid-template-columns:1fr}.four-cols{grid-template-columns:repeat(2,1fr)}.mod-grid{grid-template-columns:repeat(2,1fr)}.stair{flex-direction:column;align-items:stretch}.slide::after{left:clamp(.8rem,3vw,1.1rem);right:clamp(.8rem,3vw,1.1rem);text-align:center}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important}html{scroll-behavior:auto}}
+.algo-list{display:flex;flex-direction:column;gap:clamp(.3rem,.6vw,.5rem);width:100%;max-width:700px}
+.algo-step{display:flex;gap:clamp(.6rem,1.2vw,.9rem);align-items:baseline;padding:clamp(.35rem,.7vw,.55rem) clamp(.6rem,1.2vw,.9rem);background:var(--bg-card);border-radius:6px;border-left:3px solid var(--step-color,var(--cyan));box-shadow:var(--magnetic-shadow)}
+.algo-num{color:var(--step-color,var(--cyan));font-weight:800;font-family:var(--font-display);font-size:clamp(.9rem,1.4vw,1.2rem);min-width:clamp(1rem,1.5vw,1.3rem)}
+.algo-text{font-size:var(--body-size);color:var(--text-secondary)}
 </style>
 </head>
 <body>
@@ -208,14 +212,21 @@ em{color:var(--cyan);font-style:normal;text-shadow:0 0 18px rgba(0,245,255,.34)}
 <section class="slide" id="s_obj">
   <div class="domain-bar cyan"></div>
   <div class="slide-content">
-    <p class="eyebrow reveal">Al salir de esta clase</p>
-    <h1 class="reveal" style="transition-delay:.1s;font-size:clamp(1.1rem,2.6vw,2rem)">Al salir van a poder: organizar una historia clínica en 3 dominios, asignar estadio + modificadores, plantear plan proporcional</h1>
+    <p class="eyebrow reveal">Objetivos de la sesión</p>
+    <h1 class="reveal" style="transition-delay:.1s">Al salir van a poder:</h1>
     <div class="divider reveal" style="transition-delay:.2s"></div>
-    <div class="grid reveal" style="transition-delay:.3s;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:clamp(.4rem,.8vw,.7rem);max-width:min(90vw,72rem)">
-<div class="card" style="text-align:center;border-top:3px solid var(--acid)"><p style="font-size:clamp(1.1rem,2vw,1.6rem);margin-bottom:.3rem">◈</p><p style="font-weight:700;color:var(--acid);font-family:var(--font-mono);font-size:var(--label-size)">EXPOSOMA</p><p style="font-size:var(--label-size);margin-top:.3rem;color:var(--text-secondary)"><strong style="color:var(--acid)">K1:</strong> Describir 3 dominios con ≥2 factores y magnitud de efecto</p></div><div class="card" style="text-align:center;border-top:3px solid var(--violet)"><p style="font-size:clamp(1.1rem,2vw,1.6rem);margin-bottom:.3rem">◉</p><p style="font-weight:700;color:var(--violet);font-family:var(--font-mono);font-size:var(--label-size)">STAGING</p><p style="font-size:var(--label-size);margin-top:.3rem;color:var(--text-secondary)"><strong style="color:var(--violet)">K2:</strong> Describir estadios McGorry + modificadores P y E</p></div><div class="card" style="text-align:center;border-top:3px solid var(--cyan)"><p style="font-size:clamp(1.1rem,2vw,1.6rem);margin-bottom:.3rem">▣</p><p style="font-weight:700;color:var(--cyan);font-family:var(--font-mono);font-size:var(--label-size)">HISTORIA CLÍNICA</p><p style="font-size:var(--label-size);margin-top:.3rem;color:var(--text-secondary)"><strong style="color:var(--cyan)">K3:</strong> Organizar una historia clínica en 3 dominios</p></div><div class="card" style="text-align:center;border-top:3px solid var(--magenta)"><p style="font-size:clamp(1.1rem,2vw,1.6rem);margin-bottom:.3rem">⟁</p><p style="font-weight:700;color:var(--magenta);font-family:var(--font-mono);font-size:var(--label-size)">CASO TOMÁS</p><p style="font-size:var(--label-size);margin-top:.3rem;color:var(--text-secondary)"><strong style="color:var(--magenta)">A1:</strong> Asignar estadio + modificadores con ≥2 factores exposómicos</p></div><div class="card" style="text-align:center;border-top:3px solid var(--rdoc)"><p style="font-size:clamp(1.1rem,2vw,1.6rem);margin-bottom:.3rem">⟿</p><p style="font-weight:700;color:var(--rdoc);font-family:var(--font-mono);font-size:var(--label-size)">PLAN PROPORCIONAL</p><p style="font-size:var(--label-size);margin-top:.3rem;color:var(--text-secondary)"><strong style="color:var(--rdoc)">A2:</strong> Analizar cómo estadio + exposoma modifica la intervención</p></div>
+    <div class="algo-list reveal" style="transition-delay:.3s">
+      <div class="algo-step" style="--step-color:var(--acid)"><span class="algo-num">K1</span><span class="algo-text">Describir <strong>3 dominios del exposoma</strong> con ≥2 factores y magnitud de efecto</span></div>
+      <div class="algo-step" style="--step-color:var(--violet)"><span class="algo-num">K2</span><span class="algo-text">Describir <strong>estadios McGorry</strong> + modificadores P y E del Staging 2.0</span></div>
+      <div class="algo-step" style="--step-color:var(--cyan)"><span class="algo-num">K3</span><span class="algo-text">Organizar una <strong>historia clínica</strong> en 3 dominios exposómicos</span></div>
+      <div class="algo-step" style="--step-color:var(--magenta)"><span class="algo-num">A1</span><span class="algo-text">Asignar <strong>estadio + modificadores</strong> a Tomás con ≥2 factores exposómicos</span></div>
+      <div class="algo-step" style="--step-color:var(--rdoc)"><span class="algo-num">A2</span><span class="algo-text">Analizar cómo <strong>estadio + exposoma</strong> modifica la intervención</span></div>
+      
     </div>
   </div>
 </section>
+
+
 
 
 

@@ -144,6 +144,10 @@ em{color:var(--cyan);font-style:normal;text-shadow:0 0 18px rgba(0,245,255,.34)}
 @media (max-height:600px){:root{--slide-padding:clamp(.5rem,2.5vw,1.5rem);--body-size:clamp(.65rem,1.1vw,.9rem);--title-size:clamp(1rem,4vw,2rem)}.nav-dots,.slide-counter{display:none}}
 @media (max-width:768px){.split{grid-template-columns:1fr}.three-cols{grid-template-columns:1fr}.four-cols{grid-template-columns:repeat(2,1fr)}.slide::after{left:clamp(.8rem,3vw,1.1rem);right:clamp(.8rem,3vw,1.1rem);text-align:center}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important}html{scroll-behavior:auto}}
+.algo-list{display:flex;flex-direction:column;gap:clamp(.3rem,.6vw,.5rem);width:100%;max-width:700px}
+.algo-step{display:flex;gap:clamp(.6rem,1.2vw,.9rem);align-items:baseline;padding:clamp(.35rem,.7vw,.55rem) clamp(.6rem,1.2vw,.9rem);background:var(--bg-card);border-radius:6px;border-left:3px solid var(--step-color,var(--cyan));box-shadow:var(--magnetic-shadow)}
+.algo-num{color:var(--step-color,var(--cyan));font-weight:800;font-family:var(--font-display);font-size:clamp(.9rem,1.4vw,1.2rem);min-width:clamp(1rem,1.5vw,1.3rem)}
+.algo-text{font-size:var(--body-size);color:var(--text-secondary)}
 </style>
 </head>
 <body>
@@ -179,14 +183,21 @@ em{color:var(--cyan);font-style:normal;text-shadow:0 0 18px rgba(0,245,255,.34)}
 <section class="slide" id="s_obj">
   <div class="domain-bar cyan"></div>
   <div class="slide-content">
-    <p class="eyebrow reveal">Al salir de esta clase</p>
-    <h1 class="reveal" style="transition-delay:.1s;font-size:clamp(1.1rem,2.6vw,2rem)">Al salir van a poder: identificar 5 limitaciones del DSM, explicar el factor p, ubicar a un paciente en HiTOP</h1>
+    <p class="eyebrow reveal">Objetivos de la sesión</p>
+    <h1 class="reveal" style="transition-delay:.1s">Al salir van a poder:</h1>
     <div class="divider reveal" style="transition-delay:.2s"></div>
-    <div class="grid reveal" style="transition-delay:.3s;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:clamp(.4rem,.8vw,.7rem);max-width:min(90vw,72rem)">
-<div class="card" style="text-align:center;border-top:3px solid var(--magenta)"><p style="font-size:clamp(1.1rem,2vw,1.6rem);margin-bottom:.3rem">▣</p><p style="font-weight:700;color:var(--magenta);font-family:var(--font-mono);font-size:var(--label-size)">EL PROBLEMA</p><p style="font-size:var(--label-size);margin-top:.3rem;color:var(--text-secondary)"><strong style="color:var(--magenta)">K1:</strong> Identificar ≥4 de 5 limitaciones estructurales del DSM</p></div><div class="card" style="text-align:center;border-top:3px solid var(--cyan)"><p style="font-size:clamp(1.1rem,2vw,1.6rem);margin-bottom:.3rem">◉</p><p style="font-weight:700;color:var(--cyan);font-family:var(--font-mono);font-size:var(--label-size)">FACTOR P</p><p style="font-size:var(--label-size);margin-top:.3rem;color:var(--text-secondary)"><strong style="color:var(--cyan)">K2:</strong> Explicar el factor p y la jerarquía HiTOP de 6 niveles</p></div><div class="card" style="text-align:center;border-top:3px solid var(--violet)"><p style="font-size:clamp(1.1rem,2vw,1.6rem);margin-bottom:.3rem">◈</p><p style="font-weight:700;color:var(--violet);font-family:var(--font-mono);font-size:var(--label-size)">HITOP</p><p style="font-size:var(--label-size);margin-top:.3rem;color:var(--text-secondary)"><strong style="color:var(--violet)">K3:</strong> Ubicar a un paciente real en el mapa HiTOP</p></div><div class="card" style="text-align:center;border-top:3px solid var(--acid)"><p style="font-size:clamp(1.1rem,2vw,1.6rem);margin-bottom:.3rem">⟁</p><p style="font-weight:700;color:var(--acid);font-family:var(--font-mono);font-size:var(--label-size)">CASO MARÍA</p><p style="font-size:var(--label-size);margin-top:.3rem;color:var(--text-secondary)"><strong style="color:var(--acid)">A1:</strong> Contrastar formulación categórica vs dimensional</p></div><div class="card" style="text-align:center;border-top:3px solid var(--rdoc)"><p style="font-size:clamp(1.1rem,2vw,1.6rem);margin-bottom:.3rem">⟿</p><p style="font-weight:700;color:var(--rdoc);font-family:var(--font-mono);font-size:var(--label-size)">APLICACIÓN</p><p style="font-size:var(--label-size);margin-top:.3rem;color:var(--text-secondary)"><strong style="color:var(--rdoc)">A2:</strong> Explicar ≥3 ventajas clínicas del abordaje dimensional</p></div>
+    <div class="algo-list reveal" style="transition-delay:.3s">
+      <div class="algo-step" style="--step-color:var(--cyan)"><span class="algo-num">K1</span><span class="algo-text">Identificar <strong>≥4 de 5 limitaciones</strong> estructurales del DSM-5-TR</span></div>
+      <div class="algo-step" style="--step-color:var(--violet)"><span class="algo-num">K2</span><span class="algo-text">Explicar el <strong>factor p</strong> y la jerarquía HiTOP de 6 niveles</span></div>
+      <div class="algo-step" style="--step-color:var(--magenta)"><span class="algo-num">K3</span><span class="algo-text">Ubicar a un <strong>paciente real</strong> en el mapa HiTOP</span></div>
+      <div class="algo-step" style="--step-color:var(--acid)"><span class="algo-num">A1</span><span class="algo-text">Contrastar formulación <strong>categórica vs dimensional</strong> de María</span></div>
+      <div class="algo-step" style="--step-color:var(--rdoc)"><span class="algo-num">A2</span><span class="algo-text">Explicar <strong>≥3 ventajas clínicas</strong> del abordaje dimensional</span></div>
+      
     </div>
   </div>
 </section>
+
+
 
 
 
