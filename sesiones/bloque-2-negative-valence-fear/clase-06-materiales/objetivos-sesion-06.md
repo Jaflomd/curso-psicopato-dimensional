@@ -158,7 +158,7 @@
 
 **Temas Accesorios:**
 - Jerarquía conecta hacia atrás: el constructo RDoC y nivel HiTOP provienen del triple mapeo de S5 (A1)
-- Jerarquía conecta hacia adelante: S7 preguntará "¿este paciente necesita fármaco además de ERP? ¿Cuál dominio PRISM?"
+- Jerarquía conecta hacia adelante: S7 preguntará "¿este paciente necesita fármaco además de ERP? ¿Cuál dominio psicofarmacología de precisión?"
 - Graduación no rígida: el modelo IL permite exposiciones no secuenciales — el SUDS es brújula, no ruta fija
 
 ---
@@ -183,7 +183,7 @@
 | 1 | HiTOP general | ¿Dónde está en el mapa? | Bloom 4 |
 | 2 | RDoC general | ¿Qué sistema falla? | Bloom 4 |
 | 3 | Exposoma + Staging | ¿Por qué llegó ahí? | Bloom 4 |
-| 4 | Networks + PRISM | ¿Cómo se conecta? | Bloom 6 |
+| 4 | Networks + psicofarmacología de precisión | ¿Cómo se conecta? | Bloom 6 |
 | 5 | RDoC NV + HiTOP Fear + Metacontrol | ¿Qué tipo de amenaza? ¿Qué mecanismo? | Bloom 5 |
 | **6** | **IL + ERP + UP** | **¿Cómo se interviene sobre el sistema de amenaza? ¿Qué mecanismo terapéutico activo?** | **Bloom 6** |
 
@@ -224,8 +224,8 @@
 - **K4 se introduce brevemente.** UP reaparece en S9 (módulo de reappraisal para distress). Aquí solo la comparación funcional con ERP y la tabla decisional. No sobrecargar.
 - **A1 (demo) es el corazón de la sesión.** 13 minutos. El facilitador debe modelar: (a) elicitación de predicción ("¿Qué crees que va a pasar si tocas la perilla sin lavarte?"), (b) construcción de jerarquía con variabilidad (no estrictamente graduada), (c) revisión post-exposición ("¿Ocurrió lo que predijiste?"). Usar voluntario real si hay uno con caso del subfactor fear; caso estandarizado si no.
 - **A2 exige paciente real.** El residente que no tenga paciente del subfactor fear puede usar un caso de S5 o pedirlo al facilitador, pero la jerarquía debe ser clínicamente funcional, no académica.
-- **Benzodiacepinas como safety behaviors**: mencionarlo en la demo (A1), no como contenido formal. El residente debe saber que la BDZ PRN durante exposición funciona como señal de seguridad condicionada. Esto se profundiza en S7 (farmacología PRISM).
-- **Conexión hacia adelante:** S7 tomará el mismo paciente y preguntará: "¿Necesita fármaco? ¿Qué dominio PRISM? ¿Cuándo fármaco, cuándo terapia, cuándo ambos?" La jerarquía de S6 es el input de S7.
+- **Benzodiacepinas como safety behaviors**: mencionarlo en la demo (A1), no como contenido formal. El residente debe saber que la BDZ PRN durante exposición funciona como señal de seguridad condicionada. Esto se profundiza en S7 (farmacología de precisión).
+- **Conexión hacia adelante:** S7 tomará el mismo paciente y preguntará: "¿Necesita fármaco? ¿Qué dominio psicofarmacología de precisión? ¿Cuándo fármaco, cuándo terapia, cuándo ambos?" La jerarquía de S6 es el input de S7.
 
 ---
 
@@ -240,4 +240,4 @@
 - [x] Temas accesorios: 2-3 por LO
 - [x] Factible en 50 min según outline (K1 ≈ 7 min; K2+K3 ≈ 6 min; A1 demo ≈ 13 min; K4 ≈ 7 min; A2 ≈ 13 min; cierre ≈ 4 min)
 - [x] Progresión Bloom coherente: S5 pico Bloom 5 (evaluar) → S6 pico Bloom 6 (crear)
-- [x] Conexión bidireccional: S5 persistence bias → S6 ERP lo interrumpe → S7 farmaco PRISM lo modula
+- [x] Conexión bidireccional: S5 persistence bias → S6 ERP lo interrumpe → S7 farmaco de precisión lo modula

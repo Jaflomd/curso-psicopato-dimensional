@@ -3,71 +3,59 @@
 **Curso:** Psicopatología Dimensional: De Categorías a Sistemas
 **Instructor:** Javier Flores
 **Duración:** 50 min | **Audiencia:** R1 Psiquiatría
-**Fecha:** [por definir]
+**Bloque:** 1 — Fundamentos (cierra el bloque)
+**Estructura:** Objetivo · Contenido · Caso · Conclusiones
 
 ---
 
-## Learning Objectives
+## Objetivo
 
-- **K1** (Bloom 2 / Miller: Sabe): Explicar Network Theory (nodos, edges, centralidad, bridge symptoms, histéresis) diferenciando ≥2 ventajas sobre el modelo categórico
-- **K2** (Bloom 2 / Miller: Sabe cómo): Describir prediction error y priors bayesianos, y explicar cómo su alteración produce síntomas en ≥2 trastornos
-- **K3** (Bloom 2 / Miller: Sabe cómo): Describir el framework PRISM y comparar ≥2 decisiones farmacológicas bajo PRISM vs modelo categórico
-- **A1** (Bloom 5 / Miller: Sabe cómo): Formular un caso clínico integrando ≥3 modelos del bloque en un esquema de formulación dimensional preliminar
-- **A2** (Bloom 6 / Miller: Sabe cómo): Proponer un plan de intervención que combine target de red, dominio farmacológico y proporcionalidad de staging
+Jaflo, el objetivo de esta sesión es que al salir del aula un R1 pueda hacer, por primera vez en el curso, una formulación dimensional completa de un paciente — no con un marco, sino con el toolkit entero integrado.
 
----
+Hemos construido tres sesiones de componentes. Hoy los ensamblamos y agregamos las dos lentes que faltan (cómo se conectan los síntomas y cómo elegir el fármaco) más la primera herramienta de prescripción del curso. Es la primera sesión que alcanza Bloom 5-6 (Evaluar/Crear): las sesiones 1-3 pedían ubicar y mapear; la 4 pide formular.
 
-## Estructura de la sesión
+**Learning Objectives en lenguaje natural:**
 
-| Min | Bloque | LO |
-|-----|--------|----|
-| 0-5 | Apertura: recap acumulativo del bloque | — |
-| 5-15 | Network Theory: síntomas como red, no como lista | K1 |
-| 15-22 | Computational Psychiatry: el cerebro como máquina de predicción | K2 |
-| 22-32 | PRISM: farmacología por dominio, no por diagnóstico | K3 |
-| 32-47 | Ejercicio integrador: formulación dimensional de María | A1, A2 |
-| 47-50 | Cierre: take-home + preview Bloque 2 | — |
+- **K1 — Network Theory:** Explicar por qué los trastornos no son listas de síntomas sino redes causalmente conectadas, y usar el vocabulario de nodos, edges, centralidad, bridge symptoms e histéresis para explicar comorbilidad y persistencia. Dos ventajas mínimas sobre el modelo categórico.
+- **K2 — Computational Psychiatry:** Describir qué es un prediction error y un prior bayesiano (nivel conceptual, sin matemática), y explicar cómo un mismo mecanismo produce síntomas distintos en psicosis, ansiedad y depresión.
+- **K3 — Psicofarmacología de precisión:** Describir el marco de prescripción por dominio dimensional (NbN2) y comparar dos decisiones farmacológicas bajo lógica de precisión vs lógica categórica.
+- **A1 — Formular:** Integrar al menos 3 frameworks del bloque (HiTOP, RDoC, exposoma, staging, network, psicofarmacología de precisión) en una formulación dimensional preliminar de María.
+- **A2 — Planificar:** Proponer un plan de intervención que combine target de red (síntoma central), dominio farmacológico (NbN2) y proporcionalidad de staging.
 
----
+**Progresión respecto a sesiones previas:**
 
-## BLOQUE 1: Apertura (0-5 min)
+| Sesión | Framework | Pregunta clínica | Nivel máximo |
+|--------|-----------|------------------|-------------|
+| 1 | HiTOP | ¿Dónde está en el mapa? | Bloom 4 |
+| 2 | RDoC | ¿Qué sistema falla? | Bloom 4 |
+| 3 | Exposoma + Staging | ¿Por qué llegó ahí? ¿Qué tan lejos? | Bloom 4 |
+| **4** | **Networks + Comp. Psych + psicofarmacología de precisión** | **¿Cómo se conecta? ¿Qué fármaco, por qué?** | **Bloom 6** |
 
-### Recap acumulativo: el mapa del bloque
+**María en 30 segundos — ¿dónde estamos?**
 
-> **"En tres sesiones hemos construido un toolkit. Hoy lo completamos y lo usamos por primera vez."**
-
-Presentar el mapa acumulativo como tabla (1 slide):
-
-| Sesión | Framework | Pregunta que responde |
-|--------|-----------|----------------------|
-| 1 | HiTOP | ¿Dónde está en el mapa? (estructura) |
-| 2 | RDoC | ¿Qué sistema falla? (mecanismo) |
-| 3 | Exposoma + Staging | ¿Por qué llegó ahí? + ¿Qué tan lejos ha ido? (riesgo + trayectoria) |
-| **4** | **Networks + Comp. Psych + PRISM** | **¿Cómo se conectan los síntomas? + ¿Qué fármaco, por qué?** |
+María ha sido el caso hilo conductor del bloque. En sesión 1 la ubicamos en HiTOP: distress alto, fear moderado, detachment moderado, p elevado. En sesión 2 mapeamos sus sistemas RDoC: Negative Valence alta (rumiación, fear), Positive Valence baja (anhedonia), Arousal alterado (insomnio), Social Processes disminuidos (evitación). En sesión 3 organizamos su exposoma en 3 dominios y le asignamos Stage 2, P1, E1. Hoy cerramos su arco: ¿cómo se conectan sus síntomas y qué fármaco elegimos?
 
 > **Pregunta para los R1:** "Si ya saben dónde está el paciente (HiTOP), qué sistema falla (RDoC), por qué llegó ahí (exposoma) y qué tan lejos ha ido (staging)... ¿qué les falta para hacer una formulación completa?"
-
-**Respuesta esperada:** Les falta entender cómo los síntomas se conectan entre sí (la estructura interna del cuadro) y cómo elegir el tratamiento farmacológico con la misma lógica dimensional.
-
-**Puente:** "Exacto. Hoy agregamos dos lentes más y una herramienta de prescripción. Network Theory les va a mostrar que los síntomas no son una lista — son una red con nodos centrales que, si los atacan, pueden desactivar cascadas. Computational Psychiatry les va a dar un modelo de cómo el cerebro genera los síntomas — prediction error. Y PRISM les va a enseñar a prescribir por dominio, no por diagnóstico. Al final, van a integrar todo en la primera formulación dimensional completa del curso."
-
-### María en 30 segundos: ¿dónde estamos?
-
-> "María ha crecido con nosotros en cada sesión. En sesión 1, la ubicamos en HiTOP: distress alto, fear moderado, detachment moderado, p elevado. En sesión 2, mapeamos sus sistemas RDoC: Negative Valence alta (rumiación, fear), Positive Valence baja (anhedonia), Arousal alterado (insomnio), Social Processes disminuidos (evitación). En sesión 3, organizamos su exposoma en 3 dominios y le asignamos Stage 2, P1, E1. Hoy: ¿cómo se conectan sus síntomas y qué fármaco elegimos?"
+>
+> **Respuesta esperada:** Les falta entender cómo los síntomas se conectan entre sí (la estructura interna del cuadro) y cómo elegir el tratamiento farmacológico con la misma lógica dimensional.
 
 ---
 
-## BLOQUE 2: Network Theory — Síntomas como red, no como lista (5-15 min) → K1
+## Contenido
 
-### El problema con las listas de síntomas
+Tres bloques conceptuales. Cada uno agrega una lente al toolkit y se conecta con el siguiente.
+
+### Bloque 1 — Network Theory: los síntomas son una red, no una lista (K1)
+
+#### El problema con las listas de síntomas
 
 > **"El DSM trata los síntomas como ítems intercambiables de un checklist. 5 de 9 criterios = depresión mayor. Pero ¿son intercambiables insomnio y culpa? ¿Anhedonia y pérdida de peso?"**
 
 **Dato de apertura:** Fried & Nesse (2015) analizaron 3,703 pacientes con depresión mayor del estudio STAR*D. Encontraron **1,030 perfiles sintomáticos únicos** — un promedio de 3.6 pacientes por perfil. La mayoría de los perfiles (48.6%) fueron reportados por una sola persona.
 
-**Punto para R1:** "Si hay 1,030 formas distintas de tener 'depresión mayor', ¿realmente estamos hablando de una enfermedad? Network Theory propone que no — que lo que llamamos depresión es un patrón de conexiones entre síntomas, no una entidad que causa los síntomas."
+Si hay 1,030 formas distintas de tener "depresión mayor", ¿realmente estamos hablando de una enfermedad? Network Theory propone que no — que lo que llamamos depresión es un patrón de conexiones entre síntomas, no una entidad que causa los síntomas.
 
-### ¿Qué es Network Theory?
+#### ¿Qué es Network Theory?
 
 La Network Theory of Mental Disorders (Borsboom, 2017; Borsboom & Cramer, 2013) propone que los trastornos mentales no son entidades latentes que "causan" síntomas, sino **redes emergentes de síntomas causalmente conectados** a través de mecanismos biológicos, psicológicos y sociales.
 
@@ -82,9 +70,7 @@ La Network Theory of Mental Disorders (Borsboom, 2017; Borsboom & Cramer, 2013) 
 | **Activación de red** | Un evento externo activa un síntoma, que propaga activación a sus vecinos | Un incendio que se propaga por las carreteras |
 | **Histéresis** | La red activada no se desactiva al remover el disparador — el trastorno persiste | El incendio sigue aunque la chispa ya se apagó |
 
-### Ejemplo: la red de depresión
-
-Presentar con diagrama de red:
+#### Ejemplo: la red de depresión
 
 ```
 Evento vital negativo (pérdida, estrés)
@@ -99,17 +85,14 @@ Evento vital negativo (pérdida, estrés)
   [Culpa]          [Aislamiento social] ──► [Ideación suicida]
 ```
 
-**Paso 1 — Activación:** María pierde a su compañero de trabajo (evento). Esto activa insomnio (empieza a dormir 4-5 horas).
-
-**Paso 2 — Propagación:** El insomnio activa fatiga → la fatiga activa problemas de concentración → la rumiación aumenta → el ánimo baja → la anhedonia aparece.
-
-**Paso 3 — Feedback loops:** Rumiación ↔ Ánimo depresivo se refuerzan mutuamente. Insomnio ↔ Rumiación se refuerzan (no puede dormir porque rumia, rumia porque no puede dormir).
-
-**Paso 4 — Histéresis:** Después de 6 meses, aunque María se adapte a la pérdida, la red ya es auto-sostenida. El disparador desapareció, pero el trastorno persiste — los loops se mantienen activos por la fuerza de las conexiones internas.
+- **Paso 1 — Activación:** María pierde a su compañero de trabajo (evento). Esto activa insomnio (empieza a dormir 4-5 horas).
+- **Paso 2 — Propagación:** El insomnio activa fatiga → la fatiga activa problemas de concentración → la rumiación aumenta → el ánimo baja → la anhedonia aparece.
+- **Paso 3 — Feedback loops:** Rumiación ↔ Ánimo depresivo se refuerzan mutuamente. Insomnio ↔ Rumiación se refuerzan (no puede dormir porque rumia, rumia porque no puede dormir).
+- **Paso 4 — Histéresis:** Después de 6 meses, aunque María se adapte a la pérdida, la red ya es auto-sostenida. El disparador desapareció, pero el trastorno persiste — los loops se mantienen activos por la fuerza de las conexiones internas.
 
 > **Punto pedagógico:** "¿Por qué la depresión no se resuelve cuando el estresor desaparece? El modelo categórico no tiene buena respuesta. Network Theory sí: histéresis. Las conexiones entre síntomas se volvieron lo suficientemente fuertes para auto-sostenerse."
 
-### Centralidad: no todos los síntomas pesan igual
+#### Centralidad: no todos los síntomas pesan igual
 
 **Hallazgo empírico (Robinaugh et al., 2020, *Psychological Medicine*):** En una revisión de 363 artículos, la fatiga/baja energía es "quizás el síntoma de depresión más consistentemente central" en los estudios de red.
 
@@ -124,7 +107,7 @@ Evento vital negativo (pérdida, estrés)
 
 **Implicación terapéutica directa:** Si el insomnio es un nodo de alta centralidad en la red de María, tratar el insomnio primero podría desactivar cascadas: mejor sueño → menos fatiga → menos rumiación → mejor ánimo. Es una hipótesis de targets basada en estructura de red.
 
-### Bridge symptoms: por qué los trastornos vienen en paquete
+#### Bridge symptoms: por qué los trastornos vienen en paquete
 
 > **"¿Por qué depresión y ansiedad son tan comórbidos? El modelo categórico dice 'dos enfermedades que coinciden'. Network Theory dice: hay síntomas puente que los conectan."**
 
@@ -143,7 +126,7 @@ Insomnio, fatiga y problemas de concentración aparecen en criterios de *ambos* 
 
 > **Conexión con HiTOP (sesión 1):** "¿Recuerdan que HiTOP explica la comorbilidad por factores latentes compartidos (distress, fear)? Network Theory ofrece una explicación complementaria pero distinta: la comorbilidad no es un factor latente sino conexiones directas entre síntomas de ambos clusters."
 
-### Limitaciones — honestidad epistémica
+#### Limitaciones — honestidad epistémica
 
 **Ser transparente con los R1 (Forbes et al., 2019, *World Psychiatry*):**
 
@@ -153,43 +136,15 @@ Insomnio, fatiga y problemas de concentración aparecen en criterios de *ambos* 
 
 > **Mensaje equilibrado:** "Network Theory es un modelo poderoso para *pensar* sobre la estructura de la psicopatología — comorbilidad, persistencia, heterogeneidad. Pero las herramientas empíricas aún no están maduras para guiar tratamiento individual. Úsenla como lente conceptual, no como GPS clínico."
 
-### María como red
-
-> "Apliquemos esto a María. ¿Cuáles serían sus nodos centrales?"
-
-Presentar la red de María (esquemática):
-
-```
-                    [Exposoma: ACEs, padre alcohólico, bullying]
-                                      |
-                                      v
-[Insomnio] ◄───────────────► [Rumiación] ◄────► [Ánimo depresivo]
-     |                             |                     |
-     v                             v                     v
-[Fatiga] ──────────────► [Concentración ↓]        [Anhedonia]
-                                                        |
-                                                        v
-                                                [Aislamiento social]
-                                                        |
-                                                        v
-                                              [Evitación situaciones]
-```
-
-- **Nodo central candidato:** Insomnio (alta conectividad: conecta con rumiación, fatiga, concentración, y es hub transdiagnóstico RDoC de sesión 2).
-- **Bridge symptom:** Rumiación conecta Negative Valence (cluster depresivo) con Cognitive Systems (concentración, toma de decisiones) — puente entre dimensiones HiTOP.
-- **Implicación terapéutica:** Si atacamos insomnio + rumiación como targets prioritarios, podríamos desactivar cascadas en múltiples dominios simultáneamente.
-
-> **Conexión con RDoC (sesión 2):** "¿Recuerdan que en sesión 2 dijimos que el insomnio aparece en >80% de trastornos psiquiátricos y es el nodo transdiagnóstico RDoC más importante? Network Theory les da el vocabulario para explicar por qué: es un nodo de alta centralidad que conecta múltiples clusters."
-
 ---
 
-## BLOQUE 3: Computational Psychiatry — El cerebro como máquina de predicción (15-22 min) → K2
+### Bloque 2 — Computational Psychiatry: el cerebro como máquina de predicción (K2)
 
-### La idea central en una frase
+#### La idea central en una frase
 
 > **"El cerebro no espera pasivamente a que el mundo le envíe información. Constantemente predice lo que va a pasar — y cuando la predicción falla, eso es un prediction error. Los trastornos mentales son formas específicas de que esa maquinaria de predicción falle."**
 
-### Prediction error: el concepto
+#### Prediction error: el concepto
 
 **Analogía del GPS interno:**
 
@@ -206,7 +161,7 @@ Si PE es grande → actualizar el modelo (aprendizaje)
 Si PE es pequeño → mantener el modelo (confirmación)
 ```
 
-**Dos componentes clave:**
+**Tres componentes clave:**
 
 1. **Priors (creencias previas):** Lo que el cerebro espera basado en experiencia previa. Son predicciones top-down.
 2. **Evidencia sensorial:** Lo que los sentidos captan. Es información bottom-up.
@@ -214,7 +169,7 @@ Si PE es pequeño → mantener el modelo (confirmación)
 
 > **Analogía de los dos volúmenes:** "Imaginen que la percepción tiene dos controles de volumen: uno para 'lo que espero' (prior) y otro para 'lo que mis sentidos captan' (evidencia). En una persona sana, ambos están balanceados. En psicopatología, uno está al máximo y el otro al mínimo."
 
-### Prediction error alterado → síntomas específicos
+#### Prediction error alterado → síntomas específicos
 
 **Presentar como tabla comparativa — la misma maquinaria, distinto patrón de falla:**
 
@@ -224,7 +179,7 @@ Si PE es pequeño → mantener el modelo (confirmación)
 | **Ansiedad** | El prior de amenaza tiene precisión excesiva (hyperprecise threat priors). El cerebro sobreestima la probabilidad de peligro | Hipervigilancia, arousal excesivo, evitación — el filtro de spam está demasiado sensible | El filtro de spam marca todo como "posible amenaza" |
 | **Depresión** | Los priors negativos tienen precisión excesiva. Los prediction errors positivos (buenas noticias) se atenúan (cognitive immunization) | Rumiación, desesperanza, anhedonia — el modelo pesimista es inmune a la evidencia contraria | El autocomplete del teléfono solo sugiere finales negativos |
 
-### Psicosis como aberrant salience
+#### Psicosis como aberrant salience
 
 **Modelo de Kapur (2003, *American Journal of Psychiatry*):** Un estado hiperdopaminérgico desregulado genera asignación aberrante de saliencia — estímulos ordinarios se vuelven extraordinariamente significativos.
 
@@ -235,7 +190,7 @@ Si PE es pequeño → mantener el modelo (confirmación)
 
 > **Conexión con Tomás (sesión 3):** "¿Recuerdan a Tomás, 16 años, que decía 'siento que la gente me mira raro pero probablemente es mi imaginación'? En lenguaje computacional: su sistema de saliencia genera prediction errors leves ante estímulos sociales neutros — pero su insight está preservado: reconoce que la predicción puede ser errónea. Eso es Stage 1b: el sistema está perturbado pero no ha tomado el control."
 
-### Depresión como priors pesimistas immunizados
+#### Depresión como priors pesimistas immunizados
 
 **Modelo de Kube et al. (2020, *Biological Psychiatry*):** La depresión involucra priors negativos con precisión excesiva + atenuación de prediction errors positivos.
 
@@ -245,13 +200,13 @@ Si PE es pequeño → mantener el modelo (confirmación)
 
 > **Implicación clínica:** "Esto explica por qué el feedback positivo no funciona fácilmente en depresión. No es que el paciente 'no quiera' mejorar — es que su maquinaria de predicción está calibrada para descartar la evidencia positiva. La terapia cognitiva, vista desde aquí, es un intento de recalibrar la precisión de los priors."
 
-### Ansiedad como priors de amenaza hiperprecisos
+#### Ansiedad como priors de amenaza hiperprecisos
 
 **Modelo de Paulus & Stein (2006, *Biological Psychiatry*):** La ansiedad involucra una señal de predicción interoceptiva alterada — detección aumentada de la diferencia entre el estado corporal observado y el esperado.
 
 > **Analogía del termostato:** "Un termostato predice la temperatura y ajusta. En ansiedad, el termostato está miscalibrado: predice que el cuerpo está en peligro, detecta discrepancias exageradas, y dispara alarmas desproporcionadas. La ínsula anterior es ese termostato."
 
-### El puente clave: cada neuromodulador controla un parámetro del algoritmo
+#### El puente clave: cada neuromodulador controla un parámetro del algoritmo
 
 > **Punto pedagógico:** "No necesitan la matemática. Necesitan el mapa: cada neuromodulador es una *perilla* del algoritmo de predicción. Cuando prescriben, están ajustando perillas específicas."
 
@@ -269,17 +224,17 @@ Si PE es pequeño → mantener el modelo (confirmación)
 
 > **"Cuando un paciente dice 'todo me parece amenazante', el mapa les dice: sobreestimación de volatilidad → noradrenalina. Cuando dice 'nada me importa', el mapa dice: RPE positivo atenuado → dopamina. Cuando dice 'la gente me mira raro', dice: aberrant salience → dopamina, o precisión sensorial baja → acetilcolina. El neuromodulador les señala el fármaco."**
 
-### Reencuadre clínico: de "qué diagnóstico" a "qué parámetro"
+#### Reencuadre clínico: de "qué diagnóstico" a "qué parámetro"
 
 > "El reencuadre que propone Computational Psychiatry es radical: cambiar la pregunta de '¿qué diagnóstico tiene?' por '¿qué parámetro inferencial está roto y qué neuromodulador lo controla?'. Los fármacos no son 'antidepresivos' o 'antipsicóticos' — son intervenciones sobre el algoritmo inferencial."
 
-Esto conecta directamente con lo que viene: NbN2 y farmacología por dominio.
+Esto conecta directamente con el bloque siguiente: NbN2 y farmacología por dominio.
 
 ---
 
-## BLOQUE 4: Precision Psychiatry — NbN2 y farmacología por dominio (22-32 min) → K3
+### Bloque 3 — Psicofarmacología de precisión: prescribir por dominio, no por diagnóstico (K3)
 
-### El problema que la precision psychiatry resuelve
+#### El problema que la precision psychiatry resuelve
 
 > **"Si un paciente con 'depresión mayor' tiene anhedonia severa y un paciente con 'esquizofrenia' también tiene anhedonia severa... ¿por qué le damos ISRS a uno y antipsicótico al otro? ¿No sería más lógico tratar la anhedonia — el síntoma dimensional compartido — con la misma lógica farmacológica?"**
 
@@ -294,7 +249,7 @@ Ambos tienen el mismo síntoma dimensional (anhedonia = Positive Valence ↓), p
 
 > **"La precision psychiatry invierte la lógica: primero identifica el dominio dimensional afectado y el parámetro computacional roto, luego elige el fármaco por mecanismo de acción sobre ese dominio."**
 
-### NbN2: el lenguaje de la precision psychiatry
+#### NbN2: el lenguaje de la precision psychiatry
 
 La **Neuroscience-based Nomenclature** (NbN/NbN2; Zohar, Stahl, Nutt et al., 2015; Lancet Psychiatry 2026) desplaza la taxonomía por indicación — "antidepresivo", "antipsicótico", "ansiolítico" — porque estas etiquetas mezclan historia comercial, síntomas tratados y supuestos diagnósticos DSM.
 
@@ -315,7 +270,7 @@ La **Neuroscience-based Nomenclature** (NbN/NbN2; Zohar, Stahl, Nutt et al., 201
 
 > **Punto para R1:** "Quetiapina a 25mg no es el mismo fármaco clínico que quetiapina a 600mg. Aripiprazol no es un 'antipsicótico débil' — es un agonista parcial que estabiliza dopamina en ambas direcciones. Cobenfy es un antipsicótico sin D2. El nombre NbN2 les dice *qué hace el fármaco*, no para qué diagnóstico se inventó."
 
-### El concepto DDDP: *Different Dosage, Different Pharmacology*
+#### El concepto DDDP: *Different Dosage, Different Pharmacology*
 
 **Publicado recientemente en Lancet Psychiatry (2026):** el reconocimiento formal de que la dosis transforma el fármaco.
 
@@ -327,7 +282,7 @@ La **Neuroscience-based Nomenclature** (NbN/NbN2; Zohar, Stahl, Nutt et al., 201
 
 > "La próxima vez que alguien les diga 'quetiapina es un antipsicótico', pregunten: ¿a qué dosis?"
 
-### Las 5 preguntas antes de prescribir
+#### Las 5 preguntas antes de prescribir
 
 **Este es el algoritmo que van a usar en todo el curso:**
 
@@ -341,7 +296,7 @@ Antes de elegir un psicofármaco, formulen 5 preguntas explícitas:
 
 > **"Esta secuencia reduce tres sesgos: escalada por inercia, polifarmacia por síntoma aislado y cambio lateral dentro de la misma clase histórica."**
 
-### Tabla de referencia: dominio RDoC → parámetro computacional → lever farmacológico
+#### Tabla de referencia: dominio RDoC → parámetro computacional → lever farmacológico
 
 **Esta tabla integra las 3 herramientas de hoy — se usará en cada bloque del curso:**
 
@@ -357,7 +312,7 @@ Antes de elegir un psicofármaco, formulen 5 preguntas explícitas:
 
 > **"Noten que la tabla ahora tiene una columna de parámetro computacional. El dominio RDoC les dice QUÉ sistema. El parámetro computacional les dice POR QUÉ falla. El neuromodulador les dice CON QUÉ intervenir. NbN2 les dice CÓMO nombrarlo."**
 
-### Ejemplo contrastado: mismo diagnóstico, distinto perfil → distinto fármaco
+#### Ejemplo contrastado: mismo diagnóstico, distinto perfil → distinto fármaco
 
 **Caso A — Elena:**
 - Diagnóstico DSM: Depresión Mayor Recurrente (F32.1)
@@ -377,7 +332,7 @@ Antes de elegir un psicofármaco, formulen 5 preguntas explícitas:
 
 > **"Mismo F32.1, distinto fármaco. ¿Por qué? Porque el dominio, el parámetro computacional y el neuromodulador son distintos. Elena tiene priors negativos rígidos → necesita recalibrar serotonina. Diego tiene RPE positivo atenuado → necesita activación dopaminérgica. Un ISRS en Diego podría empeorar su anhedonia. NbN2 les dice esto; la etiqueta F32.1 no."**
 
-### Error frecuente: confundir clase con mecanismo
+#### Error frecuente: confundir clase con mecanismo
 
 > "Los errores más caros que van a ver en su residencia vienen de confundir la clase histórica con el mecanismo real."
 
@@ -388,7 +343,7 @@ Antes de elegir un psicofármaco, formulen 5 preguntas explícitas:
 | Quetiapina 25mg para insomnio = "tomar antipsicótico" | A esa dosis es H1/α1 antagonist, no antipsicótico. Pero la carga metabólica H1 crónica sí existe |
 | "Necesita ansiolítico" → benzodiazepina crónica | BZD es GABA-A PAM agudo; no recalibra priors de amenaza. ISRS/SNRI sí recalibran aprendizaje aversivo a largo plazo |
 
-### Convergencia: Network + Computational + NbN2 + Staging
+#### Convergencia: Network + Computational + NbN2 + Staging
 
 > "Ahora combinen las herramientas de hoy:"
 
@@ -406,11 +361,61 @@ Antes de elegir un psicofármaco, formulen 5 preguntas explícitas:
 
 ---
 
-## BLOQUE 5: Ejercicio Integrador — Formulación Dimensional de María (32-47 min) → A1, A2
+## Caso
 
-### Instrucciones (2 min)
+Jaflo, aquí María deja de ser ejemplo ilustrativo y se vuelve el primer paciente del curso al que se le aplica el toolkit entero. Es el cierre de su arco como caso hilo conductor del Bloque 1.
 
-> "Ahora van a hacer lo que ningún checklist del DSM les permite: una formulación dimensional completa. Tienen el template en papel. Usen todo lo del bloque — mínimo 3 frameworks. Tienen 8 minutos individuales y luego discutimos."
+### La red de síntomas de María
+
+Apliquemos Network Theory a María. Presentar la red esquemática:
+
+```
+                    [Exposoma: ACEs, padre alcohólico, bullying]
+                                      |
+                                      v
+[Insomnio] ◄───────────────► [Rumiación] ◄────► [Ánimo depresivo]
+     |                             |                     |
+     v                             v                     v
+[Fatiga] ──────────────► [Concentración ↓]        [Anhedonia]
+                                                        |
+                                                        v
+                                                [Aislamiento social]
+                                                        |
+                                                        v
+                                              [Evitación situaciones]
+```
+
+- **Nodo central candidato:** Insomnio (alta conectividad: conecta con rumiación, fatiga, concentración, y es hub transdiagnóstico RDoC de sesión 2).
+- **Bridge symptom:** Rumiación conecta Negative Valence (cluster depresivo) con Cognitive Systems (concentración, toma de decisiones) — puente entre dimensiones HiTOP.
+- **Feedback loops:** Rumiación ↔ Ánimo depresivo; Insomnio ↔ Rumiación; Anhedonia ↔ Aislamiento social.
+- **Implicación terapéutica:** Si atacamos insomnio + rumiación como targets prioritarios, podríamos desactivar cascadas en múltiples dominios simultáneamente.
+
+> **Conexión con RDoC (sesión 2):** "¿Recuerdan que en sesión 2 dijimos que el insomnio aparece en >80% de trastornos psiquiátricos y es el nodo transdiagnóstico RDoC más importante? Network Theory les da el vocabulario para explicar por qué: es un nodo de alta centralidad que conecta múltiples clusters."
+
+### El patrón computacional de María
+
+En lenguaje de Computational Psychiatry:
+
+- **Prediction error alterado:** priors pesimistas con precisión excesiva → cognitive immunization (descuenta evidencia positiva).
+- **Priors hiperprecisos:** en Negative Valence (todo será malo) + Positive Valence (nada valdrá la pena).
+- **Conexión con exposoma:** la adversidad temprana (padre alcohólico, bullying, madre con depresión) puede haber calibrado los priors hacia amenaza/desesperanza — un prior aprendido en ventana crítica y ahora hiperpreciso.
+- **Dial de precisión:** prior pesimista al máximo, evidencia positiva atenuada (mute).
+
+> "El caso de María nos dice algo clínico: su rumiación no es 'carácter' ni 'queja' — es la expresión de un sistema de predicción que descarta evidencia positiva. Eso cambia la forma de abordar la psicoterapia: no es 'pensar positivo', es recalibrar la precisión del prior."
+
+### El plan farmacológico de María
+
+Aplicando las 5 preguntas antes de prescribir:
+
+1. **¿Qué dominio RDoC explica la discapacidad?** Negative Valence (distress ↑) + Positive Valence (reward ↓).
+2. **¿Qué parámetro computacional está desregulado?** Priors negativos rígidos (5-HT) + RPE positivo atenuado (DA).
+3. **¿Qué receptor/transportador modula ese circuito?** Lever primario: SERT → **sertralina: serotonin, SERT reuptake inhibitor** (50-100mg). Si anhedonia persiste: agregar **bupropión: NE/DA, reuptake inhibitor**.
+4. **¿Qué evidencia clínica existe?** ISRS primera línea TDM (NMA robusta). Bupropión para anhedonia residual (evidencia moderada).
+5. **¿Qué marcador temprano indicará respuesta/falla?** SHAPS (anhedonia), diario de rumiación, ISI (sueño) — por separado, no solo PHQ-9 total.
+
+**¿Proporcional al staging?** Sí — Stage 2 (primer episodio completo) amerita farmacoterapia + psicoterapia.
+
+> "Noten que el plan no es 'dar un antidepresivo'. Es: atacar Negative Valence con serotonina (sertralina), monitorear Positive Valence por separado, y si la anhedonia no responde al SRI, agregar un NDRI (bupropión) en vez de escalar dentro de la misma clase. Esa es la diferencia entre prescripción categórica y precision psychiatry."
 
 ### Template de formulación dimensional (entregado en papel o proyectado)
 
@@ -467,7 +472,13 @@ Antes de elegir un psicofármaco, formulen 5 preguntas explícitas:
 
 ---
 
-### Trabajo individual (8 min)
+### Ejercicio integrador (32-47 min) — A1, A2
+
+**Instrucciones (2 min):**
+
+> "Ahora van a hacer lo que ningún checklist del DSM les permite: una formulación dimensional completa. Tienen el template en papel. Usen todo lo del bloque — mínimo 3 frameworks. Tienen 8 minutos individuales y luego discutimos."
+
+**Trabajo individual (8 min):**
 
 Los R1 completan el template con María. Facilitador circula el aula, haciendo preguntas de coaching:
 
@@ -528,7 +539,7 @@ Los R1 completan el template con María. Facilitador circula el aula, haciendo p
 
 > 1. "¿Qué ven en esta formulación que el DSM no les da?"
 
-**Guiar hacia:** La formulación dimensional les muestra *dónde* está (HiTOP), *por qué* (exposoma), *qué sistema falla* (RDoC), *cómo se conectan los síntomas* (network), *qué mecanismo está roto* (computational), *qué tan lejos ha ido* (staging), y *qué fármaco actúa sobre qué dominio* (PRISM). El DSM les da: F32.1.
+**Guiar hacia:** La formulación dimensional les muestra *dónde* está (HiTOP), *por qué* (exposoma), *qué sistema falla* (RDoC), *cómo se conectan los síntomas* (network), *qué mecanismo está roto* (computational), *qué tan lejos ha ido* (staging), y *qué fármaco actúa sobre qué dominio* (psicofarmacología de precisión). El DSM les da: F32.1.
 
 > 2. "Si miden 'mejoría de depresión' con un score total del PHQ-9... ¿qué problema ven?"
 
@@ -536,19 +547,23 @@ Los R1 completan el template con María. Facilitador circula el aula, haciendo p
 
 > 3. "¿Y si María estuviera en Stage 1b en vez de Stage 2? ¿Qué cambia?"
 
-**Guiar hacia:** Stage 1b = no fármaco en primera línea. TCC + intervención sobre exposoma modificable + monitoreo. El staging determina la intensidad; PRISM determina la dirección. No son lo mismo.
+**Guiar hacia:** Stage 1b = no fármaco en primera línea. TCC + intervención sobre exposoma modificable + monitoreo. El staging determina la intensidad; psicofarmacología de precisión determina la dirección. No son lo mismo.
 
 **Error de R1 que hay que corregir si aparece:**
-- "Le daría antidepresivo + ansiolítico + hipnótico" → PRISM no apila por diagnóstico; identifica dominios y usa el menor número de fármacos con la mayor cobertura de dominios.
+- "Le daría antidepresivo + ansiolítico + hipnótico" → psicofarmacología de precisión no apila por diagnóstico; identifica dominios y usa el menor número de fármacos con la mayor cobertura de dominios.
 - "La formulación dimensional es demasiado complicada para la práctica" → En la práctica, no escriben un documento de 8 secciones. Pero el *pensamiento* dimensional cambia sus decisiones aunque el formulario sea breve. Con el tiempo se vuelve automático.
 
 ---
 
-## BLOQUE 6: Cierre (47-50 min)
+## Conclusiones
+
+Jaflo, el cierre del Bloque 1 tiene tres funciones: fijar el take-home, mapear lo construido y abrir el Bloque 2.
 
 ### Take-Home Message
 
-> **"La formulación dimensional no es un modelo — es un toolkit. Cada herramienta ilumina un ángulo distinto del mismo paciente: HiTOP dice dónde está, RDoC dice qué sistema falla, exposoma dice por qué, staging dice cuánto intervenir, networks dice cómo se conectan los síntomas, computational dice qué mecanismo está roto, y PRISM dice qué fármaco por qué razón."**
+> **"La formulación dimensional no es un modelo — es un toolkit. Cada herramienta ilumina un ángulo distinto del mismo paciente: HiTOP dice dónde está, RDoC dice qué sistema falla, exposoma dice por qué, staging dice cuánto intervenir, networks dice cómo se conectan los síntomas, computational dice qué mecanismo está roto, y psicofarmacología de precisión dice qué fármaco por qué razón."**
+
+Estas **7 preguntas** son el esqueleto de todo el curso. A partir de la sesión 5, vamos a aplicar este toolkit dominio por dominio.
 
 ### Mapa completo del Bloque 1
 
@@ -559,14 +574,14 @@ Sesión 3: Exposoma      → ¿POR QUÉ llegó ahí?                   (riesgo)
           Staging       → ¿QUÉ TAN LEJOS ha ido?                (trayectoria)
 Sesión 4: Networks      → ¿CÓMO SE CONECTAN los síntomas?       (estructura interna)
           Computational → ¿QUÉ MECANISMO de predicción falla?   (computación)
-          PRISM         → ¿QUÉ FÁRMACO, POR QUÉ DOMINIO?       (tratamiento)
+          psicofarmacología de precisión         → ¿QUÉ FÁRMACO, POR QUÉ DOMINIO?       (tratamiento)
 ```
 
 > "Estas 7 preguntas son el esqueleto de todo el curso. A partir de la sesión 5, vamos a aplicar este toolkit dominio por dominio, empezando por Negative Valence — el sistema de amenaza."
 
 ### Preview Bloque 2: Negative Valence / Internalizing-Fear
 
-"El Bloque 2 tiene 3 sesiones: modelo (sesión 5), psicoterapia (sesión 6), y farmacología PRISM (sesión 7). Vamos a entrar en el sistema de amenaza — acute threat, potential threat, sustained threat. Verán por qué fobias, pánico, ansiedad de separación y OCD son variantes dimensionales del mismo sistema, y cómo tratar cada una con la lógica que aprendieron hoy."
+El Bloque 2 tiene 3 sesiones: modelo (sesión 5), psicoterapia (sesión 6), y psicofarmacología de precisión (sesión 7). Vamos a entrar en el sistema de amenaza — acute threat, potential threat, sustained threat. Verán por qué fobias, pánico, ansiedad de separación y OCD son variantes dimensionales del mismo sistema, y cómo tratar cada una con la lógica que aprendieron hoy.
 
 ### Template de formulación: el deliverable
 
@@ -575,8 +590,9 @@ Sesión 4: Networks      → ¿CÓMO SE CONECTAN los síntomas?       (estructur
 ### Tarea breve
 
 "Dos opciones (elijan una):
+
 1. Completen la formulación dimensional de un paciente real de su rotación usando el template de hoy (mínimo 3 de las 8 secciones).
-2. Si ya hicieron la mini-historia exposómica de la sesión 3, agreguen las secciones de red, patrón computacional y PRISM."
+2. Si ya hicieron la mini-historia exposómica de la sesión 3, agreguen las secciones de red, patrón computacional y psicofarmacología de precisión."
 
 ---
 
@@ -612,12 +628,12 @@ Sesión 4: Networks      → ¿CÓMO SE CONECTAN los síntomas?       (estructur
 23. Bennett D, Silverstein SM, Niv Y. The Two Cultures of Computational Psychiatry. *JAMA Psychiatry*. 2019;76(6):563-564
 24. Adams RA, Stephan KE, Brown HR, Frith CD, Friston KJ. The computational anatomy of psychosis. *Front Psychiatry*. 2013;4:47. doi:10.3389/fpsyt.2013.00047
 
-### Farmacología dimensional / PRISM
+### Farmacología dimensional / psicofarmacología de precisión
 25. Zohar J, Stahl S, Moller HJ, et al. A review of the current nomenclature for psychotropic agents and an introduction to the Neuroscience-based Nomenclature. *Eur Neuropsychopharmacol*. 2015;25(12):2318-2325. doi:10.1016/j.euroneuro.2015.08.019
 26. Nutt DJ, Blier P. Neuroscience-based Nomenclature (NbN) for Clinical Psychopharmacology and Neuroscience. *Int J Neuropsychopharmacol*. 2016;19(8):pyw066. doi:10.1093/ijnp/pyw066
 27. Stahl SM. *Stahl's Essential Psychopharmacology*. 5th ed. Cambridge University Press; 2021
 28. Kas MJ, et al. A quantitative approach to neuropsychiatry: The why and the how. *Neurosci Biobehav Rev*. 2019;97:3-9
-29. Bilderbeck AC, et al. Overview of PRISM clinical implementation. *Neurosci Biobehav Rev*. 2019;97:87-93. doi:10.1016/j.neubiorev.2018.06.019
+29. Bilderbeck AC, et al. Overview of psicofarmacología de precisión clinical implementation. *Neurosci Biobehav Rev*. 2019;97:87-93. doi:10.1016/j.neubiorev.2018.06.019
 
 ### Computational Psychiatry — Desarrollos recientes
 30. Shaw AD, Sumner RL, Berndt LCS. Predictive coding and neurocomputational psychiatry. *Front Psychiatry*. 2025;16:1713833

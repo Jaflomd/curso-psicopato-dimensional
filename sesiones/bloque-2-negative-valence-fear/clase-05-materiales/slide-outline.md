@@ -372,7 +372,7 @@
   - **Tarea (top):** Craske MG et al. 2014. *Maximizing exposure therapy: An inhibitory learning approach.* *BRT* 58:10-23.
   - **Preview (bottom):**
     - S6 — Psicoterapia: ERP + inhibitory learning
-    - S7 — Farmacología PRISM: por qué las benzodiacepinas pueden sabotear el ERP
+    - S7 — Farmacología de precisión: por qué las benzodiacepinas pueden sabotear el ERP
 - **Texto:** Action title.
 - **Nota instructor:** 30 seg.
 

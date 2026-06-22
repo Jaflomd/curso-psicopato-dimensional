@@ -279,7 +279,7 @@
   - 🟢 **RDoC** (derecha) = "Mecanismos: ¿qué sistema falla?"
   - 🟠 **Staging** (abajo) = "Tiempo: ¿en qué punto del camino?"
   - Centro (intersección de los 3): **"Formulación dimensional integradora"** en texto resaltado
-- Pie: "Sesión 4: esto se conecta con PRISM — farmacología por dominio, no por diagnóstico."
+- Pie: "Sesión 4: esto se conecta con psicofarmacología de precisión — farmacología por dominio, no por diagnóstico."
 - Fuente: McGorry et al., 2025
 
 ---

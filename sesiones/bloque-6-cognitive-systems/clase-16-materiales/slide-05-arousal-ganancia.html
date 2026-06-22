@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Slide 5 · Arousal funciona como ganancia</title>
+<meta name="description" content="Slide 5 de la sesion 16 del curso Psicopatologia Dimensional: arousal como ganancia para atencion y aprendizaje." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;500;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,650;6..72,800&display=swap" rel="stylesheet">
+<style>
+/* ===========================================
+   CSS CUSTOM PROPERTIES: REGULATORY COGNITION
+   =========================================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ===========================================
+   VIEWPORT FITTING: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   These styles ensure slides fit exactly in the viewport.
+   =========================================== */
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+html {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+}
+
+.slide {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.slide-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-height: 100%;
+    overflow: hidden;
+    padding: var(--slide-padding);
+}
+
+:root {
+    --title-size: clamp(1.5rem, 5vw, 4rem);
+    --h2-size: clamp(1.25rem, 3.5vw, 2.5rem);
+    --h3-size: clamp(1rem, 2.5vw, 1.75rem);
+    --body-size: clamp(0.75rem, 1.5vw, 1.125rem);
+    --small-size: clamp(0.65rem, 1vw, 0.875rem);
+    --slide-padding: clamp(1rem, 4vw, 4rem);
+    --content-gap: clamp(0.5rem, 2vw, 2rem);
+    --element-gap: clamp(0.25rem, 1vw, 1rem);
+}
+
+.card, .container, .content-box {
+    max-width: min(90vw, 1000px);
+    max-height: min(80vh, 700px);
+}
+
+.feature-list, .bullet-list {
+    gap: clamp(0.4rem, 1vh, 1rem);
+}
+
+.feature-list li, .bullet-list li {
+    font-size: var(--body-size);
+    line-height: 1.4;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    gap: clamp(0.5rem, 1.5vw, 1rem);
+}
+
+img, .image-container {
+    max-width: 100%;
+    max-height: min(50vh, 400px);
+    object-fit: contain;
+}
+
+@media (max-height: 700px) {
+    :root {
+        --slide-padding: clamp(0.75rem, 3vw, 2rem);
+        --content-gap: clamp(0.4rem, 1.5vw, 1rem);
+        --title-size: clamp(1.25rem, 4.5vw, 2.5rem);
+        --h2-size: clamp(1rem, 3vw, 1.75rem);
+    }
+}
+
+@media (max-height: 600px) {
+    :root {
+        --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem);
+        --content-gap: clamp(0.3rem, 1vw, 0.75rem);
+        --title-size: clamp(1.1rem, 4vw, 2rem);
+        --body-size: clamp(0.7rem, 1.2vw, 0.95rem);
+    }
+
+    .nav-dots, .keyboard-hint, .decorative {
+        display: none;
+    }
+}
+
+@media (max-height: 500px) {
+    :root {
+        --slide-padding: clamp(0.4rem, 2vw, 1rem);
+        --title-size: clamp(1rem, 3.5vw, 1.5rem);
+        --h2-size: clamp(0.9rem, 2.5vw, 1.25rem);
+        --body-size: clamp(0.65rem, 1vw, 0.85rem);
+    }
+}
+
+@media (max-width: 600px) {
+    :root {
+        --title-size: clamp(1.25rem, 7vw, 2.5rem);
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* ===========================================
+   THEME VARIABLES
+   =========================================== */
+:root {
+  --bg-primary: #0f1010;
+  --bg-secondary: #171818;
+  --panel: rgba(23, 24, 24, 0.82);
+  --panel-soft: rgba(23, 24, 24, 0.58);
+  --text-primary: #f7f3e9;
+  --text-secondary: rgba(245, 239, 224, 0.80);
+  --text-muted: rgba(218, 208, 184, 0.58);
+  --line: rgba(245, 239, 224, 0.15);
+  --line-strong: rgba(245, 239, 224, 0.28);
+  --arousal: #f2b85b;
+  --attention: #29d0c3;
+  --control: #83a9ff;
+  --memory: #b995ff;
+  --warning: #ef5f7c;
+  --safety: #7bd66f;
+  --ink: #0f1010;
+  --font-display: "Newsreader", Georgia, serif;
+  --font-body: "IBM Plex Sans", sans-serif;
+  --font-mono: "Azeret Mono", monospace;
+  --title-size: clamp(1.58rem, 4.2vw, 3.45rem);
+  --h2-size: clamp(1rem, 2.45vw, 1.9rem);
+  --h3-size: clamp(0.86rem, 1.38vw, 1.1rem);
+  --body-size: clamp(0.68rem, 1.05vw, 0.94rem);
+  --small-size: clamp(0.56rem, 0.84vw, 0.74rem);
+  --micro-size: clamp(0.46rem, 0.66vw, 0.58rem);
+  --slide-padding: clamp(0.92rem, 3vw, 2.72rem);
+  --content-gap: clamp(0.48rem, 1.28vw, 1rem);
+  --element-gap: clamp(0.3rem, 0.78vw, 0.64rem);
+  --radius: 8px;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-normal: 0.58s;
+}
+
+/* ===========================================
+   BASE PRESENTATION STYLE
+   =========================================== */
+body {
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  font-family: var(--font-body);
+  line-height: 1.34;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(130deg, rgba(41, 208, 195, 0.12) 0 1px, transparent 1px 72px),
+    linear-gradient(42deg, rgba(242, 184, 91, 0.10) 0 1px, transparent 1px 96px),
+    radial-gradient(circle at 74% 35%, rgba(242, 184, 91, 0.16), transparent 29%),
+    linear-gradient(180deg, #0f1010 0%, #151616 58%, #0b0c0c 100%);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.16;
+  background-image:
+    linear-gradient(rgba(247, 243, 233, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(247, 243, 233, 0.06) 1px, transparent 1px);
+  background-size: clamp(34px, 5.3vw, 64px) clamp(34px, 5.3vw, 64px);
+  mask-image: linear-gradient(180deg, transparent, #000 12%, #000 84%, transparent);
+}
+
+main, .slide, .progress-bar, .nav-dots { position: relative; z-index: 1; }
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  z-index: 1000;
+  background: linear-gradient(90deg, var(--attention), var(--arousal), var(--control), var(--memory));
+}
+
+.nav-dots {
+  position: fixed;
+  right: clamp(0.3rem, 1vw, 1rem);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px 6px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(15, 16, 16, 0.60);
+  backdrop-filter: blur(12px);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--attention);
+  transform: scale(1.45);
+}
+
+.slide::before {
+  content: "";
+  position: absolute;
+  inset: clamp(0.5rem, 1vw, 1rem);
+  border: 1px solid rgba(247, 243, 233, 0.055);
+  pointer-events: none;
+}
+
+.slide-content {
+  width: min(100%, 1160px);
+  margin: 0 auto;
+  gap: var(--content-gap);
+}
+
+/* ===========================================
+   TYPOGRAPHY AND SMALL COMPONENTS
+   =========================================== */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--micro-size);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--attention);
+}
+
+h1, h2 {
+  font-family: var(--font-display);
+  line-height: 0.98;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+h1 { font-size: var(--title-size); max-width: 15ch; }
+h2 { font-size: var(--h2-size); max-width: 20ch; }
+h3 { font-size: var(--h3-size); font-weight: 700; letter-spacing: 0; }
+p { font-size: var(--body-size); color: var(--text-secondary); max-width: 64ch; }
+
+.accent { color: var(--arousal); }
+.cyan { color: var(--attention); }
+.control { color: var(--control); }
+.memory { color: var(--memory); }
+
+.chip-row { display: flex; flex-wrap: wrap; gap: var(--element-gap); align-items: center; }
+.chip {
+  font-family: var(--font-mono);
+  font-size: var(--micro-size);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.42em 0.7em;
+  background: rgba(247, 243, 233, 0.055);
+}
+
+.source {
+  position: absolute;
+  left: clamp(1rem, 2.4vw, 2.4rem);
+  right: clamp(1rem, 2.4vw, 2.4rem);
+  bottom: clamp(0.56rem, 1.1vw, 1rem);
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: var(--micro-size);
+  color: var(--text-muted);
+}
+
+/* ===========================================
+   SLIDE 5 LAYOUT
+   =========================================== */
+.slide-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+  gap: clamp(0.8rem, 2.1vw, 1.6rem);
+  align-items: stretch;
+  min-height: min(76vh, 680px);
+}
+
+.claim {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--content-gap);
+  min-height: 100%;
+}
+
+.title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.42rem, 0.86vw, 0.72rem);
+}
+
+.title-wrap p {
+  max-width: 42ch;
+}
+
+.pearl {
+  border: 1px solid rgba(242, 184, 91, 0.30);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(135deg, rgba(242, 184, 91, 0.13), rgba(41, 208, 195, 0.06)),
+    rgba(23, 24, 24, 0.66);
+  padding: clamp(0.72rem, 1.35vw, 1.08rem);
+  box-shadow: 0 18px 70px rgba(0,0,0,0.22);
+}
+
+.pearl b {
+  display: block;
+  font-family: var(--font-mono);
+  color: var(--arousal);
+  font-size: var(--micro-size);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  margin-bottom: 0.42rem;
+}
+
+.pearl p {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2vw, 1.58rem);
+  line-height: 1.05;
+  max-width: 26ch;
+}
+
+.systems {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  padding: clamp(0.7rem, 1.4vw, 1.08rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 0.72fr);
+  gap: clamp(0.7rem, 1.4vw, 1rem);
+  overflow: hidden;
+  box-shadow: 0 18px 70px rgba(0,0,0,0.22);
+}
+
+.cascade {
+  display: grid;
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.34rem, 0.78vw, 0.62rem);
+}
+
+.stage {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(247, 243, 233, 0.045);
+  padding: clamp(0.58rem, 1.1vw, 0.86rem);
+  min-height: 0;
+}
+
+.stage::after {
+  content: "";
+  position: absolute;
+  left: clamp(0.82rem, 1.5vw, 1.1rem);
+  bottom: calc(-0.62 * var(--element-gap));
+  height: var(--element-gap);
+  border-left: 1px solid var(--line-strong);
+}
+
+.stage:last-child::after { display: none; }
+
+.stage small {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--micro-size);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 0.28rem;
+}
+
+.stage strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(0.96rem, 1.72vw, 1.36rem);
+  line-height: 1;
+  color: var(--text-primary);
+}
+
+.stage span {
+  display: block;
+  margin-top: 0.24rem;
+  font-size: var(--small-size);
+  color: var(--text-secondary);
+}
+
+.stage.arousal { border-left: 3px solid var(--arousal); }
+.stage.attention { border-left: 3px solid var(--attention); }
+.stage.control-stage { border-left: 3px solid var(--control); }
+.stage.memory-stage { border-left: 3px solid var(--memory); }
+
+/* ===========================================
+   GAIN DIAL VISUAL
+   =========================================== */
+.gain-panel {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: var(--element-gap);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(circle at 50% 34%, rgba(242, 184, 91, 0.16), transparent 42%),
+    rgba(247, 243, 233, 0.035);
+  padding: clamp(0.58rem, 1.1vw, 0.92rem);
+}
+
+.gain-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+  align-items: start;
+}
+
+.gain-title b {
+  font-family: var(--font-mono);
+  font-size: var(--micro-size);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--arousal);
+}
+
+.gain-title span {
+  font-size: var(--micro-size);
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.gain-meter {
+  position: relative;
+  min-height: clamp(220px, 45vh, 420px);
+  display: grid;
+  place-items: center;
+}
+
+.meter-spine {
+  position: absolute;
+  left: 50%;
+  top: 5%;
+  bottom: 5%;
+  width: clamp(22px, 3.1vw, 34px);
+  transform: translateX(-50%);
+  border-radius: 999px;
+  border: 1px solid rgba(247, 243, 233, 0.18);
+  background:
+    linear-gradient(180deg,
+      rgba(239, 95, 124, 0.82) 0%,
+      rgba(242, 184, 91, 0.82) 28%,
+      rgba(41, 208, 195, 0.92) 48%,
+      rgba(242, 184, 91, 0.82) 70%,
+      rgba(131, 169, 255, 0.78) 100%);
+  box-shadow:
+    0 0 38px rgba(242, 184, 91, 0.16),
+    inset 0 0 18px rgba(15, 16, 16, 0.42);
+}
+
+.meter-spine::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  width: clamp(42px, 6.4vw, 72px);
+  height: clamp(42px, 6.4vw, 72px);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid rgba(247, 243, 233, 0.28);
+  background: rgba(15, 16, 16, 0.88);
+  box-shadow: 0 0 34px rgba(41, 208, 195, 0.28);
+}
+
+.meter-spine::after {
+  content: "ventana";
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  font-size: var(--micro-size);
+  color: var(--attention);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.meter-label {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(3.2rem, 7.8vw, 5.4rem);
+  align-items: center;
+  pointer-events: none;
+}
+
+.meter-label.top { top: 4%; }
+.meter-label.mid { top: 43%; }
+.meter-label.bottom { bottom: 4%; }
+
+.meter-label span {
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(15, 16, 16, 0.74);
+  padding: clamp(0.42rem, 0.86vw, 0.64rem);
+  font-size: var(--small-size);
+  line-height: 1.22;
+  color: var(--text-secondary);
+}
+
+.meter-label strong {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--micro-size);
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.18rem;
+}
+
+.meter-label.top strong { color: var(--warning); }
+.meter-label.mid strong { color: var(--attention); }
+.meter-label.bottom strong { color: var(--control); }
+
+.teacher-note {
+  border-top: 1px solid var(--line);
+  padding-top: var(--element-gap);
+  font-size: var(--small-size);
+  color: var(--text-secondary);
+}
+
+.teacher-note b { color: var(--arousal); }
+
+/* ===========================================
+   ANIMATIONS
+   =========================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity var(--duration-normal) var(--ease-out-expo),
+    transform var(--duration-normal) var(--ease-out-expo);
+}
+
+.slide.visible .reveal { opacity: 1; transform: translateY(0); }
+.slide.visible .reveal:nth-child(1) { transition-delay: 0.06s; }
+.slide.visible .reveal:nth-child(2) { transition-delay: 0.13s; }
+.slide.visible .reveal:nth-child(3) { transition-delay: 0.20s; }
+.slide.visible .reveal:nth-child(4) { transition-delay: 0.27s; }
+.slide.visible .reveal:nth-child(5) { transition-delay: 0.34s; }
+
+.slide.visible .meter-spine {
+  animation: gainPulse 3.4s ease-in-out infinite;
+}
+
+@keyframes gainPulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.18); }
+}
+
+/* ===========================================
+   RESPONSIVE SLIDE ADJUSTMENTS
+   =========================================== */
+@media (max-width: 900px) {
+  .slide-grid, .systems {
+    grid-template-columns: 1fr;
+  }
+  .slide-grid {
+    min-height: auto;
+  }
+  h1 {
+    max-width: 18ch;
+  }
+  .gain-meter {
+    min-height: clamp(210px, 38vh, 330px);
+  }
+  .source {
+    position: static;
+    padding: 0 var(--slide-padding) clamp(0.6rem, 1vh, 0.9rem);
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --slide-padding: clamp(0.42rem, 3.2vw, 0.72rem);
+    --content-gap: clamp(0.24rem, 1.4vw, 0.42rem);
+    --element-gap: clamp(0.2rem, 1.1vw, 0.36rem);
+    --title-size: clamp(1.18rem, 6.6vw, 1.64rem);
+    --body-size: clamp(0.62rem, 2.6vw, 0.78rem);
+    --small-size: clamp(0.54rem, 2.2vw, 0.68rem);
+  }
+
+  .slide-content {
+    justify-content: center;
+  }
+
+  .slide-grid {
+    gap: var(--content-gap);
+    min-height: auto;
+  }
+
+  .claim {
+    gap: var(--content-gap);
+    min-height: auto;
+  }
+
+  .title-wrap {
+    gap: 0.28rem;
+  }
+
+  .title-wrap p:not(.eyebrow),
+  .chip-row,
+  .pearl {
+    display: none;
+  }
+
+  h1 {
+    max-width: 16ch;
+  }
+
+  .systems {
+    grid-template-columns: 1fr;
+    padding: clamp(0.42rem, 2.4vw, 0.62rem);
+    gap: var(--content-gap);
+  }
+
+  .cascade {
+    gap: var(--element-gap);
+  }
+
+  .stage {
+    padding: clamp(0.34rem, 1.9vw, 0.48rem);
+  }
+
+  .stage small {
+    margin-bottom: 0.14rem;
+  }
+
+  .stage strong {
+    font-size: clamp(0.86rem, 4.5vw, 1.08rem);
+  }
+
+  .stage span {
+    display: none;
+  }
+
+  .gain-panel {
+    display: block;
+    padding: clamp(0.38rem, 2.2vw, 0.56rem);
+  }
+
+  .gain-title {
+    display: block;
+  }
+
+  .gain-title span,
+  .gain-meter {
+    display: none;
+  }
+
+  .teacher-note {
+    margin-top: 0.28rem;
+    padding-top: 0.28rem;
+    font-size: var(--small-size);
+    line-height: 1.22;
+  }
+
+  .source {
+    display: none;
+  }
+}
+
+@media (max-height: 700px) {
+  .slide-grid {
+    min-height: min(78vh, 590px);
+  }
+  .pearl {
+    padding: clamp(0.48rem, 1vw, 0.72rem);
+  }
+  .pearl p {
+    font-size: clamp(0.88rem, 1.65vw, 1.18rem);
+  }
+  .gain-meter {
+    min-height: clamp(180px, 38vh, 300px);
+  }
+  .stage, .gain-panel {
+    padding: clamp(0.44rem, 0.86vw, 0.68rem);
+  }
+}
+
+@media (max-height: 600px) {
+  .source {
+    display: none;
+  }
+  .slide-grid {
+    min-height: min(86vh, 520px);
+  }
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" aria-hidden="true"></div>
+<nav class="nav-dots" aria-label="Navegacion de slide"><button class="dot" aria-label="Slide 5 activo"></button></nav>
+
+<main>
+  <section class="slide visible" id="slide-5" aria-labelledby="slide-title">
+    <div class="slide-content">
+      <div class="slide-grid">
+        <div class="claim">
+          <div class="title-wrap reveal">
+            <p class="eyebrow">Psicopatologia Dimensional · Sesion 16 · Slide 5</p>
+            <h1 id="slide-title"><span class="accent">Arousal</span> funciona como ganancia para atender y aprender</h1>
+            <p>La atencion no empieza en la fuerza de voluntad. Empieza en un estado regulatorio que abre, filtra o distorsiona la entrada de senal.</p>
+          </div>
+
+          <div class="chip-row reveal" aria-label="Conceptos puente">
+            <span class="chip">disponibilidad</span>
+            <span class="chip">seleccion</span>
+            <span class="chip">control</span>
+            <span class="chip">mantenimiento</span>
+          </div>
+
+          <div class="pearl reveal">
+            <b>Perla clinica</b>
+            <p>Antes de preguntar por que no atiende, pregunta si el sistema tiene energia disponible para atender.</p>
+          </div>
+        </div>
+
+        <div class="systems reveal" aria-label="Secuencia funcional arousal atencion control memoria">
+          <div class="cascade">
+            <div class="stage arousal">
+              <small>1 · Ganancia basal</small>
+              <strong>Arousal</strong>
+              <span>calibra disponibilidad, senal, ruido y energia.</span>
+            </div>
+            <div class="stage attention">
+              <small>2 · Puerta de acceso</small>
+              <strong>Atencion</strong>
+              <span>selecciona que entra al campo de procesamiento.</span>
+            </div>
+            <div class="stage control-stage">
+              <small>3 · Correccion de curso</small>
+              <strong>Control cognitivo</strong>
+              <span>inhibe desvio, reorienta meta y ajusta esfuerzo.</span>
+            </div>
+            <div class="stage memory-stage">
+              <small>4 · Pizarra activa</small>
+              <strong>Memoria de trabajo</strong>
+              <span>mantiene lo seleccionado el tiempo suficiente para aprender.</span>
+            </div>
+          </div>
+
+          <div class="gain-panel">
+            <div class="gain-title">
+              <b>Locus coeruleus · noradrenalina</b>
+              <span>tono y reactividad</span>
+            </div>
+            <div class="gain-meter" aria-label="Dial de ganancia del arousal">
+              <div class="meter-spine" aria-hidden="true"></div>
+              <div class="meter-label top">
+                <span><strong>alto</strong>escaneo, urgencia, ruido</span>
+                <span><strong>amenaza</strong>todo compite por entrar</span>
+              </div>
+              <div class="meter-label mid">
+                <span><strong>util</strong>alerta flexible</span>
+                <span><strong>aprendizaje</strong>senal con control</span>
+              </div>
+              <div class="meter-label bottom">
+                <span><strong>bajo</strong>somnolencia, lentitud</span>
+                <span><strong>apagado</strong>pedir foco llega tarde</span>
+              </div>
+            </div>
+            <p class="teacher-note"><b>Frase docente:</b> atencion sin arousal calibrado es como pedir foco con el dimmer roto.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="source">
+      <span>Garden: arousal como capa de ganancia regulatoria</span>
+      <span>Aston-Jones & Cohen, 2005 · Petersen & Posner, 2012 · Hegerl & Hensch, 2014</span>
+    </div>
+  </section>
+</main>
+
+<script>
+/* ===========================================
+   SINGLE SLIDE CONTROLLER
+   Keeps the file compatible with the course HTML deck pattern.
+   =========================================== */
+const slide = document.querySelector(".slide");
+requestAnimationFrame(() => slide.classList.add("visible"));
+
+document.addEventListener("keydown", (event) => {
+  if (["ArrowDown", "ArrowRight", " ", "PageDown"].includes(event.key)) {
+    event.preventDefault();
+    slide.animate(
+      [{ transform: "translateY(0)" }, { transform: "translateY(-6px)" }, { transform: "translateY(0)" }],
+      { duration: 260, easing: "cubic-bezier(0.16, 1, 0.3, 1)" }
+    );
+  }
+});
+</script>
+</body>
+</html>

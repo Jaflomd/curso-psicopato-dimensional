@@ -386,16 +386,16 @@
 ### Slide 37 — Tarea para S7
 - **Visual spec:** Card de tarea:
   - **Completar:** Finalizar jerarquia de exposicion para su paciente
-  - **Pensar:** "Este paciente necesita farmaco ademas de ERP? Cual dominio PRISM?"
+  - **Pensar:** "Este paciente necesita farmaco ademas de ERP? Cual dominio psicofarmacología de precisión?"
   - **Lectura sugerida:** Skapinakis et al. 2016. NMA de intervenciones en TOC. Lancet Psychiatry.
 - **Texto:** Action title.
 - **Nota instructor:** 15 seg.
 
-### Slide 38 — Preview S7: Farmacologia PRISM — por que las benzodiacepinas pueden sabotear el ERP
+### Slide 38 — Preview S7: Farmacologia de precisión — por que las benzodiacepinas pueden sabotear el ERP
 - **Visual spec:** Split:
   - Izquierda: Molecula de benzodiacepina estilizada con senal de advertencia ambar
   - Derecha: Texto:
-    - PRISM dominio Negative Valence
+    - psicofarmacología de precisión dominio Negative Valence
     - SRI, benzodiacepinas, glutamato
     - Decision clinica: cuando farmaco, cuando terapia, cuando ambos
   - Pie: "Traigan el caso de la jerarquia — lo van a usar."

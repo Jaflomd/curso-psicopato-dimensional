@@ -31,7 +31,7 @@
 ### Sesión 4: Redes, computación y farmacología dimensional
 - Network Theory: síntomas como nodos, activación como propagación
 - Computational psychiatry: prediction error, priors, modelos generativos (conceptual)
-- PRISM: psicofarmacología por dominio, no por diagnóstico — introducción al framework
+- psicofarmacología de precisión: psicofarmacología por dominio, no por diagnóstico — introducción al framework
 
 ---
 
@@ -50,8 +50,8 @@
 - Unified Protocol: módulo de exposición emocional
 - Tarea: diseñar una jerarquía de exposición para un paciente propio
 
-### Sesión 7: Tratamiento — Psicofarmacología PRISM
-- PRISM dominio Negative Valence: SRI, benzodiacepinas, glutamato
+### Sesión 7: Tratamiento — Psicofarmacología de precisión
+- psicofarmacología de precisión dominio Negative Valence: SRI, benzodiacepinas, glutamato
 - Farmacología por mecanismo vs. por diagnóstico
 - Decisiones clínicas: cuándo farmaco, cuándo terapia, cuándo ambos
 - Caso integrador del bloque
@@ -73,8 +73,8 @@
 - Demo: ejercicio de reestructuración (10-15 min)
 - Tarea: aplicar ABC con un paciente
 
-### Sesión 10: Tratamiento — Psicofarmacología PRISM
-- PRISM dominio Distress: antidepresivos monoaminérgicos, ketamina, psicodélicos (evidencia)
+### Sesión 10: Tratamiento — Psicofarmacología de precisión
+- psicofarmacología de precisión dominio Distress: antidepresivos monoaminérgicos, ketamina, psicodélicos (evidencia)
 - Neurogénesis y plasticidad como target
 - Staging farmacológico: agudo → mantenimiento → prevención
 - Caso integrador del bloque
@@ -93,13 +93,13 @@
 ### Sesión 12: Tratamiento integrado
 - Psicoterapia: IFS (unblending, acceso al Self) + activación conductual
 - Demo: ejercicio IFS básico — identificar una parte protectora (10-15 min)
-- Farmacología PRISM: dopaminérgicos, bupropión, pramipexol, aripiprazol a dosis bajas
+- Farmacología de precisión: dopaminérgicos, bupropión, pramipexol, aripiprazol a dosis bajas
 - Tarea: mapear partes IFS en un paciente con anhedonia
 - Caso integrador del bloque
 
 ---
 
-## BLOQUE 5: AROUSAL / REGULATORY SYSTEMS (Sesiones 13-14)
+## BLOQUE 5: AROUSAL / REGULATORY SYSTEMS (Sesiones 13-15)
 
 ### Sesión 13: El sistema de regulación — modelos
 - RDoC Arousal/Regulatory: arousal, circadian rhythms, sleep-wakefulness
@@ -111,80 +111,59 @@
 ### Sesión 14: Tratamiento integrado
 - Psicoterapia: DBT skills — distress tolerance, regulación emocional
 - Demo: TIPP (Temperature, Intense exercise, Paced breathing, Progressive relaxation)
-- Farmacología PRISM: estabilizadores (litio, valproato, lamotrigina), ritmo circadiano
+- Farmacología de precisión: estabilizadores (litio, valproato, lamotrigina), ritmo circadiano
 - Tarea: enseñar TIPP a un paciente esta semana
 - Caso integrador del bloque
 
----
-
-## BLOQUE 6: COGNITIVE SYSTEMS / THOUGHT DISORDER (Sesiones 15-16)
-
-### Sesión 15: El sistema cognitivo — modelos
-- RDoC Cognitive Systems: attention, perception, working memory, cognitive control
-- HiTOP: thought disorder spectrum
-- **Metacontrol y cognitive flexibility** (Hommel): el dial persistencia ↔ flexibilidad como eje dimensional
-- Theory of Mind alterada en psicosis: mentalización hipo/hiper-activa
-- Psicosis como continuo: esquizotipia → primer episodio → crónico
-- Neurocognitivo: deterioro como dimensión (MCI → demencia)
-- Computational: aberrant salience, prediction error en psicosis
-
-### Sesión 16: Tratamiento integrado
-- Psicoterapia: TCC para psicosis (normalización, testing beliefs), rehabilitación cognitiva
-- Demo: ejercicio de testing de una creencia (10 min)
-- Farmacología PRISM: antipsicóticos por receptor, clozapina, pro-cognitivos
-- Staging farmacológico: DUP, ventana crítica, dosis mínima efectiva
-- Caso integrador del bloque
+### Sesión 15: Arousal and Regulatory Systems
+- Consolidación del bloque regulatorio: arousal, sueño-vigilia, ritmo circadiano e interocepción
+- Diferenciar arousal alto, bajo e inestable como perfiles clínicos transdiagnósticos
+- Puente hacia cognición: por qué atención, memoria de trabajo y control cognitivo dependen del estado regulatorio
+- Caso puente: ansiedad, bipolaridad, insomnio y síntomas cognitivos como una sola red regulatoria-cognitiva
 
 ---
 
-## BLOQUE 7: DISINHIBITED EXTERNALIZING (Sesiones 17-18)
+## BLOQUE 6: COGNITIVE SYSTEMS (Sesiones 16-19)
 
-### Sesión 17: El sistema de control inhibitorio — modelos
-- RDoC Cognitive Systems (cognitive control) + Positive Valence (reward)
-- HiTOP: disinhibited externalizing (sustancias, TDAH, juego patológico)
-- Impulsividad como dimensión: motor, atencional, no-planificación
-- **Hilo transdiagnóstico:** Metacontrol — impulsividad como flexibilidad excesiva (flexibility bias), contraste con rigidez OCD
-- Network: cómo la impulsividad conecta con sustancias y con reward
+### Sesión 16: Arousal y atención
+- Acto I — Psicopatología y neurociencia: arousal, atención bottom-up, atención top-down, saliencia y aberrant salience
+- Fenotipos arousal-atención: hypoarousal, hyperarousal/hypervigilance, lapses, captura por saliencia, mind wandering e hyperfocus
+- Acto II — Psicoterapia y neuropsicología: ANT, CPT/SART/PVT, RT variability, eye-tracking/dot-probe, ABM/CBM, ATT, mindfulness y CBT ADHD
+- Acto III — Farmacología: MPH/catecolaminérgicos, atomoxetina, antipsicóticos, sedantes/carga farmacológica y decisiones por fenotipo
 
-### Sesión 18: Tratamiento integrado
-- Psicoterapia: DBT skills (mindfulness, opposite action) + entrevista motivacional
-- Demo: opposite action — identificar la urgencia y hacer lo contrario (10 min)
-- Farmacología PRISM: estimulantes, atomoxetina, naltrexona, acamprosato, bupropión
-- Tarea: cadena conductual con un paciente impulsivo
-- Caso integrador del bloque
+### Sesión 17: Control cognitivo y working memory
+- RDoC Cognitive Systems: cognitive control, working memory, goal selection y performance monitoring
+- Metacontrol: persistencia vs flexibilidad como dial transdiagnóstico
+- Rigidez, impulsividad y desorganización como fallas distintas de control
+- Caso: elegir intervención según falla dominante de control, no según diagnóstico
 
----
+### Sesión 18: Percepción
+- Percepción como inferencia: prediction error, priors, saliencia y precisión sensorial
+- Alucinaciones, ilusiones, despersonalización/derealización y experiencias perceptivas subclínicas
+- Diferenciar alteración perceptiva, ansiedad somática, trauma y psicosis
+- Caso: mapear una experiencia perceptiva en el continuo dimensional
 
-## BLOQUE 8: ANTAGONISTIC EXTERNALIZING (Sesiones 19-20)
-
-### Sesión 19: El sistema social-antagonista — modelos
-- RDoC Social Processes: affiliation, social communication, self-knowledge
-- HiTOP: antagonistic externalizing (antisocial, narcisista, borderline, paranoide)
-- **Theory of Mind / Mentalización** como dimensión: déficit (antisocial) vs. hipermentalización (borderline) vs. distorsión (paranoide)
-- Borderline como intersección: negative valence + arousal + antagonism
-- Developmental: apego, mentalización, trauma temprano → personalidad
-
-### Sesión 20: Tratamiento integrado
-- Psicoterapia: IFS/psicodinámica (trabajo con exiliados y protectores) + DBT (interpersonal effectiveness)
-- Demo: ejercicio de mentalización — "¿qué estaba pensando/sintiendo el otro?" (10 min)
-- Farmacología PRISM: mood stabilizers para impulsividad, antipsicóticos bajas dosis, sin "farmaco para personalidad"
-- Tarea: formular dimensionalmente un paciente con rasgos de personalidad
-- Caso integrador del bloque
+### Sesión 19: Lenguaje y pensamiento
+- Forma del pensamiento, lenguaje, discurso y comunicación como ventanas al sistema cognitivo
+- Desorganización, tangencialidad, pobreza del habla, presión del habla y pensamiento rumiativo
+- HiTOP thought disorder spectrum y puentes con manía, trauma, neurodesarrollo y psicosis
+- Caso: describir pensamiento y lenguaje sin reducirlo a “psicótico/no psicótico”
 
 ---
 
-## SESIÓN INTEGRADORA FINAL (Sesión 21)
+## BLOQUE 7: SOCIAL SYSTEMS AND CONTROL (Sesiones 20-21)
 
-### Sesión 21: Formulación dimensional — caso completo
-- Cada residente presenta un paciente propio:
-  - Perfil dimensional (dominios RDoC afectados)
-  - Ubicación HiTOP (espectros y dimensiones)
-  - Factores exposómicos relevantes
-  - Stage actual (McGorry)
-  - Network: nodos centrales del caso
-  - Plan de tratamiento transdiagnóstico: terapia + farmaco por dominio
-- Feedback grupal
-- Cierre: qué cambia en tu práctica después de este curso
+### Sesión 20: Social systems and control — modelos
+- RDoC Social Processes: affiliation/attachment, social communication, perception/understanding of self and others
+- Control inhibitorio y regulación interpersonal: impulsividad, antagonismo, mentalización y conducta social
+- HiTOP: disinhibited externalizing + antagonistic externalizing como bloque clínico-social
+- Caso: diferenciar déficit de mentalización, hipermentalización, impulsividad y antagonismo
+
+### Sesión 21: Tratamiento integrado y formulación final
+- Psicoterapia: DBT skills, entrevista motivacional, mentalización/IFS según dominio social-control afectado
+- Farmacología de precisión: tratar arousal, impulsividad, irritabilidad o distorsión cognitiva; no “personalidad” como etiqueta
+- Formulación dimensional final: RDoC, HiTOP, exposoma, stage, red sintomática y plan transdiagnóstico
+- Cierre: qué decisión clínica concreta cambia después del curso
 
 ---
 
@@ -195,19 +174,21 @@
 - Kotov et al. (2021) — HiTOP
 - Forbes et al. (2025) — Reorganización de síntomas
 - Clark et al. (2017) — ICD-11, DSM-5, RDoC
-- [PRISM papers por agregar]
+- [psicofarmacología de precisión papers por agregar]
 - [Exposoma papers por agregar]
 - [McGorry staging papers por agregar]
 - [Network Theory papers por agregar]
 
-### Bloques 2-8 — Por dominio
+### Bloques 2-7 — Por dominio
 [Por completar con lecturas específicas]
 
 ---
 
 ## NOTAS DE DISEÑO
 
-- Cada bloque por dominio sigue la estructura: MODELO → TERAPIA (mecanismo + demo) → FARMACO PRISM → CASO
+- Los bloques clínicos tempranos siguen la estructura: MODELO → TERAPIA/FARMACO por dominio → CASO
+- El bloque cognitivo (S16-S19) sigue la estructura: ATENCIÓN → CONTROL/WORKING MEMORY → PERCEPCIÓN → LENGUAJE/PENSAMIENTO
+- El bloque social-control (S20-S21) integra social systems, control inhibitorio, mentalización, impulsividad y formulación final
 - Tareas entre sesiones: breves, aplicables al paciente del día
 - El caso final es formativo (feedback, no nota)
 - Abierto a que presenten mini-formulaciones por dominio durante el curso

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión 11 — Positive Valence / Detachment</title>
+<style>
+/* === VIEWPORT BASE === */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:#0f0f12;color:#e8e6e3;font-family:'Source Serif 4',Georgia,serif}
+.slide{height:100vh;height:100dvh;overflow:hidden;display:none;position:relative;padding:clamp(1.5rem,4vw,3rem);flex-direction:column;justify-content:center}
+.slide.active{display:flex}
+
+/* === TYPOGRAPHY === */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap');
+
+h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;font-weight:600;line-height:1.15;letter-spacing:-0.02em}
+h1{font-size:clamp(2.2rem,5.5vw,4rem)}
+h2{font-size:clamp(1.6rem,4vw,2.8rem)}
+h3{font-size:clamp(1.1rem,2.5vw,1.6rem)}
+p,li{font-size:clamp(0.95rem,1.8vw,1.25rem);line-height:1.55;max-width:65ch}
+.tagline{font-family:'Space Grotesk',sans-serif;font-size:clamp(0.75rem,1.4vw,1rem);text-transform:uppercase;letter-spacing:0.12em;color:#c9a96e;font-weight:500}
+
+/* === COLORS === */
+:root{--bg:#0f0f12;--fg:#e8e6e3;--accent:#c9a96e;--accent2:#8b6f47;--muted:#7a756e;--card:#1a1a1f;--border:#2a2a30}
+
+/* === UTILITIES === */
+.accent{color:var(--accent)}
+.muted{color:var(--muted)}
+.small{font-size:clamp(0.8rem,1.4vw,1rem)}
+.center{text-align:center;align-items:center}
+.left{text-align:left;align-items:flex-start}
+.wide{width:100%;max-width:min(90vw,1200px);margin:0 auto}
+.flex{display:flex;gap:clamp(1rem,3vw,2rem)}
+.col{flex-direction:column}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(1rem,3vw,2rem);width:100%}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1rem,3vw,2rem);width:100%}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:clamp(1rem,2.5vw,1.8rem)}
+
+/* === ANIMATIONS === */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideLeft{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
+
+.reveal>*{animation:fadeUp 0.7s ease-out both}
+.reveal>*:nth-child(1){animation-delay:0.1s}
+.reveal>*:nth-child(2){animation-delay:0.25s}
+.reveal>*:nth-child(3){animation-delay:0.4s}
+.reveal>*:nth-child(4){animation-delay:0.55s}
+.reveal>*:nth-child(5){animation-delay:0.7s}
+.reveal>*:nth-child(6){animation-delay:0.85s}
+.reveal>*:nth-child(7){animation-delay:1.0s}
+
+/* === NAVIGATION === */
+.nav{position:fixed;bottom:clamp(1rem,3vh,2rem);left:50%;transform:translateX(-50%);display:flex;gap:0.5rem;z-index:100}
+.nav button{width:10px;height:10px;border-radius:50%;border:none;background:var(--border);cursor:pointer;transition:0.3s}
+.nav button.active{background:var(--accent);transform:scale(1.3)}
+.nav button:hover{background:var(--accent2)}
+
+/* === PROGRESS === */
+.progress{position:fixed;top:0;left:0;height:3px;background:var(--accent);transition:width 0.3s;z-index:100}
+
+/* === SPECIAL SLIDE STYLES === */
+.title-slide .big-number{font-family:'Space Grotesk',sans-serif;font-size:clamp(6rem,18vw,14rem);font-weight:700;color:var(--accent);opacity:0.12;position:absolute;right:clamp(1rem,5vw,4rem);top:50%;transform:translateY(-50%);line-height:1;pointer-events:none}
+
+.timeline{position:relative;padding-left:clamp(1.5rem,4vw,3rem)}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--border)}
+.timeline-item{position:relative;margin-bottom:clamp(0.8rem,2vh,1.2rem);padding-left:clamp(1rem,2vw,1.5rem)}
+.timeline-item::before{content:'';position:absolute;left:calc(-1*clamp(1.5rem,4vw,3rem) - 4px);top:0.5em;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+
+.venn{position:relative;width:min(70vw,500px);height:min(50vh,350px);margin:0 auto}
+.venn-circle{position:absolute;border-radius:50%;border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;text-align:center;padding:1rem;font-size:clamp(0.75rem,1.4vw,1rem);font-family:'Space Grotesk',sans-serif}
+.venn-a{width:55%;height:55%;left:10%;top:15%;background:rgba(201,169,110,0.08)}
+.venn-b{width:55%;height:55%;right:10%;top:15%;background:rgba(139,111,71,0.08)}
+.venn-overlap{position:absolute;left:35%;top:30%;width:30%;height:25%;display:flex;align-items:center;justify-content:center;text-align:center;font-size:clamp(0.7rem,1.3vw,0.9rem);color:var(--accent);font-weight:600}
+
+/* === BREAKPOINTS === */
+@media(max-height:700px){.slide{padding:1.2rem}p,li{font-size:0.9rem}}
+@media(max-height:600px){h1{font-size:1.8rem}h2{font-size:1.4rem}.card{padding:0.8rem}}
+@media(max-height:500px){h1{font-size:1.5rem}h2{font-size:1.2rem}p,li{font-size:0.8rem}}
+
+@media(prefers-reduced-motion:reduce){.reveal>*{animation:none;opacity:1}}
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: Title -->
+<div class="slide active title-slide center" data-index="0">
+  <div class="big-number">11</div>
+  <div class="wide reveal">
+    <p class="tagline">Bloque 4 — Positive Valence / Detachment</p>
+    <h1 style="margin-top:0.5rem">El sistema de recompensa<br>y conexión</h1>
+    <p class="muted" style="margin-top:1.5rem">Modelos dimensionales: RDoC · HiTOP · Mecanismos · Tratamientos</p>
+    <p class="small muted" style="margin-top:3rem">Curso de Psicopatología Dimensional — R1 Psiquiatría</p>
+  </div>
+</div>
+
+<!-- SLIDE 2: Hook -->
+<div class="slide left" data-index="1">
+  <div class="wide reveal">
+    <p class="tagline">Activación (min 0–3)</p>
+    <h2 style="margin-top:0.8rem">¿Cuándo fue la última vez que un paciente te dijo que <em class="accent">nada le da placer</em>?</h2>
+    <div class="card" style="margin-top:2rem">
+      <p style="font-style:italic">¿Le cambiaste el ISRS o le preguntaste <strong class="accent">QUÉ</strong> no le da placer?</p>
+    </div>
+    <p class="muted small" style="margin-top:2rem">Setup para la disociación wanting vs liking — el insight central de la sesión</p>
+  </div>
+</div>
+
+<!-- SLIDE 3: Wanting vs Liking -->
+<div class="slide left" data-index="2">
+  <div class="wide reveal">
+    <p class="tagline">Insight 1 — Wanting vs Liking (min 3–8)</p>
+    <h2 style="margin-top:0.8rem">La anhedonia no es una entidad única</h2>
+    <div class="grid2" style="margin-top:1.5rem">
+      <div class="card">
+        <h3 class="accent">Wanting</h3>
+        <p class="small muted" style="margin-top:0.3rem">Incentive salience</p>
+        <p style="margin-top:0.8rem">Dopamina mesolímbica<br>VTA → NAcc</p>
+        <p class="small muted" style="margin-top:0.5rem">"¿Tiene ganas de hacer cosas?"</p>
+      </div>
+      <div class="card">
+        <h3 class="accent">Liking</h3>
+        <p class="small muted" style="margin-top:0.3rem">Hedonic impact</p>
+        <p style="margin-top:0.8rem">Opioides / GABA<br>NAcc → Ventro-palidum</p>
+        <p class="small muted" style="margin-top:0.5rem">"¿Disfruta cuando llega?"</p>
+      </div>
+    </div>
+    <p class="small" style="margin-top:1.5rem"><strong class="accent">Por qué fallan los ISRS:</strong> aumentan 5-HT en el estriado pero no restauran ni wanting ni liking.</p>
+  </div>
+</div>
+
+<!-- SLIDE 4: RDoC PVS -->
+<div class="slide left" data-index="3">
+  <div class="wide reveal">
+    <p class="tagline">RDoC Positive Valence Systems (min 8–13)</p>
+    <h2 style="margin-top:0.8rem">3 constructos × 3 sub-constructos</h2>
+    <div class="grid3" style="margin-top:1.5rem">
+      <div class="card">
+        <h3 class="accent">Reward Learning</h3>
+        <p class="small" style="margin-top:0.5rem">Prediction error<br>VTA-NAcc<br>DA phasic</p>
+      </div>
+      <div class="card">
+        <h3 class="accent">Reward Valuation</h3>
+        <p class="small" style="margin-top:0.5rem">Incentive salience<br>OFC-vmPFC<br>DA tonic</p>
+      </div>
+      <div class="card">
+        <h3 class="accent">Effort Valuation</h3>
+        <p class="small" style="margin-top:0.5rem">Effort-cost computation<br>dACC-Insula<br>DA / NE</p>
+      </div>
+    </div>
+    <p class="small muted" style="margin-top:1.5rem">NIMH CMAT 2018. Caveat: RDoC es research framework, no clinical guide.</p>
+  </div>
+</div>
+
+<!-- SLIDE 5: HiTOP Detachment -->
+<div class="slide left" data-index="4">
+  <div class="wide reveal">
+    <p class="tagline">HiTOP Detachment — 7 facets (min 13–18)</p>
+    <h2 style="margin-top:0.8rem">Solo ~40% mapea a RDoC PVS</h2>
+    <div class="venn" style="margin-top:1rem">
+      <div class="venn-circle venn-a">RDoC PVS<br><span class="small muted">Reward Learning<br>Valuation · Effort</span></div>
+      <div class="venn-circle venn-b">HiTOP Detachment<br><span class="small muted">Anhedonia · Intimacy avoidance<br>Social withdrawal · Self-efficacy</span></div>
+      <div class="venn-overlap">Anhedonia<br>Social anhedonia<br>Restricted affectivity</div>
+    </div>
+    <p class="small center" style="margin-top:1rem">RDoC aporta <strong class="accent">profundidad mecanicista</strong> · HiTOP aporta <strong class="accent">amplitud fenotípica</strong></p>
+  </div>
+</div>
+
+<!-- SLIDE 6: Transdiagnóstico -->
+<div class="slide left" data-index="5">
+  <div class="wide reveal">
+    <p class="tagline">Vía común transdiagnóstica (min 18–23)</p>
+    <h2 style="margin-top:0.8rem">Múltiples ruturas → mismo charco</h2>
+    <div class="grid2" style="margin-top:1.5rem">
+      <div class="card">
+        <h3 class="accent">Depresión</h3>
+        <p class="small">VS hipactivación durante anticipación</p>
+        <p class="small muted">Keren 2018 meta-analysis</p>
+      </div>
+      <div class="card">
+        <h3 class="accent">Esquizofrenia</h3>
+        <p class="small">Wanting preservado + placer intacto<br>Deficit de cognición social</p>
+        <p class="small muted">Lambert 2018</p>
+      </div>
+      <div class="card">
+        <h3 class="accent">TEP</h3>
+        <p class="small">Circuito reward amortiguado<br>por amenaza hiperactiva</p>
+        <p class="small muted">Secuencia: downreg threat → recover reward</p>
+      </div>
+      <div class="card">
+        <h3 class="accent">TCA</h3>
+        <p class="small">Food-specific blunting<br>que persiste post-recuperación</p>
+        <p class="small muted">Dolan 2022 — trait-like vulnerability</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7: CRP Decision Tree -->
+<div class="slide left" data-index="6">
+  <div class="wide reveal">
+    <p class="tagline">Eje inflamación-recompensa (min 23–28)</p>
+    <h2 style="margin-top:0.8rem">CRP como biomarcador de precisión</h2>
+    <div class="flex col" style="margin-top:1.5rem;gap:0.8rem">
+      <div class="card flex" style="align-items:center;gap:1rem">
+        <div style="font-family:'Space Grotesk';font-size:clamp(1.5rem,3vw,2.5rem);font-weight:700;color:var(--muted)">&lt;2</div>
+        <div><p><strong>Standard care</strong></p><p class="small muted">Antiinflamatorio inefectivo o perjudicial</p></div>
+      </div>
+      <div class="card flex" style="align-items:center;gap:1rem;border-color:var(--accent)">
+        <div style="font-family:'Space Grotesk';font-size:clamp(1.5rem,3vw,2.5rem);font-weight:700;color:var(--accent)">2–5</div>
+        <div><p><strong class="accent">Minociclina / Celecoxib</strong></p><p class="small muted">Hedges' g = 0.40–1.9 en subgrupo inflamatorio</p></div>
+      </div>
+      <div class="card flex" style="align-items:center;gap:1rem">
+        <div style="font-family:'Space Grotesk';font-size:clamp(1.5rem,3vw,2.5rem);font-weight:700;color:var(--accent2)">&gt;5</div>
+        <div><p><strong>Infliximab</strong> (si disponible)</p><p class="small muted">Raison 2013 — remisión en CRP &gt;5; empeoramiento ≤5</p></div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:1rem"><strong class="accent">Precisión ya existe</strong> — aunque en un dominio estrecho.</p>
+  </div>
+</div>
+
+<!-- SLIDE 8: Ketamina Timeline -->
+<div class="slide left" data-index="7">
+  <div class="wide reveal">
+    <p class="tagline">Ketamina — efecto específico 24h (min 28–33)</p>
+    <h2 style="margin-top:0.8rem">Anti-anhedónico antes que antidepresivo</h2>
+    <div class="timeline" style="margin-top:1.5rem">
+      <div class="timeline-item">
+        <p class="small muted">0h — Infusión</p>
+        <p>NMDA receptor occupancy</p>
+      </div>
+      <div class="timeline-item">
+        <p class="small muted">4h — Peak occupancy</p>
+        <p>Glutamato → dopamina en estriado ventral</p>
+      </div>
+      <div class="timeline-item">
+        <p class="small muted">24h — <strong class="accent">SHAPS mejora</strong></p>
+        <p>Anhedonia ↓ significativamente</p>
+      </div>
+      <div class="timeline-item">
+        <p class="small muted">72h — MADRS mejora</p>
+        <p>Mejoría general del estado de ánimo</p>
+      </div>
+    </div>
+    <p class="small" style="margin-top:1rem">Lally 2014 · Zarate 2014 · d'Andrea 2025 (REAL-ESK, N=253)</p>
+  </div>
+</div>
+
+<!-- SLIDE 9: Pramipexol -->
+<div class="slide left" data-index="8">
+  <div class="wide reveal">
+    <p class="tagline">Pramipexol — subutilizado (min 33–38)</p>
+    <h2 style="margin-top:0.8rem">Precisión ≠ caro</h2>
+    <div class="grid2" style="margin-top:1.5rem">
+      <div class="card">
+        <h3 class="accent">Evidencia</h3>
+        <ul class="small" style="margin-top:0.5rem;list-style:none">
+          <li style="margin-bottom:0.4rem">• Lindqvist 2024 — RCT 9 sem, d≈1.0</li>
+          <li style="margin-bottom:0.4rem">• Browning PAX-D — 48 sem augmentación</li>
+          <li style="margin-bottom:0.4rem">• Ventorp PRIME-PRAXOL — transdiagnóstico</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 class="accent">Práctica</h3>
+        <ul class="small" style="margin-top:0.5rem;list-style:none">
+          <li style="margin-bottom:0.4rem">• Genérico &lt;$50/mes</li>
+          <li style="margin-bottom:0.4rem">• D3-preferente, target engagement VS</li>
+          <li style="margin-bottom:0.4rem">• Dosis: 0.375–1.5 mg/día</li>
+          <li style="margin-bottom:0.4rem">• ⚠ ICD ~5–10% a &gt;1.5 mg/día</li>
+        </ul>
+      </div>
+    </div>
+    <p class="small" style="margin-top:1.5rem">Match mecanicista: <strong class="accent">wanting deficit</strong> → pramipexol. No esperar a fallar 2 ISRS + aripiprazol + ECT.</p>
+  </div>
+</div>
+
+<!-- SLIDE 10: Viñeta -->
+<div class="slide left" data-index="9">
+  <div class="wide reveal">
+    <p class="tagline">Viñeta clínica + ejercicio (min 38–43)</p>
+    <h2 style="margin-top:0.8rem">"Depresión refractaria" + aislamiento + indiferencia</h2>
+    <div class="card" style="margin-top:1.2rem">
+      <p style="font-style:italic">Mujer 34 años. Falló sertralina 200mg 12 semanas + bupropión 300mg 8 semanas. SHAPS 42/42 (máxima anhedonia). DARS 18/60 (liking parcialmente preservado). CRP 4.2 mg/L. RSAS 28/40. Aislamiento progresivo 2 años. Sin síntomas psicóticos.</p>
+    </div>
+    <div class="grid2" style="margin-top:1rem">
+      <div>
+        <p class="small"><strong class="accent">Self-report (SHAPS)</strong> g=0.79 para tratamiento</p>
+        <p class="small muted">Captura experiencia subjetiva</p>
+      </div>
+      <div>
+        <p class="small"><strong class="accent">Tarea (EEfRT)</strong> g=0.17 para tratamiento</p>
+        <p class="small muted">Captura mecanismo computacional</p>
+      </div>
+    </div>
+    <p class="small" style="margin-top:1rem">Discordancia = <strong class="accent">top-down sesgo</strong> vs <strong class="accent">bottom-up déficit neural</strong></p>
+  </div>
+</div>
+
+<!-- SLIDE 11: RSAS + Gap -->
+<div class="slide left" data-index="10">
+  <div class="wide reveal">
+    <p class="tagline">RSAS + gap "blancos-reglas" (min 43–48)</p>
+    <h2 style="margin-top:0.8rem">Canario en la mina + era transicional</h2>
+    <div class="grid2" style="margin-top:1.5rem">
+      <div class="card">
+        <h3 class="accent">Anhedonia social</h3>
+        <p class="small" style="margin-top:0.5rem">RSAS predice conversión psicótica</p>
+        <p class="small muted" style="margin-top:0.3rem">AUC ≈ 0.65–0.70</p>
+        <p class="small" style="margin-top:0.5rem">40 ítems · 5 minutos · screening primario feasible</p>
+        <p class="small muted">Barkus 2019</p>
+      </div>
+      <div class="card">
+        <h3 class="accent">Gap 2020s</h3>
+        <p class="small" style="margin-top:0.5rem">Múltiples blancos (dopamina, glutamato, inflamación, social)</p>
+        <p class="small" style="margin-top:0.3rem">Múltiples tratamientos (pramipexol, ketamina, antiinflamatorios, BA, rTMS)</p>
+        <p class="small muted" style="margin-top:0.5rem">Pero: sin algoritmos validados de emparejamiento</p>
+      </div>
+    </div>
+    <p class="small" style="margin-top:1.5rem">Estándar de cuidado: <strong class="accent">"trial-and-error informado"</strong> — no nihilismo, no oráculo.</p>
+  </div>
+</div>
+
+<!-- SLIDE 12: 5 LOs Summary -->
+<div class="slide left" data-index="11">
+  <div class="wide reveal">
+    <p class="tagline">Learning Objectives — Sesión 11</p>
+    <h2 style="margin-top:0.8rem">5 objetivos escalados</h2>
+    <div class="flex col" style="margin-top:1rem;gap:0.6rem">
+      <div class="card flex" style="align-items:baseline;gap:1rem">
+        <span class="accent" style="font-family:'Space Grotesk';font-weight:700;min-width:2.5rem">LO1</span>
+        <p class="small">Describir wanting/liking + sustratos neuroquímicos; explicar por qué ISRS fallan</p>
+      </div>
+      <div class="card flex" style="align-items:baseline;gap:1rem">
+        <span class="accent" style="font-family:'Space Grotesk';font-weight:700;min-width:2.5rem">LO2</span>
+        <p class="small">Enumerar 3+ entry points transdiagnósticos con mecanismo neural distintivo</p>
+      </div>
+      <div class="card flex" style="align-items:baseline;gap:1rem">
+        <span class="accent" style="font-family:'Space Grotesk';font-weight:700;min-width:2.5rem">LO3</span>
+        <p class="small">Aplicar árbol CRP: antiinflamatorio / ketamina / pramipexol</p>
+      </div>
+      <div class="card flex" style="align-items:baseline;gap:1rem">
+        <span class="accent" style="font-family:'Space Grotesk';font-weight:700;min-width:2.5rem">LO4</span>
+        <p class="small">Analizar viñeta: ≥3 déficits PVS mapeados a RDoC/HiTOP + match mecanicista</p>
+      </div>
+      <div class="card flex" style="align-items:baseline;gap:1rem">
+        <span class="accent" style="font-family:'Space Grotesk';font-weight:700;min-width:2.5rem">LO5</span>
+        <p class="small">Diseñar plan evaluación dimensional: CRP + SHAPS/DARS + RSAS + tratamiento</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 13: Take-Home -->
+<div class="slide center" data-index="12">
+  <div class="wide reveal">
+    <p class="tagline">Take-Home Message</p>
+    <h2 style="margin-top:1rem;font-size:clamp(1.4rem,3.5vw,2.4rem)">La anhedonia no es un síntoma de un diagnóstico:<br>es un <em class="accent">déficit dimensional</em> del sistema de recompensa.</h2>
+    <div class="card" style="margin-top:2rem;max-width:700px">
+      <p style="text-align:center">Dimensionalizarla cambia <strong class="accent">qué tratas</strong> y <strong class="accent">con qué</strong>.</p>
+      <p class="small muted" style="text-align:center;margin-top:0.8rem">CRP ≥2–5 → antiinflamatorio · Wanting deficit → pramipexol · Anhedonia severa/TRD → ketamina</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 14: References -->
+<div class="slide left" data-index="13">
+  <div class="wide reveal">
+    <p class="tagline">Referencias clave</p>
+    <h2 style="margin-top:0.8rem">Lecturas de la sesión</h2>
+    <div class="flex col" style="margin-top:1rem;gap:0.5rem">
+      <p class="small">1. Berridge KC, Robinson TE. Liking, wanting, and the incentive-sensitization theory of addiction. <em>Am Psychol</em>. 2016;71(8):670-679.</p>
+      <p class="small">2. Keren H et al. Reward processing in depression: meta-analytic review. <em>Am J Psychiatry</em>. 2018;175(11):1111-1120.</p>
+      <p class="small">3. Raison CL et al. Infliximab for treatment-resistant depression. <em>JAMA Psychiatry</em>. 2013;70(1):31-41.</p>
+      <p class="small">4. Mac Giollabhui N et al. Anti-inflammatory treatment on anhedonia. <em>Am J Psychiatry</em>. 2026;183(1):70-79.</p>
+      <p class="small">5. Lally N et al. Anti-anhedonic effect of ketamine in bipolar depression. <em>Transl Psychiatry</em>. 2014;4:e469.</p>
+      <p class="small">6. Davis CN et al. Integrating HiTOP and RDoC Part I. <em>Psychol Med</em>. 2025;55:e138.</p>
+      <p class="small">7. Barkus E et al. A transdiagnostic perspective on social anhedonia. <em>Front Psychiatry</em>. 2019;10:216.</p>
+      <p class="small">8. Zimmermann J et al. Developing preliminary scales for HiTOP detachment. <em>Assessment</em>. 2022;29(1):75-87.</p>
+    </div>
+    <p class="small muted" style="margin-top:1.5rem">10 notas Garden: [[wanting-vs-liking-disociacion-anhedonia]] · [[anhedonia-via-comun-transdiagnostica]] · [[eje-inflamacion-recompensa-crp]] · [[rdoc-hitop-interseccion-parcial]] · [[paradoja-self-report-tarea-anhedonia]] · [[ketamina-anti-anhedonica-24h]] · [[pramipexol-subutilizado-anhedonia]] · [[puente-genomico-rdoc-hitop]] · [[anhedonia-social-canario-psicosis]] · [[gap-precision-psiquiatria-blancos-reglas]]</p>
+  </div>
+</div>
+
+<!-- NAVIGATION -->
+<div class="progress" id="progress"></div>
+<div class="nav" id="nav"></div>
+
+<script>
+/* === SLIDE ENGINE === */
+const slides = document.querySelectorAll('.slide');
+const nav = document.getElementById('nav');
+const progress = document.getElementById('progress');
+let current = 0;
+
+slides.forEach((s,i)=>{
+  const b = document.createElement('button');
+  b.dataset.index = i;
+  if(i===0) b.classList.add('active');
+  b.addEventListener('click',()=>go(i));
+  nav.appendChild(b);
+});
+
+function go(n){
+  if(n<0||n>=slides.length) return;
+  slides[current].classList.remove('active');
+  current = n;
+  slides[current].classList.add('active');
+  nav.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('active',i===current));
+  progress.style.width = ((current+1)/slides.length*100)+'%';
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown') go(current+1);
+  if(e.key==='ArrowLeft'||e.key==='PageUp') go(current-1);
+  if(e.key==='Home') go(0);
+  if(e.key==='End') go(slides.length-1);
+});
+
+let touchStartX = 0;
+document.addEventListener('touchstart',e=>{touchStartX=e.changedTouches[0].screenX});
+document.addEventListener('touchend',e=>{
+  const dx = e.changedTouches[0].screenX - touchStartX;
+  if(dx>50) go(current-1);
+  if(dx<-50) go(current+1);
+});
+
+progress.style.width = (1/slides.length*100)+'%';
+</script>
+</body>
+</html>

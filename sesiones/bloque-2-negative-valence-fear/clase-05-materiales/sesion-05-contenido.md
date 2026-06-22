@@ -540,7 +540,7 @@ Tras escuchar 2-3 pares mapear el caso B (lavado de manos), abrir:
 ### Preview S6 y S7
 
 - **S6 (Tratamiento — Psicoterapia):** del modelo al ERP. Inhibitory learning. Cómo el paciente del caso de hoy se beneficia.
-- **S7 (Tratamiento — Psicofarmacología PRISM):** SRI vs BZD vs glutamato. Por qué las benzodiacepinas pueden **sabotear** la terapia que diseñaron en S6.
+- **S7 (Tratamiento — Psicofarmacología de precisión):** SRI vs BZD vs glutamato. Por qué las benzodiacepinas pueden **sabotear** la terapia que diseñaron en S6.
 
 ---
 

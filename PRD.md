@@ -26,10 +26,10 @@ Formar residentes R1 de psiquiatría en formulación dimensional de casos y orie
 1. De categorías a dimensiones (p-factor, HiTOP, límites DSM)
 2. RDoC (dominios, unidades de análisis, matrices, RDoC 2.0)
 3. Exposoma + Staging clínico (McGorry)
-4. Network Theory + Computational Psychiatry + intro PRISM
+4. Network Theory + Computational Psychiatry + intro de psicofarmacología de precisión
 
 ### Bloques 2-8: Por dominio RDoC/HiTOP (16 sesiones)
-Cada bloque integra: modelo dimensional → psicoterapia (mecanismo + demo 10-15 min) → psicofarmacología PRISM → caso
+Cada bloque integra: modelo dimensional → psicoterapia (mecanismo + demo 10-15 min) → psicofarmacología de precisión → caso
 
 | Bloque | Dominio | Sesiones | Terapia principal |
 |---|---|---|---|
@@ -56,7 +56,7 @@ Presentación de caso con formulación dimensional completa.
 - p-factor (Caspi)
 - Network Theory (síntomas como nodos)
 - Computational Psychiatry (prediction error, priors)
-- PRISM (psicofarmacología dimensional)
+- psicofarmacología de precisión (prescripción por dominio/mecanismo, no por diagnóstico)
 - Exposoma (riesgo ambiental acumulativo)
 - Staging clínico (McGorry)
 - Metacontrol (Hommel)

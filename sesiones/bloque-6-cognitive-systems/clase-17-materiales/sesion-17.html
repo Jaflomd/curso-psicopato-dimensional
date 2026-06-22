@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Psicopatología Dimensional · Sesión 17: Control cognitivo y working memory</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800;900&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet"/>
+<style>
+/* === RESET & CUSTOM PROPERTIES === */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --bg-primary: #141518;
+  --bg-panel: #1a1b22;
+  --bg-card: #1e2028;
+  --text-primary: #dddad5;
+  --text-secondary: #8a8780;
+  --text-muted: #5a5850;
+  --accent: #c8503c;
+  --accent-glow: rgba(200, 80, 60, 0.15);
+  --accent-soft: rgba(200, 80, 60, 0.08);
+  --accent-blue: #4a7fb5;
+  --accent-green: #5a9a6a;
+  --accent-amber: #b8963c;
+  --accent-violet: #8a6ab5;
+  --white: #f0ede8;
+
+  --font-display: 'Sora', system-ui, sans-serif;
+  --font-body: 'Atkinson Hyperlegible', system-ui, sans-serif;
+
+  --title-size: clamp(2rem, 5vw, 4rem);
+  --h2-size: clamp(1.5rem, 3.5vw, 2.8rem);
+  --h3-size: clamp(1.1rem, 2.2vw, 1.6rem);
+  --body-size: clamp(0.75rem, 1.3vw, 1.05rem);
+  --small-size: clamp(0.65rem, 1vw, 0.85rem);
+  --label-size: clamp(0.55rem, 0.85vw, 0.72rem);
+
+  --slide-padding: clamp(1.5rem, 4vw, 4rem);
+  --content-gap: clamp(0.5rem, 1.5vw, 1.5rem);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* === VIEWPORT BASE (mandatory) === */
+html, body { height: 100%; overflow-x: hidden; }
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+
+.slide {
+  width: 100vw; height: 100vh; height: 100dvh;
+  overflow: hidden; scroll-snap-align: start;
+  display: flex; position: relative;
+  background: var(--bg-primary);
+  font-family: var(--font-body);
+  color: var(--text-primary);
+}
+
+.slide-content {
+  flex: 1; display: flex; flex-direction: column;
+  justify-content: center;
+  max-height: 100%; overflow: hidden;
+  padding: var(--slide-padding);
+}
+
+img, .image-container {
+  max-width: 100%;
+  max-height: min(50vh, 400px);
+  object-fit: contain;
+}
+
+/* === TYPOGRAPHY === */
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.15; }
+h1 { font-size: var(--title-size); }
+h2 { font-size: var(--h2-size); }
+h3 { font-size: var(--h3-size); }
+p, li { font-size: var(--body-size); line-height: 1.55; color: var(--text-secondary); }
+em { color: var(--accent); font-style: italic; }
+strong { color: var(--text-primary); font-weight: 600; }
+
+/* === ANIMATIONS === */
+.reveal {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
+}
+.slide.visible .reveal { opacity: 1; transform: translateY(0); }
+.reveal:nth-child(2) { transition-delay: 0.1s; }
+.reveal:nth-child(3) { transition-delay: 0.2s; }
+.reveal:nth-child(4) { transition-delay: 0.3s; }
+.reveal:nth-child(5) { transition-delay: 0.4s; }
+.reveal:nth-child(6) { transition-delay: 0.5s; }
+.reveal:nth-child(7) { transition-delay: 0.6s; }
+
+.reveal-scale {
+  opacity: 0; transform: scale(0.85);
+  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+}
+.slide.visible .reveal-scale { opacity: 1; transform: scale(1); }
+
+/* === LAYOUT HELPERS === */
+.split { display: flex; height: 100%; }
+.split-left { flex: 0 0 48%; display: flex; flex-direction: column; justify-content: center; padding: var(--slide-padding); position: relative; z-index: 1; }
+.split-right { flex: 1; display: flex; align-items: center; justify-content: center; background: var(--bg-panel); position: relative; overflow: hidden; }
+.centered { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: var(--slide-padding); height: 100%; }
+
+.eyebrow {
+  font-size: var(--label-size); color: var(--accent);
+  letter-spacing: 0.3em; text-transform: uppercase; font-weight: 600;
+  margin-bottom: clamp(0.5rem, 1.5vh, 1.2rem);
+  font-family: var(--font-body);
+}
+.divider { width: 40px; height: 2px; background: var(--accent); margin: clamp(0.8rem, 1.5vh, 1.5rem) 0; }
+.source { font-size: var(--label-size); color: var(--text-muted); margin-top: auto; padding-top: clamp(0.5rem, 1vh, 1rem); }
+
+/* === SECTION HEADERS === */
+.section-slide { background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-panel) 100%); }
+.section-slide .section-number {
+  font-family: var(--font-display); font-size: clamp(4rem, 12vw, 10rem);
+  color: var(--accent-soft); position: absolute; top: clamp(1rem, 3vh, 2rem);
+  right: clamp(2rem, 5vw, 4rem); line-height: 1; font-weight: 600;
+}
+
+/* === DATA HIGHLIGHT === */
+.hero-number {
+  font-family: var(--font-display); font-size: clamp(5rem, 15vw, 12rem);
+  color: var(--accent); line-height: 1; font-weight: 600;
+}
+.hero-label {
+  font-size: var(--small-size); color: var(--text-muted);
+  margin-top: clamp(0.3rem, 0.8vh, 0.6rem); letter-spacing: 0.08em;
+}
+
+/* === QUOTE === */
+.quote {
+  font-family: var(--font-display); font-size: clamp(1.1rem, 2.2vw, 1.7rem);
+  font-style: italic; color: var(--text-primary); line-height: 1.5;
+  border-left: 3px solid var(--accent); padding-left: clamp(1rem, 2vw, 1.5rem);
+  max-width: 700px;
+}
+.quote-author { font-size: var(--small-size); color: var(--text-muted); font-style: normal; margin-top: 0.5rem; font-family: var(--font-body); }
+
+/* === TABLES === */
+.data-table { width: 100%; border-collapse: collapse; font-size: var(--body-size); }
+.data-table th {
+  text-align: left; font-weight: 600; color: var(--accent);
+  font-size: var(--label-size); letter-spacing: 0.1em; text-transform: uppercase;
+  padding: clamp(0.3rem, 0.6vh, 0.5rem) clamp(0.5rem, 1vw, 1rem);
+  border-bottom: 1px solid rgba(200,80,60,0.2);
+}
+.data-table td {
+  padding: clamp(0.25rem, 0.5vh, 0.4rem) clamp(0.5rem, 1vw, 1rem);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: var(--text-secondary);
+}
+.data-table td:first-child { color: var(--text-primary); font-weight: 500; }
+
+/* === BAR CHARTS (CSS) === */
+.bar-chart { display: flex; flex-direction: column; gap: clamp(0.3rem, 0.6vh, 0.5rem); width: 100%; }
+.bar-row { display: flex; align-items: center; gap: clamp(0.5rem, 1vw, 0.8rem); }
+.bar-label { flex: 0 0 clamp(100px, 18vw, 180px); font-size: var(--small-size); color: var(--text-secondary); text-align: right; }
+.bar-track { flex: 1; height: clamp(16px, 2.5vh, 24px); background: rgba(255,255,255,0.04); border-radius: 3px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 3px; transition: width 1.2s var(--ease-out-expo); }
+.slide.visible .bar-fill { width: var(--bar-width); }
+.bar-fill:not(.slide.visible .bar-fill) { width: 0; }
+.bar-value { flex: 0 0 clamp(40px, 5vw, 60px); font-size: var(--small-size); color: var(--text-muted); }
+
+/* === CARDS === */
+.card-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(0.5rem, 1vw, 0.8rem); }
+.card {
+  background: var(--bg-card); border-radius: 8px;
+  padding: clamp(0.6rem, 1.2vw, 1rem);
+  border: 1px solid rgba(255,255,255,0.04);
+}
+.card h4 { font-family: var(--font-display); font-size: var(--body-size); color: var(--text-primary); font-weight: 400; margin-bottom: 0.3rem; }
+.card p { font-size: var(--small-size); color: var(--text-muted); line-height: 1.4; }
+
+/* === MODEL GRID === */
+.model-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: clamp(0.4rem, 0.8vw, 0.6rem); max-width: min(90vw, 800px); width: 100%; }
+.model-box {
+  background: var(--bg-card); border-radius: 8px;
+  padding: clamp(0.6rem, 1.2vw, 1rem);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.model-box h4 { font-family: var(--font-body); font-size: var(--label-size); color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600; margin-bottom: 0.4rem; }
+.model-box ul { list-style: none; }
+.model-box li { font-size: var(--small-size); color: var(--text-muted); padding: 0.1rem 0; }
+.model-box li::before { content: '·'; color: var(--accent); margin-right: 0.4rem; }
+
+/* === PYRAMID === */
+.pyramid { display: flex; flex-direction: column; align-items: center; gap: clamp(0.2rem, 0.4vh, 0.3rem); width: 100%; }
+.pyramid-level {
+  display: flex; align-items: center; gap: clamp(0.4rem, 0.8vw, 0.6rem);
+  padding: clamp(0.3rem, 0.5vh, 0.5rem) clamp(0.8rem, 1.5vw, 1.2rem);
+  border-radius: 6px; background: var(--bg-card); border: 1px solid rgba(255,255,255,0.04);
+  font-size: var(--small-size);
+}
+.pyramid-level .level-tag { font-size: var(--label-size); color: var(--accent); font-weight: 600; min-width: clamp(20px, 3vw, 35px); }
+.pyramid-level .level-name { color: var(--text-primary); font-weight: 500; }
+.pyramid-level .level-examples { color: var(--text-muted); }
+
+/* === PROGRESS BAR === */
+.progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: var(--accent); z-index: 9999; transition: width 0.3s ease; }
+
+/* === NAV DOTS === */
+.nav-dots {
+  position: fixed; right: clamp(0.5rem, 1.5vw, 1.2rem); top: 50%;
+  transform: translateY(-50%); z-index: 999; display: flex; flex-direction: column;
+  gap: clamp(4px, 0.6vh, 8px);
+}
+.nav-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.15);
+  cursor: pointer; transition: all 0.3s ease; border: none; padding: 0;
+}
+.nav-dot.active { background: var(--accent); transform: scale(1.4); }
+.nav-dot:hover { background: rgba(255,255,255,0.3); }
+
+/* === RESPONSIVE === */
+@media (max-height: 700px) {
+  :root { --slide-padding: clamp(0.75rem, 3vw, 2rem); --title-size: clamp(1.5rem, 4.5vw, 2.8rem); --h2-size: clamp(1.2rem, 3vw, 2rem); }
+}
+@media (max-height: 600px) {
+  :root { --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem); --body-size: clamp(0.65rem, 1.1vw, 0.9rem); }
+  .nav-dots, .decorative { display: none; }
+}
+@media (max-height: 500px) {
+  :root { --title-size: clamp(1rem, 3.5vw, 1.5rem); --h2-size: clamp(0.9rem, 2.5vw, 1.25rem); }
+}
+@media (max-width: 768px) {
+  .split { flex-direction: column; }
+  .split-left { flex: 0 0 auto; padding: clamp(1rem, 3vw, 2rem); }
+  .split-right { flex: 0 0 40%; }
+  .card-grid { grid-template-columns: 1fr; }
+  .model-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+  html { scroll-behavior: auto; }
+}
+
+/* === NEURODATOS / PSICOPATOLOGIA DE PRECISION OVERRIDE === */
+:root {
+  --bg-primary: #070811;
+  --bg-panel: #0d1224;
+  --bg-card: rgba(12, 18, 35, 0.78);
+  --text-primary: #f2fbff;
+  --text-secondary: rgba(213, 231, 239, 0.76);
+  --text-muted: rgba(157, 183, 198, 0.62);
+  --accent: #ff2fb3;
+  --accent-glow: rgba(255, 47, 179, 0.23);
+  --accent-soft: rgba(255, 47, 179, 0.11);
+  --accent-blue: #22d8ff;
+  --accent-green: #8dff9d;
+  --accent-amber: #f5db65;
+  --accent-violet: #9b7cff;
+  --white: #ffffff;
+  --font-display: 'Sora', system-ui, sans-serif;
+  --font-body: 'Atkinson Hyperlegible', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --title-size: clamp(2.3rem, 5vw, 4.65rem);
+  --h2-size: clamp(1.75rem, 3.75vw, 3.15rem);
+  --h3-size: clamp(1.1rem, 2.15vw, 1.7rem);
+  --body-size: clamp(0.82rem, 1.25vw, 1.04rem);
+  --small-size: clamp(0.68rem, 0.96vw, 0.86rem);
+  --label-size: clamp(0.55rem, 0.78vw, 0.72rem);
+  --slide-padding: clamp(1.4rem, 3.6vw, 3.8rem);
+  --content-gap: clamp(0.65rem, 1.6vw, 1.55rem);
+  --grid-line: rgba(34, 216, 255, 0.08);
+  --panel-line: rgba(34, 216, 255, 0.22);
+  --magnetic-shadow: 0 0 24px rgba(34, 216, 255, 0.16), 0 0 54px rgba(255, 47, 179, 0.10);
+}
+
+html, body { background: var(--bg-primary); }
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.18;
+  mix-blend-mode: screen;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.10) 0,
+    rgba(255,255,255,0.10) 1px,
+    transparent 1px,
+    transparent 7px
+  );
+}
+
+.slide {
+  isolation: isolate;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255, 47, 179, 0.20), transparent 26%),
+    radial-gradient(circle at 82% 14%, rgba(34, 216, 255, 0.16), transparent 25%),
+    radial-gradient(circle at 72% 78%, rgba(141, 255, 157, 0.10), transparent 26%),
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(135deg, #050610 0%, #091120 49%, #07101b 100%);
+  background-size: auto, auto, auto, clamp(36px, 5vw, 64px) clamp(36px, 5vw, 64px), clamp(36px, 5vw, 64px) clamp(36px, 5vw, 64px), auto;
+}
+
+.slide::before {
+  content: "";
+  position: absolute;
+  inset: clamp(0.7rem, 1.6vw, 1.5rem);
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.54;
+  background:
+    radial-gradient(circle at 18% 30%, rgba(34, 216, 255, 0.95) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 37% 18%, rgba(255, 47, 179, 0.90) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 57% 35%, rgba(141, 255, 157, 0.88) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 74% 22%, rgba(34, 216, 255, 0.80) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 28% 70%, rgba(155, 124, 255, 0.82) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 62% 76%, rgba(255, 47, 179, 0.82) 0 2px, transparent 2.5px),
+    linear-gradient(30deg, transparent 12%, rgba(34,216,255,0.10) 12.4%, transparent 12.8%),
+    linear-gradient(148deg, transparent 28%, rgba(255,47,179,0.10) 28.35%, transparent 28.7%),
+    linear-gradient(99deg, transparent 51%, rgba(141,255,157,0.08) 51.25%, transparent 51.65%);
+  border: 1px solid rgba(34,216,255,0.09);
+  border-radius: clamp(0.35rem, 0.7vw, 0.6rem);
+}
+
+.slide::after {
+  content: "Elaborado por Javier A. Flores-Cohaila";
+  position: absolute;
+  right: clamp(1rem, 2.8vw, 2.4rem);
+  bottom: clamp(0.55rem, 1.35vw, 1.05rem);
+  z-index: 12;
+  color: rgba(213, 231, 239, 0.50);
+  font-family: var(--font-mono);
+  font-size: clamp(0.48rem, 0.7vw, 0.64rem);
+  line-height: 1;
+  text-align: right;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.split, .slide-content, .centered {
+  width: 100%;
+  max-width: min(100vw, 1360px);
+  margin-inline: auto;
+}
+
+.slide-content, .centered {
+  position: relative;
+  z-index: 2;
+  align-items: flex-start;
+}
+
+.centered {
+  align-items: center;
+  text-align: center;
+}
+
+.split {
+  position: relative;
+  z-index: 2;
+  align-items: stretch;
+}
+
+.split-left, .split-right { min-width: 0; }
+
+.split-right {
+  background:
+    linear-gradient(135deg, rgba(34,216,255,0.08), rgba(255,47,179,0.07)),
+    rgba(7, 11, 23, 0.74);
+  border-left: 1px solid rgba(34,216,255,0.19);
+  box-shadow: inset 1px 0 rgba(255,255,255,0.04);
+}
+
+h1, h2, h3 {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-weight: 850;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+h1 { max-width: 11ch; }
+h2, h3 { max-width: 16ch; }
+
+p, li { color: var(--text-secondary); font-weight: 400; }
+strong { color: var(--text-primary); font-weight: 700; }
+em {
+  color: var(--accent-blue);
+  font-style: normal;
+  text-shadow: 0 0 18px rgba(34, 216, 255, 0.34);
+}
+
+.eyebrow, .hero-label, .model-box h4, .compare-header, .data-table th {
+  color: var(--accent-green);
+  font-family: var(--font-mono);
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.eyebrow::before { content: "[ "; color: var(--accent-blue); }
+.eyebrow::after { content: " ]"; color: var(--accent-blue); }
+
+.divider {
+  width: clamp(54px, 6vw, 92px);
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent), var(--accent-green));
+  box-shadow: 0 0 16px rgba(34,216,255,0.45);
+}
+
+.source {
+  color: rgba(213, 231, 239, 0.46);
+  font-family: var(--font-mono);
+  font-size: clamp(0.5rem, 0.72vw, 0.66rem);
+  letter-spacing: 0;
+  padding-right: clamp(9rem, 20vw, 20rem);
+}
+
+.hero-number {
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-shadow: 0 0 26px rgba(255,47,179,0.65), 0 0 72px rgba(34,216,255,0.20);
+}
+
+.hero-label { color: var(--text-secondary); }
+
+.quote {
+  background: rgba(7, 11, 23, 0.52);
+  border: 1px solid rgba(34,216,255,0.18);
+  border-left: 3px solid var(--accent);
+  border-radius: clamp(0.35rem, 0.7vw, 0.55rem);
+  box-shadow: var(--magnetic-shadow);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 650;
+  padding: clamp(1rem, 2vw, 1.55rem);
+}
+
+.quote-author {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  letter-spacing: 0;
+}
+
+.section-slide {
+  background:
+    radial-gradient(circle at 74% 25%, rgba(255,47,179,0.21), transparent 28%),
+    radial-gradient(circle at 22% 68%, rgba(34,216,255,0.18), transparent 30%),
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(135deg, #050610 0%, #0b1427 100%);
+  background-size: auto, auto, clamp(42px, 5vw, 68px) clamp(42px, 5vw, 68px), clamp(42px, 5vw, 68px) clamp(42px, 5vw, 68px), auto;
+}
+
+.section-slide .section-number {
+  color: rgba(34,216,255,0.12);
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-shadow: 0 0 48px rgba(34,216,255,0.20);
+}
+
+.card, .model-box, .pyramid-level, .node, .data-table, .compare-grid {
+  background: var(--bg-card);
+  border: 1px solid var(--panel-line);
+  border-radius: clamp(0.35rem, 0.65vw, 0.55rem);
+  box-shadow: var(--magnetic-shadow);
+  backdrop-filter: blur(14px);
+}
+
+.card h4 {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-weight: 750;
+  letter-spacing: 0;
+}
+
+.card p { color: var(--text-secondary); }
+
+.data-table {
+  overflow: hidden;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.data-table th {
+  background: rgba(34,216,255,0.06);
+  border-bottom: 1px solid rgba(34,216,255,0.20);
+}
+
+.data-table td { border-bottom: 1px solid rgba(34,216,255,0.08); }
+
+.bar-track, .profile-track {
+  background: rgba(213, 231, 239, 0.08);
+  border: 1px solid rgba(34,216,255,0.14);
+  box-shadow: inset 0 0 18px rgba(0,0,0,0.26);
+}
+
+.bar-fill, .profile-fill { box-shadow: 0 0 18px currentColor; }
+
+/* === LEARNING / TAKEHOME GRIDS === */
+.learning-grid, .takehome-grid {
+  display: grid;
+  grid-template-columns: minmax(clamp(15rem, 28vw, 23rem), 0.82fr) minmax(0, 1.18fr);
+  gap: clamp(1rem, 2.4vw, 2.2rem);
+  align-items: center;
+  width: 100%;
+  max-width: min(88vw, 1120px);
+  margin-inline: auto;
+}
+
+.learning-rail, .takehome-rail {
+  position: relative;
+  padding: clamp(0.9rem, 1.8vw, 1.4rem);
+  border-left: 3px solid var(--accent-blue);
+  background: linear-gradient(135deg, rgba(34,216,255,0.08), rgba(255,47,179,0.05));
+}
+
+.learning-rail h2, .takehome-rail h2 { max-width: 10ch; }
+.learning-rail p, .takehome-rail p { max-width: clamp(16rem, 26vw, 24rem); }
+
+.learning-map, .takehome-map { display: grid; gap: clamp(0.55rem, 1.1vw, 0.85rem); }
+
+.objective-node, .takehome-point {
+  display: grid;
+  grid-template-columns: clamp(2rem, 3.4vw, 2.8rem) minmax(0, 1fr);
+  gap: clamp(0.6rem, 1.2vw, 0.9rem);
+  align-items: start;
+  padding: clamp(0.65rem, 1.2vw, 0.95rem);
+  background: rgba(7, 11, 23, 0.58);
+  border: 1px solid rgba(34,216,255,0.18);
+  border-radius: clamp(0.35rem, 0.65vw, 0.55rem);
+  box-shadow: var(--magnetic-shadow);
+}
+
+.objective-code, .takehome-code {
+  display: grid;
+  place-items: center;
+  width: clamp(2rem, 3.4vw, 2.8rem);
+  aspect-ratio: 1;
+  color: #050610;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-green));
+  border-radius: 50%;
+  font-family: var(--font-mono);
+  font-size: clamp(0.64rem, 0.86vw, 0.76rem);
+  font-weight: 800;
+}
+
+.objective-node h4, .takehome-point h4 {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(0.85rem, 1.15vw, 1.02rem);
+  line-height: 1.08;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  margin-bottom: clamp(0.12rem, 0.32vw, 0.25rem);
+}
+
+.objective-node p, .takehome-point p { font-size: var(--small-size); line-height: 1.34; }
+
+.progress-bar {
+  height: clamp(2px, 0.35vh, 4px);
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent), var(--accent-green));
+  box-shadow: 0 0 16px rgba(34,216,255,0.55);
+}
+
+.nav-dots { right: clamp(0.45rem, 1.1vw, 1rem); }
+.nav-dot {
+  width: clamp(5px, 0.6vw, 8px);
+  height: clamp(5px, 0.6vw, 8px);
+  background: rgba(213,231,239,0.18);
+  border: 1px solid rgba(34,216,255,0.22);
+}
+.nav-dot.active {
+  background: var(--accent-blue);
+  box-shadow: 0 0 14px rgba(34,216,255,0.72);
+}
+
+@media (max-width: 768px) {
+  .slide::after { left: clamp(0.8rem, 3vw, 1.1rem); right: clamp(0.8rem, 3vw, 1.1rem); text-align: center; }
+  .source { padding-right: 0; }
+  h1, h2, h3 { max-width: 100%; }
+  .learning-grid, .takehome-grid { grid-template-columns: 1fr; align-content: center; }
+}
+
+/* === NEURODATOS BRAND LOCK ===
+   1. Titulares y conceptos: Sora, peso alto, sin letter-spacing negativo.
+   2. Texto docente/clinico: Atkinson Hyperlegible, alta legibilidad en 16:9.
+   3. Codigos, fuentes, labels y footer: JetBrains Mono.
+   4. No usar font-family inline para nuevos componentes; usar estas variables.
+*/
+:root {
+  --brand-course: "Psicopatologia de precision";
+  --font-display: 'Sora', system-ui, sans-serif;
+  --font-body: 'Atkinson Hyperlegible', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+body, .slide, .slide p, .slide li, .slide td, .slide th, .slide .card, .slide .tag {
+  font-family: var(--font-body) !important;
+  letter-spacing: 0 !important;
+}
+
+.slide h1, .slide h2, .slide h3, .slide h4, .hero-number, .quote,
+.objective-node h4, .takehome-point h4 {
+  font-family: var(--font-display) !important;
+  letter-spacing: 0 !important;
+}
+
+.eyebrow, .hero-label, .source, .slide::after,
+.objective-code, .takehome-code, .data-table th {
+  font-family: var(--font-mono) !important;
+  letter-spacing: 0 !important;
+}
+
+/* centered h2 scaling */
+.slide .centered h2 {
+  font-size: clamp(1.28rem, 3.15vw, 2.78rem) !important;
+  line-height: 1.08 !important;
+}
+
+</style>
+</head>
+<body>
+
+<!-- Progress -->
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots"></nav>
+
+<!-- =============================================
+     SLIDE 1: PORTADA
+     ============================================= -->
+<section class="slide" id="s1">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Psicopatología Dimensional &mdash; Sesión 17 / 21 · Bloque 6</p>
+      <h1 class="reveal" style="transition-delay:0.15s">Control cognitivo<br/>no es fuerza de <em>voluntad</em></h1>
+      <div class="divider reveal" style="transition-delay:0.25s"></div>
+      <p class="reveal" style="transition-delay:0.35s">De &ldquo;no le alcanza la voluntad&rdquo; a la arquitectura del control: cinco operaciones que pueden fallar por separado.</p>
+      <p class="reveal" style="transition-delay:0.45s;font-family:var(--font-mono);font-size:var(--label-size);color:var(--text-muted)">control cognitivo &middot; working memory &middot; metacontrol &middot; fallas disociables &middot; intervencion por mecanismo</p>
+      <div class="quote reveal" style="transition-delay:0.55s;margin-top:var(--content-gap);font-size:clamp(0.82rem,1.4vw,1.1rem)">
+        &ldquo;Voluntad es la palabra que usamos cuando no sabemos que operacion fall&oacute;.&rdquo;
+      </div>
+      <p class="source reveal" style="transition-delay:0.65s">Badre, 2024 (10.1146/annurev-psych-022024-103901); Cuthbert &amp; Insel, 2013 (10.1186/1741-7015-11-126).</p>
+    </div>
+    <div class="split-right">
+      <div style="text-align:center" class="reveal-scale">
+        <div class="hero-number">5</div>
+        <div class="hero-label">operaciones disociables bajo &ldquo;control ejecutivo&rdquo;</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 2: OBJETIVOS DE APRENDIZAJE
+     ============================================= -->
+<section class="slide" id="s2">
+  <div class="slide-content">
+    <div class="learning-grid">
+      <div class="learning-rail">
+        <p class="eyebrow reveal">Objetivos de aprendizaje</p>
+        <h2 class="reveal" style="transition-delay:0.12s">Al finalizar esta sesi&oacute;n, podr&aacute;s&hellip;</h2>
+        <div class="divider reveal" style="transition-delay:0.22s"></div>
+        <p class="reveal" style="transition-delay:0.32s">Cinco objetivos SMART alineados con el marco RDoC de Cognitive Systems.</p>
+      </div>
+      <div class="learning-map">
+        <div class="objective-node reveal" style="transition-delay:0.12s">
+          <span class="objective-code">1</span>
+          <div><h4>Diferenciar las cinco subfunciones</h4><p>Mantener, manipular, inhibir, cambiar, monitorear: separables, no sin&oacute;nimos (5/5).</p></div>
+        </div>
+        <div class="objective-node reveal" style="transition-delay:0.20s">
+          <span class="objective-code">2</span>
+          <div><h4>Explicar el dial metacontrol</h4><p>Estabilidad &harr; flexibilidad y el costo de cada extremo (&ge;3 de 4 ejemplos).</p></div>
+        </div>
+        <div class="objective-node reveal" style="transition-delay:0.28s">
+          <span class="objective-code">3</span>
+          <div><h4>Distinguir cuatro fallas cl&iacute;nicas</h4><p>Rigidez, impulsividad, distractibilidad, desorganizaci&oacute;n: con 2 criterios cada una.</p></div>
+        </div>
+        <div class="objective-node reveal" style="transition-delay:0.36s">
+          <span class="objective-code">4</span>
+          <div><h4>Emparejar falla y sonda</h4><p>Span, go/no-go, WCST, ERN: instrumento correcto para la pregunta correcta (&ge;4/4).</p></div>
+        </div>
+        <div class="objective-node reveal" style="transition-delay:0.44s">
+          <span class="objective-code">5</span>
+          <div><h4>Elegir intervenci&oacute;n por mecanismo</h4><p>Remediaci&oacute;n, f&aacute;rmaco por circuito, andamiaje: decisi&oacute;n por falla, no por etiqueta DSM (&ge;3/4).</p></div>
+        </div>
+      </div>
+    </div>
+    <p class="source reveal" style="transition-delay:0.52s">Cuthbert &amp; Insel, 2013 (10.1186/1741-7015-11-126); Badre, 2024 (10.1146/annurev-psych-022024-103901).</p>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 3: PUENTE S16
+     ============================================= -->
+<section class="slide" id="s3">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Puente con S16</p>
+      <h2 class="reveal">La atenci&oacute;n abre la puerta; el control decide qu&eacute; hacer con lo que entr&oacute;</h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">S16: arousal y atenci&oacute;n = qu&eacute; entra. S17: control y working memory = qu&eacute; hace el sistema con eso.</p>
+      <p class="reveal">Atender &ne; mantener &mdash; Mantener &ne; inhibir &mdash; Inhibir &ne; cambiar.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        Un paciente puede atender bien y aun as&iacute; fallar en mantener, inhibir o cambiar. Son capas distintas.
+      </div>
+      <p class="source reveal">Lopez-Garcia et al., 2016 (10.3758/s13415-015-0384-1); Badre, 2024 (10.1146/annurev-psych-022024-103901).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="card" style="border-left:3px solid var(--accent-amber)"><h4 style="color:var(--accent-amber)">S16 &mdash; Arousal</h4><p>Calibra disponibilidad basal.</p></div>
+        <div class="card" style="border-left:3px solid var(--accent-blue)"><h4 style="color:var(--accent-blue)">S16 &mdash; Atenci&oacute;n</h4><p>Selecciona qu&eacute; entra.</p></div>
+        <div class="card" style="border-left:3px solid var(--accent)"><h4 style="color:var(--accent)">S17 &mdash; Control cognitivo</h4><p>Mantiene, inhibe, cambia, monitorea.</p></div>
+        <div class="card" style="border-left:3px solid var(--accent-green)"><h4 style="color:var(--accent-green)">S17 &mdash; Working memory</h4><p>Mantiene y manipula lo seleccionado.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 4: MAPA DE LA SESION
+     ============================================= -->
+<section class="slide" id="s4">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Mapa de la sesi&oacute;n</p>
+      <h2 class="reveal">La clase avanza de subfunciones a metacontrol, fallas y tratamiento</h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">Cuatro tramos, una sola l&oacute;gica: nombrar la operaci&oacute;n, ubicar el dial, separar la falla, elegir intervenci&oacute;n por mecanismo.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        Cada tramo prepara el siguiente: sin separar las operaciones no se ubica la falla, y sin ubicar la falla no se elige la intervenci&oacute;n.
+      </div>
+      <p class="source reveal">Badre, 2024 (10.1146/annurev-psych-022024-103901); Cuthbert &amp; Insel, 2013 (10.1186/1741-7015-11-126).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="card"><h4 style="color:var(--accent-blue)">Tramo 1 &middot; Subfunciones</h4><p>Cinco operaciones disociables: mantener, manipular, inhibir, cambiar, monitorear.</p></div>
+        <div class="card"><h4 style="color:var(--accent-green)">Tramo 2 &middot; Metacontrol</h4><p>El dial estabilidad &harr; flexibilidad; dos costos opuestos: perseveraci&oacute;n vs distractibilidad.</p></div>
+        <div class="card"><h4 style="color:var(--accent)">Tramo 3 &middot; Fallas</h4><p>Cuatro fallas distintas: rigidez, impulsividad, distractibilidad, desorganizaci&oacute;n.</p></div>
+        <div class="card"><h4 style="color:var(--accent-amber)">Tramo 4 &middot; Tratamiento</h4><p>Operacionalizar y tratar por mecanismo; la sonda correcta; la intervenci&oacute;n por la falla, no por la etiqueta.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 5: FRASE EJE
+     ============================================= -->
+<section class="slide" id="s5">
+  <div class="centered">
+    <p class="eyebrow reveal">Frase eje</p>
+    <h2 class="reveal" style="max-width:700px">El control es controlabilidad, no una lista de <em>habilidades</em></h2>
+    <div class="divider reveal" style="margin-left:auto;margin-right:auto"></div>
+    <p class="reveal" style="max-width:500px">Mismo est&iacute;mulo, distinta respuesta seg&uacute;n la meta. Control = seleccionar, monitorear, ajustar.</p>
+    <div class="quote reveal" style="margin-top:var(--content-gap);max-width:650px">
+      &ldquo;Control = que el mismo input produzca acciones distintas seg&uacute;n la representaci&oacute;n de la tarea, con un bucle que monitorea conflicto y ajusta.&rdquo;
+    </div>
+    <p class="reveal" style="max-width:480px;margin-top:var(--content-gap)">Lo autom&aacute;tico no es lo opuesto al control; es control transferido a entradas entrenadas.</p>
+    <p class="source reveal">Badre, 2024 (10.1146/annurev-psych-022024-103901).</p>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 6: CINCO SUBFUNCIONES
+     ============================================= -->
+<section class="slide" id="s6">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Subfunciones</p>
+      <h2 class="reveal">Cinco operaciones disociables bajo <em>&ldquo;control&rdquo;</em></h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">Criterio de clase: ubicar las 5/5 antes de interpretar cualquier queja ejecutiva.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        &ldquo;D&eacute;ficit ejecutivo&rdquo; sin especificar operaci&oacute;n es como decir &ldquo;dolor abdominal&rdquo; sin localizar.
+      </div>
+      <p class="source reveal">Miyake et al., 2000 (10.1006/cogp.1999.0734); Niendam et al., 2012 (10.3758/s13415-011-0083-5); Badre, 2024 (10.1146/annurev-psych-022024-103901).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(0.4rem,0.8vw,0.7rem);padding:var(--slide-padding)">
+        <div class="card"><h4 style="color:var(--accent-blue)">01 &middot; Mantener la meta</h4><p>Sostener activa la representaci&oacute;n de objetivo.</p></div>
+        <div class="card"><h4 style="color:var(--accent-green)">02 &middot; Manipular en WM</h4><p>Reordenar, actualizar, transformar en l&iacute;nea.</p></div>
+        <div class="card"><h4 style="color:var(--accent)">03 &middot; Inhibir lo prepotente</h4><p>Apagar la respuesta dominante antes de actuar.</p></div>
+        <div class="card"><h4 style="color:var(--accent-amber)">04 &middot; Cambiar de set</h4><p>Flexibilidad para actualizar reglas seg&uacute;n contexto.</p></div>
+        <div class="card" style="grid-column:1 / span 2"><h4 style="color:var(--accent-violet)">05 &middot; Monitorear error &mdash; Red com&uacute;n PFC-dACC-parietal + reclutamiento espec&iacute;fico</h4><p>El bucle que detecta conflicto y retroalimenta ajuste de control.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 7: WORKING MEMORY
+     ============================================= -->
+<section class="slide" id="s7">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Working memory</p>
+      <h2 class="reveal">WM mantiene y manipula lo que la atenci&oacute;n <em>seleccion&oacute;</em></h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">No es memoria a corto plazo pasiva. Capacidad limitada y sensible al estado.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        El digit span backwards informa si el sistema ejecutivo est&aacute; prendido ahora. No estima CI desde una sola toma.
+      </div>
+      <p class="source reveal">Gignac &amp; Weiss, 2015 (10.1037/pas0000105); Gignac et al., 2019 (10.1177/1073191117748396).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="card"><h4 style="color:var(--accent-blue)">Mantener</h4><p>Sostener lo seleccionado el tiempo suficiente frente a interferencia.</p></div>
+        <div class="card"><h4 style="color:var(--accent-green)">Manipular</h4><p>Reordenar, actualizar, transformar el contenido activo.</p></div>
+        <div class="card"><h4 style="color:var(--accent-amber)">Span &amp; g</h4><p>Cada d&iacute;gito mueve la media de g, pero subscore aislado no aguanta inferir CI.</p></div>
+        <div class="card"><h4 style="color:var(--text-muted)">L&iacute;mite</h4><p>El puntaje es superficie; no lo conviertas en mecanismo.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 8: GOAL MAINTENANCE
+     ============================================= -->
+<section class="slide" id="s8">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Goal maintenance</p>
+      <h2 class="reveal">Mantener la meta es una operaci&oacute;n con <em>circuito propio</em></h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">Circuito DLPFC-parietal. Sonda: AX-CPT y dot-probe expectancy.</p>
+      <p class="reveal">Constructo CNTRICS/RDoC: definido operacionalmente con tareas y firmas neuronales.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        &ldquo;Se le olvida lo que iba a hacer en mitad de la tarea&rdquo; es falla de mantenimiento, no de motivaci&oacute;n.
+      </div>
+      <p class="source reveal">Lopez-Garcia et al., 2016 (10.3758/s13415-015-0384-1); Cuthbert &amp; Insel, 2013 (10.1186/1741-7015-11-126).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="card"><h4 style="color:var(--accent-blue)">Qu&eacute; es</h4><p>Sostener la meta activa frente a interferencia interna y externa.</p></div>
+        <div class="card"><h4 style="color:var(--accent-green)">Circuito</h4><p>DLPFC &mdash; parietal posterior.</p></div>
+        <div class="card"><h4 style="color:var(--accent)">Sonda</h4><p>AX-CPT / dot-probe expectancy.</p></div>
+        <div class="card"><h4 style="color:var(--accent-amber)">Clave cl&iacute;nica</h4><p>Perder la meta no es no quererla; es no poder sostenerla activa.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 9: INHIBICION
+     ============================================= -->
+<section class="slide" id="s9">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Inhibici&oacute;n</p>
+    <h2 class="reveal">Inhibir es suprimir una representaci&oacute;n, no <em>enlentecer</em></h2>
+    <div class="divider reveal"></div>
+    <p class="reveal">El t&eacute;rmino est&aacute; sobre-extendido. Los subtipos son separables. Cuando alguien dice &ldquo;desinhibido&rdquo;, pregunta: &iquest;cu&aacute;l inhibici&oacute;n?</p>
+    <table class="data-table reveal" style="max-width:700px;margin-top:var(--content-gap)">
+      <thead><tr><th></th><th>Lectura ingenua</th><th>Lectura de control</th></tr></thead>
+      <tbody>
+        <tr><td>Qu&eacute; es</td><td>ir m&aacute;s despacio o no responder</td><td>apagar una representaci&oacute;n activada</td></tr>
+        <tr><td>Granularidad</td><td>&ldquo;desinhibido&rdquo; como bloque</td><td>respuesta prepotente &ne; interferencia proactiva</td></tr>
+        <tr><td>Implicaci&oacute;n</td><td>una prueba mide &ldquo;inhibici&oacute;n&rdquo;</td><td>cada subtipo pide su sonda</td></tr>
+      </tbody>
+    </table>
+    <p class="source reveal">Badre, 2024 (10.1146/annurev-psych-022024-103901); Friedman &amp; Miyake, 2004 (10.1037/0096-3445.133.1.101).</p>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 10: MONITOREO
+     ============================================= -->
+<section class="slide" id="s10">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Monitoreo</p>
+      <h2 class="reveal">El sistema se vigila a s&iacute; mismo: monitoreo de error <em>cierra el bucle</em></h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">Detectar conflicto y error &rarr; ajustar el control. Marcador: ERN / post-error slowing.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        El constructo organiza la cl&iacute;nica; no es una verdad cerrada. No replica un factor trifactorial consistente en todos los estudios.
+      </div>
+      <p class="source reveal">Macedo et al., 2021 (10.1016/j.bbr.2021.113271); Friedman &amp; Miyake, 2017 (10.1016/j.cortex.2016.04.023); Karr et al., 2018 (10.1037/bul0000160); Rey-Mermet et al., 2019 (10.1037/xge0000593).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="card"><h4 style="color:var(--accent-blue)">Bucle</h4><p>Actuar &rarr; detectar error &rarr; ajustar control.</p></div>
+        <div class="card"><h4 style="color:var(--accent-green)">Marcador</h4><p>ERN distingue perfiles: ansiedad, depresi&oacute;n y perfeccionismo se separan.</p></div>
+        <div class="card"><h4 style="color:var(--accent-amber)">Caveat</h4><p>46 muestras (n=9756): ning&uacute;n modelo trifactorial replica consistentemente.</p></div>
+        <div class="card"><h4 style="color:var(--accent)">Cl&iacute;nica</h4><p>Monitoreo excesivo puede parecer ansiedad; insuficiente, descuido.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 11: DIAL METACONTROL
+     ============================================= -->
+<section class="slide" id="s11">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Metacontrol</p>
+      <h2 class="reveal">El metacontrol es un dial, no una <em>virtud</em></h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">Estabilidad &harr; Flexibilidad. Cada extremo tiene un costo. No hay polo sano fijo.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        La misma &ldquo;fuerza de voluntad&rdquo; admirable en una tarea es rigidez paralizante en otra.
+      </div>
+      <p class="source reveal">Goschke &amp; Bolte, 2014 (10.1016/j.neuropsychologia.2014.07.015).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.4rem,0.9vh,0.8rem);padding:var(--slide-padding);width:100%">
+        <p style="font-family:var(--font-mono);font-size:var(--label-size);color:var(--accent-green);text-transform:uppercase">Dial metacontrol &mdash; Goschke &amp; Bolte, 2014</p>
+        <div class="card" style="border-left:3px solid var(--accent)">
+          <h4 style="color:var(--accent)">Extremo: estabilidad</h4>
+          <p>Perseveraci&oacute;n, rigidez; no puede cambiar de estrategia aunque fracase.</p>
+        </div>
+        <div class="card" style="border-left:3px solid var(--accent-green)">
+          <h4 style="color:var(--accent-green)">Zona adaptativa</h4>
+          <p>Rebalanceo seg&uacute;n demanda del momento; costo m&iacute;nimo.</p>
+        </div>
+        <div class="card" style="border-left:3px solid var(--accent-blue)">
+          <h4 style="color:var(--accent-blue)">Extremo: flexibilidad</h4>
+          <p>Distractibilidad, dispersi&oacute;n; no termina nada.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 12: GOAL-SHIELDING
+     ============================================= -->
+<section class="slide" id="s12">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Dilema de control</p>
+    <h2 class="reveal">Blindaje fuerte persevera; blindaje d&eacute;bil se distrae: dos costos <em>opuestos</em></h2>
+    <div class="divider reveal"></div>
+    <p class="reveal">El dilema no tiene &oacute;ptimo fijo; el sistema debe re-balancearse seg&uacute;n la demanda del momento.</p>
+    <table class="data-table reveal" style="max-width:700px;margin-top:var(--content-gap)">
+      <thead><tr><th></th><th>Blindaje fuerte</th><th>Blindaje d&eacute;bil</th></tr></thead>
+      <tbody>
+        <tr><td>Beneficio</td><td>estabilidad, persistencia</td><td>flexibilidad, cambio</td></tr>
+        <tr><td>Costo</td><td>perseveraci&oacute;n, rigidez</td><td>distractibilidad, dispersi&oacute;n</td></tr>
+        <tr><td>Cl&iacute;nica</td><td>&ldquo;no puede cambiar de estrategia&rdquo;</td><td>&ldquo;no termina nada&rdquo;</td></tr>
+      </tbody>
+    </table>
+    <div class="quote reveal" style="margin-top:var(--content-gap);font-size:clamp(0.82rem,1.4vw,1.1rem)">
+      La pregunta no es &ldquo;&iquest;controla bien?&rdquo; sino &ldquo;&iquest;hacia qu&eacute; lado est&aacute; calibrado y eso le sirve aqu&iacute;?&rdquo;
+    </div>
+    <p class="source reveal">Goschke &amp; Bolte, 2014 (10.1016/j.neuropsychologia.2014.07.015).</p>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 13: AFECTO POSITIVO MUEVE EL DIAL
+     ============================================= -->
+<section class="slide" id="s13">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Evidencia experimental</p>
+      <h2 class="reveal">El afecto positivo mueve el dial: menos perseveraci&oacute;n, m&aacute;s <em>distracci&oacute;n</em></h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">Afecto positivo &rarr; flexibilidad sube, pero distractibilidad tambi&eacute;n. El estado mueve la posici&oacute;n del dial.</p>
+      <p class="reveal" style="font-family:var(--font-mono);font-size:var(--label-size);color:var(--text-muted)">Dreisbach &amp; Goschke, 2004 &middot; dopamina frontal &middot; hipoman&iacute;a como caso l&iacute;mite</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        En hipoman&iacute;a la flexibilidad puede verse como creatividad y tambi&eacute;n como no terminar nada.
+      </div>
+      <p class="source reveal">Dreisbach &amp; Goschke, 2004 (10.1037/0278-7393.30.2.343).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="quote" style="font-size:clamp(0.9rem,1.7vw,1.28rem)">
+          &ldquo;Subir flexibilidad no es gratis: baja la perseveraci&oacute;n y sube el ruido.&rdquo;
+        </div>
+        <div class="card"><p>&middot; Afecto positivo (v&iacute;a DA frontal) &rarr; menos perseveraci&oacute;n.</p></div>
+        <div class="card"><p>&middot; Pero &rarr; m&aacute;s distractibilidad.</p></div>
+        <div class="card"><p>&middot; El mismo empuje dopamin&eacute;rgico que desatasca tambi&eacute;n dispersa.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 14: DOPAMINA EN U INVERTIDA
+     ============================================= -->
+<section class="slide" id="s14">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Neurobiolog&iacute;a</p>
+      <h2 class="reveal">Dopamina en U invertida: PFC sostiene, estriado <em>cambia</em></h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">Curvas &oacute;ptimas independientes. M&aacute;s dopamina no es &ldquo;m&aacute;s control&rdquo;: es otro punto del dial.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        Subir dopamina no es &ldquo;subir el control&rdquo;; es mover una balanza con dos platos. El efecto depende del punto basal del paciente.
+      </div>
+      <p class="source reveal">Cools &amp; D&rsquo;Esposito, 2011 (10.1016/j.biopsych.2011.03.028); Fallon et al., 2012 (10.1093/cercor/bhs025).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="card"><h4 style="color:var(--accent-blue)">PFC</h4><p>Estabilidad: mantener meta, resistir interferencia. &Oacute;ptimo DA propio.</p></div>
+        <div class="card"><h4 style="color:var(--accent-green)">Estriado</h4><p>Flexibilidad: cambiar de set, actualizar. &Oacute;ptimo DA distinto.</p></div>
+        <div class="card"><h4 style="color:var(--accent-amber)">Paradoja</h4><p>Lo que ayuda a mantener puede empeorar el cambio y viceversa.</p></div>
+        <div class="card"><h4 style="color:var(--accent)">Cl&iacute;nica</h4><p>El mismo f&aacute;rmaco mejora a uno y rigidiza a otro seg&uacute;n d&oacute;nde estaba su dial.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 15: COMT / PUNTO DE PARTIDA
+     ============================================= -->
+<section class="slide" id="s15">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Diferencias individuales</p>
+      <h2 class="reveal">La dopamina prefrontal fija tu punto de partida en el <em>dial</em></h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">COMT val158met como proxy del nivel de DA prefrontal. Diferencias individuales estables en el balance estabilidad-flexibilidad.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        El paciente no parte de cero; tiene un punto basal del dial que el contexto y el estado modulan. Rasgo y estado se suman.
+      </div>
+      <p class="source reveal">Fallon et al., 2012 (10.1093/cercor/bhs025); Armbruster et al., 2012 (10.1162/jocn_a_00286).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="card"><h4 style="color:var(--accent-blue)">Fallon 2012</h4><p>DA prefrontal (COMT) predice formaci&oacute;n de set atencional y activaci&oacute;n de DLPFC derecho.</p></div>
+        <div class="card"><h4 style="color:var(--accent-green)">Armbruster 2012</h4><p>Flexibilidad y estabilidad son polos de un mismo mecanismo prefrontal.</p></div>
+        <div class="card"><h4 style="color:var(--accent-amber)">Rasgo</h4><p>Algunos parten m&aacute;s cerca del polo estabilidad; otros del polo flexibilidad.</p></div>
+        <div class="card"><h4 style="color:var(--accent)">Estado</h4><p>Afecto, f&aacute;rmaco y contexto mueven el punto; el rasgo fija la base.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 16: RIGIDEZ VS IMPULSIVIDAD
+     ============================================= -->
+<section class="slide" id="s16">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Lectura cl&iacute;nica</p>
+      <h2 class="reveal">Rigidez por exceso de freno, impulsividad por falta de freno; no son <em>espejo</em></h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">No son negativos psicom&eacute;tricos exactos. Pueden coexistir en el mismo paciente.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        Anankastia no es solo &ldquo;poca impulsividad&rdquo;; es necesidad de control, intolerancia a error, moral r&iacute;gida. El riesgo es asumir que el r&iacute;gido es &ldquo;lo contrario&rdquo; del impulsivo.
+      </div>
+      <p class="source reveal">Cools &amp; D&rsquo;Esposito, 2011 (10.1016/j.biopsych.2011.03.028); Grant &amp; Chamberlain, 2023 (10.1017/S1092852923002237).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="card"><h4 style="color:var(--accent)">Rigidez</h4><p>Exceso de blindaje: control, perfeccionismo, perseveraci&oacute;n.</p></div>
+        <div class="card"><h4 style="color:var(--accent-blue)">Impulsividad</h4><p>Blindaje insuficiente: act&uacute;a antes de pensar, falla inhibici&oacute;n prepotente.</p></div>
+        <div class="card"><h4 style="color:var(--accent-amber)">Asimetr&iacute;a</h4><p>Exceso y falta de freno conviven m&aacute;s seguido de lo que el modelo sim&eacute;trico sugiere.</p></div>
+        <div class="card"><h4 style="color:var(--accent-green)">Transdiagn&oacute;stico</h4><p>Inflexibilidad aparece en depresi&oacute;n, PTSD, GAD, TOC, ASPD, BED: no es exclusiva.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 17: CASO — DOS FALLAS DISTINTAS (setup)
+     ============================================= -->
+<section class="slide" id="s17">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Caso cl&iacute;nico</p>
+    <h2 class="reveal">&ldquo;No termina nada&rdquo; y &ldquo;no puede cambiar de estrategia&rdquo; no son el <em>mismo problema</em></h2>
+    <div class="divider reveal"></div>
+    <p class="reveal">Mismo deterioro visible, mecanismo distinto. Criterio: nombrar la falla dominante con 2 criterios.</p>
+    <div class="card-grid reveal" style="max-width:780px;margin-top:var(--content-gap)">
+      <div class="card">
+        <h4 style="color:var(--accent-blue)">Caso A</h4>
+        <p>&ldquo;Empieza diez cosas, no termina ninguna, se va con cualquier est&iacute;mulo.&rdquo;</p>
+        <p style="margin-top:0.5rem;color:var(--text-muted)">Distractibilidad / baja inhibici&oacute;n: flexibilidad excesiva. El blindaje de meta es d&eacute;bil.</p>
+        <p style="margin-top:0.5rem;font-family:var(--font-mono);font-size:var(--label-size);color:var(--accent-blue);text-transform:uppercase">Nombra: falla dominante + 2 criterios</p>
+      </div>
+      <div class="card">
+        <h4 style="color:var(--accent)">Caso B</h4>
+        <p>&ldquo;Sigue el mismo plan aunque fracase; no tolera cambiarlo aunque no funcione.&rdquo;</p>
+        <p style="margin-top:0.5rem;color:var(--text-muted)">Rigidez: estabilidad excesiva. El blindaje de meta es tan fuerte que no puede actualizar.</p>
+        <p style="margin-top:0.5rem;font-family:var(--font-mono);font-size:var(--label-size);color:var(--accent);text-transform:uppercase">Nombra: falla dominante + 2 criterios</p>
+      </div>
+    </div>
+    <div class="quote reveal" style="margin-top:var(--content-gap);font-size:clamp(0.82rem,1.4vw,1.1rem)">
+      Obliga al grupo a nombrar la operaci&oacute;n, no el diagn&oacute;stico. Mismo s&iacute;ntoma superficial, distintos circuitos, distintos tratamientos.
+    </div>
+    <p class="source reveal">Gillan et al., 2016 (10.7554/eLife.11305); Badre, 2024 (10.1146/annurev-psych-022024-103901).</p>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 18: CUATRO FALLAS
+     ============================================= -->
+<section class="slide" id="s18">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Mapa de fallas</p>
+    <h2 class="reveal">Cuatro fallas distintas, no cuatro nombres de lo <em>mismo</em></h2>
+    <div class="divider reveal"></div>
+    <p class="reveal">Cada una rompe una operaci&oacute;n distinta del control. La frase cl&iacute;nica ayuda a localizar.</p>
+    <table class="data-table reveal" style="max-width:720px;margin-top:var(--content-gap)">
+      <thead><tr><th>Falla</th><th>Mecanismo</th><th>Frase cl&iacute;nica</th></tr></thead>
+      <tbody>
+        <tr><td>Rigidez / compulsividad</td><td>exceso de blindaje, no actualiza</td><td>&ldquo;tiene que ser as&iacute;&rdquo;</td></tr>
+        <tr><td>Impulsividad</td><td>falla de inhibici&oacute;n prepotente</td><td>&ldquo;actu&oacute; antes de pensar&rdquo;</td></tr>
+        <tr><td>Distractibilidad</td><td>no sostiene meta ante interferencia</td><td>&ldquo;me voy con cualquier cosa&rdquo;</td></tr>
+        <tr><td>Desorganizaci&oacute;n</td><td>no integra ni secuencia</td><td>&ldquo;se me arma un desorden&rdquo;</td></tr>
+      </tbody>
+    </table>
+    <div class="quote reveal" style="margin-top:var(--content-gap);font-size:clamp(0.82rem,1.4vw,1.1rem)">
+      &ldquo;Desinhibido&rdquo; y &ldquo;r&iacute;gido&rdquo; son palabras gruesas. Abajo hay operaciones finas y circuitos separables.
+    </div>
+    <p class="source reveal">Dalley et al., 2011 (10.1016/j.neuron.2011.01.020); Fineberg et al., 2018 (10.1093/ijnp/pyx088); Emsley et al., 2003 (10.1016/s0920-9964(02)00302-x).</p>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 19: DOS FACTORES, NO UNO
+     ============================================= -->
+<section class="slide" id="s19">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Evidencia psicom&eacute;trica</p>
+      <h2 class="reveal">Impulsividad y compulsividad son dos factores, no un solo <em>&ldquo;desinhibido&rdquo;</em></h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">CFA (n=576): dos rasgos latentes separables, positivamente correlacionados, no id&eacute;nticos.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        El paciente puede ser impulsivo y compulsivo a la vez: son ejes, no un interruptor. Que correlacionen no los vuelve la misma cosa.
+      </div>
+      <p class="source reveal">Chamberlain et al., 2018 (10.1017/S0033291717002185).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="card"><h4 style="color:var(--accent-blue)">Modelo 2F</h4><p>Impulsividad + compulsividad: mejor ajuste que un &uacute;nico &ldquo;disinhibition&rdquo;.</p></div>
+        <div class="card"><h4 style="color:var(--accent-green)">Correlaci&oacute;n</h4><p>Positivamente correlacionados pero estad&iacute;sticamente distintos.</p></div>
+        <div class="card"><h4 style="color:var(--accent-amber)">Implicaci&oacute;n</h4><p>Dos blancos distintos para tratamiento; no son opuestos ni equivalentes.</p></div>
+        <div class="card"><h4 style="color:var(--text-muted)">Caveat</h4><p>Tiego 2019: modelo bifactor con factor general de Desinhibici&oacute;n tambi&eacute;n ajusta bien.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 20: CIRCUITOS DORSAL VS VENTRAL
+     ============================================= -->
+<section class="slide" id="s20">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Sustrato neural</p>
+      <h2 class="reveal">Rigidez e impulsividad corren por circuitos distintos: <em>dorsal vs ventral</em></h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">Compulsividad &rarr; OFC-caudado (h&aacute;bito). Impulsividad &rarr; prefrontal ventral-accumbens (recompensa).</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        La rigidez del TOC y la impulsividad de una adicci&oacute;n no son el mismo circuito ni el mismo target farmacol&oacute;gico.
+      </div>
+      <p class="source reveal">Robbins et al., 2024 (10.1038/s41583-024-00807-z); Fineberg et al., 2018 (10.1093/ijnp/pyx088); Dalley et al., 2011 (10.1016/j.neuron.2011.01.020); Gillan et al., 2016 (10.7554/eLife.11305).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="card"><h4 style="color:var(--accent)">Compulsividad</h4><p>OFC &rarr; caudado dorsal: h&aacute;bito, perseveraci&oacute;n, d&eacute;ficit goal-directed.</p></div>
+        <div class="card"><h4 style="color:var(--accent-blue)">Impulsividad</h4><p>PFC ventral &rarr; nucleus accumbens: recompensa, urgencia, descuento temporal.</p></div>
+        <div class="card"><h4 style="color:var(--accent-green)">Gillan 2016</h4><p>D&eacute;ficit goal-directed mapea a compulsividad y se disocia de inatenci&oacute;n/hiperactividad.</p></div>
+        <div class="card"><h4 style="color:var(--accent-amber)">Separabilidad</h4><p>No solo psicom&eacute;trica: tiene sustrato de conectividad diferencial (Robbins 2024).</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 21: DESORGANIZACION ES SU PROPIO FACTOR
+     ============================================= -->
+<section class="slide" id="s21">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Desorganizaci&oacute;n</p>
+      <h2 class="reveal">La desorganizaci&oacute;n es su propio factor; no es <em>inatenci&oacute;n</em> disfrazada</h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">Factor separado en psicosis (PANSS). Desorganizar no es distraerse: es no poder armar el orden.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        Separa desorganizaci&oacute;n de inatenci&oacute;n antes de atribuirla a TDAH o a psicosis. La falla es la integraci&oacute;n, no solo el filtro.
+      </div>
+      <p class="source reveal">Emsley et al., 2003 (10.1016/s0920-9964(02)00302-x).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="card"><h4 style="color:var(--accent-blue)">Emsley 2003</h4><p>An&aacute;lisis factorial PANSS (psicosis inicio reciente): 5 factores.</p></div>
+        <div class="card"><h4 style="color:var(--accent-green)">Factor</h4><p>Desorganizado/cognitivo: separado de positivo, negativo, excitaci&oacute;n, ansiedad.</p></div>
+        <div class="card"><h4 style="color:var(--accent-amber)">Mecanismo</h4><p>Falla la integraci&oacute;n y secuenciaci&oacute;n, no solo el filtro atencional.</p></div>
+        <div class="card"><h4 style="color:var(--accent)">Cl&iacute;nica</h4><p>Pensamiento desorganizado &ne; dista&iacute;do. Son patrones de falla distintos.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 22: CASO EN GRUPOS (interactivo)
+     ============================================= -->
+<section class="slide" id="s22">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Caso en grupos &middot; 4 min</p>
+    <h2 class="reveal">Atribuir la falla dominante con un matiz de <em>humildad</em></h2>
+    <div class="divider reveal"></div>
+    <p class="reveal">Nombrar la operaci&oacute;n rota y 2 criterios que la separen de las otras. Matiz: puede haber factor general de desinhibici&oacute;n de fondo.</p>
+    <div class="card-grid reveal" style="max-width:780px;margin-top:var(--content-gap)">
+      <div class="card">
+        <h4 style="color:var(--accent-blue)">Caso A</h4>
+        <p>&ldquo;Empieza diez cosas, no termina ninguna, se va con cualquier est&iacute;mulo.&rdquo;</p>
+        <p style="margin-top:0.4rem;color:var(--text-muted)">Distractibilidad/baja inhibici&oacute;n (flexibilidad excesiva). Criterios: no sostiene meta ante interferencia, cambio frecuente sin decisi&oacute;n consciente.</p>
+        <p style="margin-top:0.4rem;font-family:var(--font-mono);font-size:var(--label-size);color:var(--accent-blue);text-transform:uppercase">Falla dominante + 2 criterios + por qu&eacute; no es rigidez</p>
+      </div>
+      <div class="card">
+        <h4 style="color:var(--accent)">Caso B</h4>
+        <p>&ldquo;Sigue el mismo plan aunque fracase; no tolera cambiarlo.&rdquo;</p>
+        <p style="margin-top:0.4rem;color:var(--text-muted)">Rigidez (estabilidad excesiva). Criterios: no actualiza set ante retroalimentaci&oacute;n negativa, persiste a pesar del costo funcional.</p>
+        <p style="margin-top:0.4rem;font-family:var(--font-mono);font-size:var(--label-size);color:var(--accent);text-transform:uppercase">Falla dominante + 2 criterios + por qu&eacute; no es impulsividad</p>
+      </div>
+    </div>
+    <p class="source reveal">Tiego et al., 2019 (10.1017/S1092852918001244); Chamberlain et al., 2018 (10.1017/S0033291717002185); Hook et al., 2021 (10.1016/j.neubiorev.2020.10.007).</p>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 23: INTERVENCION POR FALLA
+     ============================================= -->
+<section class="slide" id="s23">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Principio de intervenci&oacute;n</p>
+      <h2 class="reveal">La intervenci&oacute;n se elige por la falla, no por el <em>diagn&oacute;stico</em></h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">Misma etiqueta, distinta falla, distinto plan. Criterio: &ge;3/4 decisiones justificadas por mecanismo.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        Si la intervenci&oacute;n no cambia con la falla, no formulaste por mecanismo. &ldquo;Tiene TDAH&rdquo; no te dice si entrenar WM, frenar impulso o estructurar ambiente.
+      </div>
+      <p class="source reveal">Hernaus &amp; van Amelsvoort, 2016 (10.3389/fpsyt.2016.00082); Kessler &amp; Luedtke, 2021 (10.1001/jamapsychiatry.2021.2500).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(0.5rem,1.4vh,1.2rem);padding:var(--slide-padding);height:100%">
+        <div class="card" style="width:100%;text-align:center"><h4 style="color:var(--accent-blue)">01 &middot; Queja</h4></div>
+        <div style="color:var(--accent-blue);font-size:1.4rem">&darr;</div>
+        <div class="card" style="width:100%;text-align:center"><h4 style="color:var(--accent-green)">02 &middot; Falla dominante</h4></div>
+        <div style="color:var(--accent-blue);font-size:1.4rem">&darr;</div>
+        <div class="card" style="width:100%;text-align:center"><h4 style="color:var(--accent-amber)">03 &middot; Sonda</h4></div>
+        <div style="color:var(--accent-blue);font-size:1.4rem">&darr;</div>
+        <div class="card" style="width:100%;text-align:center"><h4 style="color:var(--accent)">04 &middot; Intervenci&oacute;n por mecanismo</h4></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 24: CADA FALLA PIDE SU SONDA
+     ============================================= -->
+<section class="slide" id="s24">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Operacionalizar</p>
+    <h2 class="reveal">Cada falla pide su sonda antes de su <em>tratamiento</em></h2>
+    <div class="divider reveal"></div>
+    <p class="reveal">Cada sonda interroga una operaci&oacute;n, no &ldquo;el ejecutivo&rdquo; en general. El puntaje orienta; no es el mecanismo.</p>
+    <table class="data-table reveal" style="max-width:700px;margin-top:var(--content-gap)">
+      <thead><tr><th>Falla</th><th>Sonda</th><th>Lectura</th></tr></thead>
+      <tbody>
+        <tr><td>Working memory</td><td>digit span / n-back</td><td>capacidad y estado</td></tr>
+        <tr><td>Inhibici&oacute;n</td><td>go/no-go, stop-signal</td><td>freno prepotente</td></tr>
+        <tr><td>Flexibilidad</td><td>WCST, task-switching</td><td>cambio de set</td></tr>
+        <tr><td>Monitoreo</td><td>post-error slowing / ERN</td><td>detecci&oacute;n de error</td></tr>
+      </tbody>
+    </table>
+    <div class="quote reveal" style="margin-top:var(--content-gap);font-size:clamp(0.82rem,1.4vw,1.1rem)">
+      Una tarea de laboratorio puede leer estado, fatiga o compensaci&oacute;n antes que rasgo estable. Cambia la sonda si cambias la pregunta.
+    </div>
+    <p class="source reveal">Friedman &amp; Miyake, 2004 (10.1037/0096-3445.133.1.101); Lopez-Garcia et al., 2016 (10.3758/s13415-015-0384-1); Gignac et al., 2019 (10.1177/1073191117748396).</p>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 25: TRATAR EL CIRCUITO
+     ============================================= -->
+<section class="slide" id="s25">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Intervenci&oacute;n por circuito</p>
+    <h2 class="reveal">Tratar el circuito de control: remediaci&oacute;n con transferencia y <em>f&aacute;rmaco por dominio</em></h2>
+    <div class="divider reveal"></div>
+    <p class="reveal">El ingrediente importa m&aacute;s que el diagn&oacute;stico. El target es la red fronto-c&iacute;ngulo-parietal compartida transdiagn&oacute;sticamente.</p>
+    <table class="data-table reveal" style="max-width:720px;margin-top:var(--content-gap)">
+      <thead><tr><th>Falla dominante</th><th>Intervenci&oacute;n por mecanismo</th></tr></thead>
+      <tbody>
+        <tr><td>WM / control general</td><td>remediaci&oacute;n cognitiva + estrategia + transferencia</td></tr>
+        <tr><td>Circuito de control</td><td>f&aacute;rmaco sobre red fronto-c&iacute;ngulo-parietal</td></tr>
+        <tr><td>Representaci&oacute;n/sesgo en WM</td><td>psicoterapia (reappraisal, control cognitivo)</td></tr>
+        <tr><td>Baja inhibici&oacute;n/estructura</td><td>andamiaje ambiental, pr&oacute;tesis externas</td></tr>
+      </tbody>
+    </table>
+    <div class="quote reveal" style="margin-top:var(--content-gap);font-size:clamp(0.82rem,1.4vw,1.1rem)">
+      Remediaci&oacute;n sin transferencia mejora la tarea entrenada, no la vida. El ingrediente activo es estrategia + terapeuta activo + rehabilitaci&oacute;n adjunta.
+    </div>
+    <p class="source reveal">Vita et al., 2021 (10.1001/jamapsychiatry.2021.0620); Wykes et al., 2011 (10.1176/appi.ajp.2010.10060855); Hernaus &amp; van Amelsvoort, 2016 (10.3389/fpsyt.2016.00082); Choi et al., 2013 (10.1192/bjp.bp.111.107359).</p>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 26: TRANSFERENCIA ES EL LIMITE
+     ============================================= -->
+<section class="slide" id="s26">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Honestidad de evidencia</p>
+      <h2 class="reveal">Elegir bien el mecanismo no garantiza milagro: la transferencia es el <em>l&iacute;mite</em></h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">Entrenamiento cognitivo: near transfer s&iacute;, far transfer casi nulo. CBM: efectos peque&ntilde;os e inconsistentes. A&uacute;n sin reglas de precisi&oacute;n validadas.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        Prometer &ldquo;entrenar el cerebro&rdquo; sin transferencia es marketing, no cl&iacute;nica. Lo que transfiere no es repetir la tarea; es estrategia m&aacute;s contexto.
+      </div>
+      <p class="source reveal">Sala et al., 2019 (10.1525/collabra.203); Fodor et al., 2020 (10.1016/S2215-0366(20)30130-9); Jones &amp; Sharpe, 2017 (10.1016/j.jad.2017.07.034); Kessler &amp; Luedtke, 2021 (10.1001/jamapsychiatry.2021.2500).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="card"><h4 style="color:var(--accent-blue)">Sala 2019</h4><p>Meta-an&aacute;lisis 2do orden: far transfer WM &asymp; nulo controlando placebo y sesgo.</p></div>
+        <div class="card"><h4 style="color:var(--accent-green)">Fodor 2020</h4><p>CBM (ansiedad/depresi&oacute;n): beneficios peque&ntilde;os e inconsistentes; IC incluyen 0.</p></div>
+        <div class="card"><h4 style="color:var(--accent-amber)">Jones 2017</h4><p>ABM: efecto en ansiedad ES 0.16&ndash;0.41; d&eacute;bil en depresi&oacute;n, incierto a largo plazo.</p></div>
+        <div class="card"><h4 style="color:var(--accent)">Kessler 2021</h4><p>Precisi&oacute;n pragm&aacute;tica: direcci&oacute;n correcta, pero a&uacute;n sin reglas validadas para la cl&iacute;nica.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 27: TAKE-HOME + PUENTE S18
+     ============================================= -->
+<section class="slide" id="s27">
+  <div class="slide-content">
+    <div class="takehome-grid">
+      <div class="takehome-rail">
+        <p class="eyebrow reveal">Take-home &middot; Cierre &middot; S18</p>
+        <h2 class="reveal" style="transition-delay:0.12s">Del control a la percepci&oacute;n: la pr&oacute;xima falla es de <em>inferencia</em></h2>
+        <div class="divider reveal" style="transition-delay:0.22s"></div>
+        <p class="reveal" style="transition-delay:0.32s">S16 atenci&oacute;n, S17 control/WM, S18 percepci&oacute;n: tres capas del mismo sistema cognitivo.</p>
+        <p class="source reveal" style="transition-delay:0.42s">Badre, 2024 (10.1146/annurev-psych-022024-103901).</p>
+      </div>
+      <div class="takehome-map">
+        <div class="takehome-point reveal" style="transition-delay:0.12s">
+          <span class="takehome-code">01</span>
+          <div><h4>Cinco operaciones disociables</h4><p>Mantener, manipular, inhibir, cambiar, monitorear: no son sin&oacute;nimos de &ldquo;d&eacute;ficit ejecutivo&rdquo;.</p></div>
+        </div>
+        <div class="takehome-point reveal" style="transition-delay:0.20s">
+          <span class="takehome-code">02</span>
+          <div><h4>El metacontrol es un dial</h4><p>Estabilidad &harr; flexibilidad; cada extremo cobra peaje (perseveraci&oacute;n vs dispersi&oacute;n).</p></div>
+        </div>
+        <div class="takehome-point reveal" style="transition-delay:0.28s">
+          <span class="takehome-code">03</span>
+          <div><h4>Cuatro fallas, cuatro circuitos</h4><p>Rigidez, impulsividad, distractibilidad, desorganizaci&oacute;n: sondas y tratamientos propios.</p></div>
+        </div>
+        <div class="takehome-point reveal" style="transition-delay:0.36s">
+          <span class="takehome-code">04</span>
+          <div><h4>Operacionaliza antes de tratar</h4><p>Falla dominante &rarr; sonda correcta &rarr; intervenci&oacute;n por mecanismo. El puntaje orienta, no es el mecanismo.</p></div>
+        </div>
+        <div class="takehome-point reveal" style="transition-delay:0.44s">
+          <span class="takehome-code">S18</span>
+          <div><h4>Pr&oacute;ximo: percepci&oacute;n como inferencia</h4><p>Hoy el sistema fallaba ejecutando. En S18 fallar&aacute; infiriendo: priors, prediction error y construcci&oacute;n de la realidad.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     JAVASCRIPT (donor verbatim)
+     ============================================= -->
+<script>
+/* === SLIDE PRESENTATION CONTROLLER === */
+class SlidePresentation {
+  constructor() {
+    this.slides = document.querySelectorAll('.slide');
+    this.currentSlide = 0;
+    this.setupIntersectionObserver();
+    this.setupKeyboardNav();
+    this.setupTouchNav();
+    this.setupProgressBar();
+    this.setupNavDots();
+  }
+
+  setupIntersectionObserver() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          const idx = Array.from(this.slides).indexOf(entry.target);
+          if (idx !== -1) {
+            this.currentSlide = idx;
+            this.updateProgressBar();
+            this.updateNavDots();
+          }
+        }
+      });
+    }, { threshold: 0.4 });
+    this.slides.forEach(slide => observer.observe(slide));
+  }
+
+  setupKeyboardNav() {
+    document.addEventListener('keydown', (e) => {
+      if (e.target.getAttribute && e.target.getAttribute('contenteditable')) return;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        this.goTo(Math.min(this.currentSlide + 1, this.slides.length - 1));
+      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        this.goTo(Math.max(this.currentSlide - 1, 0));
+      } else if (e.key === 'Home') {
+        e.preventDefault(); this.goTo(0);
+      } else if (e.key === 'End') {
+        e.preventDefault(); this.goTo(this.slides.length - 1);
+      }
+    });
+  }
+
+  setupTouchNav() {
+    let startY = 0;
+    document.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, { passive: true });
+    document.addEventListener('touchend', e => {
+      const diff = startY - e.changedTouches[0].clientY;
+      if (Math.abs(diff) > 50) {
+        diff > 0 ? this.goTo(Math.min(this.currentSlide + 1, this.slides.length - 1))
+                  : this.goTo(Math.max(this.currentSlide - 1, 0));
+      }
+    }, { passive: true });
+  }
+
+  setupProgressBar() {
+    this.progressBar = document.getElementById('progressBar');
+    this.updateProgressBar();
+  }
+
+  setupNavDots() {
+    this.navDotsContainer = document.getElementById('navDots');
+    this.navDotsContainer.innerHTML = '';
+    this.slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', `Slide ${i + 1}`);
+      dot.addEventListener('click', () => this.goTo(i));
+      this.navDotsContainer.appendChild(dot);
+    });
+    this.navDots = this.navDotsContainer.querySelectorAll('.nav-dot');
+  }
+
+  goTo(index) {
+    this.slides[index].scrollIntoView({ behavior: 'smooth' });
+  }
+
+  updateProgressBar() {
+    const pct = ((this.currentSlide + 1) / this.slides.length) * 100;
+    this.progressBar.style.width = pct + '%';
+  }
+
+  updateNavDots() {
+    if (!this.navDots) return;
+    this.navDots.forEach((dot, i) => dot.classList.toggle('active', i === this.currentSlide));
+  }
+}
+
+new SlidePresentation();
+</script>
+</body>
+</html>

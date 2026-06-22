@@ -3,1030 +3,1203 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Sesión 3: Exposoma y Staging Clínico</title>
-<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@400;500;600;700&f[]=satoshi@400;500;700&display=swap"/>
+<title>Psicopatología Dimensional | Bloque 1, Sesión 03 — Exposoma y Staging Clínico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
-/* === THEME === */
-:root {
-    --bg-primary: #0b0e14;
-    --bg-secondary: #131820;
-    --bg-card: #1a2030;
-    --text-primary: #e8eaf0;
-    --text-secondary: #8892a4;
-    --text-muted: #5a6478;
-    --font-display: 'Clash Display', sans-serif;
-    --font-body: 'Satoshi', sans-serif;
-    --title-size: clamp(1.6rem, 4.5vw, 3.2rem);
-    --h2-size: clamp(1.2rem, 3vw, 2rem);
-    --body-size: clamp(0.7rem, 1.3vw, 1rem);
-    --small-size: clamp(0.6rem, 1vw, 0.8rem);
-    --slide-padding: clamp(1.5rem, 4vw, 4rem);
-    --content-gap: clamp(0.75rem, 2vw, 1.5rem);
-    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-    --duration-normal: 0.6s;
-    /* Domain colors */
-    --color-general: #64748b;
-    --color-especifico: #f59e0b;
-    --color-interno: #991b1b;
-    --color-staging: #0d9488;
-    --color-rdoc: #10b981;
-    --color-hitop: #3b82f6;
-    --color-accent: #06b6d4;
-    --color-danger: #ef4444;
-    --color-success: #22c55e;
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg-deep:#050716;--bg-primary:#070811;--bg-panel:#0d1224;--bg-card:rgba(12,18,35,.78);
+--text-primary:#f2fbff;--text-secondary:rgba(213,231,239,.76);--text-muted:rgba(157,183,198,.62);
+--cyan:#00f5ff;--magenta:#ff2ec4;--violet:#8b5cff;--acid:#dcff38;--amber:#ffb627;--pink:#ff4d9d;
+--slate:#64748b;--teal:#2dd4bf;--burgundy:#c0395f;
+--line:rgba(0,245,255,.22);--grid-line:rgba(0,245,255,.072);--panel-line:rgba(0,245,255,.22);
+--magnetic-shadow:0 0 24px rgba(0,245,255,.16),0 0 54px rgba(255,46,196,.10);
+--font-display:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;--font-mono:'JetBrains Mono',monospace;
+--title-size:clamp(1.5rem,3.8vw,3.4rem);--h2-size:clamp(1.25rem,2.8vw,2.4rem);--h3-size:clamp(.95rem,1.8vw,1.45rem);
+--body-size:clamp(.72rem,1.1vw,.98rem);--small-size:clamp(.62rem,.86vw,.82rem);--label-size:clamp(.52rem,.72vw,.68rem);
+--footer-size:clamp(.5rem,.7vw,.64rem);--slide-padding:clamp(1.1rem,3vw,3.2rem);--content-gap:clamp(.5rem,1.3vw,1.2rem);
+--ease-out-expo:cubic-bezier(.16,1,.3,1);--duration-normal:.7s;
 }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { height: 100%; overflow-x: hidden; }
-html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
-.slide { width: 100vw; height: 100vh; height: 100dvh; overflow: hidden; scroll-snap-align: start; display: flex; flex-direction: column; position: relative; background: var(--bg-primary); font-family: var(--font-body); color: var(--text-primary); }
-.slide-content { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; max-height: 100%; overflow: hidden; padding: var(--slide-padding); }
-.slide-content > * { width: 100%; max-width: 900px; }
-.slide h1 { font-family: var(--font-display); font-size: var(--title-size); font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; }
-.slide h2 { font-family: var(--font-display); font-size: var(--h2-size); font-weight: 500; line-height: 1.2; color: var(--text-secondary); margin-top: clamp(0.3rem, 1vw, 0.75rem); }
-.slide p, .slide li { font-size: var(--body-size); line-height: 1.5; color: var(--text-secondary); }
-.slide .source { font-size: var(--small-size); color: var(--text-muted); padding-top: clamp(0.75rem, 1.5vh, 1.5rem); }
-
-/* === DOMAIN BAR === */
-.domain-bar { position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-.domain-bar.general { background: var(--color-general); }
-.domain-bar.especifico { background: var(--color-especifico); }
-.domain-bar.interno { background: var(--color-interno); }
-.domain-bar.staging { background: var(--color-staging); }
-.domain-bar.integracion { background: linear-gradient(90deg, var(--color-especifico), var(--color-staging), var(--color-hitop), var(--color-rdoc)); }
-
-/* === LAYOUTS === */
-.centered { text-align: center; }
-.centered > * { margin-left: auto; margin-right: auto; }
-.split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1rem, 3vw, 2.5rem); align-items: center; }
-.three-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(0.5rem, 1.5vw, 1.5rem); }
-.flow-horizontal { display: flex; align-items: center; gap: clamp(0.3rem, 0.8vw, 0.75rem); flex-wrap: wrap; justify-content: center; }
-.flow-vertical { display: flex; flex-direction: column; gap: clamp(0.3rem, 0.8vw, 0.6rem); }
-
-/* === COMPONENTS === */
-.tag { display: inline-block; padding: clamp(0.15rem, 0.4vw, 0.3rem) clamp(0.4rem, 1vw, 0.75rem); border-radius: 4px; font-size: var(--small-size); font-weight: 500; }
-.tag-blue { background: rgba(59,130,246,0.15); color: #93c5fd; }
-.tag-green { background: rgba(16,185,129,0.15); color: #6ee7b7; }
-.tag-red { background: rgba(239,68,68,0.15); color: #fca5a5; }
-.tag-amber { background: rgba(245,158,11,0.15); color: #fcd34d; }
-.tag-teal { background: rgba(13,148,136,0.15); color: #5eead4; }
-.tag-purple { background: rgba(139,92,246,0.15); color: #c4b5fd; }
-.tag-gray { background: rgba(100,116,139,0.15); color: #94a3b8; }
-
-.card { background: var(--bg-card); border-radius: 8px; padding: clamp(0.75rem, 2vw, 1.5rem); border: 1px solid rgba(255,255,255,0.05); }
-.card h3 { font-family: var(--font-display); font-size: clamp(0.8rem, 1.5vw, 1.1rem); font-weight: 500; margin-bottom: clamp(0.3rem, 0.5vw, 0.5rem); }
-
-.flow-box { background: var(--bg-card); border-radius: 6px; padding: clamp(0.4rem, 1vw, 0.75rem) clamp(0.6rem, 1.2vw, 1rem); font-size: var(--body-size); text-align: center; border-left: 3px solid var(--color-accent); min-width: clamp(80px, 12vw, 140px); }
-.flow-arrow { font-size: clamp(0.8rem, 1.5vw, 1.2rem); color: var(--text-muted); }
-
-.bar-compare { display: flex; align-items: center; gap: clamp(0.5rem, 1vw, 1rem); margin: clamp(0.3rem, 0.5vw, 0.5rem) 0; }
-.bar-compare .bar { height: clamp(24px, 4vh, 40px); border-radius: 4px; display: flex; align-items: center; padding: 0 clamp(0.5rem, 1vw, 1rem); font-weight: 600; font-size: var(--body-size); }
-.bar-compare .label { font-size: var(--body-size); color: var(--text-secondary); min-width: clamp(80px, 12vw, 160px); }
-
-.pipeline { display: flex; align-items: center; gap: clamp(0.2rem, 0.5vw, 0.5rem); flex-wrap: wrap; justify-content: center; }
-.pipeline .node { width: clamp(40px, 6vw, 70px); height: clamp(40px, 6vw, 70px); border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: var(--small-size); font-weight: 600; border: 2px solid rgba(255,255,255,0.1); }
-.pipeline .node-label { font-size: clamp(0.5rem, 0.8vw, 0.65rem); color: var(--text-muted); text-align: center; margin-top: clamp(0.15rem, 0.3vw, 0.25rem); max-width: clamp(50px, 8vw, 80px); }
-.pipeline .arrow { color: var(--text-muted); font-size: clamp(0.7rem, 1vw, 1rem); }
-
-.highlight-box { border: 1px solid var(--color-accent); border-radius: 6px; padding: clamp(0.5rem, 1vw, 1rem); background: rgba(6,182,212,0.05); }
-
-.big-number { font-family: var(--font-display); font-size: clamp(2rem, 6vw, 5rem); font-weight: 700; line-height: 1; }
-
-/* === ANIMATIONS === */
-.reveal { opacity: 0; transform: translateY(20px); transition: opacity var(--duration-normal) var(--ease-out-expo), transform var(--duration-normal) var(--ease-out-expo); }
-.slide.visible .reveal { opacity: 1; transform: translateY(0); }
-.reveal:nth-child(2) { transition-delay: 0.1s; }
-.reveal:nth-child(3) { transition-delay: 0.2s; }
-.reveal:nth-child(4) { transition-delay: 0.3s; }
-.reveal:nth-child(5) { transition-delay: 0.4s; }
-
-/* === PROGRESS BAR === */
-.progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: var(--color-accent); z-index: 1000; transition: width 0.3s ease; }
-
-/* === NAV DOTS === */
-.nav-dots { position: fixed; right: clamp(0.5rem, 1.5vw, 1.5rem); top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 6px; z-index: 100; }
-.nav-dots .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.2); cursor: pointer; transition: all 0.3s; }
-.nav-dots .dot.active { background: var(--color-accent); transform: scale(1.4); }
-
-/* === RESPONSIVE === */
-@media (max-height: 700px) {
-    :root { --slide-padding: clamp(0.75rem, 3vw, 2rem); --title-size: clamp(1.3rem, 4vw, 2.5rem); }
-}
-@media (max-height: 600px) {
-    :root { --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem); --title-size: clamp(1.1rem, 3.5vw, 2rem); --body-size: clamp(0.65rem, 1.1vw, 0.9rem); }
-    .nav-dots { display: none; }
-}
-@media (max-width: 600px) {
-    .split { grid-template-columns: 1fr; }
-    .three-cols { grid-template-columns: 1fr; }
-}
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
-    html { scroll-behavior: auto; }
-}
+html,body{height:100%;overflow-x:hidden}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+body{background:var(--bg-deep);color:var(--text-primary);font-family:var(--font-body)}
+body::before{content:"";position:fixed;inset:0;z-index:100;pointer-events:none;opacity:.11;mix-blend-mode:screen;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.06) 0,rgba(255,255,255,.06) 1px,transparent 1px,transparent clamp(.26rem,.6vw,.5rem));animation:scanDrift 9s linear infinite}
+.slide{width:100vw;height:100vh;height:100dvh;overflow:hidden;scroll-snap-align:start;display:flex;position:relative;isolation:isolate;align-items:center;justify-content:center;background:radial-gradient(circle at 18% 18%,rgba(255,46,196,.16),transparent 26%),radial-gradient(circle at 82% 14%,rgba(0,245,255,.14),transparent 25%),radial-gradient(circle at 70% 78%,rgba(139,92,255,.10),transparent 26%),linear-gradient(var(--grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--grid-line) 1px,transparent 1px),linear-gradient(135deg,#050610 0%,#091120 49%,#07101b 100%);background-size:auto,auto,auto,clamp(1.4rem,3vw,3rem) clamp(1.4rem,3vw,3rem),clamp(1.4rem,3vw,3rem) clamp(1.4rem,3vw,3rem),auto}
+.slide::before{content:"";position:absolute;inset:clamp(.7rem,1.6vw,1.5rem);z-index:0;pointer-events:none;opacity:.4;background:radial-gradient(circle at 18% 30%,var(--cyan) 0 2px,transparent 2.5px),radial-gradient(circle at 37% 18%,var(--magenta) 0 2px,transparent 2.5px),radial-gradient(circle at 57% 35%,var(--acid) 0 2px,transparent 2.5px),radial-gradient(circle at 74% 22%,var(--cyan) 0 2px,transparent 2.5px),radial-gradient(circle at 28% 70%,var(--violet) 0 2px,transparent 2.5px),radial-gradient(circle at 62% 76%,var(--magenta) 0 2px,transparent 2.5px),linear-gradient(30deg,transparent 12%,rgba(0,245,255,.10) 12.4%,transparent 12.8%),linear-gradient(148deg,transparent 28%,rgba(255,46,196,.10) 28.35%,transparent 28.7%),linear-gradient(99deg,transparent 51%,rgba(139,92,255,.08) 51.25%,transparent 51.65%);border:1px solid rgba(0,245,255,.09);border-radius:clamp(.35rem,.7vw,.6rem)}
+.slide::after{content:"Elaborado por Javier A. Flores-Cohaila";position:absolute;right:clamp(1rem,2.8vw,2.4rem);bottom:clamp(.55rem,1.35vw,1.05rem);z-index:12;color:rgba(213,231,239,.45);font-family:var(--font-mono);font-size:var(--footer-size);line-height:1;text-align:right;letter-spacing:0;text-transform:uppercase}
+.slide-content{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;max-height:100%;overflow:hidden;padding:clamp(3rem,7vh,5rem) var(--slide-padding) clamp(3rem,6vh,4rem);position:relative;z-index:2;width:100%;max-width:min(100vw,1360px);margin-inline:auto}
+.slide-content>*{width:100%;max-width:900px}
+.domain-bar{position:absolute;top:0;left:0;right:0;height:clamp(3px,.5vh,5px);z-index:6;box-shadow:0 0 18px currentColor}
+.domain-bar.cyan{background:var(--cyan);color:var(--cyan)}
+.domain-bar.magenta{background:var(--magenta);color:var(--magenta)}
+.domain-bar.violet{background:var(--violet);color:var(--violet)}
+.domain-bar.acid{background:var(--acid);color:var(--acid)}
+.domain-bar.amber{background:var(--amber);color:var(--amber)}
+.domain-bar.integracion{background:linear-gradient(90deg,var(--amber),var(--violet),var(--cyan));color:var(--cyan)}
+.domain-bar.full{background:linear-gradient(90deg,var(--cyan),var(--magenta),var(--amber),var(--violet));color:var(--cyan)}
+h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);font-weight:800;letter-spacing:0;line-height:1.06;text-transform:uppercase}
+h1{font-size:var(--title-size);font-weight:900;text-shadow:0 0 clamp(.5rem,1.2vw,1rem) rgba(0,245,255,.18),clamp(.04rem,.1vw,.08rem) 0 rgba(255,46,196,.38)}
+h2{font-size:var(--h2-size)}
+h3{font-size:var(--h3-size)}
+p,li{font-size:var(--body-size);line-height:1.5;color:var(--text-secondary);font-weight:400}
+strong{color:var(--text-primary);font-weight:700}
+em{color:var(--cyan);font-style:normal;text-shadow:0 0 18px rgba(0,245,255,.34)}
+.eyebrow{font-family:var(--font-mono);font-size:var(--label-size);font-weight:700;color:var(--cyan);letter-spacing:0;text-transform:uppercase;line-height:1;margin-bottom:clamp(.4rem,1vh,.8rem)}
+.eyebrow::before{content:"[ ";color:var(--cyan)}
+.eyebrow::after{content:" ]";color:var(--cyan)}
+.divider{width:clamp(50px,5vw,84px);height:2px;background:linear-gradient(90deg,var(--cyan),var(--magenta),var(--acid));box-shadow:0 0 16px rgba(0,245,255,.45);margin:clamp(.6rem,1.3vh,1.1rem) 0}
+.source{font-family:var(--font-mono);font-size:clamp(.5rem,.7vw,.64rem);color:rgba(213,231,239,.46);letter-spacing:0;margin-top:auto;padding-top:clamp(.5rem,1vh,1rem)}
+.centered{text-align:center;align-items:center}
+.centered>*{margin-left:auto;margin-right:auto}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1rem,2.5vw,2.2rem);align-items:center;width:100%;max-width:1100px}
+.split-left{display:flex;flex-direction:column;justify-content:center;min-width:0}
+.split-right{display:flex;align-items:center;justify-content:center;min-width:0}
+.three-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.5rem,1.3vw,1.2rem);width:100%;max-width:1000px}
+.four-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.4rem,1vw,.8rem);width:100%;max-width:1100px}
+.flow-vertical{display:flex;flex-direction:column;gap:clamp(.3rem,.8vw,.6rem)}
+.tag{display:inline-block;padding:clamp(.15rem,.4vw,.3rem) clamp(.4rem,1vw,.7rem);border-radius:4px;font-size:var(--small-size);font-weight:600;font-family:var(--font-mono);border:1px solid rgba(255,255,255,.08)}
+.tag-cyan{background:rgba(0,245,255,.12);color:var(--cyan);border-color:rgba(0,245,255,.3)}
+.tag-magenta{background:rgba(255,46,196,.12);color:var(--magenta);border-color:rgba(255,46,196,.3)}
+.tag-violet{background:rgba(139,92,255,.12);color:var(--violet);border-color:rgba(139,92,255,.3)}
+.tag-acid{background:rgba(220,255,56,.12);color:var(--acid);border-color:rgba(220,255,56,.3)}
+.tag-amber{background:rgba(255,182,39,.12);color:var(--amber);border-color:rgba(255,182,39,.3)}
+.tag-muted{background:rgba(100,116,139,.12);color:var(--text-muted)}
+.tag-pink{background:rgba(255,77,157,.12);color:var(--pink);border-color:rgba(255,77,157,.3)}
+.tag-slate{background:rgba(100,116,139,.16);color:var(--slate);border-color:rgba(100,116,139,.3)}
+.tag-burgundy{background:rgba(192,57,95,.16);color:var(--burgundy);border-color:rgba(192,57,95,.3)}
+.card{background:var(--bg-card);border-radius:clamp(.35rem,.65vw,.55rem);padding:clamp(.7rem,1.5vw,1.3rem);border:1px solid var(--panel-line);box-shadow:var(--magnetic-shadow);backdrop-filter:blur(14px)}
+.card h3{margin-bottom:clamp(.3rem,.5vw,.5rem)}
+.card.tight{padding:clamp(.5rem,1vw,.9rem)}
+.flow-box{background:var(--bg-card);border-radius:clamp(.3rem,.55vw,.5rem);padding:clamp(.4rem,.9vw,.7rem) clamp(.6rem,1.2vw,1rem);font-size:var(--small-size);text-align:center;min-width:clamp(90px,14vw,160px);border:1px solid var(--panel-line);box-shadow:var(--magnetic-shadow)}
+.flow-box.border-cyan{border-left:3px solid var(--cyan)}
+.flow-box.border-magenta{border-left:3px solid var(--magenta)}
+.flow-box.border-violet{border-left:3px solid var(--violet)}
+.flow-box.border-acid{border-left:3px solid var(--acid)}
+.flow-box.border-amber{border-left:3px solid var(--amber)}
+.flow-box.border-slate{border-left:3px solid var(--slate)}
+.flow-box.border-burgundy{border-left:3px solid var(--burgundy)}
+.flow-box.bold{font-weight:700;color:var(--text-primary)}
+.flow-arrow{font-size:clamp(.8rem,1.5vw,1.2rem);color:var(--text-muted)}
+.big-number{font-family:var(--font-display);font-size:clamp(2.5rem,7vw,6rem);font-weight:900;line-height:1;text-shadow:0 0 clamp(.8rem,2vw,1.6rem) currentColor}
+.data-table{width:100%;border-collapse:collapse;font-size:var(--small-size)}
+.data-table th{text-align:left;padding:clamp(.3rem,.6vw,.5rem);color:var(--text-muted);font-weight:600;font-family:var(--font-mono);border-bottom:1px solid var(--line);text-transform:uppercase;font-size:var(--label-size)}
+.data-table td{padding:clamp(.28rem,.55vw,.45rem);border-bottom:1px solid rgba(0,245,255,.05);color:var(--text-secondary);line-height:1.3}
+.data-table td.head{color:var(--text-primary);font-weight:600}
+.data-table tr:hover td{background:rgba(0,245,255,.03)}
+.data-table .strike{text-decoration:line-through;color:var(--text-muted)}
+.data-table .nbn{color:var(--acid);font-family:var(--font-mono)}
+.pipeline{display:flex;align-items:center;gap:0;width:100%;flex-wrap:wrap;justify-content:center}
+.pipeline-box{padding:clamp(.3rem,.6vw,.5rem) clamp(.5rem,.8vw,.7rem);background:var(--bg-card);border-radius:clamp(.3rem,.55vw,.5rem);border:1px solid var(--panel-line);text-align:center;font-size:var(--label-size);box-shadow:var(--magnetic-shadow);min-width:clamp(70px,11vw,120px)}
+.pipeline-box .pipe-icon{font-size:clamp(.8rem,1.2vw,1.1rem);margin-bottom:.15rem}
+.pipeline-box .pipe-label{color:var(--text-secondary);font-family:var(--font-mono)}
+.pipeline-box.active{border-color:var(--cyan);background:rgba(0,245,255,.1)}
+.pipeline-box.lit{border:2px solid var(--acid);box-shadow:0 0 22px rgba(220,255,56,.55),var(--magnetic-shadow);background:rgba(220,255,56,.08)}
+.pipeline-arrow{color:var(--text-muted);font-size:var(--small-size);padding:0 clamp(.15rem,.3vw,.3rem)}
+.flowchart-v{display:flex;flex-direction:column;align-items:center;gap:0}
+.fc-box{padding:clamp(.35rem,.7vw,.55rem) clamp(.7rem,1.3vw,1.1rem);background:var(--bg-card);border-radius:clamp(.3rem,.55vw,.5rem);border:1px solid var(--panel-line);font-size:var(--small-size);color:var(--text-secondary);text-align:center;min-width:clamp(160px,28vw,320px);max-width:520px;box-shadow:var(--magnetic-shadow)}
+.fc-box.bold{color:var(--text-primary);font-weight:600}
+.fc-arrow{color:var(--text-muted);font-size:var(--body-size);padding:clamp(.1rem,.2vh,.2rem) 0}
+.stack-levels{display:flex;flex-direction:column;gap:clamp(.4rem,.8vh,.6rem);width:100%;max-width:620px}
+.stack-row{display:flex;align-items:center;gap:clamp(.5rem,1vw,.8rem);padding:clamp(.5rem,1vh,.8rem) clamp(.8rem,1.5vw,1.2rem);background:var(--bg-card);border-radius:6px;border-left:4px solid var(--row-color,var(--text-muted));box-shadow:var(--magnetic-shadow)}
+.stack-label{font-size:var(--body-size);font-weight:700;color:var(--text-primary);min-width:clamp(55px,9vw,90px);font-family:var(--font-mono)}
+.stack-desc{font-size:var(--small-size);color:var(--text-secondary)}
+.exercise-box{background:var(--bg-card);border-radius:8px;padding:clamp(.7rem,1.4vw,1.1rem);border:1px solid var(--panel-line);font-family:var(--font-mono);font-size:var(--small-size);color:var(--text-secondary);box-shadow:var(--magnetic-shadow);max-width:560px}
+.exercise-box .field{margin:clamp(.15rem,.3vh,.25rem) 0}
+.exercise-box .field-label{color:var(--text-primary);font-weight:600}
+.exercise-box .blank{border-bottom:1px dashed var(--text-muted);display:inline-block;min-width:80px}
+.dim-bar{display:flex;align-items:center;gap:clamp(.3rem,.6vw,.5rem);margin:clamp(.15rem,.3vh,.25rem) 0}
+.dim-bar-label{font-size:var(--label-size);color:var(--text-muted);min-width:clamp(50px,8vw,70px);font-family:var(--font-mono)}
+.dim-bar-track{flex:1;height:clamp(6px,1vh,10px);background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden}
+.dim-bar-fill{height:100%;border-radius:99px}
+.stair{display:flex;align-items:flex-end;gap:clamp(.4rem,1vw,.8rem);justify-content:center;width:100%;max-width:680px}
+.stair-step{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:clamp(.5rem,1vh,.8rem);border-radius:6px 6px 0 0;text-align:center;box-shadow:var(--magnetic-shadow);border:1px solid rgba(255,255,255,.08)}
+.stair-step .or{font-family:var(--font-display);font-size:clamp(1.2rem,2.4vw,2rem);font-weight:900;line-height:1}
+.stair-step .lbl{font-size:var(--label-size);font-family:var(--font-mono);margin-top:.2rem;color:var(--text-secondary)}
+.mod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.4rem,1vw,.7rem);width:100%;max-width:920px}
+.mod-chip{display:flex;flex-direction:column;align-items:center;gap:.25rem;padding:clamp(.5rem,1vw,.8rem);background:var(--bg-card);border-radius:8px;border-top:3px solid var(--chip-color,var(--text-muted));box-shadow:var(--magnetic-shadow);text-align:center}
+.mod-chip .code{font-family:var(--font-mono);font-size:var(--label-size);font-weight:700;color:var(--chip-color)}
+.mod-chip .name{font-size:var(--small-size);font-weight:700;color:var(--text-primary)}
+.mod-chip .desc{font-size:var(--label-size);color:var(--text-muted);line-height:1.2}
+.signal-bars{display:flex;align-items:flex-end;gap:clamp(2px,.4vw,4px);height:clamp(40px,7vh,64px)}
+.signal-bars span{width:clamp(8px,1.2vw,14px);background:rgba(255,255,255,.1);border-radius:2px 2px 0 0}
+.signal-bars span.on{box-shadow:0 0 12px currentColor}
+.pyramid{display:flex;flex-direction:column;align-items:center;gap:clamp(.3rem,.6vw,.5rem);width:100%;max-width:480px}
+.pyramid-tier{padding:clamp(.5rem,1vh,.75rem) clamp(1rem,2vw,1.5rem);border-radius:6px;text-align:center;box-shadow:var(--magnetic-shadow);border:1px solid rgba(255,255,255,.08)}
+.cost-bars{display:flex;align-items:flex-end;gap:clamp(1rem,3vw,2.5rem);justify-content:center;height:clamp(180px,30vh,280px)}
+.cost-bar{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;width:clamp(80px,14vw,140px);border-radius:8px 8px 0 0;padding:clamp(.5rem,1vh,.8rem);text-align:center;box-shadow:var(--magnetic-shadow)}
+.cost-bar .val{font-family:var(--font-display);font-weight:900;font-size:clamp(1.2rem,2.4vw,2rem);line-height:1}
+.cost-bar .lbl{font-size:var(--label-size);font-family:var(--font-mono);margin-top:.3rem}
+.brain-map{position:relative;width:clamp(200px,30vw,300px);height:clamp(160px,24vw,240px);margin:0 auto}
+.brain-region{position:absolute;padding:clamp(.15rem,.3vw,.25rem) clamp(.3rem,.6vw,.5rem);border-radius:4px;font-size:var(--label-size);font-family:var(--font-mono);font-weight:700;border:1px solid rgba(255,255,255,.15)}
+.cascade-flow{display:flex;align-items:center;gap:clamp(.2rem,.5vw,.4rem);flex-wrap:wrap;justify-content:center;width:100%}
+.cover-meta{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(.4rem,.9vw,.7rem);margin-top:clamp(.5rem,1.2vw,1rem)}
+.meta-chip{border:1px solid var(--line);box-shadow:inset 0 0 clamp(.4rem,1vw,.9rem) rgba(0,245,255,.08);color:var(--text-muted);font-family:var(--font-mono);font-size:var(--label-size);line-height:1;padding:clamp(.3rem,.6vw,.5rem) clamp(.4rem,.9vw,.7rem);text-transform:uppercase}
+.pearl-statement{font-family:var(--font-display);font-size:clamp(1.3rem,3.2vw,2.8rem);font-weight:900;line-height:1.08;max-width:min(86vw,60rem);text-align:center;text-transform:uppercase;text-shadow:0 0 clamp(.5rem,1.2vw,1rem) rgba(0,245,255,.18),clamp(.04rem,.1vw,.08rem) 0 rgba(255,46,196,.4)}
+.pearl-statement mark{background:transparent;color:var(--acid)}
+.pearl-statement em{color:var(--magenta);text-shadow:0 0 18px rgba(255,46,196,.4)}
+.progress-bar{position:fixed;top:0;left:0;height:clamp(2px,.35vh,4px);z-index:40;background:linear-gradient(90deg,var(--cyan),var(--magenta),var(--acid));box-shadow:0 0 16px rgba(0,245,255,.55);transform:scaleX(0);transform-origin:left center;width:100%}
+.nav-dots{position:fixed;right:clamp(.45rem,1.1vw,1rem);top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:clamp(3px,.4vh,5px)}
+.nav-dot{width:clamp(5px,.6vw,8px);height:clamp(5px,.6vw,8px);border-radius:50%;background:rgba(213,231,239,.18);cursor:pointer;transition:all .3s;border:1px solid rgba(0,245,255,.22);padding:0}
+.nav-dot.active{background:var(--cyan);box-shadow:0 0 14px rgba(0,245,255,.72);transform:scale(1.4)}
+.nav-dot:hover{background:rgba(0,245,255,.4)}
+.slide-counter{position:fixed;left:clamp(.6rem,1.4vw,1.2rem);bottom:clamp(.6rem,1.4vw,1.1rem);z-index:50;font-family:var(--font-mono);font-size:var(--footer-size);color:rgba(213,231,239,.4)}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity var(--duration-normal) var(--ease-out-expo),transform var(--duration-normal) var(--ease-out-expo)}
+.slide.visible .reveal{opacity:1;transform:translateY(0)}
+.reveal:nth-child(2){transition-delay:.1s}
+.reveal:nth-child(3){transition-delay:.2s}
+.reveal:nth-child(4){transition-delay:.3s}
+.reveal:nth-child(5){transition-delay:.4s}
+.reveal:nth-child(6){transition-delay:.5s}
+.reveal:nth-child(7){transition-delay:.6s}
+.reveal:nth-child(8){transition-delay:.7s}
+.reveal-scale{opacity:0;transform:scale(.88);transition:opacity .8s var(--ease-out-expo),transform .8s var(--ease-out-expo)}
+.slide.visible .reveal-scale{opacity:1;transform:scale(1)}
+.reveal-left{opacity:0;transform:translateX(-24px);transition:opacity var(--duration-normal) var(--ease-out-expo),transform var(--duration-normal) var(--ease-out-expo)}
+.slide.visible .reveal-left{opacity:1;transform:translateX(0)}
+@keyframes scanDrift{from{transform:translateY(0)}to{transform:translateY(clamp(1rem,2vw,1.8rem))}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@keyframes glow{0%,100%{box-shadow:0 0 16px rgba(220,255,56,.4)}50%{box-shadow:0 0 32px rgba(220,255,56,.8)}}
+@media (max-height:700px){:root{--slide-padding:clamp(.75rem,3vw,2rem);--title-size:clamp(1.2rem,4.5vw,2.6rem);--h2-size:clamp(1rem,3vw,1.75rem)}}
+@media (max-height:600px){:root{--slide-padding:clamp(.5rem,2.5vw,1.5rem);--body-size:clamp(.65rem,1.1vw,.9rem);--title-size:clamp(1rem,4vw,2rem)}.nav-dots,.slide-counter{display:none}}
+@media (max-width:768px){.split{grid-template-columns:1fr}.three-cols{grid-template-columns:1fr}.four-cols{grid-template-columns:repeat(2,1fr)}.mod-grid{grid-template-columns:repeat(2,1fr)}.stair{flex-direction:column;align-items:stretch}.slide::after{left:clamp(.8rem,3vw,1.1rem);right:clamp(.8rem,3vw,1.1rem);text-align:center}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 <div class="progress-bar" id="progressBar"></div>
-<nav class="nav-dots" id="navDots"></nav>
+<nav class="nav-dots" id="navDots" aria-label="Navegación de slides"></nav>
+<div class="slide-counter" id="slideCounter">01 / 39</div>
+<main>
 
-<!-- === SECCIÓN A: APERTURA === -->
+<!-- === SECCIÓN A: OBJETIVO (Slides 1-4 | cyan) === -->
 
-<section class="slide" id="slide-1">
-    <div class="slide-content centered">
-        <p class="reveal" style="font-size: var(--small-size); color: var(--color-accent); letter-spacing: 0.1em; text-transform: uppercase;">Psicopatología Dimensional</p>
-        <h1 class="reveal" style="margin-top: clamp(0.5rem, 1vw, 1rem);">Exposoma y Staging Clínico</h1>
-        <h2 class="reveal">Del riesgo al curso</h2>
-        <p class="reveal source">Javier Flores · MR2 Psiquiatría · 2026</p>
+<section class="slide" id="s1" data-title="Portada">
+  <div class="domain-bar cyan"></div>
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Psicopatología Dimensional — Sesión 03 / 21</p>
+      <h1 class="reveal" style="transition-delay:.12s">Exposoma y Staging Clínico<br/><em>Del riesgo al curso</em></h1>
+      <div class="divider reveal" style="transition-delay:.22s"></div>
+      <p class="reveal" style="transition-delay:.32s;max-width:480px">¿Por qué llegó ahí? ¿Qué tan lejos ha avanzado? Dos preguntas que el modelo categórico ignora — y dos herramientas para responderlas.</p>
+      <p class="source reveal" style="transition-delay:.42s">Javier Flores · R1 Psiquiatría · 2026</p>
     </div>
-    <div style="position: absolute; bottom: 15%; left: 50%; transform: translateX(-50%); width: 60%; height: 2px; background: linear-gradient(90deg, transparent, var(--color-accent), transparent); opacity: 0.3;"></div>
+    <div class="split-right">
+      <div class="reveal-scale" style="position:relative;width:clamp(240px,34vw,380px);height:clamp(200px,30vw,300px)">
+        <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 100 70" preserveAspectRatio="none">
+          <path d="M0,45 Q25,38 50,42 T100,40 L100,70 L0,70 Z" fill="rgba(0,245,255,.10)" stroke="rgba(0,245,255,.3)" stroke-width=".4"/>
+          <path d="M0,48 Q25,41 50,45 T100,43" fill="none" stroke="rgba(45,212,191,.4)" stroke-width=".3" stroke-dasharray="2,1.5"/>
+          <path d="M0,52 Q25,45 50,49 T100,47" fill="none" stroke="rgba(45,212,191,.25)" stroke-width=".3" stroke-dasharray="2,1.5"/>
+        </svg>
+        <div style="position:absolute;left:42%;top:30%;font-size:clamp(1.4rem,3vw,2.2rem)">🧑</div>
+        <div style="position:absolute;left:8%;bottom:18%;font-size:var(--label-size);color:var(--cyan);font-family:var(--font-mono);font-weight:700">0</div>
+        <div style="position:absolute;left:24%;bottom:30%;font-size:var(--label-size);color:var(--acid);font-family:var(--font-mono);font-weight:700">1a</div>
+        <div style="position:absolute;left:40%;bottom:42%;font-size:var(--label-size);color:var(--amber);font-family:var(--font-mono);font-weight:700">1b</div>
+        <div style="position:absolute;left:58%;bottom:52%;font-size:var(--label-size);color:var(--amber);font-family:var(--font-mono);font-weight:700">2</div>
+        <div style="position:absolute;left:74%;bottom:64%;font-size:var(--label-size);color:var(--pink);font-family:var(--font-mono);font-weight:700">3</div>
+        <div style="position:absolute;left:88%;bottom:76%;font-size:var(--label-size);color:var(--magenta);font-family:var(--font-mono);font-weight:700">4</div>
+        <p style="position:absolute;left:50%;bottom:2%;transform:translateX(-50%);font-size:var(--label-size);color:var(--text-muted);font-family:var(--font-mono);white-space:nowrap">EXPOSOMA → STAGING</p>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section class="slide" id="slide-2">
-    <div class="slide-content" style="gap: var(--content-gap);">
-        <h1 class="reveal">HiTOP dice dónde está; RDoC dice qué falla — pero nadie ha dicho por qué ni cuánto ha avanzado</h1>
-        <div class="flow-vertical reveal" style="gap: clamp(0.5rem, 1.2vw, 1rem); margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <div style="display: flex; align-items: center; gap: clamp(0.5rem, 1vw, 1rem); padding: clamp(0.5rem, 1vw, 0.75rem); border-left: 3px solid var(--color-hitop); background: rgba(59,130,246,0.05); border-radius: 0 6px 6px 0;">
-                <span style="color: var(--color-success);">✓</span>
-                <span><strong>HiTOP</strong> — ¿Dónde está en el mapa?</span>
-            </div>
-            <div style="display: flex; align-items: center; gap: clamp(0.5rem, 1vw, 1rem); padding: clamp(0.5rem, 1vw, 0.75rem); border-left: 3px solid var(--color-rdoc); background: rgba(16,185,129,0.05); border-radius: 0 6px 6px 0;">
-                <span style="color: var(--color-success);">✓</span>
-                <span><strong>RDoC</strong> — ¿Qué sistema falla?</span>
-            </div>
-            <div style="display: flex; align-items: center; gap: clamp(0.5rem, 1vw, 1rem); padding: clamp(0.5rem, 1vw, 0.75rem); border-left: 3px solid var(--color-danger); background: rgba(239,68,68,0.05); border-radius: 0 6px 6px 0;">
-                <span style="color: var(--color-danger); font-size: clamp(1rem, 2vw, 1.5rem);">?</span>
-                <span><strong>¿Por qué llegó ahí?</strong> · <strong>¿Cuánto ha avanzado?</strong></span>
-            </div>
-        </div>
+<section class="slide" id="s2" data-title="Puente sesiones previas">
+  <div class="domain-bar cyan"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal">El ecosistema hasta hoy</p>
+    <h1 class="reveal" style="transition-delay:.1s">HiTOP dice dónde está; RDoC dice qué falla — pero nadie ha dicho por qué ni cuánto ha avanzado</h1>
+    <div class="divider reveal" style="transition-delay:.2s"></div>
+    <div class="flow-vertical reveal" style="transition-delay:.3s;max-width:580px">
+      <div class="stack-row" style="--row-color:var(--cyan)"><span class="stack-label">HiTOP</span><span class="stack-desc"><strong>¿Dónde está?</strong> <span style="color:var(--acid)">✓</span></span></div>
+      <div class="stack-row" style="--row-color:var(--cyan)"><span class="stack-label">RDoC</span><span class="stack-desc"><strong>¿Qué sistema falla?</strong> <span style="color:var(--acid)">✓</span></span></div>
+      <div class="stack-row" style="--row-color:var(--magenta);border:1px solid rgba(255,46,196,.25)"><span class="stack-label" style="color:var(--magenta)">???</span><span class="stack-desc" style="color:var(--text-primary)"><strong>¿Por qué? ¿Cuánto ha avanzado?</strong> <span style="color:var(--magenta);animation:pulse 1.8s infinite">?</span></span></div>
     </div>
+    <p class="source reveal" style="transition-delay:.5s">Las dos primeras sesiones respondieron las primeras preguntas. Hoy completamos el ecosistema.</p>
+  </div>
 </section>
 
-<section class="slide" id="slide-3">
-    <div class="slide-content" style="gap: var(--content-gap);">
-        <h1 class="reveal">María tiene distress alto y reward baja — ¿qué la empujó hasta ahí?</h1>
-        <div class="reveal" style="display: flex; gap: clamp(0.5rem, 1vw, 1rem); flex-wrap: wrap; margin-top: clamp(0.5rem, 1vw, 1rem);">
-            <span class="tag tag-red">distress ↑</span>
-            <span class="tag tag-amber">fear ↑</span>
-            <span class="tag tag-blue">reward ↓</span>
+<section class="slide" id="s3" data-title="María pregunta">
+  <div class="domain-bar cyan"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal">Caso hilo conductor</p>
+    <h1 class="reveal" style="transition-delay:.1s">María tiene distress alto y reward baja — ¿qué la empujó hasta ahí?</h1>
+    <div class="divider reveal" style="transition-delay:.2s"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:900px">
+      <div class="card" style="text-align:center">
+        <p style="font-size:var(--label-size);color:var(--text-muted);font-family:var(--font-mono);margin-bottom:.4rem">Perfil HiTOP de María</p>
+        <div class="dim-bar"><span class="dim-bar-label">Distress</span><div class="dim-bar-track"><div class="dim-bar-fill" style="width:90%;background:var(--magenta)"></div></div></div>
+        <div class="dim-bar"><span class="dim-bar-label">Fear</span><div class="dim-bar-track"><div class="dim-bar-fill" style="width:60%;background:var(--violet)"></div></div></div>
+        <div class="dim-bar"><span class="dim-bar-label">Detachment</span><div class="dim-bar-track"><div class="dim-bar-fill" style="width:55%;background:var(--cyan)"></div></div></div>
+        <div class="dim-bar"><span class="dim-bar-label">Reward</span><div class="dim-bar-track"><div class="dim-bar-fill" style="width:25%;background:var(--text-muted)"></div></div></div>
+      </div>
+      <div style="text-align:center">
+        <div class="big-number" style="color:var(--magenta);font-size:clamp(4rem,9vw,7rem);animation:pulse 2.4s infinite">?</div>
+        <div class="cover-meta" style="justify-content:center">
+          <span class="tag tag-magenta">distress ↑</span>
+          <span class="tag tag-violet">fear ↑</span>
+          <span class="tag tag-muted">reward ↓</span>
         </div>
-        <div class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem); display: flex; align-items: center; gap: clamp(1rem, 2vw, 2rem);">
-            <div style="font-size: clamp(3rem, 8vw, 6rem); color: var(--text-muted); opacity: 0.3;">?</div>
-            <p style="color: var(--text-secondary); max-width: 60ch;">Las flechas que la empujaron hasta aquí aún no tienen nombre. Hoy las nombramos.</p>
-        </div>
+        <p style="font-size:var(--small-size);color:var(--text-muted);margin-top:.5rem;font-style:italic">¿Qué factores la empujaron hasta este perfil?</p>
+      </div>
     </div>
+  </div>
 </section>
 
-<section class="slide" id="slide-4">
-    <div class="slide-content">
-        <h1 class="reveal">Dos preguntas nuevas: ¿qué la puso en riesgo? y ¿en qué punto del camino está?</h1>
-        <div class="split reveal" style="margin-top: clamp(1.5rem, 3vw, 3rem);">
-            <div class="card" style="text-align: center; border-top: 3px solid var(--color-especifico);">
-                <div style="font-size: clamp(1.5rem, 3vw, 2.5rem); margin-bottom: clamp(0.3rem, 0.5vw, 0.5rem);">⟐</div>
-                <p style="color: var(--text-primary); font-weight: 600;">¿Por qué?</p>
-                <p style="font-size: clamp(1.2rem, 2.5vw, 2rem); font-family: var(--font-display); color: var(--color-especifico); margin-top: clamp(0.3rem, 0.5vw, 0.5rem);">EXPOSOMA</p>
-            </div>
-            <div class="card" style="text-align: center; border-top: 3px solid var(--color-staging);">
-                <div style="font-size: clamp(1.5rem, 3vw, 2.5rem); margin-bottom: clamp(0.3rem, 0.5vw, 0.5rem);">→○→●→</div>
-                <p style="color: var(--text-primary); font-weight: 600;">¿Cuánto?</p>
-                <p style="font-size: clamp(1.2rem, 2.5vw, 2rem); font-family: var(--font-display); color: var(--color-staging); margin-top: clamp(0.3rem, 0.5vw, 0.5rem);">STAGING</p>
-            </div>
-        </div>
+<section class="slide" id="s4" data-title="Dos preguntas nuevas">
+  <div class="domain-bar cyan"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal">Los conceptos del día</p>
+    <h1 class="reveal" style="transition-delay:.1s">Dos preguntas nuevas: ¿qué la puso en riesgo? y ¿en qué punto del camino está?</h1>
+    <div class="divider reveal" style="transition-delay:.2s"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:820px">
+      <div class="card" style="text-align:center;border-top:3px solid var(--amber)">
+        <div style="font-size:clamp(2rem,4vw,3rem);margin-bottom:.3rem">◎◎◎</div>
+        <p style="font-size:var(--small-size);color:var(--text-muted);font-family:var(--font-mono);margin-bottom:.2rem">¿Por qué?</p>
+        <p style="font-size:var(--h3-size);color:var(--amber);font-weight:900;font-family:var(--font-display);letter-spacing:0">EXPOSOMA</p>
+        <p style="font-size:var(--small-size);color:var(--text-muted);margin-top:.3rem">3 dominios del riesgo</p>
+      </div>
+      <div class="card" style="text-align:center;border-top:3px solid var(--violet)">
+        <div style="font-size:clamp(2rem,4vw,3rem);margin-bottom:.3rem;letter-spacing:.1em">○ ◎ ● ⬤</div>
+        <p style="font-size:var(--small-size);color:var(--text-muted);font-family:var(--font-mono);margin-bottom:.2rem">¿Cuánto?</p>
+        <p style="font-size:var(--h3-size);color:var(--violet);font-weight:900;font-family:var(--font-display);letter-spacing:0">STAGING</p>
+        <p style="font-size:var(--small-size);color:var(--text-muted);margin-top:.3rem">Trayectoria 0 → 4</p>
+      </div>
     </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-style:italic;margin-top:var(--content-gap)">El exposoma responde por qué; el staging responde cuánto. Y les voy a dar un framework para organizar la historia clínica.</p>
+  </div>
 </section>
 
-<!-- === SECCIÓN B: EXPOSOMA CONCEPTO === -->
+<!-- === SECCIÓN B.1: EXPOSOMA (Slides 5-19 | amber) === -->
 
-<section class="slide" id="slide-5">
-    <div class="slide-content">
-        <h1 class="reveal">El exposoma es todo lo no-genético que te pasa desde la concepción hasta la muerte</h1>
-        <div class="split reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <div class="card" style="text-align: center; opacity: 0.7;">
-                <div style="font-size: clamp(2rem, 4vw, 3rem);">🧬</div>
-                <p style="font-weight: 600; margin-top: 0.5rem;">Genoma</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">Lo que heredas. Fijo.</p>
-            </div>
-            <div class="card" style="text-align: center; border: 1px solid var(--color-accent);">
-                <div style="font-size: clamp(2rem, 4vw, 3rem);">🌍</div>
-                <p style="font-weight: 600; margin-top: 0.5rem; color: var(--color-accent);">Exposoma</p>
-                <p style="font-size: var(--small-size); color: var(--text-secondary);">Todo lo demás. Modificable.</p>
-            </div>
-        </div>
-        <p class="reveal source">Wild CP, Cancer Epidemiol Biomarkers Prev, 2005</p>
+<section class="slide" id="s5" data-title="Exposoma definición">
+  <div class="domain-bar amber"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--amber)">Concepto central</p>
+    <h1 class="reveal" style="transition-delay:.1s">El exposoma es todo lo no-genético que te pasa desde la concepción hasta la muerte</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--amber),var(--cyan))"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:900px">
+      <div class="card" style="text-align:center;opacity:.5">
+        <div style="font-size:clamp(2rem,4vw,3rem);margin-bottom:.3rem">🧬</div>
+        <p style="font-size:var(--small-size);color:var(--text-muted);font-family:var(--font-mono)">LO QUE HEREDAS</p>
+        <p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.2rem">Genoma — fijo</p>
+      </div>
+      <div class="card" style="text-align:center;border:1px solid var(--amber)">
+        <div style="font-size:clamp(2rem,4vw,3rem);margin-bottom:.3rem">🌧️🏭⚡🧪📱</div>
+        <p style="font-size:var(--small-size);color:var(--amber);font-family:var(--font-mono);font-weight:700">TODO LO DEMÁS</p>
+        <p style="font-size:var(--label-size);color:var(--amber);margin-top:.2rem;font-weight:700">= EXPOSOMA — modificable</p>
+      </div>
     </div>
+    <p class="source reveal" style="transition-delay:.5s">Wild, 2005 — el genoma es una cosa fija; el exposoma es todo el ruido que te rodea.</p>
+  </div>
 </section>
 
-<section class="slide" id="slide-6">
-    <div class="slide-content">
-        <h1 class="reveal">Wild lo inventó para el cáncer; la psiquiatría lo adoptó 15 años después</h1>
-        <div class="split reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <div class="card" style="text-align: center;">
-                <p style="font-size: var(--small-size); color: var(--text-muted);">Oncología, 2005</p>
-                <div style="font-size: clamp(2rem, 4vw, 3rem); margin: 0.5rem 0;">⊕</div>
-                <p>Célula + factores ambientales</p>
-            </div>
-            <div class="card" style="text-align: center; border: 1px solid var(--color-accent);">
-                <p style="font-size: var(--small-size); color: var(--text-muted);">Psiquiatría, 2018-2025</p>
-                <div style="font-size: clamp(2rem, 4vw, 3rem); margin: 0.5rem 0;">🧠</div>
-                <p>Cerebro + factores ambientales</p>
-            </div>
-        </div>
-        <p class="reveal" style="text-align: center; margin-top: clamp(0.5rem, 1vw, 1rem); color: var(--text-secondary); font-style: italic;">Misma lógica, distinto órgano. Staging también viene de oncología.</p>
+<section class="slide" id="s6" data-title="Wild oncología">
+  <div class="domain-bar amber"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--amber)">Contexto histórico</p>
+    <h1 class="reveal" style="transition-delay:.1s">Wild (2005) lo inventó para el cáncer; la psiquiatría lo adoptó 15 años después</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--amber),var(--cyan))"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:900px">
+      <div class="card" style="text-align:center;border-top:2px solid var(--magenta)">
+        <p style="font-size:var(--label-size);color:var(--magenta);font-family:var(--font-mono);font-weight:700">ONCOLOGÍA · 2005</p>
+        <div style="font-size:clamp(1.8rem,3.5vw,2.6rem);margin:.3rem 0">🔬🚬☀️🧪</div>
+        <p style="font-size:var(--small-size)">Célula cancerosa rodeada de factores ambientales</p>
+      </div>
+      <div class="card" style="text-align:center;border-top:2px solid var(--amber)">
+        <p style="font-size:var(--label-size);color:var(--amber);font-family:var(--font-mono);font-weight:700">PSIQUIATRÍA · 2018-2025</p>
+        <div style="font-size:clamp(1.8rem,3.5vw,2.6rem);margin:.3rem 0">🧠📉💔🏙️</div>
+        <p style="font-size:var(--small-size)">Cerebro rodeado de pobreza, trauma, contaminación</p>
+      </div>
     </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-weight:700;color:var(--amber);font-family:var(--font-mono);margin-top:var(--content-gap)">MISMA LÓGICA, DISTINTO ÓRGANO</p>
+    <p class="source reveal" style="transition-delay:.6s;text-align:center">Ambos campos usan exposoma + staging. No es coincidencia.</p>
+  </div>
 </section>
 
-<section class="slide" id="slide-7">
-    <div class="slide-content">
-        <h1 class="reveal">Tres dominios organizan el riesgo: el agua donde nadas, lo que te pasa, y lo que te deja dentro</h1>
-        <div class="three-cols reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <div class="card" style="border-top: 3px solid var(--color-general);">
-                <h3 style="color: var(--color-general);">GENERAL EXTERNO</h3>
-                <p style="font-size: var(--small-size); color: var(--text-muted); margin-bottom: 0.5rem;">"El agua donde nadas"</p>
-                <p style="font-size: var(--small-size);">Pobreza · Urbanicidad · Discriminación · Contaminación</p>
-            </div>
-            <div class="card" style="border-top: 3px solid var(--color-especifico);">
-                <h3 style="color: var(--color-especifico);">ESPECÍFICO EXTERNO</h3>
-                <p style="font-size: var(--small-size); color: var(--text-muted); margin-bottom: 0.5rem;">"Lo que te pasa"</p>
-                <p style="font-size: var(--small-size);">ACEs · Trauma · Cannabis · Bullying · Migración</p>
-            </div>
-            <div class="card" style="border-top: 3px solid var(--color-interno);">
-                <h3 style="color: #f87171;">INTERNO</h3>
-                <p style="font-size: var(--small-size); color: var(--text-muted); margin-bottom: 0.5rem;">"Lo que te deja dentro"</p>
-                <p style="font-size: var(--small-size);">Inflamación · Epigenética · Cortisol · Telómeros</p>
-            </div>
-        </div>
+<section class="slide" id="s7" data-title="3 dominios">
+  <div class="domain-bar amber"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--amber)">Framework de historia clínica</p>
+    <h1 class="reveal" style="transition-delay:.1s">Tres dominios organizan el riesgo: el agua donde nadas, lo que te pasa, y lo que te deja dentro</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--amber),var(--cyan))"></div>
+    <div class="three-cols reveal" style="transition-delay:.3s">
+      <div class="card" style="border-top:3px solid var(--slate);text-align:center">
+        <div style="font-size:clamp(1.6rem,3vw,2.4rem);margin-bottom:.3rem">🏙️</div>
+        <p style="font-size:var(--label-size);color:var(--slate);font-family:var(--font-mono);font-weight:700">GENERAL EXTERNO</p>
+        <p style="font-size:var(--small-size);margin-top:.4rem">pobreza · urbanicidad · discriminación · contaminación</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--amber);text-align:center">
+        <div style="font-size:clamp(1.6rem,3vw,2.4rem);margin-bottom:.3rem">⚡</div>
+        <p style="font-size:var(--label-size);color:var(--amber);font-family:var(--font-mono);font-weight:700">ESPECÍFICO EXTERNO</p>
+        <p style="font-size:var(--small-size);margin-top:.4rem">ACEs · trauma · cannabis · bullying · migración</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--burgundy);text-align:center">
+        <div style="font-size:clamp(1.6rem,3vw,2.4rem);margin-bottom:.3rem">🧬</div>
+        <p style="font-size:var(--label-size);color:var(--burgundy);font-family:var(--font-mono);font-weight:700">INTERNO</p>
+        <p style="font-size:var(--small-size);margin-top:.4rem">inflamación · epigenética · cortisol · telómeros</p>
+      </div>
     </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-style:italic;margin-top:var(--content-gap);color:var(--text-secondary)"><strong style="color:var(--slate)">el agua donde nades</strong> · <strong style="color:var(--amber)">lo que te pasa</strong> · <strong style="color:var(--burgundy)">lo que te deja dentro</strong></p>
+  </div>
 </section>
 
-<section class="slide" id="slide-8">
-    <div class="slide-content">
-        <h1 class="reveal">Los tres dominios forman una cascada causal hacia los circuitos RDoC</h1>
-        <div class="flow-horizontal reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <div class="flow-box" style="border-left-color: var(--color-general);">General<br>Externo</div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-box" style="border-left-color: var(--color-especifico);">Específico<br>Externo</div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-box" style="border-left-color: #f87171;">Interno</div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-box" style="border-left-color: var(--color-rdoc);">Circuitos<br>RDoC</div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-box" style="border-left-color: var(--color-hitop);">Dimensiones<br>HiTOP</div>
-        </div>
-        <p class="reveal source">La pobreza no causa depresión directamente — aumenta la probabilidad de exposiciones que alteran biología.</p>
+<section class="slide" id="s8" data-title="Cascada causal">
+  <div class="domain-bar amber"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--amber)">Modelo causal, no lista</p>
+    <h1 class="reveal" style="transition-delay:.1s">Los tres dominios no son independientes — forman una cascada causal hacia los circuitos RDoC</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--amber),var(--cyan))"></div>
+    <div class="cascade-flow reveal" style="transition-delay:.3s">
+      <div class="flow-box border-slate" style="min-width:clamp(80px,13vw,140px)">GENERAL EXT.<br/><span style="font-size:var(--label-size);color:var(--text-muted)">contexto</span></div>
+      <span class="flow-arrow">→<br/><span style="font-size:var(--label-size);color:var(--text-muted)">↑ exposición</span></span>
+      <div class="flow-box border-amber" style="min-width:clamp(80px,13vw,140px)">ESPECÍFICO EXT.<br/><span style="font-size:var(--label-size);color:var(--text-muted)">exposiciones</span></div>
+      <span class="flow-arrow">→<br/><span style="font-size:var(--label-size);color:var(--text-muted)">↑ vulnerabilidad</span></span>
+      <div class="flow-box border-burgundy" style="min-width:clamp(80px,13vw,140px)">INTERNO<br/><span style="font-size:var(--label-size);color:var(--text-muted)">biología</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box border-acid" style="min-width:clamp(80px,13vw,140px)">CIRCUITOS RDoC<br/><span style="font-size:var(--label-size);color:var(--text-muted)">sistemas</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box border-cyan" style="min-width:clamp(80px,13vw,140px)">HiTOP<br/><span style="font-size:var(--label-size);color:var(--text-muted)">dimensiones</span></div>
     </div>
+    <p class="source reveal" style="transition-delay:.5s;text-align:center">La pobreza no causa depresión directamente — aumenta la probabilidad de exposiciones que alteran biología.</p>
+  </div>
 </section>
 
-<!-- === SECCIÓN C: LOS 3 DOMINIOS === -->
-
-<section class="slide" id="slide-9">
-    <div class="domain-bar general"></div>
-    <div class="slide-content">
-        <h1 class="reveal">La pobreza tiene un OR de 2-3, comparable a la carga genética</h1>
-        <div class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem); max-width: 700px;">
-            <div class="bar-compare">
-                <span class="label">Carga genética</span>
-                <div class="bar" style="width: 60%; background: var(--color-general);">OR 2.0–3.0</div>
-            </div>
-            <div class="bar-compare">
-                <span class="label">Pobreza / SES bajo</span>
-                <div class="bar" style="width: 60%; background: var(--color-especifico);">OR 2.0–3.0</div>
-            </div>
-            <div style="text-align: center; font-size: clamp(1.5rem, 3vw, 2.5rem); color: var(--text-muted); margin-top: clamp(0.5rem, 1vw, 1rem);">=</div>
-        </div>
-        <p class="reveal source">La desventaja socioeconómica tiene la misma magnitud de efecto que la heredabilidad.</p>
+<section class="slide" id="s9" data-title="Pobreza OR 2-3">
+  <div class="domain-bar amber"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--slate)">Dominio: general externo</p>
+    <h1 class="reveal" style="transition-delay:.1s">La pobreza tiene un OR de 2-3, comparable a la carga genética</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--slate),var(--amber))"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:720px">
+      <div style="text-align:center">
+        <p style="font-size:var(--small-size);color:var(--text-muted);font-family:var(--font-mono);margin-bottom:.3rem">Carga genética</p>
+        <div style="height:clamp(28px,5vh,44px);width:100%;background:rgba(255,255,255,.06);border-radius:6px;overflow:hidden"><div style="height:100%;width:72%;background:var(--slate);border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:.5rem"><span style="font-size:var(--small-size);font-weight:700;color:#fff;font-family:var(--font-mono)">OR 2.0-3.0</span></div></div>
+      </div>
+      <div style="text-align:center;font-size:clamp(2rem,5vw,3.5rem);font-weight:900;color:var(--amber);font-family:var(--font-display);align-self:center">=</div>
+      <div style="text-align:center">
+        <p style="font-size:var(--small-size);color:var(--amber);font-family:var(--font-mono);margin-bottom:.3rem">Pobreza / SES bajo</p>
+        <div style="height:clamp(28px,5vh,44px);width:100%;background:rgba(255,255,255,.06);border-radius:6px;overflow:hidden"><div style="height:100%;width:72%;background:var(--amber);border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:.5rem"><span style="font-size:var(--small-size);font-weight:700;color:#1a1206;font-family:var(--font-mono)">OR 2.0-3.0</span></div></div>
+      </div>
     </div>
+    <p class="source reveal" style="transition-delay:.5s;text-align:center">La desventaja socioeconómica tiene la misma magnitud de efecto que la heredabilidad.</p>
+  </div>
 </section>
 
-<section class="slide" id="slide-10">
-    <div class="domain-bar general"></div>
-    <div class="slide-content centered">
-        <h1 class="reveal">Urbanicidad duplica el riesgo de psicosis — el entorno no es neutral</h1>
-        <div class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem); width: 80%; max-width: 600px;">
-            <div style="display: flex; justify-content: space-between; font-size: var(--small-size); color: var(--text-muted); margin-bottom: 0.5rem;">
-                <span>Rural (baseline)</span><span>Urbano denso</span>
-            </div>
-            <div style="height: clamp(30px, 5vh, 50px); border-radius: 6px; background: linear-gradient(90deg, var(--color-success), var(--color-especifico), var(--color-danger));"></div>
-            <div style="display: flex; justify-content: space-between; margin-top: 0.5rem; font-weight: 600;">
-                <span>OR 1.0</span><span style="color: var(--color-danger);">OR 2.0</span>
-            </div>
-        </div>
-        <p class="reveal source">Vassos et al., Schizophr Bull, 2012</p>
+<section class="slide" id="s10" data-title="Urbanicidad OR 2.0">
+  <div class="domain-bar amber"></div>
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal" style="color:var(--slate)">General externo · entorno construido</p>
+      <h1 class="reveal" style="transition-delay:.1s">Urbanicidad duplica el riesgo de psicosis — el entorno no es neutral</h1>
+      <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--slate),var(--amber))"></div>
+      <p class="reveal" style="transition-delay:.3s">Más urbano vs más rural: <strong style="color:var(--amber)">OR = 2.37</strong> para esquizofrenia. Relación lineal dosis-respuesta.</p>
+      <p class="reveal" style="transition-delay:.4s;font-size:var(--small-size);color:var(--text-muted)">La urbanicidad al nacer y en la infancia pesa más que la urbanicidad adulta → ventana de vulnerabilidad temprana.</p>
+      <p class="source reveal" style="transition-delay:.5s">Vassos et al., Schizophr Bull, 2012 — meta-análisis</p>
     </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="width:100%;max-width:380px">
+        <div style="display:flex;justify-content:space-between;font-size:var(--label-size);font-family:var(--font-mono);margin-bottom:.3rem"><span style="color:var(--acid)">RURAL · baseline</span><span style="color:var(--magenta)">URBANO · OR 2.37</span></div>
+        <div style="position:relative;height:clamp(28px,5vh,44px);background:linear-gradient(90deg,var(--acid),var(--amber),var(--magenta));border-radius:6px;overflow:hidden"></div>
+        <div style="display:flex;justify-content:space-between;margin-top:.3rem;font-size:var(--label-size);color:var(--text-muted)">
+          <span>🌳 espaciado</span><span>🏙️ amontonado</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section class="slide" id="slide-11">
-    <div class="domain-bar general"></div>
-    <div class="slide-content">
-        <h1 class="reveal">La discriminación no es estrés subjetivo: tiene HR de 1.4-2.2 para depresión</h1>
-        <div class="flow-horizontal reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <div class="flow-box" style="border-left-color: var(--color-general);">Discriminación<br>estructural</div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-box" style="border-left-color: var(--color-especifico);">Estrés minoritario<br>crónico</div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-box" style="border-left-color: var(--color-danger); font-weight: 700; color: #fca5a5;">HR 1.4–2.2<br>Depresión</div>
-        </div>
-        <p class="reveal source">Varchmin et al., 2021 · No es "se lo toman personal" — es medible.</p>
+<section class="slide" id="s11" data-title="Discriminación HR">
+  <div class="domain-bar amber"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--slate)">General externo · estrés minoritario</p>
+    <h1 class="reveal" style="transition-delay:.1s">La discriminación no es estrés <s>subjetivo</s>: tiene HR de 1.4-2.2 para depresión</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--slate),var(--amber))"></div>
+    <div class="cascade-flow reveal" style="transition-delay:.3s">
+      <div class="flow-box border-slate" style="min-width:clamp(120px,20vw,200px)">Discriminación estructural</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box border-amber" style="min-width:clamp(120px,20vw,200px)">Estrés minoritario crónico</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box border-burgundy bold" style="min-width:clamp(120px,20vw,200px);border-left:3px solid var(--burgundy)">HR 1.4-2.2<br/><span style="font-size:var(--label-size);color:var(--burgundy);font-weight:700">DEPRESIÓN</span></div>
     </div>
+    <p class="source reveal" style="transition-delay:.5s;text-align:center">Varchmin et al., 2021 — umbrella review. Discriminación racista: OR = 3.90 (IC95% 3.25-4.70) — el factor social más fuerte.</p>
+  </div>
 </section>
 
-<section class="slide" id="slide-12">
-    <div class="domain-bar especifico"></div>
-    <div class="slide-content centered">
-        <h1 class="reveal">5+ ACEs multiplican el riesgo de psicosis por 6.5</h1>
-        <div class="reveal" style="display: flex; align-items: flex-end; gap: clamp(0.5rem, 2vw, 2rem); margin-top: clamp(0.75rem, 1.5vw, 1.25rem); height: 40vh; max-height: 300px;">
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.3rem;">
-                <span style="font-size: var(--small-size); font-weight: 600;">1.0</span>
-                <div style="width: clamp(40px, 6vw, 60px); height: 15%; background: var(--color-success); border-radius: 4px 4px 0 0;"></div>
-                <span style="font-size: var(--small-size); color: var(--text-muted);">0 ACEs</span>
-            </div>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.3rem;">
-                <span style="font-size: var(--small-size); font-weight: 600;">~2.0</span>
-                <div style="width: clamp(40px, 6vw, 60px); height: 30%; background: var(--color-especifico); border-radius: 4px 4px 0 0;"></div>
-                <span style="font-size: var(--small-size); color: var(--text-muted);">1-2</span>
-            </div>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.3rem;">
-                <span style="font-size: var(--small-size); font-weight: 600;">~3.5</span>
-                <div style="width: clamp(40px, 6vw, 60px); height: 55%; background: #f97316; border-radius: 4px 4px 0 0;"></div>
-                <span style="font-size: var(--small-size); color: var(--text-muted);">3-4</span>
-            </div>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.3rem;">
-                <span style="font-size: var(--body-size); font-weight: 700; color: var(--color-danger);">6.46</span>
-                <div style="width: clamp(40px, 6vw, 60px); height: 100%; background: var(--color-danger); border-radius: 4px 4px 0 0; box-shadow: 0 0 20px rgba(239,68,68,0.3);"></div>
-                <span style="font-size: var(--small-size); color: var(--color-danger); font-weight: 600;">5+</span>
-            </div>
-        </div>
-        <p class="reveal source">Flinn et al., Psychol Med, 2025 · Dosis-respuesta: cada ACE suma.</p>
+<section class="slide" id="s12" data-title="ACEs dosis-respuesta">
+  <div class="domain-bar amber"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--amber)">Específico externo · adversidad acumulativa</p>
+    <h1 class="reveal" style="transition-delay:.1s">5+ ACEs multiplican el riesgo de psicosis por 6.5</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--amber),var(--magenta))"></div>
+    <div class="stair reveal" style="transition-delay:.3s">
+      <div class="stair-step" style="height:clamp(40px,8vh,70px);background:rgba(141,255,157,.18);border-top:2px solid var(--acid)"><span class="or" style="color:var(--acid)">1.0</span><span class="lbl">0 ACEs</span></div>
+      <div class="stair-step" style="height:clamp(70px,13vh,110px);background:rgba(220,255,56,.16);border-top:2px solid var(--acid)"><span class="or" style="color:var(--acid)">~2</span><span class="lbl">1-2 ACEs</span></div>
+      <div class="stair-step" style="height:clamp(100px,18vh,150px);background:rgba(255,182,39,.18);border-top:2px solid var(--amber)"><span class="or" style="color:var(--amber)">~3-4</span><span class="lbl">3-4 ACEs</span></div>
+      <div class="stair-step" style="height:clamp(140px,24vh,200px);background:rgba(255,77,157,.22);border-top:2px solid var(--pink);animation:glow 2.2s infinite"><span class="or" style="color:var(--pink)">6.46</span><span class="lbl">5+ ACEs</span></div>
     </div>
+    <p class="source reveal" style="transition-delay:.5s;text-align:center">Flinn et al., 2025 — dosis-respuesta. No es binario: más ACEs = más riesgo. Cada uno suma.</p>
+  </div>
 </section>
 
-<section class="slide" id="slide-13">
-    <div class="domain-bar especifico"></div>
-    <div class="slide-content centered">
-        <h1 class="reveal">El cannabis adolescente no es inocuo: OR 1.7 para psicosis, 34% de conversión</h1>
-        <div class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem); display: flex; flex-direction: column; align-items: center; gap: clamp(0.5rem, 1vw, 1rem);">
-            <div style="width: clamp(200px, 40vw, 350px); padding: clamp(0.5rem, 1vw, 1rem); background: var(--bg-card); border-radius: 8px 8px 0 0; text-align: center; border: 1px solid rgba(245,158,11,0.3);">
-                <p style="font-weight: 600;">Psicosis inducida por cannabis</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">OR 1.7 para primer episodio</p>
-            </div>
-            <div style="width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 15px solid var(--color-especifico);"></div>
-            <div style="width: clamp(120px, 25vw, 200px); padding: clamp(0.5rem, 1vw, 1rem); background: rgba(239,68,68,0.1); border-radius: 0 0 8px 8px; text-align: center; border: 1px solid rgba(239,68,68,0.3);">
-                <p class="big-number" style="font-size: clamp(1.5rem, 4vw, 3rem); color: var(--color-danger);">34%</p>
-                <p style="font-size: var(--small-size);">conversión a esquizofrenia</p>
-            </div>
+<section class="slide" id="s13" data-title="Cannabis 34%">
+  <div class="domain-bar amber"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--amber)">Específico externo · sustancias</p>
+    <h1 class="reveal" style="transition-delay:.1s">El cannabis adolescente no es inocuo: OR 1.7 para psicosis, 34% de conversión</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--amber),var(--magenta))"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:820px">
+      <div style="text-align:center">
+        <div class="big-number" style="color:var(--amber);font-size:clamp(2rem,5vw,3.5rem)">OR 1.71</div>
+        <p style="font-size:var(--small-size);color:var(--text-muted);margin-top:.3rem">para primer episodio psicótico</p>
+        <p style="font-size:var(--label-size);color:var(--amber);font-family:var(--font-mono);margin-top:.4rem">14-18 años · periodo crítico</p>
+      </div>
+      <div style="text-align:center">
+        <div style="position:relative;width:clamp(120px,18vw,180px);height:clamp(80px,12vh,120px);margin:0 auto;clip-path:polygon(0 0,100% 0,70% 100%,30% 100%);background:linear-gradient(180deg,var(--amber),var(--pink));display:flex;flex-direction:column;align-items:center;justify-content:center">
+          <span style="font-size:var(--small-size);font-family:var(--font-mono);color:#1a1206;font-weight:700">Psicosis inducida</span>
         </div>
-        <p class="reveal" style="font-size: var(--small-size); color: var(--color-especifico); margin-top: clamp(0.5rem, 1vw, 1rem);">Ventana crítica: 14-18 años</p>
-        <p class="reveal source">Solmi et al., BMJ, 2023 · Murrie et al., Am J Psychiatry, 2020</p>
+        <div class="big-number" style="color:var(--pink);font-size:clamp(1.6rem,4vw,2.8rem);margin-top:.3rem">34%</div>
+        <p style="font-size:var(--small-size);color:var(--text-muted)">conversión a esquizofrenia</p>
+      </div>
     </div>
+    <p class="source reveal" style="transition-delay:.5s;text-align:center">Solmi et al., BMJ, 2023 (OR) · Murrie et al., Am J Psychiatry, 2020 (conversión — la tasa más alta entre todas las sustancias)</p>
+  </div>
 </section>
 
-<section class="slide" id="slide-14">
-    <div class="domain-bar especifico"></div>
-    <div class="slide-content centered">
-        <h1 class="reveal">El periodo sensible importa: el mismo evento a los 5 y a los 25 tiene efecto distinto</h1>
-        <div class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem); width: 85%; max-width: 600px; position: relative;">
-            <svg viewBox="0 0 400 150" style="width: 100%; height: auto; max-height: 30vh;">
-                <path d="M 20 130 Q 60 30, 100 60 Q 140 90, 180 100 Q 220 110, 260 40 Q 300 10, 340 80 Q 360 110, 380 120" fill="none" stroke="var(--color-accent)" stroke-width="2.5" opacity="0.8"/>
-                <circle cx="80" cy="45" r="6" fill="var(--color-danger)"/>
-                <text x="80" y="30" text-anchor="middle" fill="#fca5a5" font-size="10">efecto ↑↑</text>
-                <circle cx="280" cy="30" r="6" fill="var(--color-danger)"/>
-                <text x="280" y="15" text-anchor="middle" fill="#fca5a5" font-size="10">efecto ↑↑</text>
-                <circle cx="360" cy="115" r="4" fill="var(--color-success)" opacity="0.6"/>
-                <text x="360" y="105" text-anchor="middle" fill="#6ee7b7" font-size="9">efecto ↓</text>
-                <text x="50" y="145" fill="#64748b" font-size="9">Infancia</text>
-                <text x="180" y="145" fill="#64748b" font-size="9">Latencia</text>
-                <text x="280" y="145" fill="#64748b" font-size="9">Adolescencia</text>
-                <text x="370" y="145" fill="#64748b" font-size="9">Adulto</text>
-            </svg>
-        </div>
-        <p class="reveal source">Ventanas de plasticidad = ventanas de vulnerabilidad. Pregunten siempre la EDAD del evento.</p>
+<section class="slide" id="s14" data-title="Periodo sensible">
+  <div class="domain-bar amber"></div>
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal" style="color:var(--amber)">Timing importa</p>
+      <h1 class="reveal" style="transition-delay:.1s">El periodo sensible importa: el mismo evento a los 5 y a los 25 tiene efecto distinto</h1>
+      <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--amber),var(--cyan))"></div>
+      <p class="reveal" style="transition-delay:.3s">Curva con dos picos: <strong>infancia temprana (0-6)</strong> y <strong>adolescencia (12-18)</strong>. Valle en adultez (25+).</p>
+      <p class="reveal" style="transition-delay:.4s;font-style:italic;color:var(--amber)">Ventanas de plasticidad = ventanas de vulnerabilidad.</p>
+      <p class="reveal" style="transition-delay:.5s;font-size:var(--small-size);color:var(--text-muted)">No es que el trauma adulto no importa — pero el cerebro en desarrollo es más vulnerable. Pregunten siempre la EDAD del evento.</p>
     </div>
+    <div class="split-right">
+      <div class="reveal-scale card" style="max-width:360px">
+        <svg viewBox="0 0 100 60" style="width:100%;height:clamp(120px,18vh,180px)">
+          <path d="M0,50 Q8,10 15,8 Q22,10 30,40 Q40,48 50,45 Q60,42 70,12 Q78,8 85,12 Q92,20 100,50" fill="none" stroke="var(--amber)" stroke-width="1.5"/>
+          <line x1="0" y1="50" x2="100" y2="50" stroke="rgba(255,255,255,.15)" stroke-width=".3"/>
+          <text x="3" y="58" fill="var(--text-muted)" font-size="3" font-family="monospace">0</text>
+          <text x="28" y="58" fill="var(--text-muted)" font-size="3" font-family="monospace">6</text>
+          <text x="48" y="58" fill="var(--text-muted)" font-size="3" font-family="monospace">12</text>
+          <text x="68" y="58" fill="var(--text-muted)" font-size="3" font-family="monospace">18</text>
+          <text x="92" y="58" fill="var(--text-muted)" font-size="3" font-family="monospace">30</text>
+          <text x="6" y="6" fill="var(--amber)" font-size="3.5" font-family="monospace" font-weight="700">PICO</text>
+          <text x="72" y="8" fill="var(--amber)" font-size="3.5" font-family="monospace" font-weight="700">PICO</text>
+          <text x="42" y="40" fill="var(--text-muted)" font-size="3" font-family="monospace">valle</text>
+        </svg>
+        <p style="text-align:center;font-size:var(--label-size);color:var(--text-muted);font-family:var(--font-mono);margin-top:.3rem">Vulnerabilidad cerebral vs edad</p>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section class="slide" id="slide-15">
-    <div class="domain-bar especifico"></div>
-    <div class="slide-content">
-        <h1 class="reveal" style="font-size: clamp(1.3rem, 3.5vw, 2.5rem);">Tipo, timing y sexo determinan qué regiones altera la adversidad — no existe 'trauma genérico'</h1>
-        <div class="reveal" style="display: grid; grid-template-columns: 1fr 1fr; gap: clamp(0.4rem, 1vw, 0.75rem); margin-top: clamp(0.5rem, 1vw, 1rem);">
-            <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.75rem; background: rgba(59,130,246,0.1); border-radius: 4px;">
-                <div style="width: 10px; height: 10px; background: #3b82f6; border-radius: 2px;"></div>
-                <span style="font-size: var(--small-size);"><strong>Abuso verbal</strong> → corteza auditiva</span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.75rem; background: rgba(139,92,246,0.1); border-radius: 4px;">
-                <div style="width: 10px; height: 10px; background: #8b5cf6; border-radius: 2px;"></div>
-                <span style="font-size: var(--small-size);"><strong>Presenciar violencia</strong> → corteza visual</span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.75rem; background: rgba(245,158,11,0.1); border-radius: 4px;">
-                <div style="width: 10px; height: 10px; background: #f59e0b; border-radius: 2px;"></div>
-                <span style="font-size: var(--small-size);"><strong>Abuso sexual</strong> → corteza somatosensorial</span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.75rem; background: rgba(239,68,68,0.1); border-radius: 4px;">
-                <div style="width: 10px; height: 10px; background: #ef4444; border-radius: 2px;"></div>
-                <span style="font-size: var(--small-size);"><strong>Negligencia</strong> → hipocampo + amígdala</span>
-            </div>
-        </div>
-        <div class="reveal highlight-box" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem); font-size: var(--small-size);">
-            Temprano vs tardío pueden tener efectos <strong>opuestos</strong> en amígdala. El cerebro no se daña genéricamente — se adapta específicamente.
-        </div>
-        <p class="reveal source">Teicher & Samson, J Child Psychol Psychiatry, 2016 · Zhu et al., Mol Psychiatry, 2023</p>
+<section class="slide" id="s15" data-title="Teicher cerebro">
+  <div class="domain-bar amber"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--amber)">Slide clave · no comprimir</p>
+    <h1 class="reveal" style="transition-delay:.1s">Tipo, timing y sexo determinan qué regiones cerebrales altera la adversidad — no existe 'trauma genérico'</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--amber),var(--magenta))"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:960px">
+      <div class="brain-map">
+        <svg viewBox="0 0 100 70" style="position:absolute;inset:0;width:100%;height:100%">
+          <path d="M20,35 Q15,20 30,12 Q50,5 70,12 Q85,18 82,35 Q80,52 65,58 Q45,62 28,55 Q18,48 20,35 Z" fill="rgba(0,245,255,.04)" stroke="rgba(0,245,255,.2)" stroke-width=".4"/>
+        </svg>
+        <div class="brain-region" style="left:60%;top:18%;background:rgba(34,216,255,.22);color:var(--cyan)">auditiva</div>
+        <div class="brain-region" style="left:18%;top:20%;background:rgba(155,124,255,.22);color:var(--violet)">visual</div>
+        <div class="brain-region" style="left:35%;top:30%;background:rgba(255,182,39,.22);color:var(--amber)">somatosens.</div>
+        <div class="brain-region" style="left:48%;top:44%;background:rgba(255,77,157,.22);color:var(--pink)">hipocampo</div>
+        <div class="brain-region" style="left:40%;top:55%;background:rgba(100,116,139,.22);color:var(--slate)">c. calloso</div>
+      </div>
+      <div style="font-size:var(--small-size)">
+        <p style="margin-bottom:.2rem"><strong style="color:var(--cyan)">Corteza auditiva</strong> → abuso verbal</p>
+        <p style="margin-bottom:.2rem"><strong style="color:var(--violet)">Corteza visual</strong> → presenciar violencia</p>
+        <p style="margin-bottom:.2rem"><strong style="color:var(--amber)">Somatosensorial</strong> → abuso sexual</p>
+        <p style="margin-bottom:.2rem"><strong style="color:var(--pink)">Hipocampo + amígdala</strong> → negligencia temprana</p>
+        <p style="margin-bottom:.2rem"><strong style="color:var(--slate)">Cuerpo calloso</strong> → negligencia (♀: mielina; ♂: axones)</p>
+        <p style="font-size:var(--label-size);color:var(--magenta);margin-top:.3rem;font-style:italic">Temprano vs tardío pueden tener efectos OPUESTOS en amígdala</p>
+      </div>
     </div>
+    <p class="source reveal" style="transition-delay:.5s;text-align:center">Teicher & Samson, 2016 · Zhu et al., 2023 — el cerebro no se daña genéricamente, se adapta específicamente.</p>
+  </div>
 </section>
 
-<section class="slide" id="slide-16">
-    <div class="domain-bar interno"></div>
-    <div class="slide-content centered">
-        <h1 class="reveal">El estrés crónico no se queda en la mente — se inscribe en inflamación y epigenética</h1>
-        <div class="reveal" style="display: flex; gap: clamp(0.5rem, 1.5vw, 1.5rem); margin-top: clamp(0.75rem, 1.5vw, 1.25rem); flex-wrap: wrap; justify-content: center;">
-            <div class="card" style="text-align: center; min-width: clamp(100px, 15vw, 140px);">
-                <p style="font-size: clamp(1.2rem, 2vw, 1.5rem);">🔥</p>
-                <p style="font-size: var(--small-size); font-weight: 600; color: #fca5a5;">IL-6 ↑</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">Inflamación</p>
-            </div>
-            <div class="card" style="text-align: center; min-width: clamp(100px, 15vw, 140px);">
-                <p style="font-size: clamp(1.2rem, 2vw, 1.5rem);">⚡</p>
-                <p style="font-size: var(--small-size); font-weight: 600; color: #fca5a5;">Cortisol ↑</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">Eje HPA</p>
-            </div>
-            <div class="card" style="text-align: center; min-width: clamp(100px, 15vw, 140px);">
-                <p style="font-size: clamp(1.2rem, 2vw, 1.5rem);">🧬</p>
-                <p style="font-size: var(--small-size); font-weight: 600; color: #fca5a5;">NR3C1 ↑met</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">Epigenética</p>
-            </div>
-            <div class="card" style="text-align: center; min-width: clamp(100px, 15vw, 140px);">
-                <p style="font-size: clamp(1.2rem, 2vw, 1.5rem);">📏</p>
-                <p style="font-size: var(--small-size); font-weight: 600; color: #fca5a5;">Telómeros ↓</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">Envejecimiento</p>
-            </div>
-        </div>
-        <p class="reveal source">El dominio interno es donde el exposoma se conecta con RDoC.</p>
+<section class="slide" id="s16" data-title="Interno inflamación">
+  <div class="domain-bar amber"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--burgundy)">Dominio interno · lo que te deja dentro</p>
+    <h1 class="reveal" style="transition-delay:.1s">Interno: el estrés crónico no se queda en la mente — se inscribe en inflamación y epigenética</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--burgundy),var(--amber))"></div>
+    <div class="four-cols reveal" style="transition-delay:.3s;max-width:880px">
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--burgundy)"><div style="font-size:clamp(1.2rem,2.4vw,1.8rem)">🧪</div><p style="font-size:var(--small-size);color:var(--burgundy);font-weight:700;font-family:var(--font-mono);margin-top:.2rem">IL-6 ↑</p><p style="font-size:var(--label-size);color:var(--text-muted)">inflamación</p></div>
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--burgundy)"><div style="font-size:clamp(1.2rem,2.4vw,1.8rem)">📉</div><p style="font-size:var(--small-size);color:var(--burgundy);font-weight:700;font-family:var(--font-mono);margin-top:.2rem">Cortisol ↑</p><p style="font-size:var(--label-size);color:var(--text-muted)">eje HPA</p></div>
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--burgundy)"><div style="font-size:clamp(1.2rem,2.4vw,1.8rem)">🧬</div><p style="font-size:var(--small-size);color:var(--burgundy);font-weight:700;font-family:var(--font-mono);margin-top:.2rem">Metil. NR3C1</p><p style="font-size:var(--label-size);color:var(--text-muted)">epigenética</p></div>
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--burgundy)"><div style="font-size:clamp(1.2rem,2.4vw,1.8rem)">⏳</div><p style="font-size:var(--small-size);color:var(--burgundy);font-weight:700;font-family:var(--font-mono);margin-top:.2rem">Telómeros ↓</p><p style="font-size:var(--label-size);color:var(--text-muted)">envejecimiento</p></div>
     </div>
+    <p class="source reveal" style="transition-delay:.5s;text-align:center">El dominio interno es donde el exposoma se conecta con RDoC — lo de afuera se convierte en lo de adentro.</p>
+  </div>
 </section>
 
-<section class="slide" id="slide-17">
-    <div class="domain-bar interno"></div>
-    <div class="slide-content">
-        <h1 class="reveal">IL-6 alta → dopamina baja → anhedonia: el exposoma se conecta con RDoC por biología</h1>
-        <div class="flow-horizontal reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <div class="flow-box" style="border-left-color: var(--color-especifico); font-size: var(--small-size);">Estrés<br>crónico</div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-box" style="border-left-color: #f87171; font-size: var(--small-size);">IL-6 ↑<br>IDO ↑</div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-box" style="border-left-color: #f87171; font-size: var(--small-size);">BH4 ↓<br>DA ↓</div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-box" style="border-left-color: var(--color-rdoc); font-size: var(--small-size);">VTA→NAcc<br>↓</div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-box" style="border-left-color: var(--color-hitop); font-size: var(--small-size); font-weight: 600; color: #93c5fd;">ANHEDONIA<br>PosVal ↓</div>
-        </div>
-        <p class="reveal source">Swardfager et al., Neurosci Biobehav Rev, 2016</p>
+<section class="slide" id="s17" data-title="IL-6 dopamina anhedonia">
+  <div class="domain-bar amber"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--burgundy)">Puente molecular exposoma → RDoC</p>
+    <h1 class="reveal" style="transition-delay:.1s">IL-6 alta → dopamina baja → anhedonia: el exposoma se conecta con RDoC por biología</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--burgundy),var(--cyan))"></div>
+    <div class="cascade-flow reveal" style="transition-delay:.3s">
+      <div class="flow-box border-amber" style="min-width:clamp(80px,13vw,140px)">Estrés crónico</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box border-burgundy" style="min-width:clamp(80px,13vw,140px)">IL-6 ↑ / IDO ↑</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box border-burgundy" style="min-width:clamp(90px,14vw,150px)">BH4 ↓ → DA ↓</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box border-acid" style="min-width:clamp(80px,13vw,140px)">VTA→NAcc ↓</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box border-cyan bold" style="min-width:clamp(80px,13vw,140px)">ANHEDONIA<br/><span style="font-size:var(--label-size);color:var(--cyan)">PosVal ↓</span></div>
     </div>
+    <p class="source reveal" style="transition-delay:.5s;text-align:center">Swardfager et al., Mol Psychiatry, 2016 — la inflamación reduce dopamina en el circuito de recompensa. No es psicológico, es bioquímico.</p>
+  </div>
 </section>
 
-<section class="slide" id="slide-18">
-    <div class="domain-bar integracion"></div>
-    <div class="slide-content">
-        <h1 class="reveal">La cascada completa: pobreza → exposición → inflamación → circuito → dimensión</h1>
-        <div class="flow-horizontal reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <div class="flow-box" style="border-left-color: var(--color-general); font-size: var(--small-size);"><strong>Pobreza</strong><br><span style="color: var(--text-muted);">General Ext.</span></div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-box" style="border-left-color: var(--color-especifico); font-size: var(--small-size);"><strong>ACEs + Cannabis</strong><br><span style="color: var(--text-muted);">Específico Ext.</span></div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-box" style="border-left-color: #f87171; font-size: var(--small-size);"><strong>IL-6↑ Cortisol↑</strong><br><span style="color: var(--text-muted);">Interno</span></div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-box" style="border-left-color: var(--color-rdoc); font-size: var(--small-size);"><strong>NegVal↑ PosVal↓</strong><br><span style="color: var(--text-muted);">RDoC</span></div>
-            <span class="flow-arrow">→</span>
-            <div class="flow-box" style="border-left-color: var(--color-hitop); font-size: var(--small-size);"><strong>Distress↑</strong><br><span style="color: var(--text-muted);">HiTOP</span></div>
-        </div>
-        <p class="reveal source">Un modelo, 5 niveles, una paciente. Esto es lo que le pasó a María.</p>
+<section class="slide" id="s18" data-title="Cascada completa">
+  <div class="domain-bar amber"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--amber)">Versión completa con datos</p>
+    <h1 class="reveal" style="transition-delay:.1s">La cascada completa: pobreza → exposición → inflamación → circuito → dimensión HiTOP</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--amber),var(--cyan))"></div>
+    <div class="cascade-flow reveal" style="transition-delay:.3s">
+      <div class="flow-box border-slate bold" style="min-width:clamp(90px,14vw,150px)">POBREZA<br/><span style="font-size:var(--label-size);color:var(--slate)">General Ext.</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box border-amber bold" style="min-width:clamp(90px,14vw,150px)">ACEs + Cannabis<br/><span style="font-size:var(--label-size);color:var(--amber)">Específico Ext.</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box border-burgundy bold" style="min-width:clamp(90px,14vw,150px)">IL-6↑, Cortisol↑<br/><span style="font-size:var(--label-size);color:var(--burgundy)">Interno</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box border-acid bold" style="min-width:clamp(90px,14vw,150px)">NegVal↑, PosVal↓<br/><span style="font-size:var(--label-size);color:var(--acid)">RDoC</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box border-cyan bold" style="min-width:clamp(90px,14vw,150px)">Distress↑, Detach↑<br/><span style="font-size:var(--label-size);color:var(--cyan)">HiTOP</span></div>
     </div>
+    <p class="source reveal" style="transition-delay:.5s;text-align:center">Un modelo, 5 niveles, una paciente. Esto es lo que le pasó a María — cada paso es medible y potencialmente modificable.</p>
+  </div>
 </section>
 
-<section class="slide" id="slide-19">
-    <div class="slide-content">
-        <h1 class="reveal">El exposoma no es un checklist — es un framework para organizar tu historia clínica</h1>
-        <div class="split reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <div class="card" style="opacity: 0.6; text-align: center;">
-                <p style="font-size: var(--small-size); color: var(--color-danger); margin-bottom: 0.5rem;">Sin framework</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted); line-height: 1.8;">pobreza · trauma · cannabis · bullying · inflamación · cortisol · migración · insomnio · padre ausente...</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.5rem;">(caos)</p>
-            </div>
-            <div class="card" style="border: 1px solid var(--color-accent); text-align: center;">
-                <p style="font-size: var(--small-size); color: var(--color-accent); margin-bottom: 0.5rem;">Con exposoma</p>
-                <div style="display: flex; flex-direction: column; gap: 0.3rem; font-size: var(--small-size); text-align: left;">
-                    <div style="border-left: 2px solid var(--color-general); padding-left: 0.5rem;">General: pobreza, migración</div>
-                    <div style="border-left: 2px solid var(--color-especifico); padding-left: 0.5rem;">Específico: ACEs, cannabis, bullying</div>
-                    <div style="border-left: 2px solid #f87171; padding-left: 0.5rem;">Interno: inflamación, cortisol</div>
-                </div>
-                <p style="font-size: var(--small-size); color: var(--color-success); margin-top: 0.5rem;">(estructura)</p>
-            </div>
+<section class="slide" id="s19" data-title="Framework historia clínica">
+  <div class="domain-bar amber"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--amber)">El valor del framework</p>
+    <h1 class="reveal" style="transition-delay:.1s">El exposoma no es un checklist — es un framework para organizar tu historia clínica</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--amber),var(--cyan))"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:900px">
+      <div class="card" style="opacity:.5;text-align:center">
+        <p style="font-size:var(--label-size);color:var(--text-muted);font-family:var(--font-mono);margin-bottom:.3rem">SIN FRAMEWORK</p>
+        <div style="font-size:var(--small-size);color:var(--text-muted);line-height:1.8">pobreza · trauma · cannabis · bullying · inflamación · cortisol · migración · dieta · sueño · contaminación</div>
+        <p style="font-size:var(--label-size);color:var(--magenta);margin-top:.3rem;font-style:italic">datos sueltos, se pierden</p>
+      </div>
+      <div class="card" style="border:1px solid var(--amber);text-align:center">
+        <p style="font-size:var(--label-size);color:var(--amber);font-family:var(--font-mono);font-weight:700;margin-bottom:.3rem">CON EXPOSOMA</p>
+        <div style="display:flex;flex-direction:column;gap:.2rem;font-size:var(--label-size);font-family:var(--font-mono)">
+          <span style="color:var(--slate);border-left:2px solid var(--slate);padding-left:.3rem;text-align:left">General ext: pobreza, migración</span>
+          <span style="color:var(--amber);border-left:2px solid var(--amber);padding-left:.3rem;text-align:left">Específico ext: trauma, cannabis</span>
+          <span style="color:var(--burgundy);border-left:2px solid var(--burgundy);padding-left:.3rem;text-align:left">Interno: inflamación, cortisol</span>
         </div>
+        <p style="font-size:var(--label-size);color:var(--acid);margin-top:.3rem;font-style:italic">estructurado, nada se pierde</p>
+      </div>
     </div>
+    <p class="source reveal" style="transition-delay:.5s;text-align:center">La tarea de hoy: organizar así la historia clínica de un paciente real.</p>
+  </div>
 </section>
 
-<!-- === SECCIÓN D: STAGING === -->
+<!-- === SECCIÓN B.2: STAGING (Slides 20-29 | violet) === -->
 
-<section class="slide" id="slide-20">
-    <div class="domain-bar staging"></div>
-    <div class="slide-content">
-        <h1 class="reveal">El DSM trata igual un primer episodio leve que 7 episodios con deterioro — staging dice: no son lo mismo</h1>
-        <div class="split reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <div class="card" style="text-align: center;">
-                <p style="font-size: var(--small-size); color: var(--text-muted); text-decoration: line-through;">F32.1</p>
-                <p style="font-size: clamp(1.5rem, 3vw, 2.5rem); margin: 0.5rem 0;">🧍</p>
-                <p style="font-weight: 600;">1er episodio</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">3 meses · GAF 70</p>
-            </div>
-            <div class="card" style="text-align: center;">
-                <p style="font-size: var(--small-size); color: var(--text-muted); text-decoration: line-through;">F32.1</p>
-                <p style="font-size: clamp(1.5rem, 3vw, 2.5rem); margin: 0.5rem 0;">🧎</p>
-                <p style="font-weight: 600;">7 episodios</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">15 años · GAF 40</p>
-            </div>
-        </div>
-        <p class="reveal" style="text-align: center; margin-top: clamp(0.75rem, 1.5vw, 1.25rem); color: var(--color-danger); font-size: var(--body-size);">Mismo código DSM. ¿Los tratarían igual?</p>
+<section class="slide" id="s20" data-title="DSM no distingue">
+  <div class="domain-bar violet"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--violet)">El problema que staging resuelve</p>
+    <h1 class="reveal" style="transition-delay:.1s">El DSM trata igual un primer episodio leve que 7 episodios con deterioro — staging dice: no son lo mismo</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--violet),var(--cyan))"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:820px">
+      <div class="card" style="text-align:center;position:relative">
+        <p style="position:absolute;top:6px;right:8px;font-size:var(--small-size);color:var(--magenta);font-weight:700">✕</p>
+        <p style="font-size:var(--label-size);color:var(--text-muted);font-family:var(--font-mono);text-decoration:line-through">F32.1</p>
+        <div style="font-size:clamp(1.8rem,3.5vw,2.6rem);margin:.3rem 0">🧍</div>
+        <p style="font-size:var(--small-size);color:var(--acid)">1er episodio · 3 meses · GAF 70</p>
+      </div>
+      <div class="card" style="text-align:center;position:relative">
+        <p style="position:absolute;top:6px;right:8px;font-size:var(--small-size);color:var(--magenta);font-weight:700">✕</p>
+        <p style="font-size:var(--label-size);color:var(--text-muted);font-family:var(--font-mono);text-decoration:line-through">F32.1</p>
+        <div style="font-size:clamp(1.8rem,3.5vw,2.6rem);margin:.3rem 0">🧎</div>
+        <p style="font-size:var(--small-size);color:var(--magenta)">7 episodios · 15 años · GAF 40</p>
+      </div>
     </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-weight:700;color:var(--violet);font-family:var(--font-mono);margin-top:var(--content-gap)">MISMO CÓDIGO DSM · ¿LOS TRATARÍAN IGUAL?</p>
+  </div>
 </section>
 
-<section class="slide" id="slide-21">
-    <div class="domain-bar staging"></div>
-    <div class="slide-content">
-        <h1 class="reveal">Analogía oncológica: nadie da quimio Stage IV a un cáncer Stage I</h1>
-        <div class="split reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <div class="card" style="text-align: center; border-top: 2px solid var(--color-success);">
-                <p style="font-size: clamp(1.2rem, 2vw, 1.5rem);">🔬</p>
-                <p style="font-weight: 600; color: var(--color-success);">Stage I</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">Cirugía mínima</p>
-            </div>
-            <div class="card" style="text-align: center; border-top: 2px solid var(--color-danger);">
-                <p style="font-size: clamp(1.2rem, 2vw, 1.5rem);">💊</p>
-                <p style="font-weight: 600; color: var(--color-danger);">Stage IV</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">Quimio + Radio + Todo</p>
-            </div>
-        </div>
-        <p class="reveal" style="text-align: center; margin-top: clamp(0.5rem, 1vw, 1rem); color: var(--text-secondary); font-style: italic;">¿Por qué en psiquiatría no hacemos esto?</p>
+<section class="slide" id="s21" data-title="Oncología analogía">
+  <div class="domain-bar violet"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--violet)">Analogía oncológica</p>
+    <h1 class="reveal" style="transition-delay:.1s">Analogía oncológica: nadie da quimio Stage IV a un cáncer Stage I</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--violet),var(--cyan))"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:820px">
+      <div class="card" style="text-align:center;border-top:2px solid var(--acid)">
+        <p style="font-size:var(--label-size);color:var(--acid);font-family:var(--font-mono);font-weight:700">STAGE I</p>
+        <div style="font-size:clamp(1.8rem,3.5vw,2.6rem);margin:.3rem 0">🔬</div>
+        <p style="font-size:var(--small-size)">cirugía mínima</p>
+        <p style="font-size:var(--label-size);color:var(--acid);margin-top:.2rem">intervención proporcional</p>
+      </div>
+      <div class="card" style="text-align:center;border-top:2px solid var(--magenta)">
+        <p style="font-size:var(--label-size);color:var(--magenta);font-family:var(--font-mono);font-weight:700">STAGE IV</p>
+        <div style="font-size:clamp(1.8rem,3.5vw,2.6rem);margin:.3rem 0">💊☢️</div>
+        <p style="font-size:var(--small-size)">quimio + radiación</p>
+        <p style="font-size:var(--label-size);color:var(--magenta);margin-top:.2rem">artillería pesada</p>
+      </div>
     </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-style:italic;margin-top:var(--content-gap);color:var(--violet)">¿Por qué en psiquiatría no hacemos esto?</p>
+  </div>
 </section>
 
-<section class="slide" id="slide-22">
-    <div class="domain-bar staging"></div>
-    <div class="slide-content centered">
-        <h1 class="reveal">McGorry propone 5 estadios: de asintomático con riesgo hasta severo/persistente</h1>
-        <div class="pipeline reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <div><div class="node" style="background: rgba(34,197,94,0.15); border-color: var(--color-success); width: clamp(35px,5vw,55px); height: clamp(35px,5vw,55px);">0</div><p class="node-label">Asintomático +riesgo</p></div>
-            <span class="arrow">→</span>
-            <div><div class="node" style="background: rgba(234,179,8,0.1); border-color: #eab308; width: clamp(38px,5.5vw,60px); height: clamp(38px,5.5vw,60px);">1a</div><p class="node-label">Inespecífico</p></div>
-            <span class="arrow">→</span>
-            <div><div class="node" style="background: rgba(245,158,11,0.15); border-color: var(--color-especifico); width: clamp(42px,6vw,65px); height: clamp(42px,6vw,65px);">1b</div><p class="node-label">Atenuado</p></div>
-            <span class="arrow">→</span>
-            <div><div class="node" style="background: rgba(249,115,22,0.15); border-color: #f97316; width: clamp(48px,6.5vw,72px); height: clamp(48px,6.5vw,72px);">2</div><p class="node-label">1er episodio</p></div>
-            <span class="arrow">→</span>
-            <div><div class="node" style="background: rgba(239,68,68,0.15); border-color: var(--color-danger); width: clamp(52px,7vw,78px); height: clamp(52px,7vw,78px);">3</div><p class="node-label">Recurrencia</p></div>
-            <span class="arrow">→</span>
-            <div><div class="node" style="background: rgba(185,28,28,0.2); border-color: #991b1b; width: clamp(56px,7.5vw,84px); height: clamp(56px,7.5vw,84px);">4</div><p class="node-label">Severo</p></div>
-        </div>
-        <p class="reveal source">McGorry et al., Can J Psychiatry, 2006 · La progresión NO es inevitable.</p>
+<section class="slide" id="s22" data-title="McGorry 5 estadios">
+  <div class="domain-bar violet"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--violet)">El modelo central</p>
+    <h1 class="reveal" style="transition-delay:.1s">McGorry propone 5 estadios: de asintomático con riesgo hasta severo/persistente</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--violet),var(--cyan))"></div>
+    <div class="pipeline reveal" style="transition-delay:.3s;gap:clamp(.2rem,.5vw,.4rem)">
+      <div class="pipeline-box" style="border-top:2px solid var(--acid)"><div class="pipe-icon" style="color:var(--acid)">○</div><div class="pipe-label" style="color:var(--acid)">Stage 0</div><div style="font-size:clamp(.45rem,.62vw,.6rem);color:var(--text-muted);margin-top:.15rem">asintom.+riesgo</div></div>
+      <span class="pipeline-arrow">→</span>
+      <div class="pipeline-box" style="border-top:2px solid var(--acid)"><div class="pipe-icon" style="color:var(--acid)">◎</div><div class="pipe-label" style="color:var(--acid)">Stage 1a</div><div style="font-size:clamp(.45rem,.62vw,.6rem);color:var(--text-muted);margin-top:.15rem">inespecífico</div></div>
+      <span class="pipeline-arrow">→</span>
+      <div class="pipeline-box" style="border-top:2px solid var(--amber)"><div class="pipe-icon" style="color:var(--amber)">◉</div><div class="pipe-label" style="color:var(--amber)">Stage 1b</div><div style="font-size:clamp(.45rem,.62vw,.6rem);color:var(--text-muted);margin-top:.15rem">atenuado</div></div>
+      <span class="pipeline-arrow" style="border-bottom:1px dashed var(--text-muted)">⇢</span>
+      <div class="pipeline-box" style="border-top:2px solid var(--amber)"><div class="pipe-icon" style="color:var(--amber)">●</div><div class="pipe-label" style="color:var(--amber)">Stage 2</div><div style="font-size:clamp(.45rem,.62vw,.6rem);color:var(--text-muted);margin-top:.15rem">1er episodio</div></div>
+      <span class="pipeline-arrow">→</span>
+      <div class="pipeline-box" style="border-top:2px solid var(--pink)"><div class="pipe-icon" style="color:var(--pink)">⬤</div><div class="pipe-label" style="color:var(--pink)">Stage 3</div><div style="font-size:clamp(.45rem,.62vw,.6rem);color:var(--text-muted);margin-top:.15rem">recurrencia</div></div>
+      <span class="pipeline-arrow">→</span>
+      <div class="pipeline-box" style="border-top:2px solid var(--magenta)"><div class="pipe-icon" style="color:var(--magenta)">⬛</div><div class="pipe-label" style="color:var(--magenta)">Stage 4</div><div style="font-size:clamp(.45rem,.62vw,.6rem);color:var(--text-muted);margin-top:.15rem">severo/persist.</div></div>
     </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-size:var(--small-size);color:var(--text-muted);margin-top:var(--content-gap)">La progresión <strong style="color:var(--violet)">NO es inevitable</strong> — el punto del staging es intervenir ANTES.</p>
+    <p class="source reveal" style="transition-delay:.6s;text-align:center">McGorry et al., 2006, 2010</p>
+  </div>
 </section>
 
-<section class="slide" id="slide-23">
-    <div class="domain-bar staging"></div>
-    <div class="slide-content centered">
-        <h1 class="reveal">Stage 0-1b: prevención. Stage 2+: tratamiento. La intervención es proporcional</h1>
-        <div class="reveal" style="display: flex; margin-top: clamp(0.75rem, 1.5vw, 1.25rem); width: 90%; max-width: 700px; border-radius: 8px; overflow: hidden;">
-            <div style="flex: 1; background: rgba(34,197,94,0.08); padding: clamp(0.5rem, 1.5vw, 1.25rem); border-right: 2px solid rgba(255,255,255,0.1);">
-                <p style="font-size: var(--small-size); color: var(--color-success); font-weight: 600; margin-bottom: 0.5rem;">PREVENCIÓN</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">0: Psicoeducación</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">1a: Counseling</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">1b: TCC + omega-3</p>
-            </div>
-            <div style="flex: 1; background: rgba(239,68,68,0.05); padding: clamp(0.5rem, 1.5vw, 1.25rem);">
-                <p style="font-size: var(--small-size); color: var(--color-danger); font-weight: 600; margin-bottom: 0.5rem;">TRATAMIENTO</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">2: Farmaco + psicoterapia</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">3: Intensificado</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">4: Multimodal + rehab</p>
-            </div>
+<section class="slide" id="s23" data-title="Prevención vs tratamiento">
+  <div class="domain-bar violet"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--violet)">Intervención proporcional</p>
+    <h1 class="reveal" style="transition-delay:.1s">Stage 0-1b: prevención y monitoreo. Stage 2+: tratamiento. La intervención es proporcional</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--violet),var(--cyan))"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:960px">
+      <div class="card" style="border-left:3px solid var(--acid);background:rgba(141,255,157,.05)">
+        <p style="font-size:var(--label-size);color:var(--acid);font-family:var(--font-mono);font-weight:700;margin-bottom:.3rem">PREVENCIÓN + MONITOREO</p>
+        <div class="flow-vertical" style="gap:.2rem;font-size:var(--small-size)">
+          <p><strong style="color:var(--acid)">0:</strong> psicoeducación familiar</p>
+          <p><strong style="color:var(--acid)">1a:</strong> counseling, baja intensidad</p>
+          <p><strong style="color:var(--amber)">1b:</strong> TCC + omega-3, monitoreo activo</p>
         </div>
-        <p class="reveal source">La línea entre prevención y tratamiento es el primer episodio completo.</p>
+      </div>
+      <div class="card" style="border-left:3px solid var(--magenta);background:rgba(255,77,157,.05)">
+        <p style="font-size:var(--label-size);color:var(--magenta);font-family:var(--font-mono);font-weight:700;margin-bottom:.3rem">TRATAMIENTO</p>
+        <div class="flow-vertical" style="gap:.2rem;font-size:var(--small-size)">
+          <p><strong style="color:var(--amber)">2:</strong> farmaco + psicoterapia</p>
+          <p><strong style="color:var(--pink)">3:</strong> intensificado, prevención recaída</p>
+          <p><strong style="color:var(--magenta)">4:</strong> multimodal + rehabilitación</p>
+        </div>
+      </div>
     </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-size:var(--small-size);color:var(--text-muted);margin-top:.3rem">CHARMS (Dwyer et al., 2025) operacionaliza 1b vs 2: CAARMS subumbral para psicosis (transición 4-13%), SCID-5 + QIDS 11-15 para depresión.</p>
+    <p class="source reveal" style="transition-delay:.6s;text-align:center">La línea entre prevención y tratamiento es el primer episodio completo.</p>
+  </div>
 </section>
 
-<section class="slide" id="slide-24">
-    <div class="domain-bar staging"></div>
-    <div class="slide-content">
-        <h1 class="reveal">Staging 2.0 agrega dos ejes: P (fenotipo) y E (carga exposómica)</h1>
-        <div class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem); text-align: center;">
-            <div class="card" style="display: inline-block; padding: clamp(1rem, 2vw, 2rem);">
-                <p style="font-family: var(--font-display); font-size: var(--h2-size); color: var(--color-staging);">Estadio <span style="opacity: 0.5;">+</span> P <span style="opacity: 0.5;">+</span> E</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.75rem;">Ejemplo: <strong style="color: var(--text-primary);">Stage 2, P1 (internalizing), E2 (carga moderada)</strong></p>
-            </div>
-        </div>
-        <p class="reveal source">Dwyer, Ye, Nelson & McGorry, Annu Rev Clin Psychol, 2025</p>
+<section class="slide" id="s24" data-title="Staging 2.0">
+  <div class="domain-bar violet"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--violet)">Staging 2.0 — análogo al TNM</p>
+    <h1 class="reveal" style="transition-delay:.1s">Staging 2.0 agrega dos ejes: P (fenotipo de presentación) y E (carga exposómica)</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--violet),var(--cyan))"></div>
+    <div class="three-cols reveal" style="transition-delay:.3s;max-width:840px">
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--violet)"><p style="font-size:var(--label-size);color:var(--violet);font-family:var(--font-mono);font-weight:700">EJE 1 · STAGE</p><p style="font-size:var(--small-size);margin-top:.2rem">0 → 4 (psicopatología primaria)</p><p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.2rem">= T en TNM</p></div>
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--cyan)"><p style="font-size:var(--label-size);color:var(--cyan);font-family:var(--font-mono);font-weight:700">EJE 2 · MOD. P</p><p style="font-size:var(--small-size);margin-top:.2rem">cognición · suicidalidad · pronóstico</p><p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.2rem">grado 0-2</p></div>
+      <div class="card tight" style="text-align:center;border-top:2px solid var(--amber)"><p style="font-size:var(--label-size);color:var(--amber);font-family:var(--font-mono);font-weight:700">EJE 3 · MOD. E</p><p style="font-size:var(--small-size);margin-top:.2rem">comorbilidad · sustancias · exposoma</p><p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.2rem">grado 0-2</p></div>
     </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-weight:700;color:var(--violet);font-family:var(--font-mono);margin-top:var(--content-gap)">FORMULACIÓN = ESTADIO + P + E</p>
+    <p class="source reveal" style="transition-delay:.6s;text-align:center">Dwyer, Ye, Nelson & McGorry, Annu Rev Clin Psychol, 2025</p>
+  </div>
 </section>
 
-<section class="slide" id="slide-25">
-    <div class="domain-bar staging"></div>
-    <div class="slide-content centered">
-        <h1 class="reveal">El modificador P: internalizing, externalizing, thought disorder, neurodevelopmental</h1>
-        <div class="reveal" style="display: flex; gap: clamp(0.5rem, 1.5vw, 1.25rem); margin-top: clamp(0.75rem, 1.5vw, 1.25rem); flex-wrap: wrap; justify-content: center;">
-            <div class="card" style="text-align: center; border-top: 2px solid #3b82f6; min-width: clamp(100px, 14vw, 140px);">
-                <p style="font-weight: 700; color: #93c5fd;">P1</p>
-                <p style="font-size: var(--small-size);">Internalizing</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">depresión, ansiedad</p>
-            </div>
-            <div class="card" style="text-align: center; border-top: 2px solid var(--color-danger); min-width: clamp(100px, 14vw, 140px);">
-                <p style="font-weight: 700; color: #fca5a5;">P2</p>
-                <p style="font-size: var(--small-size);">Externalizing</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">conducta, sustancias</p>
-            </div>
-            <div class="card" style="text-align: center; border-top: 2px solid #8b5cf6; min-width: clamp(100px, 14vw, 140px);">
-                <p style="font-weight: 700; color: #c4b5fd;">P3</p>
-                <p style="font-size: var(--small-size);">Thought Disorder</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">psicosis</p>
-            </div>
-            <div class="card" style="text-align: center; border-top: 2px solid var(--color-general); min-width: clamp(100px, 14vw, 140px);">
-                <p style="font-weight: 700; color: #94a3b8;">P4</p>
-                <p style="font-size: var(--small-size);">Neurodevelopmental</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">TDAH, TEA</p>
-            </div>
-        </div>
-        <p class="reveal source">P conecta staging con HiTOP — los espectros son los mismos.</p>
+<section class="slide" id="s25" data-title="Modificador P">
+  <div class="domain-bar violet"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--violet)">Modificador P · fenotipo</p>
+    <h1 class="reveal" style="transition-delay:.1s">El modificador P captura el espectro: internalizing, externalizing, thought disorder, neurodevelopmental</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--violet),var(--cyan))"></div>
+    <div class="mod-grid reveal" style="transition-delay:.3s">
+      <div class="mod-chip" style="--chip-color:var(--cyan)"><span class="code">P1</span><span class="name">Internalizing</span><span class="desc">distress, fear · depresión, ansiedad</span></div>
+      <div class="mod-chip" style="--chip-color:var(--magenta)"><span class="code">P2</span><span class="name">Externalizing</span><span class="desc">desinhibición, antagonismo · conducta, sustancias</span></div>
+      <div class="mod-chip" style="--chip-color:var(--violet)"><span class="code">P3</span><span class="name">Thought Disorder</span><span class="desc">psicosis · esquizofrenia, bipolar con psicosis</span></div>
+      <div class="mod-chip" style="--chip-color:var(--slate)"><span class="code">P4</span><span class="name">Neurodevelop.</span><span class="desc">cognición, desarrollo · TDAH, TEA, DI</span></div>
     </div>
+    <p class="source reveal" style="transition-delay:.5s;text-align:center">P conecta staging con HiTOP — los espectros son los mismos.</p>
+  </div>
 </section>
 
-<section class="slide" id="slide-26">
-    <div class="domain-bar staging"></div>
-    <div class="slide-content centered">
-        <h1 class="reveal">El modificador E cuantifica la carga ambiental — conecta con el exposoma</h1>
-        <div class="reveal" style="width: 80%; max-width: 500px; margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <div style="height: clamp(40px, 6vh, 60px); border-radius: 6px; background: linear-gradient(90deg, var(--color-success), var(--color-especifico), var(--color-danger)); position: relative;">
-                <span style="position: absolute; left: 10%; top: 50%; transform: translateY(-50%); font-size: var(--small-size); font-weight: 600;">E1</span>
-                <span style="position: absolute; left: 45%; top: 50%; transform: translateY(-50%); font-size: var(--small-size); font-weight: 600;">E2</span>
-                <span style="position: absolute; left: 80%; top: 50%; transform: translateY(-50%); font-size: var(--small-size); font-weight: 600;">E3</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; margin-top: 0.5rem; font-size: var(--small-size); color: var(--text-muted);">
-                <span>Baja carga</span><span>1-3 ACEs</span><span>≥4 ACEs + pobreza</span>
-            </div>
-        </div>
-        <p class="reveal source">E = resumen cuantificado del exposoma. Cierra el loop.</p>
+<section class="slide" id="s26" data-title="Modificador E">
+  <div class="domain-bar violet"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--violet)">Modificador E · carga ambiental</p>
+    <h1 class="reveal" style="transition-delay:.1s">El modificador E cuantifica la carga ambiental — conecta directamente con el exposoma</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--violet),var(--cyan))"></div>
+    <div class="three-cols reveal" style="transition-delay:.3s;max-width:780px">
+      <div class="card tight" style="text-align:center;border-top:3px solid var(--acid);background:rgba(141,255,157,.06)"><p style="font-size:var(--label-size);color:var(--acid);font-family:var(--font-mono);font-weight:700">E1 · BAJA</p><p style="font-size:var(--small-size);margin-top:.2rem">0-1 ACEs · SES medio-alto</p></div>
+      <div class="card tight" style="text-align:center;border-top:3px solid var(--amber);background:rgba(255,182,39,.06)"><p style="font-size:var(--label-size);color:var(--amber);font-family:var(--font-mono);font-weight:700">E2 · MODERADA</p><p style="font-size:var(--small-size);margin-top:.2rem">1-3 ACEs · SES medio-bajo</p></div>
+      <div class="card tight" style="text-align:center;border-top:3px solid var(--burgundy);background:rgba(192,57,95,.08)"><p style="font-size:var(--label-size);color:var(--burgundy);font-family:var(--font-mono);font-weight:700">E3 · ALTA</p><p style="font-size:var(--small-size);margin-top:.2rem">≥4 ACEs · pobreza · migración forzada</p></div>
     </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-style:italic;margin-top:var(--content-gap);color:var(--amber)">E = resumen cuantificado del exposoma — cierra el loop.</p>
+  </div>
 </section>
 
-<section class="slide" id="slide-27">
-    <div class="domain-bar staging"></div>
-    <div class="slide-content centered">
-        <h1 class="reveal">Clarke (2025): evidencia fuerte para psicosis, creciente para ánimo, emergente para ansiedad</h1>
-        <div class="reveal" style="display: flex; gap: clamp(1.5rem, 4vw, 3rem); margin-top: clamp(0.75rem, 1.5vw, 1.25rem); align-items: flex-end;">
-            <div style="text-align: center;">
-                <div style="display: flex; flex-direction: column; gap: 3px; align-items: center;">
-                    <div style="width: 12px; height: clamp(15px, 2.5vh, 25px); background: var(--color-success); border-radius: 2px;"></div>
-                    <div style="width: 12px; height: clamp(15px, 2.5vh, 25px); background: var(--color-success); border-radius: 2px;"></div>
-                    <div style="width: 12px; height: clamp(15px, 2.5vh, 25px); background: var(--color-success); border-radius: 2px;"></div>
-                    <div style="width: 12px; height: clamp(15px, 2.5vh, 25px); background: var(--color-success); border-radius: 2px;"></div>
-                </div>
-                <p style="font-size: var(--small-size); font-weight: 600; margin-top: 0.5rem; color: var(--color-success);">Psicosis</p>
-            </div>
-            <div style="text-align: center;">
-                <div style="display: flex; flex-direction: column; gap: 3px; align-items: center;">
-                    <div style="width: 12px; height: clamp(15px, 2.5vh, 25px); background: rgba(255,255,255,0.1); border-radius: 2px;"></div>
-                    <div style="width: 12px; height: clamp(15px, 2.5vh, 25px); background: var(--color-especifico); border-radius: 2px;"></div>
-                    <div style="width: 12px; height: clamp(15px, 2.5vh, 25px); background: var(--color-especifico); border-radius: 2px;"></div>
-                    <div style="width: 12px; height: clamp(15px, 2.5vh, 25px); background: var(--color-especifico); border-radius: 2px;"></div>
-                </div>
-                <p style="font-size: var(--small-size); font-weight: 600; margin-top: 0.5rem; color: var(--color-especifico);">Ánimo</p>
-            </div>
-            <div style="text-align: center;">
-                <div style="display: flex; flex-direction: column; gap: 3px; align-items: center;">
-                    <div style="width: 12px; height: clamp(15px, 2.5vh, 25px); background: rgba(255,255,255,0.1); border-radius: 2px;"></div>
-                    <div style="width: 12px; height: clamp(15px, 2.5vh, 25px); background: rgba(255,255,255,0.1); border-radius: 2px;"></div>
-                    <div style="width: 12px; height: clamp(15px, 2.5vh, 25px); background: #f97316; border-radius: 2px;"></div>
-                    <div style="width: 12px; height: clamp(15px, 2.5vh, 25px); background: #f97316; border-radius: 2px;"></div>
-                </div>
-                <p style="font-size: var(--small-size); font-weight: 600; margin-top: 0.5rem; color: #f97316;">Ansiedad</p>
-            </div>
-        </div>
-        <p class="reveal source">Clarke et al., Front Psychiatry, 2025 · Honestidad epistémica: no toda la evidencia es igual.</p>
+<section class="slide" id="s27" data-title="Clarke evidencia">
+  <div class="domain-bar violet"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--violet)">Honestidad epistémica</p>
+    <h1 class="reveal" style="transition-delay:.1s">Clarke (2025): evidencia fuerte para psicosis, creciente para ánimo, emergente para ansiedad</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--violet),var(--cyan))"></div>
+    <div class="three-cols reveal" style="transition-delay:.3s;max-width:780px">
+      <div class="card" style="text-align:center;border-top:2px solid var(--acid)">
+        <p style="font-size:var(--label-size);color:var(--acid);font-family:var(--font-mono);font-weight:700">PSICOSIS</p>
+        <div class="signal-bars" style="justify-content:center;margin:.4rem auto"><span class="on" style="background:var(--acid);height:25%"></span><span class="on" style="background:var(--acid);height:50%"></span><span class="on" style="background:var(--acid);height:75%"></span><span class="on" style="background:var(--acid);height:100%"></span></div>
+        <p style="font-size:var(--small-size)">Validado: predicción de transición, respuesta a intervención</p>
+      </div>
+      <div class="card" style="text-align:center;border-top:2px solid var(--amber)">
+        <p style="font-size:var(--label-size);color:var(--amber);font-family:var(--font-mono);font-weight:700">ÁNIMO</p>
+        <div class="signal-bars" style="justify-content:center;margin:.4rem auto"><span class="on" style="background:var(--amber);height:25%"></span><span class="on" style="background:var(--amber);height:50%"></span><span class="on" style="background:var(--amber);height:75%"></span><span style="height:100%"></span></div>
+        <p style="font-size:var(--small-size)">Neuroprogresión documentada (Berk et al.)</p>
+      </div>
+      <div class="card" style="text-align:center;border-top:2px solid var(--pink)">
+        <p style="font-size:var(--label-size);color:var(--pink);font-family:var(--font-mono);font-weight:700">ANSIEDAD</p>
+        <div class="signal-bars" style="justify-content:center;margin:.4rem auto"><span class="on" style="background:var(--pink);height:25%"></span><span class="on" style="background:var(--pink);height:50%"></span><span style="height:75%"></span><span style="height:100%"></span></div>
+        <p style="font-size:var(--small-size)">Lógica staging aplica; evidencia emergente</p>
+      </div>
     </div>
+    <p class="source reveal" style="transition-delay:.5s;text-align:center">Clarke et al., Front Psychiatry, 2025 — 71 estudios (2012-2023). No toda la evidencia es igual de fuerte.</p>
+  </div>
 </section>
 
-<section class="slide" id="slide-28">
-    <div class="domain-bar staging"></div>
-    <div class="slide-content centered">
-        <h1 class="reveal">Staging justifica servicios escalonados y prevención costo-efectiva</h1>
-        <div class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem); width: 70%; max-width: 400px;">
-            <div style="background: rgba(185,28,28,0.15); padding: clamp(0.3rem, 0.8vw, 0.6rem); text-align: center; border-radius: 6px 6px 0 0; font-size: var(--small-size);">
-                <strong>Stage 4</strong> — Rehabilitación intensiva<br><span style="color: var(--text-muted);">Pocos, muy caro</span>
-            </div>
-            <div style="background: rgba(249,115,22,0.1); padding: clamp(0.3rem, 0.8vw, 0.6rem); text-align: center; font-size: var(--small-size);">
-                <strong>Stage 2-3</strong> — Tratamiento especializado<br><span style="color: var(--text-muted);">Selectivo, costo moderado</span>
-            </div>
-            <div style="background: rgba(34,197,94,0.1); padding: clamp(0.5rem, 1vw, 0.8rem); text-align: center; border-radius: 0 0 6px 6px; font-size: var(--small-size);">
-                <strong>Stage 0-1</strong> — Prevención primaria<br><span style="color: var(--text-muted);">Masivo, bajo costo</span>
-            </div>
-            <p style="text-align: right; font-size: var(--small-size); color: var(--text-muted); margin-top: 0.3rem;">Costo ↑</p>
-        </div>
-        <p class="reveal source">La inversión eficiente está en la base.</p>
+<section class="slide" id="s28" data-title="Salud pública">
+  <div class="domain-bar violet"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--violet)">Más que clínica individual</p>
+    <h1 class="reveal" style="transition-delay:.1s">Staging es herramienta de salud pública: justifica servicios escalonados y prevención costo-efectiva</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--violet),var(--cyan))"></div>
+    <div class="pyramid reveal" style="transition-delay:.3s">
+      <div class="pyramid-tier" style="width:30%;background:rgba(255,77,157,.18);border-top:2px solid var(--pink)"><p style="font-size:var(--small-size);color:var(--pink);font-weight:700;font-family:var(--font-mono)">STAGE 4 · Rehabilitación intensiva</p><p style="font-size:var(--label-size);color:var(--text-muted)">pocos pacientes · muy caro</p></div>
+      <div class="pyramid-tier" style="width:55%;background:rgba(255,182,39,.14);border-top:2px solid var(--amber)"><p style="font-size:var(--small-size);color:var(--amber);font-weight:700;font-family:var(--font-mono)">STAGE 2-3 · Tratamiento especializado</p><p style="font-size:var(--label-size);color:var(--text-muted)">selectivo · costo moderado</p></div>
+      <div class="pyramid-tier" style="width:80%;background:rgba(141,255,157,.12);border-top:2px solid var(--acid)"><p style="font-size:var(--small-size);color:var(--acid);font-weight:700;font-family:var(--font-mono)">STAGE 0-1 · Prevención primaria</p><p style="font-size:var(--label-size);color:var(--text-muted)">masivo · bajo costo: psicoeducación, monitoreo</p></div>
     </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-style:italic;color:var(--acid);margin-top:var(--content-gap)">La inversión eficiente está en la base.</p>
+  </div>
 </section>
 
-<section class="slide" id="slide-29">
-    <div class="domain-bar staging"></div>
-    <div class="slide-content centered">
-        <h1 class="reveal">Intervenir en Stage 1 cuesta 5-10x menos que en Stage 4</h1>
-        <div class="reveal" style="display: flex; align-items: flex-end; gap: clamp(2rem, 5vw, 4rem); margin-top: clamp(0.75rem, 1.5vw, 1.25rem); height: 35vh; max-height: 250px;">
-            <div style="text-align: center;">
-                <div style="width: clamp(60px, 10vw, 100px); height: 20%; background: var(--color-success); border-radius: 4px 4px 0 0;"></div>
-                <p style="font-size: var(--small-size); margin-top: 0.5rem; font-weight: 600;">Stage 1</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">TCC + monitoreo</p>
-            </div>
-            <div style="text-align: center; position: relative;">
-                <div style="position: absolute; top: 30%; left: 50%; transform: translateX(-50%); font-size: var(--h2-size); font-weight: 700; color: var(--color-danger);">×5-10</div>
-                <div style="width: clamp(60px, 10vw, 100px); height: 100%; background: var(--color-danger); border-radius: 4px 4px 0 0;"></div>
-                <p style="font-size: var(--small-size); margin-top: 0.5rem; font-weight: 600;">Stage 4</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">Hospital + clozapina</p>
-            </div>
-        </div>
-        <p class="reveal source">NNT = 5 para prevención de transición psicótica · Ricci et al., 2025</p>
+<section class="slide" id="s29" data-title="Costo Stage 1 vs 4">
+  <div class="domain-bar violet"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--violet)">El argumento económico</p>
+    <h1 class="reveal" style="transition-delay:.1s">Intervenir en Stage 1 cuesta 5-10x menos que en Stage 4 — cada peso temprano ahorra hospitalizaciones</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--violet),var(--cyan))"></div>
+    <div class="cost-bars reveal" style="transition-delay:.3s">
+      <div class="cost-bar" style="height:18%;background:linear-gradient(180deg,var(--acid),rgba(141,255,157,.3))">
+        <span class="val" style="color:var(--acid)">1×</span>
+        <span class="lbl" style="color:var(--text-secondary)">STAGE 1<br/>TCC + monitoreo</span>
+      </div>
+      <div style="align-self:center;font-size:clamp(1.2rem,3vw,2rem);font-weight:900;color:var(--amber);font-family:var(--font-display)">×5-10</div>
+      <div class="cost-bar" style="height:92%;background:linear-gradient(180deg,var(--magenta),rgba(255,77,157,.3))">
+        <span class="val" style="color:var(--magenta)">5-10×</span>
+        <span class="lbl" style="color:var(--text-secondary)">STAGE 4<br/>hospitalización + clozapina + rehab</span>
+      </div>
     </div>
+    <p class="source reveal" style="transition-delay:.5s;text-align:center">NNT = 5 para prevención de transición psicótica (Ricci et al., 2025). Prevenir es más barato que reparar.</p>
+  </div>
 </section>
 
-<!-- === SECCIÓN E: INTEGRACIÓN === -->
+<!-- === SECCIÓN B.3: INTEGRACIÓN (Slide 30 | gradient) === -->
 
-<section class="slide" id="slide-30">
-    <div class="domain-bar integracion"></div>
-    <div class="slide-content centered">
-        <h1 class="reveal">Cuatro frameworks, cuatro preguntas</h1>
-        <div class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem); display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(0.3rem, 0.8vw, 0.75rem); width: 95%; max-width: 800px;">
-            <div class="card" style="border-top: 2px solid var(--color-hitop); text-align: center; padding: clamp(0.5rem, 1vw, 1rem);">
-                <p style="font-weight: 700; color: #93c5fd; font-size: var(--small-size);">HiTOP</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.3rem;">¿Dónde está?</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">Estructura</p>
-            </div>
-            <div class="card" style="border-top: 2px solid var(--color-rdoc); text-align: center; padding: clamp(0.5rem, 1vw, 1rem);">
-                <p style="font-weight: 700; color: #6ee7b7; font-size: var(--small-size);">RDoC</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.3rem;">¿Qué falla?</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">Mecanismo</p>
-            </div>
-            <div class="card" style="border-top: 2px solid var(--color-especifico); text-align: center; padding: clamp(0.5rem, 1vw, 1rem);">
-                <p style="font-weight: 700; color: #fcd34d; font-size: var(--small-size);">Exposoma</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.3rem;">¿Por qué?</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">Causalidad</p>
-            </div>
-            <div class="card" style="border-top: 2px solid var(--color-staging); text-align: center; padding: clamp(0.5rem, 1vw, 1rem);">
-                <p style="font-weight: 700; color: #5eead4; font-size: var(--small-size);">Staging</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.3rem;">¿Cuánto?</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">Tiempo</p>
-            </div>
-        </div>
-        <p class="reveal source">Cada uno responde una pregunta distinta. Juntos: formulación dimensional completa.</p>
+<section class="slide" id="s30" data-title="Integración 4 frameworks">
+  <div class="domain-bar full"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--cyan)">Síntesis del bloque · no comprimir</p>
+    <h1 class="reveal" style="transition-delay:.1s">Cuatro frameworks, cuatro preguntas — y el exposoma ES el modificador E del Staging 2.0</h1>
+    <div class="divider reveal" style="transition-delay:.2s"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:1000px">
+      <div>
+        <table class="data-table" style="font-size:var(--label-size)">
+          <tr><th>Framework</th><th>Pregunta</th><th>Eje</th></tr>
+          <tr><td class="head" style="color:var(--cyan)">HiTOP</td><td>¿Dónde está?</td><td>estructura</td></tr>
+          <tr><td class="head" style="color:var(--acid)">RDoC</td><td>¿Qué falla?</td><td>mecanismo</td></tr>
+          <tr><td class="head" style="color:var(--amber)">Exposoma</td><td>¿Por qué?</td><td>riesgo</td></tr>
+          <tr><td class="head" style="color:var(--violet)">Staging</td><td>¿Cuánto?</td><td>tiempo</td></tr>
+        </table>
+      </div>
+      <div class="flowchart-v" style="gap:.1rem">
+        <div class="fc-box bold" style="border-left:3px solid var(--amber);font-size:var(--label-size);min-width:auto;max-width:260px"><strong style="color:var(--amber)">EXPOSOMA</strong> → "empuja"</div>
+        <div class="fc-arrow">↓</div>
+        <div class="fc-box bold" style="border-left:3px solid var(--violet);font-size:var(--label-size);min-width:auto;max-width:260px"><strong style="color:var(--violet)">STAGING</strong> → 0→4, Mod E = exposoma</div>
+        <div class="fc-arrow">↓</div>
+        <div class="fc-box bold" style="border-left:3px solid var(--cyan);font-size:var(--label-size);min-width:auto;max-width:260px"><strong style="color:var(--cyan)">HiTOP</strong> → dimensiones</div>
+        <div class="fc-arrow">↓</div>
+        <div class="fc-box bold" style="border-left:3px solid var(--acid);font-size:var(--label-size);min-width:auto;max-width:260px"><strong style="color:var(--acid)">RDoC</strong> → circuitos</div>
+      </div>
     </div>
+    <p class="source reveal" style="transition-delay:.5s;text-align:center">Cada uno responde una pregunta distinta. Juntos: formulación dimensional completa. El exposoma no es un addendum — ES el modificador E.</p>
+  </div>
 </section>
 
-<section class="slide" id="slide-31">
-    <div class="domain-bar integracion"></div>
-    <div class="slide-content centered">
-        <h1 class="reveal">El exposoma ES el modificador E del Staging — son un ecosistema</h1>
-        <div class="reveal flow-vertical" style="align-items: center; margin-top: clamp(0.75rem, 1.5vw, 1.25rem); gap: clamp(0.3rem, 0.8vw, 0.6rem);">
-            <div class="flow-box" style="border-left-color: var(--color-especifico); min-width: 150px;"><strong>EXPOSOMA</strong></div>
-            <span style="color: var(--text-muted); font-size: var(--small-size);">↓ empuja</span>
-            <div class="flow-box" style="border-left-color: var(--color-staging); min-width: 150px;"><strong>STAGING</strong></div>
-            <span style="color: var(--text-muted); font-size: var(--small-size);">↓ expresado como</span>
-            <div class="flow-box" style="border-left-color: var(--color-hitop); min-width: 150px;"><strong>HiTOP</strong></div>
-            <span style="color: var(--text-muted); font-size: var(--small-size);">↓ mediado por</span>
-            <div class="flow-box" style="border-left-color: var(--color-rdoc); min-width: 150px;"><strong>RDoC</strong></div>
-        </div>
-        <p class="reveal source">McGorry et al., Psychol Med, 2025</p>
+<!-- === SECCIÓN C: CASO (Slides 31-37 | integracion) === -->
+
+<section class="slide" id="s31" data-title="María 3 dominios">
+  <div class="domain-bar integracion"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--amber)">Cierre del arco de María</p>
+    <h1 class="reveal" style="transition-delay:.1s">María en 3 dominios: los "antecedentes" sueltos ahora se organizan — y revelan qué falta preguntar</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--amber),var(--cyan))"></div>
+    <div class="three-cols reveal" style="transition-delay:.3s">
+      <div class="card tight" style="border-top:3px solid var(--slate)"><p style="font-size:var(--label-size);color:var(--slate);font-family:var(--font-mono);font-weight:700;margin-bottom:.3rem">GENERAL EXT.</p><p style="font-size:var(--label-size);line-height:1.4">padre alcohólico · madre con depresión · bullying severo en secundaria</p></div>
+      <div class="card tight" style="border-top:3px solid var(--amber)"><p style="font-size:var(--label-size);color:var(--amber);font-family:var(--font-mono);font-weight:700;margin-bottom:.3rem">ESPECÍFICO EXT.</p><p style="font-size:var(--label-size);line-height:1.4">insomnio severo (3-4h) · atracones 2-3x/sem · abandonó ejercicio</p><p style="font-size:var(--label-size);color:var(--magenta);margin-top:.3rem;font-weight:700">¿Falta: sustancias? ¿contaminación? ¿pantallas? ¿dieta?</p></div>
+      <div class="card tight" style="border-top:3px solid var(--burgundy)"><p style="font-size:var(--label-size);color:var(--burgundy);font-family:var(--font-mono);font-weight:700;margin-bottom:.3rem">INTERNO</p><p style="font-size:var(--label-size);line-height:1.4">probable sensibilización HPA · inflamación → anhedonia · desregulación circadiana</p></div>
     </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-family:var(--font-mono);font-size:var(--small-size);color:var(--cyan);margin-top:var(--content-gap)">María: <strong>Stage 2 · P1 · E1</strong></p>
+  </div>
 </section>
 
-<!-- === SECCIÓN F: CASO TOMÁS === -->
-
-<section class="slide" id="slide-32">
-    <div class="slide-content">
-        <h1 class="reveal">Tomás, 16 años: migrante, hacinamiento, bullying, cannabis, ideas de referencia</h1>
-        <div class="reveal" style="display: flex; flex-wrap: wrap; gap: clamp(0.3rem, 0.6vw, 0.5rem); margin-top: clamp(0.5rem, 1vw, 1rem);">
-            <span class="tag tag-gray">Madre migrante venezolana</span>
-            <span class="tag tag-gray">Padre ausente (4 años)</span>
-            <span class="tag tag-amber">Hacinamiento 5/2hab</span>
-            <span class="tag tag-amber">Bullying por acento</span>
-            <span class="tag tag-red">Cannabis semanal (15a)</span>
-            <span class="tag tag-purple">Ideas de referencia (16a)</span>
+<section class="slide" id="s32" data-title="Tomás viñeta">
+  <div class="domain-bar integracion"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--violet)">Caso longitudinal de hoy</p>
+    <h1 class="reveal" style="transition-delay:.1s">Tomás, 16 años: migrante, bullying, cannabis, ahora con ideas de referencia con insight preservado</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--violet),var(--cyan))"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:960px">
+      <div style="text-align:center">
+        <div style="font-size:clamp(2.5rem,5vw,3.5rem);margin-bottom:.4rem">🧒</div>
+        <div class="cover-meta" style="justify-content:center;max-width:340px;margin-inline:auto">
+          <span class="tag tag-slate">Padres separados (6a)</span>
+          <span class="tag tag-slate">Migración HVCA→Lima (8a)</span>
+          <span class="tag tag-amber">Bullying por acento</span>
+          <span class="tag tag-amber">Pérdida abuela (13a)</span>
+          <span class="tag tag-amber">Cannabis semanal (14a)</span>
+          <span class="tag tag-pink">Ideas referencia (16a)</span>
         </div>
-        <div class="reveal" style="margin-top: clamp(0.5rem, 1vw, 1rem); font-size: var(--small-size); color: var(--text-muted); border-left: 2px solid var(--color-staging); padding-left: 1rem;">
-            14a → insomnio · 15a → cannabis · 15.5a → suspicacia · 16a → CAARMS+
-        </div>
+      </div>
+      <div class="card tight" style="font-family:var(--font-mono);font-size:var(--label-size)">
+        <p style="font-size:var(--label-size);color:var(--violet);font-weight:700;margin-bottom:.3rem">TIMELINE</p>
+        <p>13 → insomnio</p>
+        <p>14 → cannabis</p>
+        <p>15.5 → aislamiento</p>
+        <p>16 → CAARMS+</p>
+        <p style="font-size:var(--label-size);color:var(--text-muted);margin-top:.3rem;font-style:italic">"siente que lo miran raro" — reconoce que "probablemente es mi imaginación"</p>
+      </div>
     </div>
+  </div>
 </section>
 
-<section class="slide" id="slide-33">
-    <div class="slide-content">
-        <h1 class="reveal">Mapear su exposoma revela que 4 de 5 factores son modificables</h1>
-        <div class="three-cols reveal" style="margin-top: clamp(0.5rem, 1vw, 1rem);">
-            <div class="card" style="border-top: 2px solid var(--color-general); font-size: var(--small-size);">
-                <h3 style="color: var(--color-general); font-size: var(--small-size);">General Externo</h3>
-                <p>Pobreza · Hacinamiento · Barrio periurbano</p>
-            </div>
-            <div class="card" style="border-top: 2px solid var(--color-especifico); font-size: var(--small-size);">
-                <h3 style="color: var(--color-especifico); font-size: var(--small-size);">Específico Externo</h3>
-                <p><span style="color: var(--color-success);">●</span> Bullying · <span style="color: var(--color-success);">●</span> Cannabis · <span style="color: var(--text-muted);">○</span> Padre ausente</p>
-            </div>
-            <div class="card" style="border-top: 2px solid #f87171; font-size: var(--small-size);">
-                <h3 style="color: #f87171; font-size: var(--small-size);">Interno (inferido)</h3>
-                <p style="font-style: italic;">Neuroinflamación · Sensibilización DA · Poda alterada</p>
-            </div>
-        </div>
-        <div class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1rem); font-size: var(--small-size);">
-            <span style="color: var(--color-success);">● = modificable</span> · <span style="color: var(--text-muted);">○ = no modificable</span> · <strong>4/5 factores específicos = modificables HOY</strong>
-        </div>
+<section class="slide" id="s33" data-title="Tomás exposoma">
+  <div class="domain-bar integracion"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--amber)">Mapeo del exposoma</p>
+    <h1 class="reveal" style="transition-delay:.1s">Mapear su exposoma en 3 dominios revela que la mayoría de factores específicos son modificables</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--amber),var(--cyan))"></div>
+    <div class="three-cols reveal" style="transition-delay:.3s">
+      <div class="card tight" style="border-top:3px solid var(--slate)"><p style="font-size:var(--label-size);color:var(--slate);font-family:var(--font-mono);font-weight:700;margin-bottom:.3rem">GENERAL EXT.</p><p style="font-size:var(--label-size);line-height:1.5;color:var(--text-muted)">migración interna · discriminación/bullying · separación parental · pérdida cuidadora · SES bajo · urbanicidad forzada</p></div>
+      <div class="card tight" style="border-top:3px solid var(--amber)"><p style="font-size:var(--label-size);color:var(--amber);font-family:var(--font-mono);font-weight:700;margin-bottom:.3rem">ESPECÍFICO EXT.</p><p style="font-size:var(--label-size);line-height:1.5"><span style="color:var(--acid);font-weight:700">cannabis</span> · <span style="color:var(--acid);font-weight:700">dieta pobre</span> · <span style="color:var(--acid);font-weight:700">abandono ejercicio</span> · <span style="color:var(--acid);font-weight:700">insomnio</span> · contaminación+ruido · sin espacios verdes</p></div>
+      <div class="card tight" style="border-top:3px solid var(--burgundy)"><p style="font-size:var(--label-size);color:var(--burgundy);font-family:var(--font-mono);font-weight:700;margin-bottom:.3rem">INTERNO (inferido)</p><p style="font-size:var(--label-size);line-height:1.5;font-style:italic;color:var(--text-muted)">probable sensibilización HPA · neuroinflamación · alteración endocannabinoide · déficit BDNF</p></div>
     </div>
+    <p class="reveal" style="transition-delay:.5s;text-align:center;font-weight:700;color:var(--acid);font-family:var(--font-mono);margin-top:var(--content-gap)">4/6 FACTORES ESPECÍFICOS = MODIFICABLES HOY</p>
+    <p class="source reveal" style="transition-delay:.6s;text-align:center">Lo no modificable ya pasó. Lo modificable es donde intervienen.</p>
+  </div>
 </section>
 
-<section class="slide" id="slide-34">
-    <div class="slide-content">
-        <h1 class="reveal">Ejercicio: asignar estadio + modificadores + plan proporcional</h1>
-        <div class="reveal card" style="margin-top: clamp(0.5rem, 1vw, 1rem); font-family: monospace; font-size: var(--small-size); line-height: 1.8;">
-            <p>1. EXPOSOMA — Mapear en 3 dominios</p>
-            <p>2. STAGING — Estadio: ___ | P: ___ | E: ___</p>
-            <p>3. Justificación (≥2 factores de dominios distintos): ___</p>
-            <p>4. INTERVENCIÓN PROPORCIONAL: ___</p>
-            <p>5. ¿Qué es modificable ahora? ___</p>
-        </div>
-        <div class="reveal" style="margin-top: clamp(0.5rem, 1vw, 1rem); text-align: center;">
-            <span style="font-size: clamp(1.5rem, 3vw, 2.5rem); color: var(--color-accent);">⏱ 5:00</span>
-            <p style="font-size: var(--small-size); color: var(--text-muted);">Trabajo individual</p>
-        </div>
+<section class="slide" id="s34" data-title="Ejercicio template">
+  <div class="domain-bar integracion"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--magenta)">Ejercicio individual — A1, A2</p>
+    <h1 class="reveal" style="transition-delay:.1s">Instrucciones: mapear exposoma + asignar estadio + modificadores + plan proporcional (5 min)</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--magenta),var(--cyan))"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:960px">
+      <div class="exercise-box" style="max-width:520px">
+        <div class="field" style="font-weight:700;color:var(--text-primary);margin-bottom:.3rem">MINI-HISTORIA EXPOSÓMICA</div>
+        <div class="field"><span class="field-label">1. EXPOSOMA — 3 dominios:</span></div>
+        <div class="field" style="padding-left:.6rem">General ext: <span class="blank"></span></div>
+        <div class="field" style="padding-left:.6rem">Específico ext: <span class="blank"></span></div>
+        <div class="field" style="padding-left:.6rem">Interno (inferido): <span class="blank"></span></div>
+        <div class="field"><span class="field-label">2. STAGING — asignar:</span></div>
+        <div class="field" style="padding-left:.6rem">Estadio: <span class="blank" style="min-width:40px"></span> · P: <span class="blank" style="min-width:30px"></span> · E: <span class="blank" style="min-width:30px"></span></div>
+        <div class="field" style="padding-left:.6rem">Justificación (≥2 dominios): <span class="blank"></span></div>
+        <div class="field"><span class="field-label">3. PLAN PROPORCIONAL:</span></div>
+        <div class="field" style="padding-left:.6rem">¿Qué haría? <span class="blank"></span></div>
+        <div class="field" style="padding-left:.6rem">¿Qué NO haría? <span class="blank"></span></div>
+      </div>
+      <div style="text-align:center">
+        <div class="reveal-scale" style="font-family:var(--font-display);font-size:clamp(2.5rem,5vw,4rem);color:var(--magenta);line-height:1;font-weight:900;text-shadow:0 0 20px rgba(255,46,196,.4)">5:00</div>
+        <p style="font-size:var(--small-size);color:var(--text-muted);margin-top:.3rem;font-family:var(--font-mono)">min — trabajo individual</p>
+        <p class="reveal" style="transition-delay:.4s;font-size:var(--small-size);margin-top:.6rem;color:var(--text-secondary)">Usen el template.<br/>Preguntas: <em style="font-size:var(--small-size)">¿Stage 1b o 2? ¿Le darías antipsicótico?</em></p>
+      </div>
     </div>
+  </div>
 </section>
 
-<section class="slide" id="slide-35">
-    <div class="domain-bar staging"></div>
-    <div class="slide-content centered">
-        <h1 class="reveal">Tomás es Stage 1b, P3, E3 — síntomas atenuados con alta carga exposómica</h1>
-        <div class="pipeline reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <div><div class="node" style="background: rgba(34,197,94,0.1); border-color: rgba(255,255,255,0.1); width: clamp(30px,4vw,45px); height: clamp(30px,4vw,45px); opacity: 0.4;">0</div></div>
-            <span class="arrow" style="opacity: 0.4;">→</span>
-            <div><div class="node" style="background: rgba(234,179,8,0.05); border-color: rgba(255,255,255,0.1); width: clamp(33px,4.5vw,50px); height: clamp(33px,4.5vw,50px); opacity: 0.4;">1a</div></div>
-            <span class="arrow" style="opacity: 0.4;">→</span>
-            <div><div class="node" style="background: rgba(245,158,11,0.3); border-color: var(--color-especifico); width: clamp(45px,6.5vw,70px); height: clamp(45px,6.5vw,70px); box-shadow: 0 0 15px rgba(245,158,11,0.4);"><strong>1b</strong></div><p class="node-label" style="color: var(--color-especifico);">← Tomás</p></div>
-            <span class="arrow" style="opacity: 0.4;">→</span>
-            <div><div class="node" style="opacity: 0.3; width: clamp(35px,5vw,55px); height: clamp(35px,5vw,55px);">2</div></div>
-            <span class="arrow" style="opacity: 0.3;">→</span>
-            <div><div class="node" style="opacity: 0.2; width: clamp(35px,5vw,55px); height: clamp(35px,5vw,55px);">3-4</div></div>
-        </div>
-        <div class="reveal" style="display: flex; gap: clamp(0.5rem, 1vw, 1rem); margin-top: clamp(0.5rem, 1vw, 1rem); justify-content: center;">
-            <span class="tag tag-purple">P3: Thought Disorder</span>
-            <span class="tag tag-red">E3: Alta carga</span>
-        </div>
-        <p class="reveal source">CAARMS+ (no primer episodio) · ≥4 factores exposómicos</p>
+<section class="slide" id="s35" data-title="Tomás Stage 1b">
+  <div class="domain-bar integracion"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--violet)">Plenario — respuesta</p>
+    <h1 class="reveal" style="transition-delay:.1s">Tomás es Stage 1b, P0-P1, E2 — síntomas atenuados con alta carga exposómica</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--violet),var(--cyan))"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:960px">
+      <div class="pipeline" style="gap:clamp(.15rem,.4vw,.3rem);justify-content:flex-start">
+        <div class="pipeline-box" style="border-top:2px solid var(--acid);min-width:clamp(56px,8vw,80px)"><div class="pipe-icon" style="color:var(--acid);font-size:var(--small-size)">0</div></div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-box" style="border-top:2px solid var(--acid);min-width:clamp(56px,8vw,80px)"><div class="pipe-icon" style="color:var(--acid);font-size:var(--small-size)">1a</div></div>
+        <span class="pipeline-arrow">→</span>
+        <div class="pipeline-box lit" style="min-width:clamp(56px,8vw,80px)"><div class="pipe-icon" style="color:var(--acid);font-size:var(--small-size);font-weight:800">1b</div></div>
+        <span class="pipeline-arrow" style="border-bottom:1px dashed var(--text-muted)">⇢</span>
+        <div class="pipeline-box" style="border-top:2px solid var(--amber);min-width:clamp(56px,8vw,80px);opacity:.5"><div class="pipe-icon" style="color:var(--amber);font-size:var(--small-size)">2</div></div>
+        <span class="pipeline-arrow" style="opacity:.5">→</span>
+        <div class="pipeline-box" style="border-top:2px solid var(--pink);min-width:clamp(56px,8vw,80px);opacity:.5"><div class="pipe-icon" style="color:var(--pink);font-size:var(--small-size)">3</div></div>
+        <span class="pipeline-arrow" style="opacity:.5">→</span>
+        <div class="pipeline-box" style="border-top:2px solid var(--magenta);min-width:clamp(56px,8vw,80px);opacity:.5"><div class="pipe-icon" style="color:var(--magenta);font-size:var(--small-size)">4</div></div>
+      </div>
+      <div class="flow-vertical" style="gap:.2rem">
+        <div class="card tight" style="border-left:3px solid var(--cyan)"><p style="font-size:var(--label-size);color:var(--cyan);font-family:var(--font-mono);font-weight:700">P0-P1</p><p style="font-size:var(--label-size)">sin déficit cognitivo objetivo / notas bajaron → posible P1 leve</p></div>
+        <div class="card tight" style="border-left:3px solid var(--burgundy)"><p style="font-size:var(--label-size);color:var(--burgundy);font-family:var(--font-mono);font-weight:700">E2</p><p style="font-size:var(--label-size)">cannabis activo + SES bajo + dieta pobre + contaminación + pérdida protectores</p></div>
+        <div class="card tight" style="border:1px solid var(--violet);text-align:center;background:rgba(139,92,255,.08)"><p style="font-size:var(--body-size);color:var(--violet);font-weight:700;font-family:var(--font-mono)">Stage 1b | P0-P1 | E2</p></div>
+        <p style="font-size:var(--label-size);color:var(--text-muted);font-style:italic">CAARMS+ (no primer episodio) · ideas de referencia con insight · deterioro funcional · ≥4 factores exposómicos</p>
+      </div>
     </div>
+  </div>
 </section>
 
-<section class="slide" id="slide-36">
-    <div class="slide-content">
-        <h1 class="reveal">Stage 1b ≠ antipsicóticos: TCC, omega-3, cesar cannabis, intervención familiar</h1>
-        <div class="split reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem);">
-            <div class="card" style="text-align: center; background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.2);">
-                <p style="font-size: clamp(1.5rem, 3vw, 2.5rem); opacity: 0.7;">❌</p>
-                <p style="font-weight: 600; color: var(--color-danger); text-decoration: line-through;">Antipsicótico</p>
-                <p style="font-size: var(--small-size); color: var(--text-muted);">Stage 1b ≠ Stage 2</p>
-            </div>
-            <div class="card" style="border: 1px solid rgba(34,197,94,0.3);">
-                <p style="font-size: clamp(1.2rem, 2vw, 1.5rem); text-align: center;">✓</p>
-                <div style="font-size: var(--small-size); display: flex; flex-direction: column; gap: 0.3rem; margin-top: 0.5rem;">
-                    <p>✓ TCC para síntomas atenuados</p>
-                    <p>✓ Omega-3 (Amminger et al.)</p>
-                    <p>✓ Cesar cannabis</p>
-                    <p>✓ Intervención familiar</p>
-                    <p style="color: var(--text-muted); margin-top: 0.3rem;">Monitoreo: CAARMS c/3-6m</p>
-                </div>
-            </div>
+<section class="slide" id="s36" data-title="Plan proporcional">
+  <div class="domain-bar integracion"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--violet)">Plan proporcional a 1b</p>
+    <h1 class="reveal" style="transition-delay:.1s">Plan proporcional a 1b: CBT + cesar cannabis + reactivar ejercicio + mejorar dieta + NO antipsicóticos</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--violet),var(--cyan))"></div>
+    <div class="split reveal" style="transition-delay:.3s;max-width:900px">
+      <div class="card" style="text-align:center;border:1px solid var(--magenta);background:rgba(255,46,196,.06);opacity:.7">
+        <p style="font-size:var(--h3-size);color:var(--magenta);font-weight:900;text-decoration:line-through">❌ ANTIPSICÓTICO</p>
+        <p style="font-size:var(--small-size);color:var(--text-muted);margin-top:.3rem">Stage 1b ≠ Stage 2<br/>No ha tenido primer episodio</p>
+      </div>
+      <div class="card" style="border-left:3px solid var(--acid)">
+        <p style="font-size:var(--label-size);color:var(--acid);font-family:var(--font-mono);font-weight:700;margin-bottom:.3rem">✓ INTERVENCIÓN PROPORCIONAL</p>
+        <div class="flow-vertical" style="gap:.15rem;font-size:var(--label-size)">
+          <p>✓ CBT breve para ideas de referencia</p>
+          <p>✓ Reducción/cese cannabis (EM)</p>
+          <p>✓ Reactivación ejercicio (BDNF)</p>
+          <p>✓ Mejorar dieta (dentro de SES)</p>
+          <p>✓ Higiene del sueño</p>
+          <p>✓ Psicoeducación a madre</p>
+          <p>✓ Monitoreo quincenal</p>
         </div>
+      </div>
     </div>
+    <p class="source reveal" style="transition-delay:.5s;text-align:center">Si no hay mejoría en 8-12 semanas: reevaluar estadio.</p>
+  </div>
 </section>
 
-<section class="slide" id="slide-37">
-    <div class="domain-bar staging"></div>
-    <div class="slide-content centered">
-        <h1 class="reveal">Si progresa a Stage 2 cambia todo — el staging te dice cuándo escalar</h1>
-        <div class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem); display: flex; align-items: center; gap: clamp(1rem, 3vw, 2.5rem);">
-            <div style="text-align: center;">
-                <div style="width: clamp(50px, 7vw, 80px); height: clamp(50px, 7vw, 80px); border-radius: 50%; background: rgba(245,158,11,0.2); border: 2px solid var(--color-especifico); display: flex; align-items: center; justify-content: center; font-weight: 700;">1b</div>
-                <p style="font-size: var(--small-size); color: var(--text-muted); margin-top: 0.5rem;">TCC + omega-3</p>
-            </div>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.2rem;">
-                <span style="font-size: var(--small-size); color: var(--text-muted);">SI progresa</span>
-                <span style="font-size: clamp(1rem, 2vw, 1.5rem); color: var(--color-danger);">⟶</span>
-            </div>
-            <div style="text-align: center;">
-                <div style="width: clamp(55px, 8vw, 90px); height: clamp(55px, 8vw, 90px); border-radius: 50%; background: rgba(249,115,22,0.2); border: 2px solid #f97316; display: flex; align-items: center; justify-content: center; font-weight: 700;">2</div>
-                <p style="font-size: var(--small-size); color: var(--color-danger); margin-top: 0.5rem;">AP dosis baja + equipo</p>
-            </div>
+<section class="slide" id="s37" data-title="Si progresa">
+  <div class="domain-bar integracion"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--violet)">El staging no es rígido</p>
+    <h1 class="reveal" style="transition-delay:.1s">Si progresa a Stage 2 cambia todo — y si tuviera 38 años y 3 hospitalizaciones, también</h1>
+    <div class="divider reveal" style="transition-delay:.2s;background:linear-gradient(90deg,var(--violet),var(--cyan))"></div>
+    <div class="flow-vertical reveal" style="transition-delay:.3s;max-width:780px">
+      <div class="split" style="max-width:780px">
+        <div class="card tight" style="border-top:2px solid var(--acid);text-align:center">
+          <p style="font-size:var(--label-size);color:var(--acid);font-family:var(--font-mono);font-weight:700">AHORA · Stage 1b</p>
+          <p style="font-size:var(--small-size);margin-top:.2rem">CBT · cesar cannabis · ejercicio · dieta · sueño · monitoreo</p>
         </div>
-        <p class="reveal source">La decisión la toma la evolución del paciente, no la ansiedad del clínico.</p>
+        <span style="align-self:center;font-size:clamp(1.2rem,2.5vw,1.8rem);color:var(--text-muted);border-bottom:1px dashed var(--text-muted)">⇢ SI progresa</span>
+        <div class="card tight" style="border-top:2px solid var(--amber);text-align:center">
+          <p style="font-size:var(--label-size);color:var(--amber);font-family:var(--font-mono);font-weight:700">Stage 2</p>
+          <p style="font-size:var(--small-size);margin-top:.2rem">antipsicótico dosis baja + intervención temprana intensiva + equipo multidisciplinario</p>
+        </div>
+      </div>
+      <div class="card tight" style="border-top:2px solid var(--magenta);text-align:center;background:rgba(255,46,196,.05)">
+        <p style="font-size:var(--label-size);color:var(--magenta);font-family:var(--font-mono);font-weight:700">CONTRASTE · Tomás a los 38, 3 hospitalizaciones, 10 años de enfermedad</p>
+        <p style="font-size:var(--small-size);margin-top:.2rem">Stage 3-4 → clozapina + rehabilitación. Mismo perfil dimensional ≠ mismo estadio ≠ misma intervención.</p>
+      </div>
     </div>
+    <p class="source reveal" style="transition-delay:.5s;text-align:center">El staging te dice CUÁNDO cambiar el plan — no antes, no después. Y el exposoma sigue importando en todos los estadios.</p>
+  </div>
 </section>
 
-<!-- === SECCIÓN G: CIERRE === -->
+<!-- === SECCIÓN D: CONCLUSIONES (Slides 38-39 | cyan) === -->
 
-<section class="slide" id="slide-38">
-    <div class="slide-content centered">
-        <div class="reveal" style="max-width: 700px;">
-            <h1 style="font-size: clamp(1.3rem, 3.5vw, 2.5rem); line-height: 1.4;">"El exposoma organiza tu historia clínica y te muestra qué es modificable. El staging te dice cuánto intervenir."</h1>
-            <div style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem); display: flex; flex-direction: column; gap: 0.5rem;">
-                <p style="font-size: var(--body-size); color: var(--color-success);">✓ ¿Qué lo empujó? → Exposoma</p>
-                <p style="font-size: var(--body-size); color: var(--color-success);">✓ ¿En qué punto del camino? → Staging</p>
-            </div>
-        </div>
+<section class="slide" id="s38" data-title="Take-home">
+  <div class="domain-bar cyan"></div>
+  <div class="slide-content centered">
+    <p class="eyebrow reveal" style="color:var(--cyan)">Take-home</p>
+    <h1 class="reveal" style="transition-delay:.1s">Take-home: el exposoma organiza tu historia clínica; el staging te dice cuánto intervenir</h1>
+    <div class="divider reveal" style="transition-delay:.2s"></div>
+    <div class="pearl-statement reveal-scale" style="transition-delay:.3s;font-size:clamp(1rem,2.2vw,1.9rem);line-height:1.3;max-width:min(86vw,52rem)">
+      <p>El exposoma no es un checklist —</p>
+      <p>es un <mark>mapa de 3 dominios</mark> que organiza tu historia clínica</p>
+      <p>y te muestra <em>qué es modificable</em>.</p>
+      <p>El staging te dice <em>cuánto intervenir</em>.</p>
+      <p>Juntos: ¿por qué llegó ahí y qué tan lejos ha ido?</p>
     </div>
+    <div class="cover-meta reveal" style="transition-delay:.5s;justify-content:center;margin-top:clamp(.5rem,1.2vw,.8rem)">
+      <span class="tag tag-acid">✓ ¿Qué lo empujó? → Exposoma</span>
+      <span class="tag tag-violet">✓ ¿En qué punto del camino? → Staging</span>
+    </div>
+  </div>
 </section>
 
-<section class="slide" id="slide-39">
-    <div class="slide-content">
-        <h1 class="reveal">Tarea: mini-historia clínica en 3 dominios + estadio tentativo</h1>
-        <div class="reveal flow-vertical" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem); gap: clamp(0.4rem, 1vw, 0.75rem);">
-            <p style="font-size: var(--body-size);">□ Elegir un paciente real de su rotación</p>
-            <p style="font-size: var(--body-size);">□ Organizar su historia en 3 dominios del exposoma</p>
-            <p style="font-size: var(--body-size);">□ Asignar estadio tentativo (0-4) + modificadores P y E</p>
-        </div>
-        <div class="reveal card" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem); border-left: 3px solid var(--color-accent);">
-            <p style="font-size: var(--small-size); color: var(--color-accent); font-weight: 600;">Preview Sesión 4</p>
-            <p style="font-size: var(--small-size); color: var(--text-secondary);">Integración: HiTOP + RDoC + Exposoma + Staging en una formulación dimensional unificada. PRISM: farmacología por dominio, no por diagnóstico.</p>
-        </div>
-        <p class="reveal source">Lectura: McGorry et al. (2025) — New diagnosis in psychiatry: beyond heuristics</p>
+<section class="slide" id="s39" data-title="Tarea">
+  <div class="domain-bar cyan"></div>
+  <div class="slide-content">
+    <p class="eyebrow reveal" style="color:var(--cyan)">Tarea + preview sesión 4</p>
+    <h1 class="reveal" style="transition-delay:.1s">Tarea: mini-historia clínica de un paciente real en 3 dominios + preview sesión 4</h1>
+    <div class="divider reveal" style="transition-delay:.2s"></div>
+    <div class="flow-vertical reveal" style="transition-delay:.3s;max-width:580px">
+      <div class="card tight" style="border-left:3px solid var(--cyan)"><p style="font-size:var(--small-size)"><strong>1.</strong> ☐ Elegir un paciente real de su rotación</p></div>
+      <div class="card tight" style="border-left:3px solid var(--amber)"><p style="font-size:var(--small-size)"><strong>2.</strong> ☐ Organizar su historia en 3 dominios del exposoma (general ext, específico ext, interno)</p></div>
+      <div class="card tight" style="border-left:3px solid var(--violet)"><p style="font-size:var(--small-size)"><strong>3.</strong> ☐ Asignar estadio tentativo (0-4) + modificadores P y E</p></div>
     </div>
+    <div class="reveal" style="transition-delay:.5s;margin-top:clamp(.4rem,.8vw,.6rem);padding:clamp(.4rem,.8vw,.6rem) clamp(.8rem,1.5vw,1.2rem);border:1px dashed var(--cyan);border-radius:6px;background:rgba(0,245,255,.04);max-width:580px">
+      <p style="font-size:var(--small-size);color:var(--cyan);font-family:var(--font-mono);font-weight:700;margin-bottom:.2rem">PREVIEW SESIÓN 4</p>
+      <p style="font-size:var(--small-size);color:var(--text-secondary)">Networks + psicofarmacología de precisión — red de síntomas con nodos centrales, y elección de fármacos por dominio dimensional. Van a integrar todo lo del bloque en un caso.</p>
+      <div style="font-family:var(--font-mono);font-size:var(--label-size);color:var(--text-muted);margin-top:.4rem;line-height:1.6">
+        <p>S1: HiTOP → estructura</p>
+        <p>S2: RDoC → mecanismo</p>
+        <p>S3: Exposoma → riesgo · Staging → trayectoria</p>
+        <p style="color:var(--cyan)">S4: Networks + psicofarmacología de precisión → integración + tratamiento</p>
+      </div>
+    </div>
+  </div>
 </section>
 
+
+</main>
 <script>
 class SlidePresentation {
-    constructor() {
-        this.slides = document.querySelectorAll('.slide');
-        this.currentSlide = 0;
-        this.setupIntersectionObserver();
-        this.setupKeyboardNav();
-        this.setupTouchNav();
-        this.setupProgressBar();
-        this.setupNavDots();
-    }
-    setupIntersectionObserver() {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    const idx = Array.from(this.slides).indexOf(entry.target);
-                    this.currentSlide = idx;
-                    this.updateProgress();
-                    this.updateDots();
-                }
-            });
-        }, { threshold: 0.5 });
-        this.slides.forEach(slide => observer.observe(slide));
-    }
-    setupKeyboardNav() {
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
-                e.preventDefault();
-                this.goTo(Math.min(this.currentSlide + 1, this.slides.length - 1));
-            } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
-                e.preventDefault();
-                this.goTo(Math.max(this.currentSlide - 1, 0));
-            }
-        });
-    }
-    setupTouchNav() {
-        let startY = 0;
-        document.addEventListener('touchstart', (e) => { startY = e.touches[0].clientY; });
-        document.addEventListener('touchend', (e) => {
-            const diff = startY - e.changedTouches[0].clientY;
-            if (Math.abs(diff) > 50) {
-                if (diff > 0) this.goTo(Math.min(this.currentSlide + 1, this.slides.length - 1));
-                else this.goTo(Math.max(this.currentSlide - 1, 0));
-            }
-        });
-    }
-    setupProgressBar() {
-        this.progressBar = document.getElementById('progressBar');
-        this.updateProgress();
-    }
-    setupNavDots() {
-        const nav = document.getElementById('navDots');
-        nav.innerHTML = '';
-        this.slides.forEach((_, i) => {
-            const dot = document.createElement('div');
-            dot.className = 'dot' + (i === 0 ? ' active' : '');
-            dot.addEventListener('click', () => this.goTo(i));
-            nav.appendChild(dot);
-        });
-        this.dots = nav.querySelectorAll('.dot');
-    }
-    goTo(idx) {
-        this.slides[idx].scrollIntoView({ behavior: 'smooth' });
-    }
-    updateProgress() {
-        const pct = ((this.currentSlide + 1) / this.slides.length) * 100;
-        this.progressBar.style.width = pct + '%';
-    }
-    updateDots() {
-        if (!this.dots) return;
-        this.dots.forEach((d, i) => d.classList.toggle('active', i === this.currentSlide));
-    }
+  constructor() {
+    this.slides = Array.from(document.querySelectorAll('.slide'));
+    this.currentSlide = 0;
+    this.navDotsContainer = document.getElementById('navDots');
+    this.progressBar = document.getElementById('progressBar');
+    this.slideCounter = document.getElementById('slideCounter');
+    this.touchStartY = 0;
+    this.wheelLocked = false;
+    this.setupIntersectionObserver();
+    this.setupKeyboardNav();
+    this.setupTouchNav();
+    this.setupWheelNav();
+    this.setupNavDots();
+    this.updateProgress();
+    this.updateCounter();
+  }
+
+  setupIntersectionObserver() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const index = this.slides.indexOf(entry.target);
+          this.currentSlide = index;
+          entry.target.classList.add('visible');
+          this.updateNavDots();
+          this.updateProgress();
+          this.updateCounter();
+        }
+      });
+    }, { threshold: 0.55 });
+    this.slides.forEach((slide) => observer.observe(slide));
+    this.slides[0]?.classList.add('visible');
+  }
+
+  setupKeyboardNav() {
+    document.addEventListener('keydown', (event) => {
+      const forwardKeys = ['ArrowDown', 'ArrowRight', 'PageDown', ' '];
+      const backKeys = ['ArrowUp', 'ArrowLeft', 'PageUp'];
+      if (forwardKeys.includes(event.key)) {
+        event.preventDefault();
+        this.goTo(this.currentSlide + 1);
+      }
+      if (backKeys.includes(event.key)) {
+        event.preventDefault();
+        this.goTo(this.currentSlide - 1);
+      }
+      if (event.key === 'Home') {
+        event.preventDefault();
+        this.goTo(0);
+      }
+      if (event.key === 'End') {
+        event.preventDefault();
+        this.goTo(this.slides.length - 1);
+      }
+    });
+  }
+
+  setupTouchNav() {
+    document.addEventListener('touchstart', (event) => {
+      this.touchStartY = event.touches[0].clientY;
+    }, { passive: true });
+    document.addEventListener('touchend', (event) => {
+      const delta = this.touchStartY - event.changedTouches[0].clientY;
+      if (Math.abs(delta) < 42) return;
+      this.goTo(this.currentSlide + (delta > 0 ? 1 : -1));
+    }, { passive: true });
+  }
+
+  setupWheelNav() {
+    document.addEventListener('wheel', (event) => {
+      if (Math.abs(event.deltaY) < 28 || this.wheelLocked) return;
+      event.preventDefault();
+      this.wheelLocked = true;
+      this.goTo(this.currentSlide + (event.deltaY > 0 ? 1 : -1));
+      window.setTimeout(() => { this.wheelLocked = false; }, 720);
+    }, { passive: false });
+  }
+
+  setupNavDots() {
+    this.navDotsContainer.innerHTML = '';
+    this.slides.forEach((slide, index) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'nav-dot' + (index === 0 ? ' active' : '');
+      button.title = slide.dataset.title || ('Slide ' + (index + 1));
+      button.setAttribute('aria-label', button.title);
+      button.addEventListener('click', () => this.goTo(index));
+      this.navDotsContainer.appendChild(button);
+    });
+  }
+
+  updateNavDots() {
+    const dots = Array.from(this.navDotsContainer.querySelectorAll('.nav-dot'));
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === this.currentSlide);
+    });
+  }
+
+  updateProgress() {
+    const maxIndex = Math.max(this.slides.length - 1, 1);
+    const progress = this.currentSlide / maxIndex;
+    this.progressBar.style.transform = 'scaleX(' + progress + ')';
+  }
+
+  updateCounter() {
+    const current = String(this.currentSlide + 1).padStart(2, '0');
+    const total = String(this.slides.length).padStart(2, '0');
+    this.slideCounter.textContent = current + ' / ' + total;
+  }
+
+  goTo(index) {
+    const targetIndex = Math.max(0, Math.min(index, this.slides.length - 1));
+    this.slides[targetIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
+
 new SlidePresentation();
 </script>
 </body>

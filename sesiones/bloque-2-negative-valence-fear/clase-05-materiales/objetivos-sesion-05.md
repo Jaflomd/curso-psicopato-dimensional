@@ -175,7 +175,7 @@
 | 1 | HiTOP general | ¿Dónde está en el mapa? | Bloom 4 |
 | 2 | RDoC general | ¿Qué sistema falla? | Bloom 4 |
 | 3 | Exposoma + Staging | ¿Por qué llegó ahí? | Bloom 4 |
-| 4 | Networks + PRISM | ¿Cómo se conecta? | Bloom 6 |
+| 4 | Networks + psicofarmacología de precisión | ¿Cómo se conecta? | Bloom 6 |
 | **5** | **RDoC NV + HiTOP Fear + AL + K10 + Metacontrol** | **¿Qué tipo de amenaza? ¿Qué dimensión? ¿Qué carga corporal? ¿Qué mecanismo cognitivo?** | **Bloom 5** |
 
 **Salto del Bloque 1 al 2:** El Bloque 1 cerró con María (caso integrador unificador). S5 abre la fase de **dominio**, donde el residente debe aplicar el aparato dimensional a un sistema biológico específico (negative valence / fear). El nivel Bloom 5 (Evaluar el placement dimensional del TOC) es el pico cognitivo de la sesión y sirve como puente al ejercicio de S6 (diseño de jerarquía ERP, Bloom 6).

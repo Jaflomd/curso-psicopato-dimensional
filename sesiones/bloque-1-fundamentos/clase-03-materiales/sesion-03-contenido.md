@@ -3,72 +3,70 @@
 **Curso:** Psicopatología Dimensional: De Categorías a Sistemas
 **Instructor:** Javier Flores
 **Duración:** 50 min | **Audiencia:** R1 Psiquiatría
-**Fecha:** [por definir]
+**Bloque:** 1 — Fundamentos
+**Estructura:** Objetivo · Contenido · Caso · Conclusiones
 
 ---
 
-## Learning Objectives
+## Objetivo
 
-- **K1** (Bloom 2 — Comprender / Miller: Sabe): Describir el framework de 3 dominios del exposoma (general externo, específico externo, interno) y enumerar ≥2 factores por dominio con magnitud de efecto
-- **K2** (Bloom 2 — Comprender / Miller: Sabe): Describir los estadios de McGorry (0 → 1a → 1b → 2 → 3-4), los modificadores P y E del Staging 2.0, y explicar por qué staging es herramienta de salud pública
-- **K3** (Bloom 3 — Aplicar / Miller: Sabe cómo): Usar el framework de 3 dominios para estructurar una historia clínica centrada en exposoma
-- **A1** (Bloom 4 — Analizar / Miller: Sabe cómo): Asignar estadio y modificadores a un caso longitudinal, justificando con ≥2 factores exposómicos de dominios distintos
-- **A2** (Bloom 4 — Analizar / Miller: Sabe cómo): Analizar cómo el estadio + exposoma modifica la intervención, integrando ≥1 framework previo (HiTOP o RDoC)
+Jaflo, el objetivo de esta sesión es que al salir del aula un R1 pueda responder, por primera vez en el curso, dos preguntas que el modelo categórico ignora sistemáticamente: **¿por qué llegó ahí?** y **¿qué tan lejos ha avanzado?**
 
----
+Hemos construido dos sesiones de mapa y mecanismo. Hoy agregamos la dimensión causal y la dimensión temporal, y — lo más importante — damos un framework operativo para que el exposoma no sea un checklist suelto sino una forma de organizar la historia clínica.
 
-## Estructura de la sesión
+**Learning Objectives en lenguaje natural:**
 
-| Min | Bloque | LO |
-|-----|--------|----|
-| 0-5 | Apertura: recap + la pregunta del riesgo y el tiempo | — |
-| 5-22 | Exposoma: framework de 3 dominios como guía de historia clínica | K1, K3 |
-| 22-35 | Staging 1.0 → 2.0: del estadio a la salud pública | K2 |
-| 35-38 | Integración: exposoma como modificador E del staging | K1, K2 |
-| 38-48 | Caso longitudinal: Tomás, 16 años | A1, A2 |
-| 48-50 | Cierre: take-home + preview sesión 4 | — |
+- **K1 — Exposoma:** Describir el framework de 3 dominios del exposoma (general externo, específico externo, interno) y enumerar ≥2 factores por dominio con magnitud de efecto. La psiquiatría lo tomó prestado de la oncología (Wild, 2005) y hoy es una herramienta clínica.
+- **K2 — Staging:** Describir los estadios de McGorry (0 → 1a → 1b → 2 → 3-4) y los modificadores P y E del Staging 2.0 (Dwyer, Ye, Nelson & McGorry, 2025), explicando por qué staging es una herramienta de salud pública, no solo clínica.
+- **K3 — Historia clínica exposómica:** Usar el framework de 3 dominios para estructurar una historia clínica centrada en exposoma. Es la primera vez en el curso que se pide *aplicar* un framework para organizar información clínica, no solo comprenderlo.
+- **A1 — Asignar estadio + modificadores:** Asignar estadio y modificadores P y E a un caso longitudinal (Tomás, 16 años), justificando con ≥2 factores exposómicos de dominios distintos.
+- **A2 — Plan proporcional:** Analizar cómo el estadio + exposoma modifica la intervención, integrando ≥1 framework previo (HiTOP o RDoC).
 
----
+**Progresión respecto a sesiones previas:**
 
-## BLOQUE 1: Apertura (0-5 min)
+| Sesión | Framework | Pregunta clínica | Nivel máximo |
+|--------|-----------|------------------|-------------|
+| 1 | HiTOP | ¿Dónde está en el mapa? | Bloom 4 |
+| 2 | RDoC | ¿Qué sistema falla? | Bloom 4 |
+| **3** | **Exposoma + Staging** | **¿Por qué llegó ahí? ¿Qué tan lejos?** | **Bloom 4** |
+| 4 | Networks + psicofarmacología de precisión | ¿Cómo se conecta? ¿Qué fármaco? | Bloom 5-6 |
 
-### Recap y la pregunta que falta
+**Recap acumulativo (1 slide con los tres logos):**
 
-> **"La sesión pasada María tenía distress alto y fear moderado. La ubicamos en HiTOP, la mapeamos en RDoC. Pero dos preguntas quedaron sin respuesta: ¿por qué llegó ahí? y ¿en qué punto del camino está?"**
-
-Breve recapitulación visual (1 slide con los tres logos):
 - **HiTOP** respondió: ¿dónde está en el mapa de la psicopatología? (estructura)
 - **RDoC** respondió: ¿qué sistemas están fallando? (mecanismo)
-- **Hoy** responderemos: ¿qué la empujó? (exposoma) y ¿qué tan lejos ha llegado? (staging)
+- **Hoy** respondemos: ¿qué lo empujó? (exposoma) y ¿qué tan lejos ha llegado? (staging)
 
-> Pregunta para los R1: "Si dos pacientes tienen el mismo perfil dimensional — digamos, distress alto con fear moderado — pero uno tiene 16 años y síntomas desde hace 3 meses, y otro tiene 40 años y 15 años de enfermedad... ¿los tratan igual?"
+> **Pregunta para los R1:** "Si dos pacientes tienen el mismo perfil dimensional — digamos, distress alto con fear moderado — pero uno tiene 16 años y síntomas desde hace 3 meses, y otro tiene 40 años y 15 años de enfermedad... ¿los tratan igual?"
+>
+> **Respuesta esperada:** No — la intensidad y tipo de intervención dependen de dónde está el paciente en su trayectoria.
 
-**Respuesta esperada:** No — la intensidad y tipo de intervención dependen de dónde está el paciente en su trayectoria.
+**María en 30 segundos — ¿qué la empujó?**
 
-**Puente:** "Exactamente. Hoy vamos a aprender dos herramientas que agregan esa dimensión temporal: el exposoma les dice *por qué* un paciente está en riesgo, y el staging les dice *qué tan lejos* ha avanzado. Y — lo más importante — les voy a dar un framework para que el exposoma no sea un checklist suelto sino una forma de organizar la historia clínica."
-
-**Conexión con lectura asignada:** "¿Leyeron el paper de McGorry et al. (2025) que les dejé la sesión pasada? Su mensaje central era que HiTOP, RDoC y Staging son un *ecosistema* — cada uno responde una pregunta distinta. Hoy vamos a agregar las dos piezas que faltan."
-
-### María en 30 segundos: ¿qué la empujó?
-
-Antes de entrar en el framework formal, un ejercicio rápido con el caso que ya conocen:
-
-> "Ya sabemos que María tiene distress alto y fear moderado (HiTOP, sesión 1). Sabemos que su rumiación cruza Cognitive Systems y Negative Valence, y que su insomnio es un hub transdiagnóstico (RDoC, sesión 2). Pero ¿qué la empujó ahí?"
+Ya sabemos que María tiene distress alto y fear moderado (HiTOP, sesión 1). Sabemos que su rumiación cruza Cognitive Systems y Negative Valence, y que su insomnio es un hub transdiagnóstico (RDoC, sesión 2). Pero ¿qué la empujó ahí?
 
 Revisar brevemente lo que ya sabemos de María:
 - Padre con alcoholismo → historia familiar + modelado de regulación disfuncional
 - Madre con "depresión nerviosa" → carga genética/familiar internalizing
 - Bullying severo en secundaria → adversidad interpersonal en ventana crítica (adolescencia)
 
-> "Esos datos ya los tenían de la sesión 1. Pero estaban sueltos — eran 'antecedentes'. Hoy los van a organizar en un framework que les dice *a qué dominio pertenecen* y *qué se puede modificar*."
+> "Esos datos ya los tenían desde la sesión 1. Pero estaban sueltos — eran 'antecedentes'. Hoy los van a organizar en un framework que les dice *a qué dominio pertenecen* y *qué se puede modificar*."
 
-**Conexión con DSM-6 (sesión 1):** "¿Recuerdan el Diagnostic Construction Model de Öngür et al.? Su primer dominio era 'Factores Contextuales' — determinantes socioeconómicos, culturales, ambientales, del desarrollo. El exposoma es exactamente eso, pero con un framework operativo de 3 dominios que les permite organizarlo sistemáticamente en la historia clínica."
+**Conexión con DSM-6 (sesión 1):** ¿Recuerdan el Diagnostic Construction Model de Öngür et al.? Su primer dominio era "Factores Contextuales" — determinantes socioeconómicos, culturales, ambientales, del desarrollo. El exposoma es exactamente eso, pero con un framework operativo de 3 dominios que les permite organizarlo sistemáticamente en la historia clínica.
+
+**Puente:** "Hoy vamos a aprender dos herramientas que agregan esa dimensión temporal: el exposoma les dice *por qué* un paciente está en riesgo, y el staging les dice *qué tan lejos* ha avanzado. Y les voy a dar un framework para que el exposoma no sea un checklist suelto sino una forma de organizar la historia clínica."
+
+**Conexión con lectura asignada:** "¿Leyeron el paper de McGorry et al. (2025) que les dejé la sesión pasada? Su mensaje central era que HiTOP, RDoC y Staging son un *ecosistema* — cada uno responde una pregunta distinta. Hoy vamos a agregar las dos piezas que faltan."
 
 ---
 
-## BLOQUE 2: Exposoma — Framework de 3 Dominios (5-22 min) → K1, K3
+## Contenido
 
-### ¿Qué es el exposoma?
+Dos bloques conceptuales que se conectan al final: el exposoma organiza el riesgo, el staging organiza la trayectoria. La integración cierra el bucle.
+
+### Bloque 1 — Exposoma: el framework de 3 dominios como guía de historia clínica (K1, K3)
+
+#### ¿Qué es el exposoma?
 
 El término fue acuñado por Christopher Wild (2005) en epidemiología del cáncer: la totalidad de exposiciones no-genéticas que una persona acumula desde la concepción hasta la muerte. En psiquiatría, el exposoma es *todo lo que no es genoma*.
 
@@ -76,13 +74,9 @@ El término fue acuñado por Christopher Wild (2005) en epidemiología del cánc
 
 El exposoma se divide en 3 dominios (Wild, 2012; Barzilay & Jeste, 2026; Dallere et al., 2025). Esta división no es solo teórica — les va a servir para organizar la historia clínica.
 
-### Los 3 dominios del exposoma
-
 #### DOMINIO 1: Exposoma general externo
 
 Son las condiciones contextuales amplias que rodean al paciente. No siempre son directamente medibles, pero moldean todo lo demás.
-
-**Qué incluye:**
 
 **Factores socioeconómicos:**
 - Funciona como amplificador transversal: pobreza → mayor exposición a ACEs, urbanicidad forzada, menor acceso a intervención temprana, mayor discriminación.
@@ -97,7 +91,7 @@ Son las condiciones contextuales amplias que rodean al paciente. No siempre son 
 - Concepto de "urban exposome": cómo el diseño urbano modela fragilidad y vulnerabilidad poblacional (Andrianou et al., 2021).
 
 **Estrés, adversidad y trauma:**
-	- ACE Study (Felitti et al., 1998) como punto de partida, pero la evidencia ha crecido masivamente.
+- ACE Study (Felitti et al., 1998) como punto de partida, pero la evidencia ha crecido masivamente.
 - Meta-análisis Varese et al. (2012): OR = 2.78 (IC95% 2.34-3.31) para psicosis. Riesgo atribuible poblacional = 33%.
 - Relación dosis-respuesta (Flinn et al., 2025): 1 ACE → OR 1.76; 3 ACEs → OR 3.18; 5+ ACEs → OR 6.46 (IC95% 4.37-9.53).
 - Dallere et al. (2025): el estrés prenatal materno altera conectividad de la corteza prefrontal del offspring en la adultez (Tuulari et al., 2024; Turk et al., 2023). Traumas en edades tempranas producen consecuencias más severas que en edades tardías (Vythilingam et al., 2002).
@@ -114,13 +108,9 @@ Son las condiciones contextuales amplias que rodean al paciente. No siempre son 
 
 > **Regla para la historia clínica:** El exposoma general externo se explora con preguntas sobre *contexto de vida*: "¿Dónde creciste? ¿Cómo era tu barrio? ¿Cuál era la situación económica de tu familia? ¿Hubo violencia, abandono, pérdidas? ¿Experiencias de discriminación?"
 
----
-
 #### DOMINIO 2: Exposoma específico externo
 
 Son exposiciones directas, cuantificables, que el paciente encuentra en su vida cotidiana. Aquí están los factores más modificables — y por tanto los más accionables clínicamente.
-
-**Qué incluye:**
 
 **Contaminación del aire y material particulado (PM):**
 - PM2.5 (≤2.5μm) puede cruzar la barrera hematoencefálica (BHE) e internalizarse en mitocondrias.
@@ -165,13 +155,9 @@ Son exposiciones directas, cuantificables, que el paciente encuentra en su vida 
 
 > **Regla para la historia clínica:** El exposoma específico externo se explora con preguntas sobre *hábitos y ambiente directo*: "¿Qué comes normalmente? ¿Haces ejercicio? ¿Cómo duermes? ¿Usas alguna sustancia — alcohol, tabaco, marihuana, otra? ¿Cuántas horas de pantalla? ¿Estás expuesto a contaminación, ruido, químicos en tu trabajo?"
 
----
-
 #### DOMINIO 3: Exposoma interno
 
 Es la huella biológica que dejan las exposiciones externas en el organismo. Es donde el ambiente "se mete bajo la piel" — el puente entre exposición y enfermedad.
-
-**Qué incluye:**
 
 **Modificaciones epigenéticas:**
 - Dallere et al. (2025): las exposiciones ambientales pueden causar cambios permanentes vía mutagénesis y epigénesis — metilación de DNA, modificaciones de histonas, miRNAs.
@@ -195,7 +181,7 @@ Es la huella biológica que dejan las exposiciones externas en el organismo. Es 
 
 > **Regla para la historia clínica:** El exposoma interno generalmente no se explora con preguntas sino con *mediciones y razonamiento clínico*: "¿Hay marcadores inflamatorios elevados? ¿Historia familiar de respuesta al estrés? ¿Evidencia de desregulación del eje HPA (cortisol)? ¿Factores que sugieran alteración de microbioma (problemas GI crónicos, uso prolongado de antibióticos)?" Muchos de estos no están disponibles en la consulta diaria — pero el framework les enseña a *pensar* en la cascada biológica aunque no puedan medirla.
 
-### Tabla resumen: 3 dominios como guía de historia clínica → K3
+#### Tabla resumen: 3 dominios como guía de historia clínica → K3
 
 | Dominio | Qué explora | Cómo se pregunta | Ejemplo de factor | OR/RR |
 |---------|-------------|------------------|-------------------|-------|
@@ -212,7 +198,7 @@ Es la huella biológica que dejan las exposiciones externas en el organismo. Es 
 
 > **Pausa:** "Miren estos números. No son correlaciones débiles — son tamaños de efecto comparables a los que justifican intervenciones en medicina interna. Un OR de 2.78 para ACEs es similar al riesgo de HTA sobre enfermedad coronaria. Y lo más importante: a diferencia del genoma, el exposoma es *modificable*."
 
-### Exposoma → RDoC: cómo las exposiciones activan los sistemas de sesión 2
+#### Exposoma → RDoC: cómo las exposiciones activan los sistemas de sesión 2
 
 Conexión explícita con lo aprendido en sesión 2. No es solo que el exposoma "causa" enfermedad — es que cada exposición activa *sistemas RDoC específicos*:
 
@@ -227,27 +213,27 @@ Conexión explícita con lo aprendido en sesión 2. No es solo que el exposoma "
 
 > **Punto pedagógico:** "No estamos agregando capas por agregar. El exposoma les dice *qué entra al sistema*. RDoC les dice *qué sistema se afecta*. HiTOP les dice *dónde se manifiesta en el mapa*. Son tres niveles de la misma historia."
 
-### La lógica de cascada entre dominios
+#### La lógica de cascada entre dominios
 
 Las exposiciones no operan en silos. Dallere et al. (2025) enfatizan que los 3 dominios están dinámicamente interconectados:
 
 ```
 GENERAL EXTERNO          ESPECÍFICO EXTERNO          INTERNO
 (contexto)               (exposiciones directas)     (biología)
-                                                     
+                                                      
 Pobreza ──────────────► Peor dieta ──────────────► Neuroinflamación
          ──────────────► Mayor contaminación ─────► Estrés oxidativo
          ──────────────► Menor ejercicio ─────────► Menor BDNF
          ──────────────► Peor sueño ──────────────► Desregulación HPA
-                                                     
+                                                      
 Discriminación ────────► Estrés social crónico ──► Metilación alterada
-                                                     ↓
-                                                   Neuroprogresión
+                                                      ↓
+                                                    Neuroprogresión
 ```
 
 > **Punto pedagógico:** "Cuando preguntan por contexto de vida (general externo), están identificando las condiciones que *determinan* las exposiciones directas (específico externo), que a su vez producen los cambios biológicos (interno) que impulsan la psicopatología. Es una cadena causal, no una lista."
 
-### Periodos sensibles: el exposoma no pesa igual siempre
+#### Periodos sensibles: el exposoma no pesa igual siempre
 
 Barzilay & Jeste (2026) distinguen dos teorías clave:
 
@@ -261,19 +247,15 @@ Barzilay & Jeste (2026) distinguen dos teorías clave:
 
 > **Conexión con RDoC (sesión 2):** "¿Recuerdan que el sistema más antiguo es el de amenaza (Negative Valence)? Pues el exposoma activa desproporcionadamente ese sistema — ACEs, discriminación, pobreza, todos activan amenaza sostenida en ventanas donde el cerebro es más vulnerable."
 
----
+### Bloque 2 — Staging Clínico: de McGorry 1.0 a salud pública (K2)
 
-## BLOQUE 3: Staging Clínico — De McGorry 1.0 a Salud Pública (22-35 min) → K2
-
-### La analogía que abre la puerta
+#### La analogía que abre la puerta
 
 > **"En oncología, nadie trata igual un cáncer estadio I que un estadio IV. La misma histología, el mismo órgano — pero el tratamiento es completamente distinto. ¿Por qué en psiquiatría tratamos igual un primer episodio que una enfermedad de 15 años de evolución?"**
 
 El staging clínico psiquiátrico fue propuesto por McGorry et al. (2006) y ha evolucionado en los últimos 30 años. Dwyer et al. (2025) trazan la historia completa y argumentan que podría hacer por la salud mental lo que el TNM hizo por el cáncer.
 
-### Staging 1.0: Los estadios (McGorry et al., 2006)
-
-Presentar con diagrama visual (timeline horizontal):
+#### Staging 1.0: Los estadios (McGorry et al., 2006)
 
 | Estadio | Definición | Quién está aquí | Qué se hace |
 |---------|-----------|-----------------|-------------|
@@ -295,7 +277,7 @@ El grupo de McGorry operacionalizó los estadios tempranos con instrumentos psic
 | Personalidad borderline | SCID-5-PD (≥2 síntomas, ≥6 meses) | BPD | 8-10% |
 | Psicosis | CAARMS subumbral | Psicosis | 4-13% |
 
-### Evidencia de Staging 1.0
+#### Evidencia de Staging 1.0
 
 **Transición entre estadios (Dwyer et al., 2025):**
 - Stage 1a → 1b: riesgo 2-3x de progresión a Stage 2
@@ -308,7 +290,7 @@ El grupo de McGorry operacionalizó los estadios tempranos con instrumentos psic
 - 2024: 170 sitios en Australia integran terapias digitales; modelo adoptado en 12 países
 - Ejemplo global: The Being Initiative opera en 12 países prioritarios (Colombia, Ghana, India, Romania, Vietnam)
 
-### Staging 2.0: Modificadores P y E (Scott et al., 2024; Dwyer et al., 2025)
+#### Staging 2.0: Modificadores P y E (Scott et al., 2024; Dwyer et al., 2025)
 
 Staging 1.0 fue un avance, pero tenía limitaciones:
 - Los parámetros más allá de la psicopatología primaria (cognición, suicidalidad) confundían a los expertos al clasificar
@@ -332,7 +314,7 @@ El TNM de cáncer tiene 3 parámetros principales (Tumor, Node, Metastasis), 6 s
 
 > **Ejemplo:** Paciente en Stage 1b (síndrome atenuado depresivo) + P1 (déficit cognitivo leve) + E2 (cannabis activo + pobreza extrema). No es lo mismo que Stage 1b sin modificadores — la intervención debe ser diferente.
 
-### Staging como herramienta de salud pública (Dwyer et al., 2025)
+#### Staging como herramienta de salud pública (Dwyer et al., 2025)
 
 Aquí viene la dimensión que diferencia staging de un mero instrumento clínico:
 
@@ -363,7 +345,7 @@ Aquí viene la dimensión que diferencia staging de un mero instrumento clínico
 | Largo | Investigar causas de progresión entre estadios |
 | Largo | Investigar prevención de progresión |
 
-### Evidencia por trastorno — ¿Staging funciona más allá de psicosis? (Clarke et al., 2025)
+#### Evidencia por trastorno — ¿Staging funciona más allá de psicosis? (Clarke et al., 2025)
 
 Clarke et al. (2025) revisaron 71 estudios (2012-2023). La evidencia es desigual:
 
@@ -379,19 +361,17 @@ Clarke et al. (2025) revisaron 71 estudios (2012-2023). La evidencia es desigual
 
 > **Punto honesto para los R1:** "La evidencia empírica para staging es desigual. Esquizofrenia y bipolar tienen más datos. Pero el crecimiento es sostenido — de 78 papers en 2012 a 71 papers *solo* en la última década. El campo se está moviendo."
 
-### La hipótesis de diferenciación del p-factor (Dwyer et al., 2025)
+#### La hipótesis de diferenciación del p-factor (Dwyer et al., 2025)
 
 Conectar con sesión 1 (p-factor de Caspi):
 
 - **Hipótesis:** En estadios tempranos, los síntomas son difusos e inespecíficos (p elevado, sin especificidad). A medida que avanza el staging, se *diferencian* en dimensiones específicas (internalización, externalización, psicosis).
-- **Evidencia:** Mixta. Cross-sectional: adultos muestran subgrupos más separables. Longitudinal: la comorbididad también *aumenta* con el tiempo (mutualismo dinámico).
+- **Evidencia:** Mixta. Cross-sectional: adultos muestran subgrupos más separables. Longitudinal: la comorbilidad también *aumenta* con el tiempo (mutualismo dinámico).
 - **Implicación clínica:** En Stage 1a/1b, no intenten forzar un diagnóstico específico — la trayectoria es *pluripotente*. Un adolescente en 1b puede ir hacia psicosis, bipolar, depresión severa o personalidad.
 
----
+### Bloque 3 — Integración: exposoma como modificador E del Staging 2.0 (K1, K2)
 
-## BLOQUE 4: Integración — Exposoma como Modificador E (35-38 min) → K1, K2
-
-### La convergencia natural
+#### La convergencia natural
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -422,9 +402,11 @@ Conectar con sesión 1 (p-factor de Caspi):
 
 ---
 
-## BLOQUE 5: Caso Longitudinal — Tomás (38-48 min) → A1, A2
+## Caso
 
-### Primero: María en 3 dominios (1 min — el facilitador lo presenta)
+Jaflo, aquí cerramos el arco parcial de María con el framework de hoy (1 min) y pasamos al caso longitudinal propio de esta sesión: Tomás, 16 años. El caso de Tomás es el laboratorio donde los R1 aplican exposoma + staging por primera vez.
+
+### María en 3 dominios — cierre del arco parcial (1 min, el facilitador lo presenta)
 
 Antes de pasar al caso nuevo, cerrar el arco de María con el framework de hoy:
 
@@ -438,15 +420,7 @@ Antes de pasar al caso nuevo, cerrar el arco de María con el framework de hoy:
 
 **Staging de María:** Stage 2 (primer episodio depresivo mayor que cumple criterios). P1 (rumiación como posible indicador de deterioro cognitivo funcional). E1 (adversidad temprana, insomnio crónico, dieta disregulada).
 
-### Instrucciones (1 min)
-
-"Ahora van a hacer lo mismo con un caso nuevo. Tienen 5 minutos para: (1) mapear el exposoma de Tomás en los 3 dominios, (2) asignar un estadio + modificadores P y E, (3) proponer un plan proporcional al estadio."
-
-### El caso (entregado en papel o proyectado)
-
----
-
-**Tomás, 16 años. Lima, Perú.**
+### Tomás, 16 años — caso longitudinal de la sesión
 
 **Motivo de consulta:** Referido por orientador escolar por aislamiento progresivo y baja de notas en los últimos 4 meses.
 
@@ -463,16 +437,49 @@ Antes de pasar al caso nuevo, cerrar el arco de María con el framework de hoy:
 **Examen mental (resumen):**
 - Afecto aplanado. Contacto visual pobre. No hay delirios estructurados ni alucinaciones. Ideas de referencia parciales ("siento que la gente me mira") que el paciente cuestiona espontáneamente. Sin alteración del curso del pensamiento. Insight preservado.
 
+### Template de mini-historia exposómica
+
+Antes de lanzar a los R1 al ejercicio, entregar este template en papel o proyectado:
+
 ---
 
-### Trabajo individual (5 min)
+**MINI-HISTORIA EXPOSÓMICA — TEMPLATE**
+*Curso: Psicopatología Dimensional | Sesión 3: Exposoma y Staging*
+
+**Paciente:** ____________________ | **Edad:** ___
+
+**1. EXPOSOMA — MAPEAR EN 3 DOMINIOS**
+- **General externo** (contexto de vida: ¿dónde creció? ¿SES? ¿migración? ¿discriminación? ¿adversidad?):
+  ___
+- **Específico externo** (hábitos y ambiente directo: dieta, ejercicio, sueño, sustancias, pantallas, contaminación, ruido):
+  ___
+- **Interno** (biología inferida: eje HPA, inflamación, microbioma, epigenética):
+  ___
+
+**2. STAGING — ASIGNAR**
+- **Estadio** (0 / 1a / 1b / 2 / 3 / 4):
+- **Modificador P** (0 / 1 / 2 — cognición, suicidalidad, pronóstico):
+- **Modificador E** (0 / 1 / 2 — comorbilidad física, sustancias, exposoma):
+- **Justificación** (≥2 factores exposómicos de dominios distintos):
+  ___
+
+**3. PLAN PROPORCIONAL AL ESTADIO**
+- ¿Qué干预ención es proporcional a este estadio? (prevenir / monitorear / tratar / rehabilitar)
+- ¿Qué dominio del exposoma es modificable ahora?
+- ¿Qué NO haría en este estadio?
+
+---
+
+### Trabajo individual (5 min) — A1, A2
+
+> "Ahora van a hacer lo mismo con Tomás. Tienen 5 minutos para: (1) mapear el exposoma de Tomás en los 3 dominios, (2) asignar un estadio + modificadores P y E, (3) proponer un plan proporcional al estadio. Usen el template."
 
 Los R1 escriben:
 1. **Exposoma en 3 dominios** (≥2 factores por dominio)
 2. **Estadio + modificadores P y E**
 3. **Plan proporcional al estadio**
 
-### Guía del facilitador — Respuestas esperadas
+### Guía del facilitador — Respuestas esperadas para Tomás
 
 **Exposoma de Tomás en 3 dominios:**
 
@@ -518,21 +525,23 @@ Los R1 escriben:
 
 ---
 
-## BLOQUE 6: Cierre (48-50 min)
+## Conclusiones
+
+Jaflo, el cierre tiene tres funciones: fijar el take-home, mapear lo construido en el bloque 1 hasta ahora y abrir la sesión 4.
 
 ### Take-Home Message
 
 > **"El exposoma no es un checklist — es un mapa de 3 dominios que organiza tu historia clínica y te muestra qué es modificable. El staging no es solo un instrumento clínico — es una herramienta de salud pública que dice cuánto intervenir. Juntos: el exposoma te dice por qué llegó ahí y qué puedes cambiar; el staging te dice qué tan lejos ha ido y cuánto empujar."**
 
-### Mapa acumulativo del bloque 1
+### Mapa acumulativo del bloque 1 (S1 + S2 + S3)
 
 ```
 Sesión 1: HiTOP     → ¿DÓNDE está en el mapa?          (estructura)
 Sesión 2: RDoC      → ¿QUÉ sistema falla?               (mecanismo)
 Sesión 3: Exposoma  → ¿POR QUÉ llegó ahí?               (riesgo — 3 dominios)
-          Staging   → ¿QUÉ TAN LEJOS ha ido?             (trayectoria — 2.0 con P+E)
-Sesión 4: Networks + PRISM → ¿CÓMO se conecta todo?      (integración)
-                             ¿QUÉ fármaco, por qué?       (tratamiento)
+           Staging   → ¿QUÉ TAN LEJOS ha ido?            (trayectoria — 2.0 con P+E)
+Sesión 4: Networks + psicofarmacología de precisión → ¿CÓMO se conecta todo?  (integración)
+                              ¿QUÉ fármaco, por qué?     (tratamiento)
 ```
 
 ### María a través de las 3 sesiones — tabla integradora
@@ -549,9 +558,9 @@ Sesión 4: Networks + PRISM → ¿CÓMO se conecta todo?      (integración)
 
 ### Preview sesión 4
 
-"La próxima sesión es la última del bloque de fundamentos. Vamos a ver Network Theory — que los síntomas no son una lista sino una red con nodos centrales — y PRISM, una forma de elegir fármacos por dominio dimensional, no por diagnóstico. Y al final, van a integrar todo lo del bloque en un caso."
+"La próxima sesión es la última del bloque de fundamentos. Vamos a ver Network Theory — que los síntomas no son una lista sino una red con nodos centrales — y psicofarmacología de precisión, una forma de elegir fármacos por dominio dimensional, no por diagnóstico. Y al final, van a integrar todo lo del bloque en un caso."
 
-### Tarea breve (opcional, 5 min fuera de clase)
+### Tarea breve (5 min fuera de clase)
 
 "Hagan una mini-historia clínica de un paciente real usando los 3 dominios del exposoma. No necesita ser completa — solo organicen lo que ya saben del paciente en general externo, específico externo, e interno. Tráiganla a sesión 4."
 

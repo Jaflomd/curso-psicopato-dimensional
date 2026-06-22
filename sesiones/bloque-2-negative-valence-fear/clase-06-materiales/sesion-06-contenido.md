@@ -486,7 +486,7 @@ Cada residente elige un paciente **real** (no hipotetico) del subfactor fear. Si
 ### Conexiones bidireccionales
 
 - **Hacia atras (S5):** El constructo RDoC y nivel HiTOP provienen del triple mapeo de S5 (A1). El mecanismo transdiagnostico (persistence bias) es lo que la PR busca interrumpir.
-- **Hacia adelante (S7):** S7 tomara el **mismo paciente** y preguntara: "Necesita farmaco ademas de ERP? Cual dominio PRISM? Cuando farmaco, cuando terapia, cuando ambos?"
+- **Hacia adelante (S7):** S7 tomara el **mismo paciente** y preguntara: "Necesita farmaco ademas de ERP? Cual dominio psicofarmacología de precisión? Cuando farmaco, cuando terapia, cuando ambos?"
 
 ---
 
@@ -506,18 +506,18 @@ Cada residente elige un paciente **real** (no hipotetico) del subfactor fear. Si
 ### Tarea para S7
 
 1. **Completar** la jerarquia de exposicion para su paciente
-2. **Pensar:** "Este paciente necesita farmaco ademas de ERP? Cual dominio PRISM?"
+2. **Pensar:** "Este paciente necesita farmaco ademas de ERP? Cual dominio psicofarmacología de precisión?"
 3. **Lectura sugerida:** Skapinakis et al. 2016. NMA de intervenciones en TOC. *Lancet Psychiatry*.
 
 ### Preview S7
 
-> S7 cierra el bloque fear con **farmacologia PRISM**: SRI, benzodiacepinas, glutamato. La pregunta central sera: **por que las benzodiacepinas pueden sabotear el ERP** — y la respuesta viene directamente del modelo inhibitorio que aprendieron hoy (las BDZ funcionan como safety behaviors farmacologicas que impiden la consolidacion de la extincion). Traigan su caso — lo van a usar.
+> S7 cierra el bloque fear con **farmacologia de precisión**: SRI, benzodiacepinas, glutamato. La pregunta central sera: **por que las benzodiacepinas pueden sabotear el ERP** — y la respuesta viene directamente del modelo inhibitorio que aprendieron hoy (las BDZ funcionan como safety behaviors farmacologicas que impiden la consolidacion de la extincion). Traigan su caso — lo van a usar.
 
 ---
 
 ## Augmentacion farmacologica de la exposicion (material de referencia para el instructor — no para clase)
 
-> Este material se profundiza en S7 (PRISM). Se incluye aqui como referencia para el instructor en caso de preguntas durante S6.
+> Este material se profundiza en S7 (psicofarmacología de precisión). Se incluye aqui como referencia para el instructor en caso de preguntas durante S6.
 
 ### Benzodiacepinas: el problema de la safety behavior farmacologica
 

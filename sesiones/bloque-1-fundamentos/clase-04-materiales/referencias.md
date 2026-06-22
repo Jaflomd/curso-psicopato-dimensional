@@ -78,7 +78,7 @@
 
 ---
 
-## Farmacología dimensional / NbN / PRISM
+## Farmacología dimensional / NbN / psicofarmacología de precisión
 
 33. **Nutt DJ, Blier P.** Neuroscience-based Nomenclature (NbN) for Clinical Psychopharmacology and Neuroscience. *Int J Neuropsychopharmacol*. 2016;19(8):pyw066. doi:10.1093/ijnp/pyw066
 34. **Stahl SM.** *Stahl's Essential Psychopharmacology*. 5th ed. Cambridge University Press; 2021

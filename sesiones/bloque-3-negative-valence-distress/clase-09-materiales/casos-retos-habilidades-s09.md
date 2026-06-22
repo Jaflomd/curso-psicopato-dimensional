@@ -30,7 +30,7 @@
 | **RDoC**         | Sustained Threat (agudo) + Arousal/Regulatory Systems                                                                          |
 | **Circuitos**    | ↑ SNS / locus coeruleus–HPA; **dlPFC offline** → TIPSS busca ↑ vagal, ↓ CeA-driven arousal, re-entrar red salience al presente |
 | **Error típico** | Disputar "no debería escribirle" con arousal 9/10                                                                              |
-| **Eval 30 s**    | Arousal pre/post **−2 pts** · ¿postergó escribir **5–10 min**? · ¿nombró emoción ≠ «explosión»? → **3/3** = TIPSS OK          |
+| **Eval 30 s**    | Arousal pre/post **−2 pts** · ¿postergó escribir **5–10 min**? · ¿nombró emoción ≠ «explosión»? → **3/3** = TIPSS OK           |
 
 ---
 
