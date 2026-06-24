@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Psicopatología Dimensional · Sesión 18: Percepción</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800;900&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet"/>
+<style>
+/* === RESET & CUSTOM PROPERTIES === */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --bg-primary: #141518;
+  --bg-panel: #1a1b22;
+  --bg-card: #1e2028;
+  --text-primary: #dddad5;
+  --text-secondary: #8a8780;
+  --text-muted: #5a5850;
+  --accent: #c8503c;
+  --accent-glow: rgba(200, 80, 60, 0.15);
+  --accent-soft: rgba(200, 80, 60, 0.08);
+  --accent-blue: #4a7fb5;
+  --accent-green: #5a9a6a;
+  --accent-amber: #b8963c;
+  --accent-violet: #8a6ab5;
+  --white: #f0ede8;
+
+  --font-display: 'Sora', system-ui, sans-serif;
+  --font-body: 'Atkinson Hyperlegible', system-ui, sans-serif;
+
+  --title-size: clamp(2rem, 5vw, 4rem);
+  --h2-size: clamp(1.5rem, 3.5vw, 2.8rem);
+  --h3-size: clamp(1.1rem, 2.2vw, 1.6rem);
+  --body-size: clamp(0.75rem, 1.3vw, 1.05rem);
+  --small-size: clamp(0.65rem, 1vw, 0.85rem);
+  --label-size: clamp(0.55rem, 0.85vw, 0.72rem);
+
+  --slide-padding: clamp(1.5rem, 4vw, 4rem);
+  --content-gap: clamp(0.5rem, 1.5vw, 1.5rem);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* === VIEWPORT BASE (mandatory) === */
+html, body { height: 100%; overflow-x: hidden; }
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+
+.slide {
+  width: 100vw; height: 100vh; height: 100dvh;
+  overflow: hidden; scroll-snap-align: start;
+  display: flex; position: relative;
+  background: var(--bg-primary);
+  font-family: var(--font-body);
+  color: var(--text-primary);
+}
+
+.slide-content {
+  flex: 1; display: flex; flex-direction: column;
+  justify-content: center;
+  max-height: 100%; overflow: hidden;
+  padding: var(--slide-padding);
+}
+
+img, .image-container {
+  max-width: 100%;
+  max-height: min(50vh, 400px);
+  object-fit: contain;
+}
+
+/* === TYPOGRAPHY === */
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.15; }
+h1 { font-size: var(--title-size); }
+h2 { font-size: var(--h2-size); }
+h3 { font-size: var(--h3-size); }
+p, li { font-size: var(--body-size); line-height: 1.55; color: var(--text-secondary); }
+em { color: var(--accent); font-style: italic; }
+strong { color: var(--text-primary); font-weight: 600; }
+
+/* === ANIMATIONS === */
+.reveal {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
+}
+.slide.visible .reveal { opacity: 1; transform: translateY(0); }
+.reveal:nth-child(2) { transition-delay: 0.1s; }
+.reveal:nth-child(3) { transition-delay: 0.2s; }
+.reveal:nth-child(4) { transition-delay: 0.3s; }
+.reveal:nth-child(5) { transition-delay: 0.4s; }
+.reveal:nth-child(6) { transition-delay: 0.5s; }
+.reveal:nth-child(7) { transition-delay: 0.6s; }
+
+.reveal-scale {
+  opacity: 0; transform: scale(0.85);
+  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+}
+.slide.visible .reveal-scale { opacity: 1; transform: scale(1); }
+
+/* === LAYOUT HELPERS === */
+.split { display: flex; height: 100%; }
+.split-left { flex: 0 0 48%; display: flex; flex-direction: column; justify-content: center; padding: var(--slide-padding); position: relative; z-index: 1; }
+.split-right { flex: 1; display: flex; align-items: center; justify-content: center; background: var(--bg-panel); position: relative; overflow: hidden; }
+.centered { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: var(--slide-padding); height: 100%; }
+
+.eyebrow {
+  font-size: var(--label-size); color: var(--accent);
+  letter-spacing: 0.3em; text-transform: uppercase; font-weight: 600;
+  margin-bottom: clamp(0.5rem, 1.5vh, 1.2rem);
+  font-family: var(--font-body);
+}
+.divider { width: 40px; height: 2px; background: var(--accent); margin: clamp(0.8rem, 1.5vh, 1.5rem) 0; }
+.source { font-size: var(--label-size); color: var(--text-muted); margin-top: auto; padding-top: clamp(0.5rem, 1vh, 1rem); }
+
+/* === SECTION HEADERS === */
+.section-slide { background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-panel) 100%); }
+.section-slide .section-number {
+  font-family: var(--font-display); font-size: clamp(4rem, 12vw, 10rem);
+  color: var(--accent-soft); position: absolute; top: clamp(1rem, 3vh, 2rem);
+  right: clamp(2rem, 5vw, 4rem); line-height: 1; font-weight: 600;
+}
+
+/* === DATA HIGHLIGHT === */
+.hero-number {
+  font-family: var(--font-display); font-size: clamp(5rem, 15vw, 12rem);
+  color: var(--accent); line-height: 1; font-weight: 600;
+}
+.hero-label {
+  font-size: var(--small-size); color: var(--text-muted);
+  margin-top: clamp(0.3rem, 0.8vh, 0.6rem); letter-spacing: 0.08em;
+}
+
+/* === QUOTE === */
+.quote {
+  font-family: var(--font-display); font-size: clamp(1.1rem, 2.2vw, 1.7rem);
+  font-style: italic; color: var(--text-primary); line-height: 1.5;
+  border-left: 3px solid var(--accent); padding-left: clamp(1rem, 2vw, 1.5rem);
+  max-width: 700px;
+}
+.quote-author { font-size: var(--small-size); color: var(--text-muted); font-style: normal; margin-top: 0.5rem; font-family: var(--font-body); }
+
+/* === TABLES === */
+.data-table { width: 100%; border-collapse: collapse; font-size: var(--body-size); }
+.data-table th {
+  text-align: left; font-weight: 600; color: var(--accent);
+  font-size: var(--label-size); letter-spacing: 0.1em; text-transform: uppercase;
+  padding: clamp(0.3rem, 0.6vh, 0.5rem) clamp(0.5rem, 1vw, 1rem);
+  border-bottom: 1px solid rgba(200,80,60,0.2);
+}
+.data-table td {
+  padding: clamp(0.25rem, 0.5vh, 0.4rem) clamp(0.5rem, 1vw, 1rem);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: var(--text-secondary);
+}
+.data-table td:first-child { color: var(--text-primary); font-weight: 500; }
+
+/* === BAR CHARTS (CSS) === */
+.bar-chart { display: flex; flex-direction: column; gap: clamp(0.3rem, 0.6vh, 0.5rem); width: 100%; }
+.bar-row { display: flex; align-items: center; gap: clamp(0.5rem, 1vw, 0.8rem); }
+.bar-label { flex: 0 0 clamp(100px, 18vw, 180px); font-size: var(--small-size); color: var(--text-secondary); text-align: right; }
+.bar-track { flex: 1; height: clamp(16px, 2.5vh, 24px); background: rgba(255,255,255,0.04); border-radius: 3px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 3px; transition: width 1.2s var(--ease-out-expo); }
+.slide.visible .bar-fill { width: var(--bar-width); }
+.bar-fill:not(.slide.visible .bar-fill) { width: 0; }
+.bar-value { flex: 0 0 clamp(40px, 5vw, 60px); font-size: var(--small-size); color: var(--text-muted); }
+
+/* === CARDS === */
+.card-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(0.5rem, 1vw, 0.8rem); }
+.card {
+  background: var(--bg-card); border-radius: 8px;
+  padding: clamp(0.6rem, 1.2vw, 1rem);
+  border: 1px solid rgba(255,255,255,0.04);
+}
+.card h4 { font-family: var(--font-display); font-size: var(--body-size); color: var(--text-primary); font-weight: 400; margin-bottom: 0.3rem; }
+.card p { font-size: var(--small-size); color: var(--text-muted); line-height: 1.4; }
+
+/* === MODEL GRID === */
+.model-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: clamp(0.4rem, 0.8vw, 0.6rem); max-width: min(90vw, 800px); width: 100%; }
+.model-box {
+  background: var(--bg-card); border-radius: 8px;
+  padding: clamp(0.6rem, 1.2vw, 1rem);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.model-box h4 { font-family: var(--font-body); font-size: var(--label-size); color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600; margin-bottom: 0.4rem; }
+.model-box ul { list-style: none; }
+.model-box li { font-size: var(--small-size); color: var(--text-muted); padding: 0.1rem 0; }
+.model-box li::before { content: '·'; color: var(--accent); margin-right: 0.4rem; }
+
+/* === PYRAMID === */
+.pyramid { display: flex; flex-direction: column; align-items: center; gap: clamp(0.2rem, 0.4vh, 0.3rem); width: 100%; }
+.pyramid-level {
+  display: flex; align-items: center; gap: clamp(0.4rem, 0.8vw, 0.6rem);
+  padding: clamp(0.3rem, 0.5vh, 0.5rem) clamp(0.8rem, 1.5vw, 1.2rem);
+  border-radius: 6px; background: var(--bg-card); border: 1px solid rgba(255,255,255,0.04);
+  font-size: var(--small-size);
+}
+.pyramid-level .level-tag { font-size: var(--label-size); color: var(--accent); font-weight: 600; min-width: clamp(20px, 3vw, 35px); }
+.pyramid-level .level-name { color: var(--text-primary); font-weight: 500; }
+.pyramid-level .level-examples { color: var(--text-muted); }
+
+/* === PROGRESS BAR === */
+.progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: var(--accent); z-index: 9999; transition: width 0.3s ease; }
+
+/* === NAV DOTS === */
+.nav-dots {
+  position: fixed; right: clamp(0.5rem, 1.5vw, 1.2rem); top: 50%;
+  transform: translateY(-50%); z-index: 999; display: flex; flex-direction: column;
+  gap: clamp(4px, 0.6vh, 8px);
+}
+.nav-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.15);
+  cursor: pointer; transition: all 0.3s ease; border: none; padding: 0;
+}
+.nav-dot.active { background: var(--accent); transform: scale(1.4); }
+.nav-dot:hover { background: rgba(255,255,255,0.3); }
+
+/* === RESPONSIVE === */
+@media (max-height: 700px) {
+  :root { --slide-padding: clamp(0.75rem, 3vw, 2rem); --title-size: clamp(1.5rem, 4.5vw, 2.8rem); --h2-size: clamp(1.2rem, 3vw, 2rem); }
+}
+@media (max-height: 600px) {
+  :root { --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem); --body-size: clamp(0.65rem, 1.1vw, 0.9rem); }
+  .nav-dots, .decorative { display: none; }
+}
+@media (max-height: 500px) {
+  :root { --title-size: clamp(1rem, 3.5vw, 1.5rem); --h2-size: clamp(0.9rem, 2.5vw, 1.25rem); }
+}
+@media (max-width: 768px) {
+  .split { flex-direction: column; }
+  .split-left { flex: 0 0 auto; padding: clamp(1rem, 3vw, 2rem); }
+  .split-right { flex: 0 0 40%; }
+  .card-grid { grid-template-columns: 1fr; }
+  .model-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+  html { scroll-behavior: auto; }
+}
+
+/* === NEURODATOS / PSICOPATOLOGIA DE PRECISION OVERRIDE === */
+:root {
+  --bg-primary: #070811;
+  --bg-panel: #0d1224;
+  --bg-card: rgba(12, 18, 35, 0.78);
+  --text-primary: #f2fbff;
+  --text-secondary: rgba(213, 231, 239, 0.76);
+  --text-muted: rgba(157, 183, 198, 0.62);
+  --accent: #ff2fb3;
+  --accent-glow: rgba(255, 47, 179, 0.23);
+  --accent-soft: rgba(255, 47, 179, 0.11);
+  --accent-blue: #22d8ff;
+  --accent-green: #8dff9d;
+  --accent-amber: #f5db65;
+  --accent-violet: #9b7cff;
+  --white: #ffffff;
+  --font-display: 'Sora', system-ui, sans-serif;
+  --font-body: 'Atkinson Hyperlegible', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --title-size: clamp(2.3rem, 5vw, 4.65rem);
+  --h2-size: clamp(1.75rem, 3.75vw, 3.15rem);
+  --h3-size: clamp(1.1rem, 2.15vw, 1.7rem);
+  --body-size: clamp(0.82rem, 1.25vw, 1.04rem);
+  --small-size: clamp(0.68rem, 0.96vw, 0.86rem);
+  --label-size: clamp(0.55rem, 0.78vw, 0.72rem);
+  --slide-padding: clamp(1.4rem, 3.6vw, 3.8rem);
+  --content-gap: clamp(0.65rem, 1.6vw, 1.55rem);
+  --grid-line: rgba(34, 216, 255, 0.08);
+  --panel-line: rgba(34, 216, 255, 0.22);
+  --magnetic-shadow: 0 0 24px rgba(34, 216, 255, 0.16), 0 0 54px rgba(255, 47, 179, 0.10);
+}
+
+html, body { background: var(--bg-primary); }
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.18;
+  mix-blend-mode: screen;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.10) 0,
+    rgba(255,255,255,0.10) 1px,
+    transparent 1px,
+    transparent 7px
+  );
+}
+
+.slide {
+  isolation: isolate;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255, 47, 179, 0.20), transparent 26%),
+    radial-gradient(circle at 82% 14%, rgba(34, 216, 255, 0.16), transparent 25%),
+    radial-gradient(circle at 72% 78%, rgba(141, 255, 157, 0.10), transparent 26%),
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(135deg, #050610 0%, #091120 49%, #07101b 100%);
+  background-size: auto, auto, auto, clamp(36px, 5vw, 64px) clamp(36px, 5vw, 64px), clamp(36px, 5vw, 64px) clamp(36px, 5vw, 64px), auto;
+}
+
+.slide::before {
+  content: "";
+  position: absolute;
+  inset: clamp(0.7rem, 1.6vw, 1.5rem);
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.54;
+  background:
+    radial-gradient(circle at 18% 30%, rgba(34, 216, 255, 0.95) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 37% 18%, rgba(255, 47, 179, 0.90) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 57% 35%, rgba(141, 255, 157, 0.88) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 74% 22%, rgba(34, 216, 255, 0.80) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 28% 70%, rgba(155, 124, 255, 0.82) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 62% 76%, rgba(255, 47, 179, 0.82) 0 2px, transparent 2.5px),
+    linear-gradient(30deg, transparent 12%, rgba(34,216,255,0.10) 12.4%, transparent 12.8%),
+    linear-gradient(148deg, transparent 28%, rgba(255,47,179,0.10) 28.35%, transparent 28.7%),
+    linear-gradient(99deg, transparent 51%, rgba(141,255,157,0.08) 51.25%, transparent 51.65%);
+  border: 1px solid rgba(34,216,255,0.09);
+  border-radius: clamp(0.35rem, 0.7vw, 0.6rem);
+}
+
+.slide::after {
+  content: "Elaborado por Javier A. Flores-Cohaila";
+  position: absolute;
+  right: clamp(1rem, 2.8vw, 2.4rem);
+  bottom: clamp(0.55rem, 1.35vw, 1.05rem);
+  z-index: 12;
+  color: rgba(213, 231, 239, 0.50);
+  font-family: var(--font-mono);
+  font-size: clamp(0.48rem, 0.7vw, 0.64rem);
+  line-height: 1;
+  text-align: right;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.split, .slide-content, .centered {
+  width: 100%;
+  max-width: min(100vw, 1360px);
+  margin-inline: auto;
+}
+
+.slide-content, .centered {
+  position: relative;
+  z-index: 2;
+  align-items: flex-start;
+}
+
+.centered {
+  align-items: center;
+  text-align: center;
+}
+
+.split {
+  position: relative;
+  z-index: 2;
+  align-items: stretch;
+}
+
+.split-left, .split-right { min-width: 0; }
+
+.split-right {
+  background:
+    linear-gradient(135deg, rgba(34,216,255,0.08), rgba(255,47,179,0.07)),
+    rgba(7, 11, 23, 0.74);
+  border-left: 1px solid rgba(34,216,255,0.19);
+  box-shadow: inset 1px 0 rgba(255,255,255,0.04);
+}
+
+h1, h2, h3 {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-weight: 850;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+h1 { max-width: 11ch; }
+h2, h3 { max-width: 16ch; }
+
+p, li { color: var(--text-secondary); font-weight: 400; }
+strong { color: var(--text-primary); font-weight: 700; }
+em {
+  color: var(--accent-blue);
+  font-style: normal;
+  text-shadow: 0 0 18px rgba(34, 216, 255, 0.34);
+}
+
+.eyebrow, .hero-label, .model-box h4, .compare-header, .data-table th {
+  color: var(--accent-green);
+  font-family: var(--font-mono);
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.eyebrow::before { content: "[ "; color: var(--accent-blue); }
+.eyebrow::after { content: " ]"; color: var(--accent-blue); }
+
+.divider {
+  width: clamp(54px, 6vw, 92px);
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent), var(--accent-green));
+  box-shadow: 0 0 16px rgba(34,216,255,0.45);
+}
+
+.source {
+  color: rgba(213, 231, 239, 0.46);
+  font-family: var(--font-mono);
+  font-size: clamp(0.5rem, 0.72vw, 0.66rem);
+  letter-spacing: 0;
+  padding-right: clamp(9rem, 20vw, 20rem);
+}
+
+.hero-number {
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-shadow: 0 0 26px rgba(255,47,179,0.65), 0 0 72px rgba(34,216,255,0.20);
+}
+
+.hero-label { color: var(--text-secondary); }
+
+.quote {
+  background: rgba(7, 11, 23, 0.52);
+  border: 1px solid rgba(34,216,255,0.18);
+  border-left: 3px solid var(--accent);
+  border-radius: clamp(0.35rem, 0.7vw, 0.55rem);
+  box-shadow: var(--magnetic-shadow);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 650;
+  padding: clamp(1rem, 2vw, 1.55rem);
+}
+
+.quote-author {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  letter-spacing: 0;
+}
+
+.section-slide {
+  background:
+    radial-gradient(circle at 74% 25%, rgba(255,47,179,0.21), transparent 28%),
+    radial-gradient(circle at 22% 68%, rgba(34,216,255,0.18), transparent 30%),
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(135deg, #050610 0%, #0b1427 100%);
+  background-size: auto, auto, clamp(42px, 5vw, 68px) clamp(42px, 5vw, 68px), clamp(42px, 5vw, 68px) clamp(42px, 5vw, 68px), auto;
+}
+
+.section-slide .section-number {
+  color: rgba(34,216,255,0.12);
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-shadow: 0 0 48px rgba(34,216,255,0.20);
+}
+
+.card, .model-box, .pyramid-level, .node, .data-table, .compare-grid {
+  background: var(--bg-card);
+  border: 1px solid var(--panel-line);
+  border-radius: clamp(0.35rem, 0.65vw, 0.55rem);
+  box-shadow: var(--magnetic-shadow);
+  backdrop-filter: blur(14px);
+}
+
+.card h4 {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-weight: 750;
+  letter-spacing: 0;
+}
+
+.card p { color: var(--text-secondary); }
+
+.data-table {
+  overflow: hidden;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.data-table th {
+  background: rgba(34,216,255,0.06);
+  border-bottom: 1px solid rgba(34,216,255,0.20);
+}
+
+.data-table td { border-bottom: 1px solid rgba(34,216,255,0.08); }
+
+.bar-track, .profile-track {
+  background: rgba(213, 231, 239, 0.08);
+  border: 1px solid rgba(34,216,255,0.14);
+  box-shadow: inset 0 0 18px rgba(0,0,0,0.26);
+}
+
+.bar-fill, .profile-fill { box-shadow: 0 0 18px currentColor; }
+
+/* === LEARNING / TAKEHOME GRIDS === */
+.learning-grid, .takehome-grid {
+  display: grid;
+  grid-template-columns: minmax(clamp(15rem, 28vw, 23rem), 0.82fr) minmax(0, 1.18fr);
+  gap: clamp(1rem, 2.4vw, 2.2rem);
+  align-items: center;
+  width: 100%;
+  max-width: min(88vw, 1120px);
+  margin-inline: auto;
+}
+
+.learning-rail, .takehome-rail {
+  position: relative;
+  padding: clamp(0.9rem, 1.8vw, 1.4rem);
+  border-left: 3px solid var(--accent-blue);
+  background: linear-gradient(135deg, rgba(34,216,255,0.08), rgba(255,47,179,0.05));
+}
+
+.learning-rail h2, .takehome-rail h2 { max-width: 10ch; }
+.learning-rail p, .takehome-rail p { max-width: clamp(16rem, 26vw, 24rem); }
+
+.learning-map, .takehome-map { display: grid; gap: clamp(0.55rem, 1.1vw, 0.85rem); }
+
+.objective-node, .takehome-point {
+  display: grid;
+  grid-template-columns: clamp(2rem, 3.4vw, 2.8rem) minmax(0, 1fr);
+  gap: clamp(0.6rem, 1.2vw, 0.9rem);
+  align-items: start;
+  padding: clamp(0.65rem, 1.2vw, 0.95rem);
+  background: rgba(7, 11, 23, 0.58);
+  border: 1px solid rgba(34,216,255,0.18);
+  border-radius: clamp(0.35rem, 0.65vw, 0.55rem);
+  box-shadow: var(--magnetic-shadow);
+}
+
+.objective-code, .takehome-code {
+  display: grid;
+  place-items: center;
+  width: clamp(2rem, 3.4vw, 2.8rem);
+  aspect-ratio: 1;
+  color: #050610;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-green));
+  border-radius: 50%;
+  font-family: var(--font-mono);
+  font-size: clamp(0.64rem, 0.86vw, 0.76rem);
+  font-weight: 800;
+}
+
+.objective-node h4, .takehome-point h4 {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(0.85rem, 1.15vw, 1.02rem);
+  line-height: 1.08;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  margin-bottom: clamp(0.12rem, 0.32vw, 0.25rem);
+}
+
+.objective-node p, .takehome-point p { font-size: var(--small-size); line-height: 1.34; }
+
+.progress-bar {
+  height: clamp(2px, 0.35vh, 4px);
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent), var(--accent-green));
+  box-shadow: 0 0 16px rgba(34,216,255,0.55);
+}
+
+.nav-dots { right: clamp(0.45rem, 1.1vw, 1rem); }
+.nav-dot {
+  width: clamp(5px, 0.6vw, 8px);
+  height: clamp(5px, 0.6vw, 8px);
+  background: rgba(213,231,239,0.18);
+  border: 1px solid rgba(34,216,255,0.22);
+}
+.nav-dot.active {
+  background: var(--accent-blue);
+  box-shadow: 0 0 14px rgba(34,216,255,0.72);
+}
+
+@media (max-width: 768px) {
+  .slide::after { left: clamp(0.8rem, 3vw, 1.1rem); right: clamp(0.8rem, 3vw, 1.1rem); text-align: center; }
+  .source { padding-right: 0; }
+  h1, h2, h3 { max-width: 100%; }
+  .learning-grid, .takehome-grid { grid-template-columns: 1fr; align-content: center; }
+}
+
+/* === NEURODATOS BRAND LOCK ===
+   1. Titulares y conceptos: Sora, peso alto, sin letter-spacing negativo.
+   2. Texto docente/clinico: Atkinson Hyperlegible, alta legibilidad en 16:9.
+   3. Codigos, fuentes, labels y footer: JetBrains Mono.
+   4. No usar font-family inline para nuevos componentes; usar estas variables.
+*/
+:root {
+  --brand-course: "Psicopatologia de precision";
+  --font-display: 'Sora', system-ui, sans-serif;
+  --font-body: 'Atkinson Hyperlegible', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+body, .slide, .slide p, .slide li, .slide td, .slide th, .slide .card, .slide .tag {
+  font-family: var(--font-body) !important;
+  letter-spacing: 0 !important;
+}
+
+.slide h1, .slide h2, .slide h3, .slide h4, .hero-number, .quote,
+.objective-node h4, .takehome-point h4 {
+  font-family: var(--font-display) !important;
+  letter-spacing: 0 !important;
+}
+
+.eyebrow, .hero-label, .source, .slide::after,
+.objective-code, .takehome-code, .data-table th {
+  font-family: var(--font-mono) !important;
+  letter-spacing: 0 !important;
+}
+
+/* centered h2 scaling */
+.slide .centered h2 {
+  font-size: clamp(1.28rem, 3.15vw, 2.78rem) !important;
+  line-height: 1.08 !important;
+}
+
+</style>
+</head>
+<body>
+
+<!-- Progress -->
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots"></nav>
+
+<!-- =============================================
+     SLIDE 1: PORTADA
+     ============================================= -->
+<section class="slide" id="s1">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Psicopatología Dimensional &mdash; Sesión 18 / 21 · Bloque 6</p>
+      <h1 class="reveal" style="transition-delay:0.15s">Percepción no es ver: es <em>apostar</em></h1>
+      <div class="divider reveal" style="transition-delay:0.25s"></div>
+      <p class="reveal" style="transition-delay:0.35s">De &ldquo;¿alucina o no?&rdquo; a qué mezcla de señal, prior, saliencia, arousal e insight volvió esa percepción clínicamente relevante.</p>
+      <p class="reveal" style="transition-delay:0.45s;font-family:var(--font-mono);font-size:var(--label-size);color:var(--text-muted)">inferencia activa &middot; triple network &middot; RDoC &middot; HiTOP &middot; continuo perceptivo</p>
+      <div class="quote reveal" style="transition-delay:0.55s;margin-top:var(--content-gap);font-size:clamp(0.82rem,1.4vw,1.1rem)">
+        &ldquo;El cerebro no recibe el mundo; lo predice y corrige el error.&rdquo;
+      </div>
+      <p class="source reveal" style="transition-delay:0.65s">Sterzer et al., 2018 (10.1016/j.biopsych.2018.05.015); Corlett et al., 2016 (10.1177/0269881116650087).</p>
+    </div>
+    <div class="split-right">
+      <div style="text-align:center" class="reveal-scale">
+        <div class="hero-number">4</div>
+        <div class="hero-label">puntos de fallo: entrada &middot; predicción &middot; saliencia &middot; juicio</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     SLIDE 2: OBJETIVOS
+     ============================================= -->
+<section class="slide" id="s2">
+  <div class="slide-content">
+    <div class="learning-grid">
+      <div class="learning-rail">
+        <p class="eyebrow reveal">Objetivos de aprendizaje</p>
+        <h2 class="reveal" style="transition-delay:0.12s">Al finalizar esta sesión, podrás&hellip;</h2>
+        <div class="divider reveal" style="transition-delay:0.22s"></div>
+        <p class="reveal" style="transition-delay:0.32s">Tres objetivos alineados con RDoC Cognitive Systems &mdash; Perception y el continuo HiTOP.</p>
+      </div>
+      <div class="learning-map">
+        <div class="objective-node reveal" style="transition-delay:0.12s">
+          <span class="objective-code">1</span>
+          <div><h4>Explicar la percepción como inferencia activa</h4><p>Diferenciar señal sensorial, prior, precisión y prediction error.</p></div>
+        </div>
+        <div class="objective-node reveal" style="transition-delay:0.24s">
+          <span class="objective-code">2</span>
+          <div><h4>Distinguir fenómenos en un continuo</h4><p>Alucinación, ilusión, disociación, interocepción y experiencia subclínica &mdash; sin el binario psicótico/no psicótico (&ge;4/5).</p></div>
+        </div>
+        <div class="objective-node reveal" style="transition-delay:0.36s">
+          <span class="objective-code">3</span>
+          <div><h4>Formular por mecanismo y riesgo</h4><p>Mecanismo, contexto, insight, arousal, trauma y riesgo (&ge;5/6).</p></div>
+        </div>
+      </div>
+    </div>
+    <p class="source reveal" style="transition-delay:0.52s">Cuthbert &amp; Insel, 2013 (10.1186/1741-7015-11-126); Kotov et al., 2020 (10.1002/wps.20730).</p>
+  </div>
+</section>
+
+<!-- ============ LO1 ============ -->
+
+<!-- SLIDE 3 (1.1): ACTIVACIÓN -->
+<section class="slide" id="s3">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Activación</p>
+    <h2 class="reveal">Tres escenas, una misma <em>percepción</em></h2>
+    <div class="divider reveal"></div>
+    <p class="reveal">¿Son lo mismo? La fenomenología se parece; el mecanismo no.</p>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(0.4rem,0.9vw,0.8rem);margin-top:var(--content-gap)">
+      <div class="card"><h4 style="color:var(--accent-blue)">&ldquo;Escuché mi nombre&rdquo;</h4><p>En una multitud ruidosa, sin que nadie lo dijera.</p></div>
+      <div class="card"><h4 style="color:var(--accent)">Voz que comenta</h4><p>&ldquo;Lo estás haciendo mal&rdquo;, presente y con agencia propia.</p></div>
+      <div class="card"><h4 style="color:var(--accent-amber)">Frase del agresor</h4><p>Reaparece al oír pasos en la calle.</p></div>
+    </div>
+    <p class="reveal" style="margin-top:var(--content-gap)">Pregunta de la sesión: ¿qué <strong>generó</strong> cada percepción, no qué diagnóstico la &ldquo;produce&rdquo;?</p>
+    <p class="source reveal">Corlett et al., 2016 (10.1177/0269881116650087).</p>
+  </div>
+</section>
+
+<!-- SLIDE 4 (1.2): PERCIBIR = INFERIR -->
+<section class="slide" id="s4">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Idea central</p>
+      <h2 class="reveal">Percibir es <em>inferir</em>, no recibir</h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">El cerebro construye una apuesta sobre el mundo combinando predicciones (priors) con la señal sensorial, y aprende del error.</p>
+      <p class="reveal">Lo que &ldquo;ves&rdquo; es la mejor hipótesis del cerebro, no una copia del input.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        Percepción = inferencia bayesiana jerárquica: predicción descendente, error ascendente.
+      </div>
+      <p class="source reveal">Sterzer et al., 2018 (10.1016/j.biopsych.2018.05.015).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="card" style="border-left:3px solid var(--accent)"><h4 style="color:var(--accent)">Predicción (prior) &darr;</h4><p>El modelo interno baja una hipótesis del mundo.</p></div>
+        <div class="card" style="border-left:3px solid var(--accent-blue)"><h4 style="color:var(--accent-blue)">Señal sensorial &uarr;</h4><p>La evidencia entra desde los sentidos.</p></div>
+        <div class="card" style="border-left:3px solid var(--accent-green)"><h4 style="color:var(--accent-green)">Prediction error</h4><p>La discrepancia que actualiza la creencia.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 5 (1.3): LOS 4 ENGRANAJES -->
+<section class="slide" id="s5">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Mecanismo</p>
+    <h2 class="reveal">Cuatro engranajes &mdash; el error va <em>ponderado por precisión</em></h2>
+    <div class="divider reveal"></div>
+    <p class="reveal">No basta el error: lo que decide la percepción es cuánta confianza (precisión) asigna el cerebro a la predicción frente al dato.</p>
+    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(0.4rem,0.9vw,0.8rem);margin-top:var(--content-gap);max-width:900px">
+      <div class="card"><h4 style="color:var(--accent-blue)">Señal sensorial</h4><p>Evidencia bruta desde el receptor.</p></div>
+      <div class="card"><h4 style="color:var(--accent)">Prior</h4><p>Expectativa aprendida sobre el mundo.</p></div>
+      <div class="card"><h4 style="color:var(--accent-green)">Precisión</h4><p>Confianza relativa: ¿peso al prior o al dato?</p></div>
+      <div class="card"><h4 style="color:var(--accent-amber)">Prediction error</h4><p>Mismatch que dispara el aprendizaje.</p></div>
+    </div>
+    <p class="reveal" style="margin-top:var(--content-gap)">Desbalancea la precisión y mueves toda la percepción: <strong>misma maquinaria, distintos fallos</strong>.</p>
+    <p class="source reveal">Corlett et al., 2016 (10.1177/0269881116650087); Lecaignard et al., 2021 (10.1523/JNEUROSCI.0601-21.2021).</p>
+  </div>
+</section>
+
+<!-- SLIDE 6 (1.4): CUANDO EL PRIOR GANA -->
+<section class="slide" id="s6">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Alucinación</p>
+      <h2 class="reveal">Cuando el prior <em>domina</em> y suprime el input</h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">Si la expectativa pesa más que la evidencia, el cerebro &ldquo;percibe&rdquo; lo que esperaba: una predicción que no se corrige.</p>
+      <p class="reveal">Powers: ruido bottom-up &rarr; sobre-confianza en priors &rarr; alucinación, que covaría con la severidad.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        La voz no es input fantasma: es una expectativa que ganó la apuesta.
+      </div>
+      <p class="source reveal">Corlett et al., 2016 (10.1177/0269881116650087); Powers et al., 2024 (10.1016/j.biopsych.2024.08.026).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="card"><h4 style="color:var(--accent-blue)">Balance sano</h4><p>Prior y evidencia se pesan; el error corrige.</p></div>
+        <div class="card"><h4 style="color:var(--accent)">Prior dominante</h4><p>La expectativa suprime/ignora el input real.</p></div>
+        <div class="card"><h4 style="color:var(--accent-amber)">Desarrollo</h4><p>Ruido &rarr; baja relación señal/ruido &rarr; refugio en priors.</p></div>
+        <div class="card"><h4 style="color:var(--accent-green)">Continuo</h4><p>De experiencia subclínica a conversión a psicosis.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 7 (1.5+1.6): PRIORS Y FIRMA NEUROFISIOLÓGICA -->
+<section class="slide" id="s7">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Debate y evidencia</p>
+    <h2 class="reveal">Priors débiles <em>o</em> fuertes &mdash; y su firma medible</h2>
+    <div class="divider reveal"></div>
+    <p class="reveal">No hay un único defecto: el fallo varía por nivel jerárquico y por modalidad. Alucinaciones y delirios pueden venir de alteraciones distintas que coexisten.</p>
+    <table class="data-table reveal" style="max-width:820px;margin-top:var(--content-gap)">
+      <thead><tr><th>Lectura</th><th>Qué falla</th><th>Firma neurofisiológica</th></tr></thead>
+      <tbody>
+        <tr><td>Priors débiles</td><td>Baja precisión del prior &rarr; mundo inestable, apofanía</td><td>MMN / P300 reducidos = imprecisión predictiva</td></tr>
+        <tr><td>Priors fuertes</td><td>Prior rígido suprime evidencia &rarr; alucinación</td><td>Respuesta a sorpresa esperada alterada</td></tr>
+        <tr><td>Jerarquía</td><td>El fallo bajo no predice linealmente el alto</td><td>Ganancia sináptica piramidal reducida</td></tr>
+      </tbody>
+    </table>
+    <p class="source reveal">Sterzer et al., 2018 (10.1016/j.biopsych.2018.05.015); Liddle &amp; Liddle, 2022 (10.3389/fnhum.2022.818711); Lecaignard et al., 2021 (10.1523/JNEUROSCI.0601-21.2021).</p>
+  </div>
+</section>
+
+<!-- SLIDE 8 (1.7): RDoC PERCEPTION -->
+<section class="slide" id="s8">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">RDoC &middot; Cognitive Systems</p>
+      <h2 class="reveal">Perception: el constructo que <em>operacionaliza</em> el fenómeno</h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">RDoC define percepción como las computaciones que transforman datos sensoriales en representaciones para predecir y actuar. Subdominios: visual, auditiva, somatosensorial/multimodal.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        Permite separar alucinación, hiperreactividad sensorial, gating pobre y error de predicción: parecidos en entrevista, distintos en mecanismo.
+      </div>
+      <p class="source reveal">NIMH RDoC, Cognitive Systems (nota madre: rdoc-percepcion).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="card"><h4 style="color:var(--accent-blue)">Visual</h4><p>Contrast-contrast, JOVI (integración de orientación).</p></div>
+        <div class="card"><h4 style="color:var(--accent-green)">Auditiva / somatosensorial</h4><p>MMN, oddball, sensory gating, prepulse inhibition.</p></div>
+        <div class="card"><h4 style="color:var(--accent-amber)">Sustrato</h4><p>Células piramidales, interneuronas PV, vías sensoriales subcorticales.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 9 (1.8): CIERRE LO1 -->
+<section class="slide" id="s9">
+  <div class="centered">
+    <p class="eyebrow reveal">Cierre · Objetivo 1</p>
+    <h2 class="reveal" style="max-width:760px">Misma queja perceptiva, <em>cuatro</em> puntos de fallo distintos</h2>
+    <div class="divider reveal" style="margin-left:auto;margin-right:auto"></div>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(0.4rem,0.9vw,0.8rem);margin-top:var(--content-gap);max-width:960px">
+      <div class="card"><h4 style="color:var(--accent-blue)">Entrada</h4><p>Falla la señal sensorial.</p></div>
+      <div class="card"><h4 style="color:var(--accent-green)">Predicción</h4><p>Falla la precisión del prior.</p></div>
+      <div class="card"><h4 style="color:var(--accent)">Saliencia</h4><p>Se marca como significativo lo neutro.</p></div>
+      <div class="card"><h4 style="color:var(--accent-amber)">Juicio</h4><p>Falla el testing de realidad.</p></div>
+    </div>
+    <p class="reveal" style="max-width:620px;margin-top:var(--content-gap)">No toda &ldquo;percepción alterada&rdquo; es percepción primaria. La clínica ubica <strong>dónde</strong> se rompió.</p>
+    <p class="source reveal">Nota madre rdoc-percepcion (caveat).</p>
+  </div>
+</section>
+
+<!-- ============ LO2 ============ -->
+
+<!-- SLIDE 10 (2.1): NO ES BINARIO -->
+<section class="slide" id="s10">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">El continuo</p>
+      <h2 class="reveal">No es un interruptor: es un <em>continuo</em></h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">Las experiencias perceptivas anómalas existen en población sana: creencias raras, percepciones anómalas disociativas y alucinatorias coexisten con funcionamiento.</p>
+      <p class="reveal">El umbral clínico lo marca malestar, frecuencia, insight y riesgo &mdash; no la mera presencia.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        Preguntar &ldquo;¿alucina sí o no?&rdquo; recorta un continuo en un binario falso.
+      </div>
+      <p class="source reveal">Unterrassner et al., 2017 (10.3389/fpsyg.2017.00775).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="card"><h4 style="color:var(--accent-green)">Subclínico</h4><p>Experiencias anómalas con insight y función preservados.</p></div>
+        <div class="card"><h4 style="color:var(--accent-amber)">Intermedio</h4><p>Mayor frecuencia, malestar, búsqueda de explicación.</p></div>
+        <div class="card"><h4 style="color:var(--accent)">Clínico</h4><p>Convicción, deterioro, testing comprometido.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 11 (2.2): HiTOP -->
+<section class="slide" id="s11">
+  <div class="slide-content">
+    <p class="eyebrow reveal">HiTOP · Psychosis superspectrum</p>
+    <h2 class="reveal">El espectro <em>thought disorder</em>: del testing normal al delirio</h2>
+    <div class="divider reveal"></div>
+    <p class="reveal">HiTOP ordena los fenómenos por dimensión, no por categoría. Y predice desenlaces mejor que el DSM (1.7&ndash;3.4&times; más varianza).</p>
+    <div class="pyramid reveal" style="max-width:820px;margin-top:var(--content-gap)">
+      <div class="pyramid-level" style="width:55%"><span class="level-tag">+0</span><span class="level-name">Reality testing normal</span></div>
+      <div class="pyramid-level" style="width:70%"><span class="level-tag">+1</span><span class="level-name">Psicoticismo (rasgo maladaptativo)</span></div>
+      <div class="pyramid-level" style="width:85%"><span class="level-tag">+2</span><span class="level-name">Experiencias perceptivas anómalas</span></div>
+      <div class="pyramid-level" style="width:100%"><span class="level-tag">+3</span><span class="level-name">Alucinaciones y delirios</span></div>
+    </div>
+    <p class="reveal" style="margin-top:var(--content-gap)">Detachment y thought disorder comparten genética y riesgo: un <strong>superspectrum psicosis</strong>.</p>
+    <p class="source reveal">Kotov et al., 2020 (10.1002/wps.20730); Martin et al., 2021 (10.1093/schbul/sbab043).</p>
+  </div>
+</section>
+
+<!-- SLIDE 12 (2.3): SALIENCIA ABERRANTE -->
+<section class="slide" id="s12">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Saliencia aberrante</p>
+      <h2 class="reveal">La pregunta cambia: ¿qué empezó a <em>brillar</em>?</h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">Antes de la idea rara hay un cambio en el mundo vivido: lo neutro gana significado, se vuelve personal y pide relato. El delirio organiza una saliencia ya cargada; no la crea.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        Desplaza el examen de &ldquo;¿qué cree?&rdquo; a &ldquo;¿qué empezó a significar?&rdquo;.
+      </div>
+      <p class="source reveal">Kapur, 2003 (10.1176/appi.ajp.160.1.13); Corlett &amp; Fraser, 2025 (10.1176/appi.ajp.20240556).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="padding:var(--slide-padding);width:100%">
+        <table class="data-table" style="width:100%">
+          <thead><tr><th>Dimensión ASI</th><th>En el examen mental</th></tr></thead>
+          <tbody>
+            <tr><td>Significancia &uarr;</td><td>&ldquo;no era casual&rdquo; · ideas de referencia</td></tr>
+            <tr><td>Sentidos &uarr;</td><td>mundo más nítido, hiperestesia</td></tr>
+            <tr><td>Comprensión inminente</td><td>apofanía, trema, &ldquo;estaba por entender&rdquo;</td></tr>
+            <tr><td>Emoción &uarr;</td><td>tensión, perplejidad, amenaza</td></tr>
+            <tr><td>Cognición &uarr;</td><td>&ldquo;todo encajaba&rdquo;, conexiones excesivas</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 13 (2.4): TRIPLE NETWORK -->
+<section class="slide" id="s13">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Sustrato · Triple network</p>
+      <h2 class="reveal">Saliencia, ejecutivo y default: una red que <em>mapea mal</em></h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">La red de saliencia (ínsula&ndash;dACC) atribuye relevancia a estímulos externos e internos. Su disfunción + dopamina estriatal = saliencia mal asignada.</p>
+      <p class="reveal">La dysconnección SN se relaciona con desorganización y déficit cognitivo, y aparece ya en estadios de riesgo.</p>
+      <p class="source reveal">Menon et al., 2023 (10.1016/j.biopsych.2022.09.029); Schiwy et al., 2022 (10.1016/j.schres.2022.06.008); Kim et al., 2023 (10.1093/schbul/sbac174).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="card" style="border-left:3px solid var(--accent)"><h4 style="color:var(--accent)">Salience (SN)</h4><p>Ínsula&ndash;dACC: marca qué es relevante. Nodo del fallo.</p></div>
+        <div class="card" style="border-left:3px solid var(--accent-blue)"><h4 style="color:var(--accent-blue)">Central Executive (CEN)</h4><p>Frontoparietal: manipula y dirige.</p></div>
+        <div class="card" style="border-left:3px solid var(--accent-green)"><h4 style="color:var(--accent-green)">Default Mode (DMN)</h4><p>Autorreferencial: el mundo interno.</p></div>
+        <div class="card" style="border-left:3px solid var(--accent-amber)"><h4 style="color:var(--accent-amber)">Dopamina estriatal</h4><p>Modula la saliencia: glutamato e inferencia (hipótesis 3 niveles).</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 14 (2.5): AAV 4 PUERTAS -->
+<section class="slide" id="s14">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Clasificar alucinaciones auditivas verbales</p>
+    <h2 class="reveal">Cuatro puertas clínicas &mdash; clasifica por <em>generador</em>, no por contenido</h2>
+    <div class="divider reveal"></div>
+    <p class="reveal">La AAV no es una sola cosa. Una voz puede mezclar puertas; el subtipo es la escena dominante, no una esencia.</p>
+    <table class="data-table reveal" style="max-width:980px;margin-top:var(--content-gap)">
+      <thead><tr><th>Puerta</th><th>Mecanismo dominante</th><th>Fenomenología que orienta</th></tr></thead>
+      <tbody>
+        <tr><td>Hipervigilancia</td><td>Amenaza + escaneo &rarr; ruido ambiguo se vuelve voz</td><td>Breves, externas, detonadas por motores/murmullos</td></tr>
+        <tr><td>Habla interna / source</td><td>Representación verbal interna sin etiqueta de &ldquo;mío&rdquo;</td><td>Diálogo interno que se vuelve ajeno, con agencia</td></tr>
+        <tr><td>Memoria&ndash;trauma</td><td>Intrusión de material autobiográfico mal integrado</td><td>Frases repetidas, voz del agresor, tono biográfico</td></tr>
+        <tr><td>Auditivo&ndash;orgánica</td><td>Corteza auditiva/temporal, fenómeno paroxístico</td><td>Fonemas, lateralización, aura, déjà vu, automatismos</td></tr>
+      </tbody>
+    </table>
+    <p class="source reveal">Cioroboiu et al., 2025 (10.1016/j.psychres.2025.116696); McCarthy-Jones et al., 2014 (10.1093/schbul/sbs156); Garwood et al., 2015 (10.1017/S1352465813000714); Brookwell et al., 2013 (10.1017/S0033291712002760).</p>
+  </div>
+</section>
+
+<!-- SLIDE 15 (2.6): DOS RELOJES -->
+<section class="slide" id="s15">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Dos relojes de la voz</p>
+      <h2 class="reveal">Habla interna vs hipervigilancia: <em>trait</em> vs <em>state</em></h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">La voz por habla interna apunta a una falla de agencia del lenguaje (más developmental y crónica). La voz por hipervigilancia apunta a percepción capturada por amenaza (más reactiva y aguda).</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        No es &ldquo;inner speech = esquizofrenia&rdquo;. Es un reloj de formulación, no una equivalencia diagnóstica.
+      </div>
+      <p class="source reveal">Cioroboiu et al., 2025 (10.1016/j.psychres.2025.116696); Garwood et al., 2015 (10.1017/S1352465813000714).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="padding:var(--slide-padding);width:100%">
+        <table class="data-table" style="width:100%">
+          <thead><tr><th>Eje</th><th>Habla interna</th><th>Hipervigilancia</th></tr></thead>
+          <tbody>
+            <tr><td>Reloj</td><td>Trait / crónico</td><td>State / agudo</td></tr>
+            <tr><td>Inicio</td><td>Temprano, insidioso</td><td>Reactivo a amenaza</td></tr>
+            <tr><td>Gatillo</td><td>En silencio</td><td>Ruido ambiental</td></tr>
+            <tr><td>Pregunta</td><td>¿Edad, duración, suicidalidad?</td><td>¿Ruido, paranoia, contexto?</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 16 (2.7): DPDR -->
+<section class="slide" id="s16">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Disociación · DPDR</p>
+      <h2 class="reveal">Percepción del yo y del mundo alterada &mdash; con juicio <em>intacto</em></h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">Despersonalización (irrealidad del yo) y desrealización (irrealidad del entorno) persistentes, con valoración de la realidad preservada (criterio B). No es psicosis.</p>
+      <p class="reveal">Entidad: DSM F48.1 · CIE-11 6B66. Exposoma típico: trauma, pánico, cannabis, fatiga.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        La frontera clave: el paciente sabe que la experiencia es anómala. Eso no es delirio.
+      </div>
+      <p class="source reveal">DSM-5-TR; CIE-11 6B66 (nota: trastorno-despersonalización).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="card"><h4 style="color:var(--accent-blue)">A &mdash; Experiencias</h4><p>Despersonalización y/o desrealización recurrentes.</p></div>
+        <div class="card"><h4 style="color:var(--accent-green)">B &mdash; Insight</h4><p>Juicio de realidad intacto (lo separa de psicosis).</p></div>
+        <div class="card"><h4 style="color:var(--accent-amber)">C &mdash; Deterioro</h4><p>Malestar o disfunción significativos.</p></div>
+        <div class="card"><h4 style="color:var(--text-muted)">D&ndash;E &mdash; Exclusión</h4><p>No sustancia/médico; no mejor explicado por otro TM.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 17 (2.8): INTEROCEPCIÓN -->
+<section class="slide" id="s17">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Interocepción y self</p>
+    <h2 class="reveal">DPDR como predictive coding <em>interoceptivo</em></h2>
+    <div class="divider reveal"></div>
+    <p class="reveal">El mismo lenguaje (priors, precisión) explica la disociación: cuando la señal corporal/sensorial pierde precisión, el cerebro recurre a priors para reconstruir un sentido estable de sí mismo &mdash; y el yo se siente irreal.</p>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(0.4rem,0.9vw,0.8rem);margin-top:var(--content-gap)">
+      <div class="card"><h4 style="color:var(--accent-blue)">Señal interoceptiva &darr;</h4><p>Baja precisión de la información corporal.</p></div>
+      <div class="card"><h4 style="color:var(--accent)">Compensación por priors</h4><p>Priors visuales/corporales sostienen el self.</p></div>
+      <div class="card"><h4 style="color:var(--accent-green)">Marcador</h4><p>Heartbeat-evoked potentials; gamma en ínsula.</p></div>
+    </div>
+    <p class="reveal" style="margin-top:var(--content-gap)">Mismo mecanismo, distinto fenómeno: <strong>no toda percepción rara es psicosis</strong>.</p>
+    <p class="source reveal">Gatus et al., 2022 (10.3389/fnhum.2022.744487); Jamieson et al., 2023 (10.1016/j.bandc.2023.106121).</p>
+  </div>
+</section>
+
+<!-- SLIDE 18 (2.9): CIERRE LO2 — TABLA -->
+<section class="slide" id="s18">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Cierre · Objetivo 2</p>
+    <h2 class="reveal">Cinco fenómenos, un <em>mapa</em> de diferenciación</h2>
+    <div class="divider reveal"></div>
+    <table class="data-table reveal" style="max-width:1000px;margin-top:var(--content-gap)">
+      <thead><tr><th>Fenómeno</th><th>Mecanismo dominante</th><th>Testing de realidad</th></tr></thead>
+      <tbody>
+        <tr><td>Alucinación</td><td>Prior domina input / saliencia aberrante</td><td>A menudo comprometido</td></tr>
+        <tr><td>Ilusión</td><td>Input real mal interpretado por prior</td><td>Corregible</td></tr>
+        <tr><td>Disociación / DPDR</td><td>Predictive coding interoceptivo</td><td>Intacto</td></tr>
+        <tr><td>Interocepción anómala</td><td>Precisión de señal corporal alterada</td><td>Intacto</td></tr>
+        <tr><td>Experiencia subclínica</td><td>Variación en el continuo</td><td>Intacto, con insight</td></tr>
+      </tbody>
+    </table>
+    <p class="reveal" style="margin-top:var(--content-gap)">La columna que más decide el manejo: <strong>testing de realidad</strong>.</p>
+    <p class="source reveal">Síntesis: Sterzer 2018; Kotov 2020; Gatus 2022; nota rdoc-percepcion.</p>
+  </div>
+</section>
+
+<!-- ============ LO3 ============ -->
+
+<!-- SLIDE 19 (3.1): DE FENÓMENO A FORMULACIÓN -->
+<section class="slide" id="s19">
+  <div class="slide-content">
+    <p class="eyebrow reveal">De fenómeno a formulación</p>
+    <h2 class="reveal">Seis ejes para formular una experiencia <em>perceptiva</em></h2>
+    <div class="divider reveal"></div>
+    <p class="reveal">No clasifiques la voz por su contenido; formúlala por su generación y su riesgo.</p>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(0.4rem,0.9vw,0.8rem);margin-top:var(--content-gap)">
+      <div class="card"><h4 style="color:var(--accent-blue)">1 · Mecanismo</h4><p>¿Entrada, predicción, saliencia o juicio?</p></div>
+      <div class="card"><h4 style="color:var(--accent-green)">2 · Contexto</h4><p>¿Ruido/amenaza, silencio, gatillo?</p></div>
+      <div class="card"><h4 style="color:var(--accent-amber)">3 · Insight</h4><p>¿Reconoce la experiencia como anómala?</p></div>
+      <div class="card"><h4 style="color:var(--accent-violet)">4 · Arousal</h4><p>¿State reactivo o trait de base?</p></div>
+      <div class="card"><h4 style="color:var(--accent)">5 · Trauma</h4><p>¿Material biográfico, agresor, intrusión?</p></div>
+      <div class="card"><h4 style="color:var(--white)">6 · Riesgo</h4><p>¿Comandos, suicidalidad, pérdida de control?</p></div>
+    </div>
+    <p class="source reveal">Síntesis clínica RDoC (nota tipos-de-alucinaciones-auditivas-verbales).</p>
+  </div>
+</section>
+
+<!-- SLIDE 20 (3.2): BEDSIDE -->
+<section class="slide" id="s20">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Bedside mínimo</p>
+      <h2 class="reveal">Seis preguntas que cambian la <em>formulación</em></h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">La respuesta no da diagnóstico: da hipótesis de mecanismo y prioridad de seguridad.</p>
+      <p class="source reveal">Nota tipos-de-alucinaciones-auditivas-verbales (bedside).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="padding:var(--slide-padding);width:100%">
+        <div class="pyramid" style="width:100%">
+          <div class="pyramid-level" style="width:100%"><span class="level-tag">01</span><span class="level-name">¿Aparece con ruido o en silencio?</span></div>
+          <div class="pyramid-level" style="width:100%"><span class="level-tag">02</span><span class="level-name">¿Se sintió primero como pensamiento propio?</span></div>
+          <div class="pyramid-level" style="width:100%"><span class="level-tag">03</span><span class="level-name">¿A qué edad empezó?</span></div>
+          <div class="pyramid-level" style="width:100%"><span class="level-tag">04</span><span class="level-name">¿Repite algo biográfico?</span></div>
+          <div class="pyramid-level" style="width:100%"><span class="level-tag">05</span><span class="level-name">¿Viene con aura / déjà vu / automatismos?</span></div>
+          <div class="pyramid-level" style="width:100%"><span class="level-tag">06</span><span class="level-name">¿Hay comandos o ideación suicida?</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 21 (3.3): INSIGHT + TESTING -->
+<section class="slide" id="s21">
+  <div class="centered">
+    <p class="eyebrow reveal">Eje insight + testing</p>
+    <h2 class="reveal" style="max-width:780px">La frontera que decide el manejo: <em>juicio de realidad</em></h2>
+    <div class="divider reveal" style="margin-left:auto;margin-right:auto"></div>
+    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(0.5rem,1vw,1rem);margin-top:var(--content-gap);max-width:820px">
+      <div class="card" style="border-left:3px solid var(--accent-green)"><h4 style="color:var(--accent-green)">Intacto &rarr; DPDR, disociación</h4><p>&ldquo;Sé que es raro, que viene de mí.&rdquo; Manejo: regulación, trauma, psicoeducación.</p></div>
+      <div class="card" style="border-left:3px solid var(--accent)"><h4 style="color:var(--accent)">Comprometido &rarr; psicosis</h4><p>Explicación delirante, convicción. Manejo: antipsicótico, safety, estadiaje.</p></div>
+    </div>
+    <p class="reveal" style="max-width:600px;margin-top:var(--content-gap)">Misma queja de &ldquo;irrealidad&rdquo;; el insight separa dos mundos terapéuticos.</p>
+    <p class="source reveal">DSM-5-TR / CIE-11 6B66; nota trastorno-despersonalización.</p>
+  </div>
+</section>
+
+<!-- SLIDE 22 (3.4): SELF MÍNIMO VS NARRATIVO -->
+<section class="slide" id="s22">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Personalidad · Niveles del self</p>
+    <h2 class="reveal">Self mínimo vs self narrativo: <em>qué</em> nivel se rompió</h2>
+    <div class="divider reveal"></div>
+    <p class="reveal">El diferencial fino protege contra sobrediagnosticar psicosis o banalizar disociación severa.</p>
+    <table class="data-table reveal" style="max-width:980px;margin-top:var(--content-gap)">
+      <thead><tr><th>Eje</th><th>Espectro psicótico</th><th>TLP / borderline</th></tr></thead>
+      <tbody>
+        <tr><td>Nivel afectado</td><td>Self mínimo / ipseidad</td><td>Self narrativo / extendido</td></tr>
+        <tr><td>Pregunta nuclear</td><td>&ldquo;¿Esto se siente mío?&rdquo;</td><td>&ldquo;¿Quién soy en el tiempo y con los otros?&rdquo;</td></tr>
+        <tr><td>Fenomenología</td><td>Hiperreflexividad, pasividad, perplejidad</td><td>Vacío, identidad difusa, self prestado</td></tr>
+        <tr><td>Testing</td><td>Puede deteriorarse de forma persistente</td><td>Preservado fuera de crisis (stress-related)</td></tr>
+      </tbody>
+    </table>
+    <p class="source reveal">Parnas &amp; Sass, 2001; Sass &amp; Parnas, 2003 (nota tlp-minimal-self-vs-narrative-self).</p>
+  </div>
+</section>
+
+<!-- SLIDE 23 (3.5): SELF CAMALEÓNICO -->
+<section class="slide" id="s23">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Personalidad · TLP</p>
+      <h2 class="reveal">Self camaleónico: identidad <em>prestada</em>, no psicosis</h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">En TLP el self toma prestados valores, gestos y roles del entorno cuando el ancla interna es frágil. Bajo estrés puede haber DPDR y frontera self-otro permeable.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        No confundir: prótesis social del self &ne; experiencia psicótica del self. El testing distingue.
+      </div>
+      <p class="source reveal">Jorgensen &amp; Boye, 2022 (10.1521/pedi_2021_35_526); nota self-camaleonico-tlp.</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="card"><h4 style="color:var(--accent-blue)">Vacío</h4><p>No solo ánimo bajo: falla de self sentido.</p></div>
+        <div class="card"><h4 style="color:var(--accent)">Camaleón</h4><p>Identidad prestada por relaciones.</p></div>
+        <div class="card"><h4 style="color:var(--accent-amber)">DPDR por estrés</h4><p>Disociación reactiva, no psicosis primaria.</p></div>
+        <div class="card"><h4 style="color:var(--accent-green)">Clave</h4><p>Curso, estabilidad, insight y nivel del self afectado.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 24 (3.6): EJE TRAUMA -->
+<section class="slide" id="s24">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Eje trauma</p>
+      <h2 class="reveal">Preguntar por trauma <em>no</em> niega psicosis</h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">Las AAV en esquizofrenia y TEPT comparten fenomenología y vínculo con trauma, memoria y disociación. Algunas voces son fenómenos ligados a trauma, no solo marcador de psicosis primaria.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        Preguntar por trauma no es negar psicosis; es no asumir que la etiqueta explica la voz.
+      </div>
+      <p class="source reveal">McCarthy-Jones &amp; Longden, 2015 (10.3389/fpsyg.2015.01071); Daalman et al., 2012 (10.1017/S0033291712000761).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="card"><h4 style="color:var(--accent-amber)">Contenido</h4><p>Frases del agresor, escena pasada, insulto repetido.</p></div>
+        <div class="card"><h4 style="color:var(--accent-blue)">Mecanismo</h4><p>Intrusión de memoria autobiográfica mal integrada.</p></div>
+        <div class="card"><h4 style="color:var(--accent)">Riesgo</h4><p>Reexperimentación, evitación, hiperactivación.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 25 (3.7a): CASO — PRESENTACIÓN -->
+<section class="slide" id="s25">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Caso · Dos voces, dos relojes</p>
+    <h2 class="reveal">Misma queja: &ldquo;escucho voces que otros no <em>oyen</em>&rdquo;</h2>
+    <div class="divider reveal"></div>
+    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(0.5rem,1.2vw,1rem);margin-top:var(--content-gap)">
+      <div class="card" style="border-left:3px solid var(--accent-amber)">
+        <h4 style="color:var(--accent-amber)">Rosa, 34 &middot; ruta PTSD</h4>
+        <p>Asalto hace 8 meses. Voces <strong>breves y externas</strong> que aparecen <strong>al oír pasos o motores</strong>; en silencio casi no las nota. Repiten <strong>frases del agresor</strong>. Sobresaltos, escaneo. <strong>Sabe que vienen de su cabeza</strong>, &ldquo;pero el miedo las vuelve reales&rdquo;. Inicio post-trauma.</p>
+      </div>
+      <div class="card" style="border-left:3px solid var(--accent)">
+        <h4 style="color:var(--accent)">Daniel, 21 &middot; ruta F20</h4>
+        <p>Aislamiento y caída funcional desde los 16. Voces <strong>continuas, en silencio</strong>, que <strong>comentan y ordenan</strong>; &ldquo;un pensamiento mío que se volvió otra persona&rdquo;, con <strong>agencia propia</strong>. Inicio insidioso. <strong>Cree que un dispositivo se las transmite</strong> (testing comprometido).</p>
+      </div>
+    </div>
+    <p class="reveal" style="margin-top:var(--content-gap)">Viñeta docente ficticia. ¿Qué <strong>generó</strong> cada voz?</p>
+    <p class="source reveal">Garwood 2015; Cioroboiu 2025; McCarthy-Jones &amp; Longden 2015; Brookwell 2013.</p>
+  </div>
+</section>
+
+<!-- SLIDE 26 (3.7b): CASO — RESOLUCIÓN -->
+<section class="slide" id="s26">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Caso · Resolución por los 6 ejes</p>
+    <h2 class="reveal">No es PTSD vs F20: es <em>hipervigilancia/memoria</em> vs <em>discurso interno</em></h2>
+    <div class="divider reveal"></div>
+    <table class="data-table reveal" style="max-width:1000px;margin-top:var(--content-gap)">
+      <thead><tr><th>Eje</th><th>Rosa (PTSD)</th><th>Daniel (F20)</th></tr></thead>
+      <tbody>
+        <tr><td>Mecanismo</td><td>Hipervigilancia + memoria-trauma (bottom-up)</td><td>Falla de source-monitoring (habla interna sin firma)</td></tr>
+        <tr><td>Contexto</td><td>Ruido ambiguo, amenaza</td><td>Sin gatillo; en silencio</td></tr>
+        <tr><td>Insight / testing</td><td>Preservado</td><td>Deteriorado (explicación delirante)</td></tr>
+        <tr><td>Arousal</td><td>Alto, reactivo (state)</td><td>Saliencia aberrante de base (trait)</td></tr>
+        <tr><td>Trauma</td><td>Central, fechado</td><td>No nuclear</td></tr>
+        <tr><td>Riesgo</td><td>Reexperimentación, evitación</td><td>Comandos + convicción &rarr; safety</td></tr>
+      </tbody>
+    </table>
+    <p class="reveal" style="margin-top:var(--content-gap)">El diagnóstico encuadra; el <strong>mecanismo</strong> decide la conducta.</p>
+    <p class="source reveal">Síntesis notas AAV + saliencia-aberrante.</p>
+  </div>
+</section>
+
+<!-- SLIDE 27 (3.8): TAKE-HOME + PUENTE S19 -->
+<section class="slide" id="s27">
+  <div class="slide-content">
+    <div class="takehome-grid">
+      <div class="takehome-rail">
+        <p class="eyebrow reveal">Take-home &middot; Cierre &middot; S19</p>
+        <h2 class="reveal" style="transition-delay:0.12s">De la percepción al <em>lenguaje</em>: la salida del sistema cognitivo</h2>
+        <div class="divider reveal" style="transition-delay:0.22s"></div>
+        <p class="reveal" style="transition-delay:0.32s">S18 percepción como inferencia; S19: pensamiento y lenguaje como su lectura observable.</p>
+        <p class="source reveal" style="transition-delay:0.42s">Powers et al., 2024 (10.1016/j.biopsych.2024.08.026).</p>
+      </div>
+      <div class="takehome-map">
+        <div class="takehome-point reveal" style="transition-delay:0.12s">
+          <span class="takehome-code">01</span>
+          <div><h4>Percibir es inferir</h4><p>Señal + prior + precisión + error. La alucinación es un prior que ganó la apuesta.</p></div>
+        </div>
+        <div class="takehome-point reveal" style="transition-delay:0.20s">
+          <span class="takehome-code">02</span>
+          <div><h4>Es un continuo, no un binario</h4><p>RDoC ubica el mecanismo; HiTOP ordena del testing normal al delirio.</p></div>
+        </div>
+        <div class="takehome-point reveal" style="transition-delay:0.28s">
+          <span class="takehome-code">03</span>
+          <div><h4>Clasifica por generador</h4><p>AAV: hipervigilancia, habla interna, memoria-trauma, orgánica. No por contenido.</p></div>
+        </div>
+        <div class="takehome-point reveal" style="transition-delay:0.36s">
+          <span class="takehome-code">04</span>
+          <div><h4>El insight separa mundos</h4><p>DPDR (testing intacto) vs psicosis. Self mínimo vs narrativo en personalidad.</p></div>
+        </div>
+        <div class="takehome-point reveal" style="transition-delay:0.44s">
+          <span class="takehome-code">S19</span>
+          <div><h4>Próximo: lenguaje y pensamiento</h4><p>Hoy el sistema infería; en S19 hablará: desorganización, discurso y forma del pensamiento.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- =============================================
+     JAVASCRIPT (donor verbatim)
+     ============================================= -->
+<script>
+/* === SLIDE PRESENTATION CONTROLLER === */
+class SlidePresentation {
+  constructor() {
+    this.slides = document.querySelectorAll('.slide');
+    this.currentSlide = 0;
+    this.setupIntersectionObserver();
+    this.setupKeyboardNav();
+    this.setupTouchNav();
+    this.setupProgressBar();
+    this.setupNavDots();
+  }
+
+  setupIntersectionObserver() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          const idx = Array.from(this.slides).indexOf(entry.target);
+          if (idx !== -1) {
+            this.currentSlide = idx;
+            this.updateProgressBar();
+            this.updateNavDots();
+          }
+        }
+      });
+    }, { threshold: 0.4 });
+    this.slides.forEach(slide => observer.observe(slide));
+  }
+
+  setupKeyboardNav() {
+    document.addEventListener('keydown', (e) => {
+      if (e.target.getAttribute && e.target.getAttribute('contenteditable')) return;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        this.goTo(Math.min(this.currentSlide + 1, this.slides.length - 1));
+      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        this.goTo(Math.max(this.currentSlide - 1, 0));
+      } else if (e.key === 'Home') {
+        e.preventDefault(); this.goTo(0);
+      } else if (e.key === 'End') {
+        e.preventDefault(); this.goTo(this.slides.length - 1);
+      }
+    });
+  }
+
+  setupTouchNav() {
+    let startY = 0;
+    document.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, { passive: true });
+    document.addEventListener('touchend', e => {
+      const diff = startY - e.changedTouches[0].clientY;
+      if (Math.abs(diff) > 50) {
+        diff > 0 ? this.goTo(Math.min(this.currentSlide + 1, this.slides.length - 1))
+                  : this.goTo(Math.max(this.currentSlide - 1, 0));
+      }
+    }, { passive: true });
+  }
+
+  setupProgressBar() {
+    this.progressBar = document.getElementById('progressBar');
+    this.updateProgressBar();
+  }
+
+  setupNavDots() {
+    this.navDotsContainer = document.getElementById('navDots');
+    this.navDotsContainer.innerHTML = '';
+    this.slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', `Slide ${i + 1}`);
+      dot.addEventListener('click', () => this.goTo(i));
+      this.navDotsContainer.appendChild(dot);
+    });
+    this.navDots = this.navDotsContainer.querySelectorAll('.nav-dot');
+  }
+
+  goTo(index) {
+    this.slides[index].scrollIntoView({ behavior: 'smooth' });
+  }
+
+  updateProgressBar() {
+    const pct = ((this.currentSlide + 1) / this.slides.length) * 100;
+    this.progressBar.style.width = pct + '%';
+  }
+
+  updateNavDots() {
+    if (!this.navDots) return;
+    this.navDots.forEach((dot, i) => dot.classList.toggle('active', i === this.currentSlide));
+  }
+}
+
+new SlidePresentation();
+</script>
+</body>
+</html>
