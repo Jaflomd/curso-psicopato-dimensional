@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Psicopatología Dimensional · Sesión 21: Catatonía y precisión (cierre)</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800;900&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet"/>
+<style>
+/* === RESET & CUSTOM PROPERTIES === */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --bg-primary: #141518;
+  --bg-panel: #1a1b22;
+  --bg-card: #1e2028;
+  --text-primary: #dddad5;
+  --text-secondary: #8a8780;
+  --text-muted: #5a5850;
+  --accent: #c8503c;
+  --accent-glow: rgba(200, 80, 60, 0.15);
+  --accent-soft: rgba(200, 80, 60, 0.08);
+  --accent-blue: #4a7fb5;
+  --accent-green: #5a9a6a;
+  --accent-amber: #b8963c;
+  --accent-violet: #8a6ab5;
+  --white: #f0ede8;
+
+  --font-display: 'Sora', system-ui, sans-serif;
+  --font-body: 'Atkinson Hyperlegible', system-ui, sans-serif;
+
+  --title-size: clamp(2rem, 5vw, 4rem);
+  --h2-size: clamp(1.5rem, 3.5vw, 2.8rem);
+  --h3-size: clamp(1.1rem, 2.2vw, 1.6rem);
+  --body-size: clamp(0.75rem, 1.3vw, 1.05rem);
+  --small-size: clamp(0.65rem, 1vw, 0.85rem);
+  --label-size: clamp(0.55rem, 0.85vw, 0.72rem);
+
+  --slide-padding: clamp(1.5rem, 4vw, 4rem);
+  --content-gap: clamp(0.5rem, 1.5vw, 1.5rem);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* === VIEWPORT BASE (mandatory) === */
+html, body { height: 100%; overflow-x: hidden; }
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+
+.slide {
+  width: 100vw; height: 100vh; height: 100dvh;
+  overflow: hidden; scroll-snap-align: start;
+  display: flex; position: relative;
+  background: var(--bg-primary);
+  font-family: var(--font-body);
+  color: var(--text-primary);
+}
+
+.slide-content {
+  flex: 1; display: flex; flex-direction: column;
+  justify-content: center;
+  max-height: 100%; overflow: hidden;
+  padding: var(--slide-padding);
+}
+
+img, .image-container {
+  max-width: 100%;
+  max-height: min(50vh, 400px);
+  object-fit: contain;
+}
+
+/* === TYPOGRAPHY === */
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.15; }
+h1 { font-size: var(--title-size); }
+h2 { font-size: var(--h2-size); }
+h3 { font-size: var(--h3-size); }
+p, li { font-size: var(--body-size); line-height: 1.55; color: var(--text-secondary); }
+em { color: var(--accent); font-style: italic; }
+strong { color: var(--text-primary); font-weight: 600; }
+
+/* === ANIMATIONS === */
+.reveal {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
+}
+.slide.visible .reveal { opacity: 1; transform: translateY(0); }
+.reveal:nth-child(2) { transition-delay: 0.1s; }
+.reveal:nth-child(3) { transition-delay: 0.2s; }
+.reveal:nth-child(4) { transition-delay: 0.3s; }
+.reveal:nth-child(5) { transition-delay: 0.4s; }
+.reveal:nth-child(6) { transition-delay: 0.5s; }
+.reveal:nth-child(7) { transition-delay: 0.6s; }
+
+.reveal-scale {
+  opacity: 0; transform: scale(0.85);
+  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+}
+.slide.visible .reveal-scale { opacity: 1; transform: scale(1); }
+
+/* === LAYOUT HELPERS === */
+.split { display: flex; height: 100%; }
+.split-left { flex: 0 0 48%; display: flex; flex-direction: column; justify-content: center; padding: var(--slide-padding); position: relative; z-index: 1; }
+.split-right { flex: 1; display: flex; align-items: center; justify-content: center; background: var(--bg-panel); position: relative; overflow: hidden; }
+.centered { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: var(--slide-padding); height: 100%; }
+
+.eyebrow {
+  font-size: var(--label-size); color: var(--accent);
+  letter-spacing: 0.3em; text-transform: uppercase; font-weight: 600;
+  margin-bottom: clamp(0.5rem, 1.5vh, 1.2rem);
+  font-family: var(--font-body);
+}
+.divider { width: 40px; height: 2px; background: var(--accent); margin: clamp(0.8rem, 1.5vh, 1.5rem) 0; }
+.source { font-size: var(--label-size); color: var(--text-muted); margin-top: auto; padding-top: clamp(0.5rem, 1vh, 1rem); }
+
+/* === SECTION HEADERS === */
+.section-slide { background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-panel) 100%); }
+.section-slide .section-number {
+  font-family: var(--font-display); font-size: clamp(4rem, 12vw, 10rem);
+  color: var(--accent-soft); position: absolute; top: clamp(1rem, 3vh, 2rem);
+  right: clamp(2rem, 5vw, 4rem); line-height: 1; font-weight: 600;
+}
+
+/* === DATA HIGHLIGHT === */
+.hero-number {
+  font-family: var(--font-display); font-size: clamp(5rem, 15vw, 12rem);
+  color: var(--accent); line-height: 1; font-weight: 600;
+}
+.hero-label {
+  font-size: var(--small-size); color: var(--text-muted);
+  margin-top: clamp(0.3rem, 0.8vh, 0.6rem); letter-spacing: 0.08em;
+}
+
+/* === QUOTE === */
+.quote {
+  font-family: var(--font-display); font-size: clamp(1.1rem, 2.2vw, 1.7rem);
+  font-style: italic; color: var(--text-primary); line-height: 1.5;
+  border-left: 3px solid var(--accent); padding-left: clamp(1rem, 2vw, 1.5rem);
+  max-width: 700px;
+}
+.quote-author { font-size: var(--small-size); color: var(--text-muted); font-style: normal; margin-top: 0.5rem; font-family: var(--font-body); }
+
+/* === TABLES === */
+.data-table { width: 100%; border-collapse: collapse; font-size: var(--body-size); }
+.data-table th {
+  text-align: left; font-weight: 600; color: var(--accent);
+  font-size: var(--label-size); letter-spacing: 0.1em; text-transform: uppercase;
+  padding: clamp(0.3rem, 0.6vh, 0.5rem) clamp(0.5rem, 1vw, 1rem);
+  border-bottom: 1px solid rgba(200,80,60,0.2);
+}
+.data-table td {
+  padding: clamp(0.25rem, 0.5vh, 0.4rem) clamp(0.5rem, 1vw, 1rem);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: var(--text-secondary);
+}
+.data-table td:first-child { color: var(--text-primary); font-weight: 500; }
+
+/* === BAR CHARTS (CSS) === */
+.bar-chart { display: flex; flex-direction: column; gap: clamp(0.3rem, 0.6vh, 0.5rem); width: 100%; }
+.bar-row { display: flex; align-items: center; gap: clamp(0.5rem, 1vw, 0.8rem); }
+.bar-label { flex: 0 0 clamp(100px, 18vw, 180px); font-size: var(--small-size); color: var(--text-secondary); text-align: right; }
+.bar-track { flex: 1; height: clamp(16px, 2.5vh, 24px); background: rgba(255,255,255,0.04); border-radius: 3px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 3px; transition: width 1.2s var(--ease-out-expo); }
+.slide.visible .bar-fill { width: var(--bar-width); }
+.bar-fill:not(.slide.visible .bar-fill) { width: 0; }
+.bar-value { flex: 0 0 clamp(40px, 5vw, 60px); font-size: var(--small-size); color: var(--text-muted); }
+
+/* === CARDS === */
+.card-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(0.5rem, 1vw, 0.8rem); }
+.card {
+  background: var(--bg-card); border-radius: 8px;
+  padding: clamp(0.6rem, 1.2vw, 1rem);
+  border: 1px solid rgba(255,255,255,0.04);
+}
+.card h4 { font-family: var(--font-display); font-size: var(--body-size); color: var(--text-primary); font-weight: 400; margin-bottom: 0.3rem; }
+.card p { font-size: var(--small-size); color: var(--text-muted); line-height: 1.4; }
+
+/* === MODEL GRID === */
+.model-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: clamp(0.4rem, 0.8vw, 0.6rem); max-width: min(90vw, 800px); width: 100%; }
+.model-box {
+  background: var(--bg-card); border-radius: 8px;
+  padding: clamp(0.6rem, 1.2vw, 1rem);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.model-box h4 { font-family: var(--font-body); font-size: var(--label-size); color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600; margin-bottom: 0.4rem; }
+.model-box ul { list-style: none; }
+.model-box li { font-size: var(--small-size); color: var(--text-muted); padding: 0.1rem 0; }
+.model-box li::before { content: '·'; color: var(--accent); margin-right: 0.4rem; }
+
+/* === PYRAMID === */
+.pyramid { display: flex; flex-direction: column; align-items: center; gap: clamp(0.2rem, 0.4vh, 0.3rem); width: 100%; }
+.pyramid-level {
+  display: flex; align-items: center; gap: clamp(0.4rem, 0.8vw, 0.6rem);
+  padding: clamp(0.3rem, 0.5vh, 0.5rem) clamp(0.8rem, 1.5vw, 1.2rem);
+  border-radius: 6px; background: var(--bg-card); border: 1px solid rgba(255,255,255,0.04);
+  font-size: var(--small-size);
+}
+.pyramid-level .level-tag { font-size: var(--label-size); color: var(--accent); font-weight: 600; min-width: clamp(20px, 3vw, 35px); }
+.pyramid-level .level-name { color: var(--text-primary); font-weight: 500; }
+.pyramid-level .level-examples { color: var(--text-muted); }
+
+/* === PROGRESS BAR === */
+.progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: var(--accent); z-index: 9999; transition: width 0.3s ease; }
+
+/* === NAV DOTS === */
+.nav-dots {
+  position: fixed; right: clamp(0.5rem, 1.5vw, 1.2rem); top: 50%;
+  transform: translateY(-50%); z-index: 999; display: flex; flex-direction: column;
+  gap: clamp(4px, 0.6vh, 8px);
+}
+.nav-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.15);
+  cursor: pointer; transition: all 0.3s ease; border: none; padding: 0;
+}
+.nav-dot.active { background: var(--accent); transform: scale(1.4); }
+.nav-dot:hover { background: rgba(255,255,255,0.3); }
+
+/* === RESPONSIVE === */
+@media (max-height: 700px) {
+  :root { --slide-padding: clamp(0.75rem, 3vw, 2rem); --title-size: clamp(1.5rem, 4.5vw, 2.8rem); --h2-size: clamp(1.2rem, 3vw, 2rem); }
+}
+@media (max-height: 600px) {
+  :root { --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem); --body-size: clamp(0.65rem, 1.1vw, 0.9rem); }
+  .nav-dots, .decorative { display: none; }
+}
+@media (max-height: 500px) {
+  :root { --title-size: clamp(1rem, 3.5vw, 1.5rem); --h2-size: clamp(0.9rem, 2.5vw, 1.25rem); }
+}
+@media (max-width: 768px) {
+  .split { flex-direction: column; }
+  .split-left { flex: 0 0 auto; padding: clamp(1rem, 3vw, 2rem); }
+  .split-right { flex: 0 0 40%; }
+  .card-grid { grid-template-columns: 1fr; }
+  .model-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+  html { scroll-behavior: auto; }
+}
+
+/* === NEURODATOS / PSICOPATOLOGIA DE PRECISION OVERRIDE === */
+:root {
+  --bg-primary: #070811;
+  --bg-panel: #0d1224;
+  --bg-card: rgba(12, 18, 35, 0.78);
+  --text-primary: #f2fbff;
+  --text-secondary: rgba(213, 231, 239, 0.76);
+  --text-muted: rgba(157, 183, 198, 0.62);
+  --accent: #ff2fb3;
+  --accent-glow: rgba(255, 47, 179, 0.23);
+  --accent-soft: rgba(255, 47, 179, 0.11);
+  --accent-blue: #22d8ff;
+  --accent-green: #8dff9d;
+  --accent-amber: #f5db65;
+  --accent-violet: #9b7cff;
+  --white: #ffffff;
+  --font-display: 'Sora', system-ui, sans-serif;
+  --font-body: 'Atkinson Hyperlegible', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --title-size: clamp(2.3rem, 5vw, 4.65rem);
+  --h2-size: clamp(1.75rem, 3.75vw, 3.15rem);
+  --h3-size: clamp(1.1rem, 2.15vw, 1.7rem);
+  --body-size: clamp(0.82rem, 1.25vw, 1.04rem);
+  --small-size: clamp(0.68rem, 0.96vw, 0.86rem);
+  --label-size: clamp(0.55rem, 0.78vw, 0.72rem);
+  --slide-padding: clamp(1.4rem, 3.6vw, 3.8rem);
+  --content-gap: clamp(0.65rem, 1.6vw, 1.55rem);
+  --grid-line: rgba(34, 216, 255, 0.08);
+  --panel-line: rgba(34, 216, 255, 0.22);
+  --magnetic-shadow: 0 0 24px rgba(34, 216, 255, 0.16), 0 0 54px rgba(255, 47, 179, 0.10);
+}
+
+html, body { background: var(--bg-primary); }
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.18;
+  mix-blend-mode: screen;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.10) 0,
+    rgba(255,255,255,0.10) 1px,
+    transparent 1px,
+    transparent 7px
+  );
+}
+
+.slide {
+  isolation: isolate;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255, 47, 179, 0.20), transparent 26%),
+    radial-gradient(circle at 82% 14%, rgba(34, 216, 255, 0.16), transparent 25%),
+    radial-gradient(circle at 72% 78%, rgba(141, 255, 157, 0.10), transparent 26%),
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(135deg, #050610 0%, #091120 49%, #07101b 100%);
+  background-size: auto, auto, auto, clamp(36px, 5vw, 64px) clamp(36px, 5vw, 64px), clamp(36px, 5vw, 64px) clamp(36px, 5vw, 64px), auto;
+}
+
+.slide::before {
+  content: "";
+  position: absolute;
+  inset: clamp(0.7rem, 1.6vw, 1.5rem);
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.54;
+  background:
+    radial-gradient(circle at 18% 30%, rgba(34, 216, 255, 0.95) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 37% 18%, rgba(255, 47, 179, 0.90) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 57% 35%, rgba(141, 255, 157, 0.88) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 74% 22%, rgba(34, 216, 255, 0.80) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 28% 70%, rgba(155, 124, 255, 0.82) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 62% 76%, rgba(255, 47, 179, 0.82) 0 2px, transparent 2.5px),
+    linear-gradient(30deg, transparent 12%, rgba(34,216,255,0.10) 12.4%, transparent 12.8%),
+    linear-gradient(148deg, transparent 28%, rgba(255,47,179,0.10) 28.35%, transparent 28.7%),
+    linear-gradient(99deg, transparent 51%, rgba(141,255,157,0.08) 51.25%, transparent 51.65%);
+  border: 1px solid rgba(34,216,255,0.09);
+  border-radius: clamp(0.35rem, 0.7vw, 0.6rem);
+}
+
+.slide::after {
+  content: "Elaborado por Javier A. Flores-Cohaila";
+  position: absolute;
+  right: clamp(1rem, 2.8vw, 2.4rem);
+  bottom: clamp(0.55rem, 1.35vw, 1.05rem);
+  z-index: 12;
+  color: rgba(213, 231, 239, 0.50);
+  font-family: var(--font-mono);
+  font-size: clamp(0.48rem, 0.7vw, 0.64rem);
+  line-height: 1;
+  text-align: right;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.split, .slide-content, .centered {
+  width: 100%;
+  max-width: min(100vw, 1360px);
+  margin-inline: auto;
+}
+
+.slide-content, .centered {
+  position: relative;
+  z-index: 2;
+  align-items: flex-start;
+}
+
+.centered {
+  align-items: center;
+  text-align: center;
+}
+
+.split {
+  position: relative;
+  z-index: 2;
+  align-items: stretch;
+}
+
+.split-left, .split-right { min-width: 0; }
+
+.split-right {
+  background:
+    linear-gradient(135deg, rgba(34,216,255,0.08), rgba(255,47,179,0.07)),
+    rgba(7, 11, 23, 0.74);
+  border-left: 1px solid rgba(34,216,255,0.19);
+  box-shadow: inset 1px 0 rgba(255,255,255,0.04);
+}
+
+h1, h2, h3 {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-weight: 850;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+h1 { max-width: 11ch; }
+h2, h3 { max-width: 16ch; }
+
+p, li { color: var(--text-secondary); font-weight: 400; }
+strong { color: var(--text-primary); font-weight: 700; }
+em {
+  color: var(--accent-blue);
+  font-style: normal;
+  text-shadow: 0 0 18px rgba(34, 216, 255, 0.34);
+}
+
+.eyebrow, .hero-label, .model-box h4, .compare-header, .data-table th {
+  color: var(--accent-green);
+  font-family: var(--font-mono);
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.eyebrow::before { content: "[ "; color: var(--accent-blue); }
+.eyebrow::after { content: " ]"; color: var(--accent-blue); }
+
+.divider {
+  width: clamp(54px, 6vw, 92px);
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent), var(--accent-green));
+  box-shadow: 0 0 16px rgba(34,216,255,0.45);
+}
+
+.source {
+  color: rgba(213, 231, 239, 0.46);
+  font-family: var(--font-mono);
+  font-size: clamp(0.5rem, 0.72vw, 0.66rem);
+  letter-spacing: 0;
+  padding-right: clamp(9rem, 20vw, 20rem);
+}
+
+.hero-number {
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-shadow: 0 0 26px rgba(255,47,179,0.65), 0 0 72px rgba(34,216,255,0.20);
+}
+
+.hero-label { color: var(--text-secondary); }
+
+.quote {
+  background: rgba(7, 11, 23, 0.52);
+  border: 1px solid rgba(34,216,255,0.18);
+  border-left: 3px solid var(--accent);
+  border-radius: clamp(0.35rem, 0.7vw, 0.55rem);
+  box-shadow: var(--magnetic-shadow);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 650;
+  padding: clamp(1rem, 2vw, 1.55rem);
+}
+
+.quote-author {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  letter-spacing: 0;
+}
+
+.section-slide {
+  background:
+    radial-gradient(circle at 74% 25%, rgba(255,47,179,0.21), transparent 28%),
+    radial-gradient(circle at 22% 68%, rgba(34,216,255,0.18), transparent 30%),
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(135deg, #050610 0%, #0b1427 100%);
+  background-size: auto, auto, clamp(42px, 5vw, 68px) clamp(42px, 5vw, 68px), clamp(42px, 5vw, 68px) clamp(42px, 5vw, 68px), auto;
+}
+
+.section-slide .section-number {
+  color: rgba(34,216,255,0.12);
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-shadow: 0 0 48px rgba(34,216,255,0.20);
+}
+
+.card, .model-box, .pyramid-level, .node, .data-table, .compare-grid {
+  background: var(--bg-card);
+  border: 1px solid var(--panel-line);
+  border-radius: clamp(0.35rem, 0.65vw, 0.55rem);
+  box-shadow: var(--magnetic-shadow);
+  backdrop-filter: blur(14px);
+}
+
+.card h4 {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-weight: 750;
+  letter-spacing: 0;
+}
+
+.card p { color: var(--text-secondary); }
+
+.data-table {
+  overflow: hidden;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.data-table th {
+  background: rgba(34,216,255,0.06);
+  border-bottom: 1px solid rgba(34,216,255,0.20);
+}
+
+.data-table td { border-bottom: 1px solid rgba(34,216,255,0.08); }
+
+.bar-track, .profile-track {
+  background: rgba(213, 231, 239, 0.08);
+  border: 1px solid rgba(34,216,255,0.14);
+  box-shadow: inset 0 0 18px rgba(0,0,0,0.26);
+}
+
+.bar-fill, .profile-fill { box-shadow: 0 0 18px currentColor; }
+
+/* === LEARNING / TAKEHOME GRIDS === */
+.learning-grid, .takehome-grid {
+  display: grid;
+  grid-template-columns: minmax(clamp(15rem, 28vw, 23rem), 0.82fr) minmax(0, 1.18fr);
+  gap: clamp(1rem, 2.4vw, 2.2rem);
+  align-items: center;
+  width: 100%;
+  max-width: min(88vw, 1120px);
+  margin-inline: auto;
+}
+
+.learning-rail, .takehome-rail {
+  position: relative;
+  padding: clamp(0.9rem, 1.8vw, 1.4rem);
+  border-left: 3px solid var(--accent-blue);
+  background: linear-gradient(135deg, rgba(34,216,255,0.08), rgba(255,47,179,0.05));
+}
+
+.learning-rail h2, .takehome-rail h2 { max-width: 10ch; }
+.learning-rail p, .takehome-rail p { max-width: clamp(16rem, 26vw, 24rem); }
+
+.learning-map, .takehome-map { display: grid; gap: clamp(0.55rem, 1.1vw, 0.85rem); }
+
+.objective-node, .takehome-point {
+  display: grid;
+  grid-template-columns: clamp(2rem, 3.4vw, 2.8rem) minmax(0, 1fr);
+  gap: clamp(0.6rem, 1.2vw, 0.9rem);
+  align-items: start;
+  padding: clamp(0.65rem, 1.2vw, 0.95rem);
+  background: rgba(7, 11, 23, 0.58);
+  border: 1px solid rgba(34,216,255,0.18);
+  border-radius: clamp(0.35rem, 0.65vw, 0.55rem);
+  box-shadow: var(--magnetic-shadow);
+}
+
+.objective-code, .takehome-code {
+  display: grid;
+  place-items: center;
+  width: clamp(2rem, 3.4vw, 2.8rem);
+  aspect-ratio: 1;
+  color: #050610;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-green));
+  border-radius: 50%;
+  font-family: var(--font-mono);
+  font-size: clamp(0.64rem, 0.86vw, 0.76rem);
+  font-weight: 800;
+}
+
+.objective-node h4, .takehome-point h4 {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(0.85rem, 1.15vw, 1.02rem);
+  line-height: 1.08;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  margin-bottom: clamp(0.12rem, 0.32vw, 0.25rem);
+}
+
+.objective-node p, .takehome-point p { font-size: var(--small-size); line-height: 1.34; }
+
+.progress-bar {
+  height: clamp(2px, 0.35vh, 4px);
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent), var(--accent-green));
+  box-shadow: 0 0 16px rgba(34,216,255,0.55);
+}
+
+.nav-dots { right: clamp(0.45rem, 1.1vw, 1rem); }
+.nav-dot {
+  width: clamp(5px, 0.6vw, 8px);
+  height: clamp(5px, 0.6vw, 8px);
+  background: rgba(213,231,239,0.18);
+  border: 1px solid rgba(34,216,255,0.22);
+}
+.nav-dot.active {
+  background: var(--accent-blue);
+  box-shadow: 0 0 14px rgba(34,216,255,0.72);
+}
+
+@media (max-width: 768px) {
+  .slide::after { left: clamp(0.8rem, 3vw, 1.1rem); right: clamp(0.8rem, 3vw, 1.1rem); text-align: center; }
+  .source { padding-right: 0; }
+  h1, h2, h3 { max-width: 100%; }
+  .learning-grid, .takehome-grid { grid-template-columns: 1fr; align-content: center; }
+}
+
+/* === NEURODATOS BRAND LOCK ===
+   1. Titulares y conceptos: Sora, peso alto, sin letter-spacing negativo.
+   2. Texto docente/clinico: Atkinson Hyperlegible, alta legibilidad en 16:9.
+   3. Codigos, fuentes, labels y footer: JetBrains Mono.
+   4. No usar font-family inline para nuevos componentes; usar estas variables.
+*/
+:root {
+  --brand-course: "Psicopatologia de precision";
+  --font-display: 'Sora', system-ui, sans-serif;
+  --font-body: 'Atkinson Hyperlegible', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+body, .slide, .slide p, .slide li, .slide td, .slide th, .slide .card, .slide .tag {
+  font-family: var(--font-body) !important;
+  letter-spacing: 0 !important;
+}
+
+.slide h1, .slide h2, .slide h3, .slide h4, .hero-number, .quote,
+.objective-node h4, .takehome-point h4 {
+  font-family: var(--font-display) !important;
+  letter-spacing: 0 !important;
+}
+
+.eyebrow, .hero-label, .source, .slide::after,
+.objective-code, .takehome-code, .data-table th {
+  font-family: var(--font-mono) !important;
+  letter-spacing: 0 !important;
+}
+
+/* centered h2 scaling */
+.slide .centered h2 {
+  font-size: clamp(1.28rem, 3.15vw, 2.78rem) !important;
+  line-height: 1.08 !important;
+}
+
+</style>
+</head>
+<body>
+
+<!-- Progress -->
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots"></nav>
+
+<!-- SLIDE 1: PORTADA -->
+<section class="slide" id="s1">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Psicopatología Dimensional &mdash; Sesión 21 / 21 · Bloque 7 · Cierre del curso</p>
+      <h1 class="reveal" style="transition-delay:0.15s">El cuerpo <em>habla</em></h1>
+      <div class="divider reveal" style="transition-delay:0.25s"></div>
+      <p class="reveal" style="transition-delay:0.35s">La catatonia es el <strong>caso capstone</strong> de la psiquiatría dimensional: un síndrome motor transdiagnóstico donde el <em>perfil</em> &mdash; no la etiqueta &mdash; guía el tratamiento. Aquí converge todo el curso.</p>
+      <p class="reveal" style="transition-delay:0.45s;font-family:var(--font-mono);font-size:var(--label-size);color:var(--text-muted)">3 factores motores &middot; hipo/hiper/parakinético &middot; motor profiling &middot; DSM→HiTOP→RDoC→staging &middot; muchos blancos, pocas reglas</p>
+      <div class="quote reveal" style="transition-delay:0.55s;margin-top:var(--content-gap);font-size:clamp(0.82rem,1.4vw,1.1rem)">
+        &ldquo;El perfil motor puede guiar la selección terapéutica más eficazmente que el diagnóstico categórico.&rdquo;
+      </div>
+      <p class="source reveal" style="transition-delay:0.65s">Flores-Cohaila &amp; Huarcaya-Victoria, Asian J Psychiatr 2026 (10.1016/j.ajp.2026.104920).</p>
+    </div>
+    <div class="split-right">
+      <div style="text-align:center" class="reveal-scale">
+        <div class="hero-number">3</div>
+        <div class="hero-label">factores motores en 16 estudios: hipo · hiper · parakinético</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 2: OBJETIVOS -->
+<section class="slide" id="s2">
+  <div class="slide-content">
+    <div class="learning-grid">
+      <div class="learning-rail">
+        <p class="eyebrow reveal">Objetivos de aprendizaje</p>
+        <h2 class="reveal" style="transition-delay:0.12s">Al finalizar esta sesión, podrás&hellip;</h2>
+        <div class="divider reveal" style="transition-delay:0.22s"></div>
+        <p class="reveal" style="transition-delay:0.32s">Tres objetivos: el modelo motor, el tratamiento por perfil, y la formulación final integrada.</p>
+      </div>
+      <div class="learning-map">
+        <div class="objective-node reveal" style="transition-delay:0.12s">
+          <span class="objective-code">1</span>
+          <div><h4>Explicar la catatonia como síndrome motor transdiagnóstico</h4><p>Modelo de 3 factores (hipo/hiper/parakinético) integrado con HiTOP y RDoC.</p></div>
+        </div>
+        <div class="objective-node reveal" style="transition-delay:0.24s">
+          <span class="objective-code">2</span>
+          <div><h4>Usar el perfil motor para guiar el tratamiento</h4><p>Lorazepam/ECT en inhibitorio; neuromodulación en parakinético resistente. Motor profiling &gt; etiqueta.</p></div>
+        </div>
+        <div class="objective-node reveal" style="transition-delay:0.36s">
+          <span class="objective-code">3</span>
+          <div><h4>Construir la formulación dimensional final</h4><p>DSM/HiTOP/RDoC/staging/red en un caso; reconocer el gap "muchos blancos, pocas reglas".</p></div>
+        </div>
+      </div>
+    </div>
+    <p class="source reveal" style="transition-delay:0.52s">Cierre del curso · integración de los 9 bloques sobre un síndrome transdiagnóstico.</p>
+  </div>
+</section>
+
+<!-- SLIDE 3: PUENTE S20 -->
+<section class="slide" id="s3">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Puente con S20 · última clase</p>
+      <h2 class="reveal">De leer la <em>mente</em> del otro a leer su <em>cuerpo</em></h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">La ToM leía estados mentales; ahora el sistema motor los <strong>expresa</strong>. La catatonia es el punto donde cognición, afecto y conducta se vuelven movimiento &mdash; y donde todo el método del curso se pone a prueba en un solo síndrome.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        Un síndrome, cuatro zooms, una formulación. Así se cierra el curso.
+      </div>
+      <p class="source reveal">RDoC Sensorimotor Systems · integración final del curso.</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="card" style="border-left:3px solid var(--accent-blue)"><h4 style="color:var(--accent-blue)">Bloques 1&ndash;5</h4><p>Categorías→dimensiones, RDoC, exposoma/staging, redes, fear.</p></div>
+        <div class="card" style="border-left:3px solid var(--accent-green)"><h4 style="color:var(--accent-green)">Bloques 6&ndash;7</h4><p>Distress, valencia positiva, arousal, cognición, social.</p></div>
+        <div class="card" style="border-left:3px solid var(--accent)"><h4 style="color:var(--accent)">S21 &mdash; Catatonia</h4><p>El síndrome motor donde todo converge.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LO1 · MODELO MOTOR ============ -->
+<section class="slide section-slide" id="s4">
+  <div class="centered">
+    <div class="section-number">01</div>
+    <p class="eyebrow reveal">Objetivo 1</p>
+    <h2 class="reveal" style="max-width:820px">La catatonia como síndrome motor transdiagnóstico</h2>
+    <div class="divider reveal" style="margin-left:auto;margin-right:auto"></div>
+    <p class="reveal" style="max-width:640px">Un modelo de 3 factores, replicado en 16 estudios.</p>
+  </div>
+</section>
+
+<!-- SLIDE 5 (1.1): QUÉ ES -->
+<section class="slide" id="s5">
+  <div class="slide-content">
+    <p class="eyebrow reveal">El síndrome</p>
+    <h2 class="reveal">No es un diagnóstico: es un <em>síndrome</em> transdiagnóstico</h2>
+    <div class="divider reveal"></div>
+    <p class="reveal">La catatonia cruza fronteras psiquiátricas, médicas y del neurodesarrollo. Prevalencia ~9% en agudos; hasta 20.6% en enfermedad médica sin psiquiátrica. Emergencia médica con mortalidad elevada si no se trata.</p>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(0.4rem,0.9vw,0.8rem);margin-top:var(--content-gap)">
+      <div class="card"><h4 style="color:var(--accent-blue)">Transdiagnóstico</h4><p>Ánimo, psicosis, médico, neurodesarrollo. No pertenece a un solo trastorno.</p></div>
+      <div class="card"><h4 style="color:var(--accent)">9&ndash;20.6%</h4><p>Prevalencia en agudos; mayor en enfermedad médica.</p></div>
+      <div class="card"><h4 style="color:var(--accent-green)">≥3 de 12 signos</h4><p>Umbral DSM-5-TR / CIE-11 6A40. Emergencia médica.</p></div>
+    </div>
+    <p class="source reveal">Solmi et al., Schizophr Bull 2018 (10.1093/schbul/sbx157); APA DSM-5-TR; OMS CIE-11 6A40.</p>
+  </div>
+</section>
+
+<!-- SLIDE 6 (1.2): EL PROBLEMA -->
+<section class="slide" id="s6">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">El problema</p>
+      <h2 class="reveal">El DSM la trata como <em>monolítica</em>: ≥3 signos y listo</h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">El umbral ≥3/12 colapsa presentaciones distintas en una etiqueta. Hay heterogeneidad no solo entre diagnósticos sino <strong>dentro</strong> de la catatonia. La evidencia consolida esos signos en dimensiones subyacentes &mdash; pero faltaba una síntesis sistemática.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        Un estupor inhibido y una agitación catatónica cumplen el mismo criterio y no son lo mismo.
+      </div>
+      <p class="source reveal">Flores-Cohaila &amp; Huarcaya-Victoria, 2026 (introducción, 10.1016/j.ajp.2026.104920).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="padding:var(--slide-padding);width:100%">
+        <div class="quote" style="font-size:clamp(0.8rem,1.4vw,1.05rem)">
+          Inmovilidad · mutismo · negativismo · flexibilidad cérea · ecolalia · agitación · manierismos · estereotipias&hellip;
+          <div class="quote-author">&rarr; 12 signos, un solo umbral: la heterogeneidad queda oculta</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 7 (1.3): SCOPING REVIEW -->
+<section class="slide" id="s7">
+  <div class="slide-content">
+    <p class="eyebrow reveal">La evidencia · scoping review</p>
+    <h2 class="reveal">16 estudios convergen en un modelo de <em>3 factores</em></h2>
+    <div class="divider reveal"></div>
+    <p class="reveal">Revisión de alcance (JBI / PRISMA-ScR): 16 estudios factoriales, 4650 participantes, 1999&ndash;2025. El modelo de tres factores es el más consistente a través de muestras y métodos.</p>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(0.4rem,0.9vw,0.8rem);margin-top:var(--content-gap)">
+      <div class="card"><h4 style="color:var(--accent-blue)">16 estudios</h4><p>1999&ndash;2025; 4650 participantes (rango 80&ndash;1456).</p></div>
+      <div class="card"><h4 style="color:var(--accent)">3 factores</h4><p>Hipokinético, hiperkinético, parakinético.</p></div>
+      <div class="card"><h4 style="color:var(--accent-green)">+ subfactores</h4><p>Con correlatos clínicos específicos &rarr; precisión.</p></div>
+    </div>
+    <p class="source reveal">Flores-Cohaila &amp; Huarcaya-Victoria, Asian J Psychiatr 2026 (10.1016/j.ajp.2026.104920).</p>
+  </div>
+</section>
+
+<!-- SLIDE 8 (1.4): LOS 3 FACTORES -->
+<section class="slide" id="s8">
+  <div class="slide-content">
+    <p class="eyebrow reveal">El modelo</p>
+    <h2 class="reveal">Tres dimensiones motoras, <em>ocho</em> subfactores</h2>
+    <div class="divider reveal"></div>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(0.4rem,0.9vw,0.8rem);margin-top:var(--content-gap)">
+      <div class="card" style="border-top:3px solid var(--accent-blue)">
+        <h4 style="color:var(--accent-blue)">HIPOKINÉTICO</h4>
+        <p><strong>Inhibitorio:</strong> inmovilidad/estupor, mutismo, withdrawal, staring, rigidez.<br/><strong>Oposicional:</strong> negativismo, gegenhalten.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent)">
+        <h4 style="color:var(--accent)">HIPERKINÉTICO</h4>
+        <p><strong>Agitado:</strong> excitación, combatividad, impulsividad.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent-violet)">
+        <h4 style="color:var(--accent-violet)">PARAKINÉTICO</h4>
+        <p><strong>Odd:</strong> manierismos, muecas, postura/catalepsia.<br/><strong>Iterativo:</strong> ecolalia/ecopraxia, estereotipia, verbigeración.<br/><strong>Volicional:</strong> flexibilidad cérea, obediencia automática, mitgehen.</p>
+      </div>
+    </div>
+    <p class="source reveal">Flores-Cohaila &amp; Huarcaya-Victoria, 2026 · Table 2 (estabilidad de ítems por factor).</p>
+  </div>
+</section>
+
+<!-- SLIDE 9 (1.5): CORRELATOS CLÍNICOS -->
+<section class="slide" id="s9">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Correlatos clínicos</p>
+    <h2 class="reveal">Cada factor tiene su <em>compañía</em> clínica</h2>
+    <div class="divider reveal"></div>
+    <table class="data-table reveal" style="max-width:1040px;margin-top:var(--content-gap)">
+      <thead><tr><th>Factor</th><th>Asociaciones</th><th>Señal distintiva</th></tr></thead>
+      <tbody>
+        <tr><td>Hipokinético (inhibitorio)</td><td>Depresión, síntomas negativos, extrapiramidales, sexo masculino</td><td>Único con heredabilidad (h² 0.49&ndash;0.65)</td></tr>
+        <tr><td>Hiperkinético (agitado)</td><td>Manía, psicosis, impulsividad; inverso con depresión y retardo</td><td>Replicabilidad consistente</td></tr>
+        <tr><td>Parakinético (odd/iterativo/volicional)</td><td>Trastornos del neurodesarrollo (ASD), resistencia al tratamiento</td><td>Iterativo predice hospitalización más larga</td></tr>
+      </tbody>
+    </table>
+    <p class="reveal" style="margin-top:var(--content-gap)">El factor motor no es cosmético: <strong>predice</strong> compañía sintomática, curso y respuesta.</p>
+    <p class="source reveal">Flores-Cohaila &amp; Huarcaya-Victoria, 2026 · Table 3.</p>
+  </div>
+</section>
+
+<!-- SLIDE 10 (1.6): INTEGRACIÓN HiTOP + RDoC -->
+<section class="slide" id="s10">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Marco teórico · Fig. 2</p>
+    <h2 class="reveal">Las dimensiones motoras cruzan <em>HiTOP</em> y mapean <em>RDoC</em></h2>
+    <div class="divider reveal"></div>
+    <p class="reveal">El modelo integra motor con psicopatología dimensional: cada factor se distribuye a través de espectros HiTOP y mapea al dominio Sensorimotor de RDoC. Catatonia = psicopatología motora transdiagnóstica, no fenómeno de un solo trastorno.</p>
+    <table class="data-table reveal" style="max-width:1040px;margin-top:var(--content-gap)">
+      <thead><tr><th>Factor</th><th>Espectro HiTOP</th><th>RDoC Sensorimotor</th><th>Neurobiología</th></tr></thead>
+      <tbody>
+        <tr><td>Hipokinético</td><td>Internalizing / detachment</td><td>Iniciación</td><td>Ganglios basales ↓; SMA compensatoria; OFC</td></tr>
+        <tr><td>Hiperkinético</td><td>Psicosis / externalizing</td><td>Iniciación</td><td>ACC (hiperperfusión); glutamato</td></tr>
+        <tr><td>Parakinético</td><td>Neurodesarrollo / thought disorder</td><td>Planeación · inhibición</td><td>dlPFC · red ejecutiva central (CEN)</td></tr>
+      </tbody>
+    </table>
+    <p class="source reveal">Flores-Cohaila &amp; Huarcaya-Victoria, 2026 · Fig. 2 (framework HiTOP × RDoC).</p>
+  </div>
+</section>
+
+<!-- SLIDE 11 (1.7): CIERRE LO1 -->
+<section class="slide" id="s11">
+  <div class="centered">
+    <p class="eyebrow reveal">Cierre · Objetivo 1</p>
+    <h2 class="reveal" style="max-width:800px">Un síndrome, <em>tres</em> firmas motoras</h2>
+    <div class="divider reveal" style="margin-left:auto;margin-right:auto"></div>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(0.5rem,1vw,1rem);margin-top:var(--content-gap);max-width:900px">
+      <div class="card" style="border-left:3px solid var(--accent-blue)"><h4 style="color:var(--accent-blue)">Hipokinético</h4><p>Freeze. Depresión, negativos, heredable.</p></div>
+      <div class="card" style="border-left:3px solid var(--accent)"><h4 style="color:var(--accent)">Hiperkinético</h4><p>Fight/flight. Manía, psicosis, impulsividad.</p></div>
+      <div class="card" style="border-left:3px solid var(--accent-violet)"><h4 style="color:var(--accent-violet)">Parakinético</h4><p>Fawn. Neurodesarrollo, resistencia.</p></div>
+    </div>
+    <p class="reveal" style="max-width:660px;margin-top:var(--content-gap)">Perfilar el motor es el primer paso para <strong>tratar por mecanismo</strong>, no por etiqueta.</p>
+    <p class="source reveal">Marco evolutivo: Zingela et al., 2022 (10.1186/s40359-022-00885-7).</p>
+  </div>
+</section>
+
+<!-- ============ LO2 · TRATAMIENTO POR PERFIL ============ -->
+<section class="slide section-slide" id="s12">
+  <div class="centered">
+    <div class="section-number">02</div>
+    <p class="eyebrow reveal">Objetivo 2</p>
+    <h2 class="reveal" style="max-width:820px">El perfil motor guía el tratamiento</h2>
+    <div class="divider reveal" style="margin-left:auto;margin-right:auto"></div>
+    <p class="reveal" style="max-width:640px">Motor profiling &gt; diagnóstico categórico.</p>
+  </div>
+</section>
+
+<!-- SLIDE 13 (2.1): LA TESIS -->
+<section class="slide" id="s13">
+  <div class="slide-content">
+    <p class="eyebrow reveal">La tesis terapéutica</p>
+    <h2 class="reveal">La implicación mayor está en la <em>respuesta al tratamiento</em></h2>
+    <div class="divider reveal"></div>
+    <p class="reveal">El modelo dimensional resuelve inconsistencias en la respuesta terapéutica. El perfil motor &mdash; no el diagnóstico base &mdash; predice quién responde a qué. Esa es la promesa de precisión de la catatonia.</p>
+    <div class="quote reveal" style="margin-top:var(--content-gap);max-width:820px">
+      No preguntes solo "¿es esquizofrenia o depresión?"; pregunta "¿qué perfil motor tiene?".
+    </div>
+    <p class="source reveal">Flores-Cohaila &amp; Huarcaya-Victoria, 2026 (discusión 4.3&ndash;4.4).</p>
+  </div>
+</section>
+
+<!-- SLIDE 14 (2.2): GRADIENTE DE RESPUESTA -->
+<section class="slide" id="s14">
+  <div class="centered">
+    <p class="eyebrow reveal">Gradiente de respuesta · Fig. 2</p>
+    <h2 class="reveal" style="max-width:820px">De <em>buena</em> a <em>pobre</em> respuesta según el perfil</h2>
+    <div class="divider reveal" style="margin-left:auto;margin-right:auto"></div>
+    <div class="reveal" style="margin-top:var(--content-gap);width:90%;max-width:820px">
+      <div style="height:clamp(30px,5vh,48px);border-radius:8px;background:linear-gradient(90deg,#8dff9d,#f5db65,#ff2fb3);box-shadow:var(--magnetic-shadow)"></div>
+      <div style="display:flex;justify-content:space-between;margin-top:0.5rem;font-family:var(--font-mono);font-size:var(--small-size)">
+        <span style="color:var(--accent-green)">HIPO-INHIBITORIO<br/>ECT + lorazepam: buena</span>
+        <span style="color:var(--accent-amber);text-align:center">Hiperkinético<br/>intermedia</span>
+        <span style="color:var(--accent);text-align:right">PARAKINÉTICO<br/>ECT + benzo: pobre</span>
+      </div>
+    </div>
+    <p class="reveal" style="max-width:660px;margin-top:var(--content-gap)">El eje de respuesta corre en paralelo al eje motor. Leer el perfil es <strong>predecir</strong> la respuesta.</p>
+    <p class="source reveal">Flores-Cohaila &amp; Huarcaya-Victoria, 2026 · Fig. 2 (margen derecho: respuesta ECT/lorazepam).</p>
+  </div>
+</section>
+
+<!-- SLIDE 15 (2.3): HIPO-INHIBITORIO -->
+<section class="slide" id="s15">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Perfil A · Hipokinético-inhibitorio</p>
+      <h2 class="reveal">GABA, lorazepam y ECT: la <em>respuesta favorable</em></h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">El subfactor inhibitorio, pese a asociarse con mayor severidad, es el <strong>único predictor de respuesta favorable a lorazepam</strong> y de hospitalización más corta. Su vínculo con disfunción GABAérgica sostiene el estándar: benzodiacepinas y ECT.</p>
+      <p class="reveal">Modelos de machine learning ya predicen la respuesta a lorazepam desde el perfil sintomático.</p>
+      <p class="source reveal">Mastellari et al., 2025 (10.1016/j.pnpbp.2025.111435); Badinier et al., 2024.</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="card" style="border-left:3px solid var(--accent-blue)"><h4 style="color:var(--accent-blue)">Mecanismo</h4><p>Disfunción GABAérgica; respuesta freeze.</p></div>
+        <div class="card" style="border-left:3px solid var(--accent-green)"><h4 style="color:var(--accent-green)">1.ª línea</h4><p>Lorazepam; ECT si estupor profundo o riesgo vital.</p></div>
+        <div class="card" style="border-left:3px solid var(--accent-amber)"><h4 style="color:var(--accent-amber)">Predictor</h4><p>Inhibitorio → respuesta favorable pese a severidad.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 16 (2.4): PARAKINÉTICO RESISTENTE -->
+<section class="slide" id="s16">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">Perfil B · Parakinético resistente</p>
+      <h2 class="reveal">Cuando ECT y benzos <em>no</em> bastan: neuromodulación</h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">El parakinético presenta un desafío terapéutico: sus conductas iterativas y disturbios volicionales se asocian a resistencia a ECT <em>y</em> benzodiacepinas. Para estos fenotipos se propone neuromodulación (rTMS/tDCS) sobre el dlPFC, diana de la disfunción ejecutiva.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        La resistencia no es "más de lo mismo": pide otra diana y otro mecanismo.
+      </div>
+      <p class="source reveal">Xiao et al., 2023 (10.3389/fpsyt.2023.1135583); discusión 4.3.</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="card" style="border-left:3px solid var(--accent-violet)"><h4 style="color:var(--accent-violet)">Mecanismo</h4><p>Disfunción ejecutiva dlPFC / CEN; respuesta fawn.</p></div>
+        <div class="card" style="border-left:3px solid var(--accent)"><h4 style="color:var(--accent)">Resistencia</h4><p>A ECT y benzodiacepinas (iterativo, volicional).</p></div>
+        <div class="card" style="border-left:3px solid var(--accent-blue)"><h4 style="color:var(--accent-blue)">Propuesta</h4><p>rTMS / tDCS sobre dlPFC (hipótesis a validar).</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 17 (2.5): NEUROBIOLOGÍA POR FACTOR -->
+<section class="slide" id="s17">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Neurobiología por factor</p>
+    <h2 class="reveal">Tres perfiles, tres <em>circuitos</em> candidatos</h2>
+    <div class="divider reveal"></div>
+    <p class="reveal">Las asociaciones neurobiológicas son extrapolaciones teóricas que requieren validación, pero orientan la diana: el sustrato motor de la catatonia incluye tronco/mesencéfalo, ganglios basales y redes prefrontales.</p>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(0.4rem,0.9vw,0.8rem);margin-top:var(--content-gap)">
+      <div class="card" style="border-left:3px solid var(--accent-blue)"><h4 style="color:var(--accent-blue)">Hipokinético</h4><p>Hipoactividad de ganglios basales + hiperactividad compensatoria del SMA; OFC.</p></div>
+      <div class="card" style="border-left:3px solid var(--accent)"><h4 style="color:var(--accent)">Hiperkinético</h4><p>Hiperperfusión del ACC; desregulación glutamatérgica.</p></div>
+      <div class="card" style="border-left:3px solid var(--accent-violet)"><h4 style="color:var(--accent-violet)">Parakinético</h4><p>Disfunción de la red ejecutiva central y dlPFC.</p></div>
+    </div>
+    <p class="source reveal">Fritze &amp; Hirjak et al., 2020 (10.1016/j.schres.2020.09.025); Sambataro 2021; Cattarinussi 2024.</p>
+  </div>
+</section>
+
+<!-- SLIDE 18 (2.6): CIERRE LO2 -->
+<section class="slide" id="s18">
+  <div class="centered">
+    <p class="eyebrow reveal">Cierre · Objetivo 2</p>
+    <h2 class="reveal" style="max-width:800px">Trata el <em>perfil</em>, no la etiqueta</h2>
+    <div class="divider reveal" style="margin-left:auto;margin-right:auto"></div>
+    <p class="reveal" style="max-width:680px;margin-top:var(--content-gap)">Inhibitorio → lorazepam/ECT con buena respuesta. Parakinético resistente → neuromodulación sobre dlPFC. El mismo diagnóstico base, dos perfiles motores, dos planes.</p>
+    <div class="quote reveal" style="margin-top:var(--content-gap);max-width:700px">
+      El perfil motor puede guiar la selección terapéutica más eficazmente que el diagnóstico categórico.
+    </div>
+    <p class="source reveal">Flores-Cohaila &amp; Huarcaya-Victoria, 2026 (conclusión).</p>
+  </div>
+</section>
+
+<!-- ============ LO3 · FORMULACIÓN FINAL + CIERRE ============ -->
+<section class="slide section-slide" id="s19">
+  <div class="centered">
+    <div class="section-number">03</div>
+    <p class="eyebrow reveal">Objetivo 3</p>
+    <h2 class="reveal" style="max-width:820px">La formulación dimensional final</h2>
+    <div class="divider reveal" style="margin-left:auto;margin-right:auto"></div>
+    <p class="reveal" style="max-width:660px">Cuatro zooms sobre un paciente, y una honestidad epistémica.</p>
+  </div>
+</section>
+
+<!-- SLIDE 20 (3.1): CUATRO ZOOMS -->
+<section class="slide" id="s20">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Los cuatro zooms</p>
+    <h2 class="reveal">DSM, HiTOP, RDoC y staging no <em>compiten</em>: hacen zoom</h2>
+    <div class="divider reveal"></div>
+    <p class="reveal">La formulación integradora sintetiza cuatro profundidades sobre el mismo paciente catatónico. Cada marco responde una pregunta distinta.</p>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(0.35rem,0.8vw,0.7rem);margin-top:var(--content-gap)">
+      <div class="card"><h4 style="color:var(--accent-blue)">DSM</h4><p>¿Qué tiene? Catatonia (≥3/12) + forma.</p></div>
+      <div class="card"><h4 style="color:var(--accent-green)">HiTOP</h4><p>¿Dónde está? Perfil en espectros.</p></div>
+      <div class="card"><h4 style="color:var(--accent)">RDoC</h4><p>¿Qué falla? Sensorimotor + arousal.</p></div>
+      <div class="card"><h4 style="color:var(--accent-amber)">Staging</h4><p>¿En qué punto? Curso y urgencia.</p></div>
+    </div>
+    <p class="source reveal">Nota dsm-hitop-rdoc-staging (Garden); McGorry et al., Psychol Med 2025 55:e26.</p>
+  </div>
+</section>
+
+<!-- SLIDE 21 (3.2): pMSE CROSSWALK -->
+<section class="slide" id="s21">
+  <div class="split">
+    <div class="split-left">
+      <p class="eyebrow reveal">El instrumento · pMSE / bMSE</p>
+      <h2 class="reveal">La catatonia se descompone en <em>velocidad</em> + <em>parakinesia</em></h2>
+      <div class="divider reveal"></div>
+      <p class="reveal">El examen mental de precisión ancla la catatonia en tres campos: velocidad psicomotriz (los dos polos hipo/hiper), expresividad y drive. El factor de <em>forma</em> vive en Parakinesia. Así el instrumento honra el modelo de 3 factores.</p>
+      <div class="quote reveal" style="font-size:clamp(0.82rem,1.4vw,1.1rem);margin-top:var(--content-gap)">
+        Catatonia completa = velocidad (2 polos) + parakinesia (forma), no velocidad sola.
+      </div>
+      <p class="source reveal">Nota catatonia-criterios (Garden, pMSE crosswalk); Wilson et al., 2015 (10.1016/j.schres.2014.12.036).</p>
+    </div>
+    <div class="split-right">
+      <div class="reveal-scale" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.2vh,1rem);padding:var(--slide-padding)">
+        <div class="card"><h4 style="color:var(--accent-blue)">F2 · Velocidad</h4><p>−2 estupor/catalepsia/flexibilidad; +2 agitación/manierismos.</p></div>
+        <div class="card"><h4 style="color:var(--accent)">F1 · Expresividad</h4><p>−2 mutismo; anómala (muecas, ecolalia).</p></div>
+        <div class="card"><h4 style="color:var(--accent-violet)">F3 · Drive + Parakinesia</h4><p>−2 negativismo; forma parakinética-volicional.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 22 (3.3): CASO INTEGRADOR -->
+<section class="slide" id="s22">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Caso capstone · formular en 5 capas</p>
+    <h2 class="reveal">Un paciente catatónico, la <em>formulación completa</em></h2>
+    <div class="divider reveal"></div>
+    <table class="data-table reveal" style="max-width:1040px;margin-top:var(--content-gap)">
+      <thead><tr><th>Capa</th><th>Lectura</th></tr></thead>
+      <tbody>
+        <tr><td>DSM</td><td>Catatonia (≥3/12) asociada a episodio depresivo mayor</td></tr>
+        <tr><td>HiTOP</td><td>Internalizing / detachment elevado; thought disorder bajo</td></tr>
+        <tr><td>RDoC</td><td>Sensorimotor (iniciación ↓); arousal ↓; social communication ↓ (mutismo)</td></tr>
+        <tr><td>Staging / exposoma</td><td>Inicio agudo (días); fechar 1.er signo motor; emergencia médica</td></tr>
+        <tr><td>Perfil motor → plan</td><td>Hipokinético-inhibitorio → lorazepam; ECT si no cede. Respuesta esperada: favorable</td></tr>
+      </tbody>
+    </table>
+    <p class="reveal" style="margin-top:var(--content-gap)">Viñeta docente ficticia. La etiqueta abre; el <strong>perfil</strong> decide el plan.</p>
+    <p class="source reveal">Síntesis: Garden (cuatro zooms, pMSE) + Flores-Cohaila &amp; Huarcaya-Victoria, 2026.</p>
+  </div>
+</section>
+
+<!-- SLIDE 23 (3.4): EJERCICIO -->
+<section class="slide" id="s23">
+  <div class="slide-content">
+    <p class="eyebrow reveal">Ejercicio · 5 minutos</p>
+    <h2 class="reveal">Perfila el <em>motor</em>, elige el plan proporcional</h2>
+    <div class="divider reveal"></div>
+    <div class="reveal card" style="margin-top:var(--content-gap);font-family:var(--font-mono);font-size:var(--small-size);line-height:1.9;max-width:900px">
+      <p>1 · PERFIL MOTOR — ¿hipokinético / hiperkinético / parakinético? ¿subfactor?</p>
+      <p>2 · CUATRO ZOOMS — DSM · HiTOP · RDoC · staging</p>
+      <p>3 · RESPUESTA ESPERADA — según el eje motor (buena ↔ pobre)</p>
+      <p>4 · PLAN — lorazepam / ECT / neuromodulación, con hipótesis mecanística</p>
+      <p>5 · ¿Qué mediría para confirmar el perfil?</p>
+    </div>
+    <p class="reveal" style="margin-top:var(--content-gap);text-align:center;color:var(--accent-blue);font-family:var(--font-mono)">⏱ 5:00 · trabajo individual</p>
+    <p class="source reveal">Aplicación del método del curso a un caso motor.</p>
+  </div>
+</section>
+
+<!-- SLIDE 24 (3.5): EL GAP HONESTO -->
+<section class="slide" id="s24">
+  <div class="centered">
+    <p class="eyebrow reveal">Honestidad epistémica</p>
+    <h2 class="reveal" style="max-width:820px">Muchos <em>blancos</em>, pocas <em>reglas</em> validadas</h2>
+    <div class="divider reveal" style="margin-left:auto;margin-right:auto"></div>
+    <p class="reveal" style="max-width:680px;margin-top:var(--content-gap)">El motor profiling es una <strong>hipótesis estructurada</strong>, no una regla validada. Ningún estudio prospectivo ha probado aún que la evaluación dimensional supere al diagnóstico categórico. Estamos en la psiquiatría "pre-HER2": ricos en blancos, pobres en reglas.</p>
+    <div class="quote reveal" style="margin-top:var(--content-gap);max-width:720px">
+      Trial-and-error informado &gt; trial-and-error ciego. La regla llegará; mientras tanto, cada prescripción lleva una hipótesis.
+    </div>
+    <p class="source reveal">Nota gap-precision-psiquiatria (Garden); Flores-Cohaila &amp; Huarcaya-Victoria, 2026 (4.5 future research).</p>
+  </div>
+</section>
+
+<!-- SLIDE 25 (3.6): RECAP DEL CURSO -->
+<section class="slide" id="s25">
+  <div class="slide-content">
+    <p class="eyebrow reveal">El curso, en una mirada</p>
+    <h2 class="reveal">Nueve bloques, un <em>método</em></h2>
+    <div class="divider reveal"></div>
+    <p class="reveal">Todo el curso fue entrenamiento para esta formulación: dimensionar en vez de etiquetar, medir el mecanismo, ubicar el curso, tratar por perfil.</p>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(0.35rem,0.8vw,0.7rem);margin-top:var(--content-gap)">
+      <div class="card"><h4 style="color:var(--accent-blue)">Fundamentos</h4><p>Categorías→dimensiones, RDoC, exposoma/staging, redes.</p></div>
+      <div class="card"><h4 style="color:var(--accent)">Valencias</h4><p>Fear, distress, valencia positiva/detachment.</p></div>
+      <div class="card"><h4 style="color:var(--accent-green)">Sistemas</h4><p>Arousal, cognición, lenguaje, social/mentalización.</p></div>
+      <div class="card" style="grid-column:1/-1;border-left:3px solid var(--accent-violet)"><h4 style="color:var(--accent-violet)">Cierre · Catatonia</h4><p>El síndrome motor donde DSM, HiTOP, RDoC, staging, red y tratamiento por perfil convergen.</p></div>
+    </div>
+    <p class="source reveal">Integración de los bloques 1&ndash;9 del curso.</p>
+  </div>
+</section>
+
+<!-- SLIDE 26 (TAKE-HOME) -->
+<section class="slide" id="s26">
+  <div class="slide-content">
+    <div class="takehome-grid">
+      <div class="takehome-rail">
+        <p class="eyebrow reveal">Take-home &middot; Fin del curso</p>
+        <h2 class="reveal" style="transition-delay:0.12s">Dimensiona, mide, <em>perfila</em>, trata</h2>
+        <div class="divider reveal" style="transition-delay:0.22s"></div>
+        <p class="reveal" style="transition-delay:0.32s">La catatonia demuestra el método completo: un síndrome motor transdiagnóstico donde el perfil guía el plan mejor que la etiqueta.</p>
+        <p class="source reveal" style="transition-delay:0.42s">Flores-Cohaila &amp; Huarcaya-Victoria, 2026 (10.1016/j.ajp.2026.104920).</p>
+      </div>
+      <div class="takehome-map">
+        <div class="takehome-point reveal" style="transition-delay:0.12s">
+          <span class="takehome-code">01</span>
+          <div><h4>Catatonia = síndrome motor transdiagnóstico</h4><p>3 factores (hipo/hiper/parakinético) replicados en 16 estudios.</p></div>
+        </div>
+        <div class="takehome-point reveal" style="transition-delay:0.20s">
+          <span class="takehome-code">02</span>
+          <div><h4>El perfil predice compañía, curso y respuesta</h4><p>Inhibitorio → lorazepam/ECT; parakinético resistente → neuromodulación.</p></div>
+        </div>
+        <div class="takehome-point reveal" style="transition-delay:0.28s">
+          <span class="takehome-code">03</span>
+          <div><h4>Cuatro zooms, una formulación</h4><p>DSM/HiTOP/RDoC/staging + pMSE: velocidad + parakinesia.</p></div>
+        </div>
+        <div class="takehome-point reveal" style="transition-delay:0.36s">
+          <span class="takehome-code">04</span>
+          <div><h4>Honestidad epistémica</h4><p>Motor profiling es hipótesis, no regla validada. Trial-and-error informado.</p></div>
+        </div>
+        <div class="takehome-point reveal" style="transition-delay:0.44s">
+          <span class="takehome-code">FIN</span>
+          <div><h4>Qué cambia mañana</h4><p>No más diagnósticos: mejores decisiones. Qué dominio falla, por qué vía, desde cuándo, qué lo modifica.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 27: CIERRE FINAL -->
+<section class="slide" id="s27">
+  <div class="centered">
+    <p class="eyebrow reveal">Fin del curso · Psicopatología Dimensional</p>
+    <h2 class="reveal" style="max-width:820px">Gracias. Ahora el <em>cuerpo</em> y la <em>mente</em> se leen distinto.</h2>
+    <div class="divider reveal" style="margin-left:auto;margin-right:auto"></div>
+    <div class="quote reveal" style="margin-top:var(--content-gap);max-width:740px">
+      La formulación dimensional final no busca más diagnósticos: busca mejores decisiones.
+    </div>
+    <p class="reveal" style="max-width:640px;margin-top:var(--content-gap);font-family:var(--font-mono);font-size:var(--label-size);color:var(--text-muted)">21 / 21 sesiones · 9 bloques · HiTOP · RDoC · Exposoma · Staging · Network · Motor profiling</p>
+    <p class="source reveal">Javier A. Flores-Cohaila · Curso de Psicopatología Dimensional · 2026.</p>
+  </div>
+</section>
+<!-- =============================================
+     JAVASCRIPT (donor verbatim)
+     ============================================= -->
+<script>
+/* === SLIDE PRESENTATION CONTROLLER === */
+class SlidePresentation {
+  constructor() {
+    this.slides = document.querySelectorAll('.slide');
+    this.currentSlide = 0;
+    this.setupIntersectionObserver();
+    this.setupKeyboardNav();
+    this.setupTouchNav();
+    this.setupProgressBar();
+    this.setupNavDots();
+  }
+
+  setupIntersectionObserver() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          const idx = Array.from(this.slides).indexOf(entry.target);
+          if (idx !== -1) {
+            this.currentSlide = idx;
+            this.updateProgressBar();
+            this.updateNavDots();
+          }
+        }
+      });
+    }, { threshold: 0.4 });
+    this.slides.forEach(slide => observer.observe(slide));
+  }
+
+  setupKeyboardNav() {
+    document.addEventListener('keydown', (e) => {
+      if (e.target.getAttribute && e.target.getAttribute('contenteditable')) return;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        this.goTo(Math.min(this.currentSlide + 1, this.slides.length - 1));
+      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        this.goTo(Math.max(this.currentSlide - 1, 0));
+      } else if (e.key === 'Home') {
+        e.preventDefault(); this.goTo(0);
+      } else if (e.key === 'End') {
+        e.preventDefault(); this.goTo(this.slides.length - 1);
+      }
+    });
+  }
+
+  setupTouchNav() {
+    let startY = 0;
+    document.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, { passive: true });
+    document.addEventListener('touchend', e => {
+      const diff = startY - e.changedTouches[0].clientY;
+      if (Math.abs(diff) > 50) {
+        diff > 0 ? this.goTo(Math.min(this.currentSlide + 1, this.slides.length - 1))
+                  : this.goTo(Math.max(this.currentSlide - 1, 0));
+      }
+    }, { passive: true });
+  }
+
+  setupProgressBar() {
+    this.progressBar = document.getElementById('progressBar');
+    this.updateProgressBar();
+  }
+
+  setupNavDots() {
+    this.navDotsContainer = document.getElementById('navDots');
+    this.navDotsContainer.innerHTML = '';
+    this.slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', `Slide ${i + 1}`);
+      dot.addEventListener('click', () => this.goTo(i));
+      this.navDotsContainer.appendChild(dot);
+    });
+    this.navDots = this.navDotsContainer.querySelectorAll('.nav-dot');
+  }
+
+  goTo(index) {
+    this.slides[index].scrollIntoView({ behavior: 'smooth' });
+  }
+
+  updateProgressBar() {
+    const pct = ((this.currentSlide + 1) / this.slides.length) * 100;
+    this.progressBar.style.width = pct + '%';
+  }
+
+  updateNavDots() {
+    if (!this.navDots) return;
+    this.navDots.forEach((dot, i) => dot.classList.toggle('active', i === this.currentSlide));
+  }
+}
+
+new SlidePresentation();
+</script>
+</body>
+</html>
